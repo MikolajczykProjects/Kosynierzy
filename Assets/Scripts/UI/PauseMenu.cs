@@ -35,7 +35,7 @@ namespace Kosynierzy
         public bool IsOpen => canvas != null && canvas.gameObject.activeSelf;
 
         /// <summary>Esc belongs to another screen (history card, failure, epilogue) and must not open the pause menu.</summary>
-        static bool PauseBlocked => MissionFail.IsFailed || Epilogue.IsPlaying || HistoryCardView.BlocksPauseInput;
+        static bool PauseBlocked => MissionFail.IsFailed || Epilogue.IsPlaying || HistoryCardView.BlocksPauseInput || LoadoutScreen.IsOpen;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics() => RestartFromCheckpointRequested = null;

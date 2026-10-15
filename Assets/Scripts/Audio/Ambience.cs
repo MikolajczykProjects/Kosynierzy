@@ -88,7 +88,7 @@ namespace Kosynierzy
             {
                 checkAt = Time.unscaledTime + 0.4f;
                 var pl = FindAnyObjectByType<FirstPersonController>();
-                if (pl != null) Switch(AutoZone(pl.transform.position));
+                Switch(pl != null ? AutoZone(pl.transform.position) : "");
             }
             t = Mathf.Min(1f, t + Time.unscaledDeltaTime / fade);
             var other = active == a ? b : a;

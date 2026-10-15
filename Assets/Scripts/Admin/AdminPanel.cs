@@ -44,10 +44,12 @@ namespace Kosynierzy
             if (god) KeepAlive();
         }
 
+        static bool UiBlocking => GameState.IsPaused || LoadoutScreen.IsOpen || MissionFail.IsFailed || Epilogue.IsPlaying || HistoryCardView.IsOpen;
+
         void Toggle()
         {
             open = !open;
-            PlayerControlLock.SetCursorFree(open);
+            if (open || !UiBlocking) PlayerControlLock.SetCursorFree(open);
             if (open) RefreshPoints();
         }
 
@@ -122,7 +124,7 @@ namespace Kosynierzy
             if (m == null) { GUILayout.Label("Brak misji w scenie", Style(ref label, 14, TextAnchor.MiddleLeft)); return; }
             GUILayout.Label("Teraz: " + m.CurrentIndex + "  " + (m.Current != null ? m.Current.Title : "-"), Style(ref label, 14, TextAnchor.MiddleLeft));
             for (int i = 0; i < m.DebugStepCount; i++)
-                if (B(i + "   " + m.DebugStepTitle(i))) { status = "Skok do kroku " + i; m.DebugJumpTo(i); open = false; PlayerControlLock.SetCursorFree(false); }
+                if (B(i + "   " + m.DebugStepTitle(i))) { status = "Skok do kroku " + i; m.DebugJumpTo(i); open = false; { if (!UiBlocking) PlayerControlLock.SetCursorFree(false); } }
         }
 
         void TabTeleport()
@@ -180,12 +182,12 @@ namespace Kosynierzy
             var mm = Mission.Instance;
             var pl = Player;
             if (B("Plansza aktu")) Cutscene.ActTitle("Akt 1", "Dworzec i hotel", GameClock.Hour);
-            if (B("Podróż do celu (fade + teleport)") && mm != null && mm.Current != null && mm.Current.MarkerPosition.HasValue) { Cutscene.Travel(mm.Current.MarkerPosition.Value, mm.Current.Title); open = false; PlayerControlLock.SetCursorFree(false); }
-            if (B("Ujęcie kamery na cel") && mm != null && mm.Current != null && mm.Current.MarkerPosition.HasValue) { Cutscene.Pan(mm.Current.MarkerPosition.Value + Vector3.up, 3.5f); open = false; PlayerControlLock.SetCursorFree(false); }
+            if (B("Podróż do celu (fade + teleport)") && mm != null && mm.Current != null && mm.Current.MarkerPosition.HasValue) { Cutscene.Travel(mm.Current.MarkerPosition.Value, mm.Current.Title); open = false; { if (!UiBlocking) PlayerControlLock.SetCursorFree(false); } }
+            if (B("Ujęcie kamery na cel") && mm != null && mm.Current != null && mm.Current.MarkerPosition.HasValue) { Cutscene.Pan(mm.Current.MarkerPosition.Value + Vector3.up, 3.5f); open = false; { if (!UiBlocking) PlayerControlLock.SetCursorFree(false); } }
             if (B("Strzelanina (wstrząs + muzyka)")) Cutscene.Shootout();
             if (B("Koniec gry (epilog)")) { Epilogue.Play(); open = false; }
             string[] scenes = { "a1_hotel_goscie", "pob_fotograf_przed", "pob_fotograf_gestapo", "pob_fotograf_po", "a2_auto_daleko", "a2_auto_blisko", "a2_most", "a3_wejscie", "a3_sd_udaja", "a3_mysl_kable", "a4_ucieczka", "a4_radio_spiker" };
-            foreach (var sc in scenes) if (B("Scena: " + sc)) { Cutscene.PlayScene(sc); open = false; PlayerControlLock.SetCursorFree(false); }
+            foreach (var sc in scenes) if (B("Scena: " + sc)) { Cutscene.PlayScene(sc); open = false; { if (!UiBlocking) PlayerControlLock.SetCursorFree(false); } }
             string[] tracks = { "mus_menu_main_theme", "mus_eksploracja_spokojna", "mus_skradanie_napiecie", "mus_sledzenie_auta", "mus_akcja_strzelanina", "mus_kulminacja_lacznica", "mus_ucieczka_pola", "mus_epilog_pamiec", "mus_porazka_game_over" };
             foreach (var tr in tracks) if (B("Muzyka: " + tr)) GameMusic.Play(tr, 0.8f);
             if (B("Zamknij panel")) Toggle();

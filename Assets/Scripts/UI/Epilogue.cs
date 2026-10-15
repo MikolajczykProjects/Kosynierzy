@@ -53,6 +53,7 @@ namespace Kosynierzy
         /// <summary>Starts the ending; called by the mission after the courier scene.</summary>
         public static void Play()
         {
+            GameMusic.Play("mus_epilog_pamiec", 2f, 9999f);
             if (IsPlaying) return;
             if (instance == null) instance = new GameObject("[Epilogue]").AddComponent<Epilogue>();
             instance.StartCoroutine(instance.Run());
@@ -120,7 +121,7 @@ namespace Kosynierzy
                 foreach (var line in lines)
                 {
                     string text = string.IsNullOrEmpty(line.Subtitle) ? line.Text : line.Subtitle;
-                    var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>("Audio/" + line.Audio);
+                    var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>(Dialog.AudioPath(line.Audio));
                     yield return Board(text, clip);
                 }
             }

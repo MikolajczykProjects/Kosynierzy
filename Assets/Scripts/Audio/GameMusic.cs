@@ -37,10 +37,10 @@ namespace Kosynierzy
 
         public static string Current => instance != null ? instance.currentId : "";
 
-        public static void Play(string id, float fade = 1.5f)
+        public static void Play(string id, float fade = 1.5f, float hold = 20f)
         {
             if (instance == null) Bootstrap();
-            instance.manualUntil = Time.unscaledTime + 20f;
+            instance.manualUntil = Time.unscaledTime + hold;
             instance.Switch(id, fade);
         }
 
@@ -66,7 +66,7 @@ namespace Kosynierzy
             return s;
         }
 
-        void OnFail(string _) { holdUntil = 0f; manualUntil = 0f; Switch("mus_porazka_game_over", 0.8f); manualUntil = Time.unscaledTime + 30f; }
+        void OnFail(string _) { holdUntil = 0f; manualUntil = 0f; Switch("mus_porazka_game_over", 0.8f); manualUntil = Time.unscaledTime + 600f; }
 
         void Switch(string id, float fade)
         {

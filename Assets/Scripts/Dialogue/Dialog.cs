@@ -79,7 +79,7 @@ namespace Kosynierzy
 
         /// <summary>Plays one random line of a bark set as 3D audio at a character (no subtitles freeze).</summary>
         /// <summary>Team A writes "Audio/a1_intro_01" (new package) or "a1_intro_01" (old); both map to Resources/Audio.</summary>
-        static string AudioPath(string audio) => audio.StartsWith("Audio/") ? audio : "Audio/" + audio;
+        public static string AudioPath(string audio) => audio.StartsWith("Audio/") ? audio : "Audio/" + audio;
 
         public static void Bark(string id, Vector3 position)
         {
