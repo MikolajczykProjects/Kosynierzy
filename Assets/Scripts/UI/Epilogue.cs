@@ -184,7 +184,7 @@ namespace Kosynierzy
 
         void PlayAgain()
         {
-            Checkpoints.NewGame();
+            GameReset.Wipe();
             Checkpoints.Restart();
         }
 
@@ -226,7 +226,7 @@ namespace Kosynierzy
             column.anchoredPosition = new Vector2(0f, -10f);
 
             menuButton = SettingsMenuUi.CreateButton(column, "Menu główne", 66f, 30, GoToMenu, out _, dark: true);
-            replayButton = SettingsMenuUi.CreateButton(column, "Zagraj ponownie", 66f, 30, PlayAgain, out _, dark: true);
+            replayButton = SettingsMenuUi.CreateButton(column, "Zagraj jeszcze raz", 66f, 30, PlayAgain, out _, dark: true);
         }
     }
 }

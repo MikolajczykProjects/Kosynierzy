@@ -142,7 +142,7 @@ namespace Kosynierzy
 
         void StartOver()
         {
-            Checkpoints.NewGame();
+            GameReset.Wipe();
             Checkpoints.Restart();
         }
 

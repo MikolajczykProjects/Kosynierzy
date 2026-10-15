@@ -342,6 +342,17 @@ namespace Kosynierzy
                 GameSettingsChanged();
             }));
 
+            UnityEngine.UI.Text delLabel = null;
+            bool armed = false;
+            var del = SettingsMenuUi.CreateButton(page, "Usuń zapis gry", 56f, 22, () =>
+            {
+                if (!armed) { armed = true; if (delLabel != null) delLabel.text = "NA PEWNO? KLIKNIJ PONOWNIE"; return; }
+                armed = false;
+                GameReset.Wipe();
+                if (delLabel != null) delLabel.text = "ZAPIS USUNIĘTY";
+            }, out delLabel);
+            items.Add(del);
+
             // Hint under the row; leading spaces line it up with the row label.
             var note = SettingsMenuUi.CreateText("Note", page, "      Brutalniejsze efekty trafień. Domyślnie wyłączone.",
                 22, TextAnchor.MiddleLeft, FontStyle.Italic, SettingsMenuUi.MutedTextColor);

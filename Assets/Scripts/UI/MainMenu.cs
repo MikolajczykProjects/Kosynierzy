@@ -62,8 +62,10 @@ namespace Kosynierzy
             if (canvas.gameObject.activeSelf) SettingsMenuUi.RestoreSelection(newGameButton);
         }
 
-        void StartGame(bool historical)
+        void StartGame(bool historical, bool resume = false)
         {
+            if (resume && GameReset.HasSave) Checkpoints.ResumeStep = Checkpoints.SavedStep;
+            else GameReset.Wipe();
             GameMode.Historical = historical;
             Time.timeScale = 1f;
             if (Application.CanStreamedLevelBeLoaded(gameSceneName))
@@ -128,13 +130,19 @@ namespace Kosynierzy
             SettingsMenuUi.Place(date.rectTransform, new Vector2(0f, 1f), new Vector2(100f, -520f), new Vector2(1000f, 28f));
 
             var column = SettingsMenuUi.CreateColumn("Buttons", root, 4f);
-            SettingsMenuUi.Place(column, new Vector2(0f, 0f), new Vector2(96f, 150f), new Vector2(700f, 4 * 68f + 3 * 4f));
+            SettingsMenuUi.Place(column, new Vector2(0f, 0f), new Vector2(96f, 150f), new Vector2(700f, (GameReset.HasSave ? 5 : 4) * 68f + 16f));
 
+            UnityEngine.UI.Button continueButton = null;
+            if (GameReset.HasSave) continueButton = MenuV2.CreateButton(column, "Kontynuuj", MenuV2.Kind.Item, 68f, 40, () => StartGame(false, true), out _);
             newGameButton = MenuV2.CreateButton(column, "Nowa gra", MenuV2.Kind.Item, 68f, 40, () => StartGame(false), out _);
             var historicalButton = MenuV2.CreateButton(column, "Tryb historyczny", MenuV2.Kind.Item, 68f, 40, () => StartGame(true), out _);
             settingsButton = MenuV2.CreateButton(column, "Ustawienia", MenuV2.Kind.Item, 68f, 40, OpenSettings, out _);
             var quitButton = MenuV2.CreateButton(column, "Wyjście", MenuV2.Kind.Item, 68f, 40, Quit, out _);
-            SettingsMenuUi.LinkVertical(new UnityEngine.UI.Selectable[] { newGameButton, historicalButton, settingsButton, quitButton });
+            var order = new System.Collections.Generic.List<UnityEngine.UI.Selectable>();
+            if (continueButton != null) order.Add(continueButton);
+            order.AddRange(new UnityEngine.UI.Selectable[] { newGameButton, historicalButton, settingsButton, quitButton });
+            SettingsMenuUi.LinkVertical(order.ToArray());
+            if (continueButton != null) newGameButton = continueButton;
         }
     }
 }
