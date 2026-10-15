@@ -58,6 +58,7 @@ namespace Kosynierzy
 
         void Start()
         {
+            if (gameObject.GetComponent<NpcCulling>() == null) gameObject.AddComponent<NpcCulling>();
             if (spawnOnStart) SpawnAll();
             if (createDefaultZones) ForbiddenZone.EnsureDefaults();
             if (createDefaultHidingSpots)
@@ -73,6 +74,7 @@ namespace Kosynierzy
         public void AlarmAll(Vector3 lastKnownPlayerPos)
         {
             EnsureSpawned();
+            NpcCulling.WakeAll();
             var soldiers = new List<EnemyController>(EnemyController.All);
             foreach (var e in soldiers) e.RaiseAlarm(lastKnownPlayerPos, false);
         }

@@ -183,9 +183,11 @@ namespace Kosynierzy
                     best = e;
                 }
             }
-            foreach (var p in FindObjectsByType<PoliceController>(FindObjectsInactive.Exclude))
+            foreach (var ch in Character.All)
             {
-                if (p.IsDown || !p.isActiveAndEnabled) continue;
+                if (ch.Type != CharacterType.Police || ch.IsDown || ch.Culled) continue;
+                var p = ch.GetComponent<PoliceController>();
+                if (p == null || !p.isActiveAndEnabled) continue;
                 float sqr = (p.transform.position - transform.position).sqrMagnitude;
                 if (sqr < bestSqr)
                 {

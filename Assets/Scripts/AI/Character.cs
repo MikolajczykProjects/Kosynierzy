@@ -68,7 +68,13 @@ namespace Kosynierzy
         public Animator Anim { get; private set; }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void ResetStatics() => AnyDowned = null;
+        static void ResetStatics() { AnyDowned = null; all.Clear(); }
+
+        static readonly List<Character> all = new();
+        /// <summary>Enabled characters (NPCs), for cheap scans instead of FindObjectsByType.</summary>
+        public static IReadOnlyList<Character> All => all;
+        /// <summary>Switched off by NpcCulling (far from the player).</summary>
+        public bool Culled { get; internal set; }
 
         void Awake()
         {
@@ -80,19 +86,21 @@ namespace Kosynierzy
 
         void OnEnable()
         {
+            if (!all.Contains(this)) all.Add(this);
             Health.Died += OnDied;
             ProjectileSystem.AnyHit += OnAnyHit;
         }
 
         void OnDisable()
         {
+            all.Remove(this);
             Health.Died -= OnDied;
             ProjectileSystem.AnyHit -= OnAnyHit;
         }
 
         void Update()
         {
-            if (IsDown || Anim == null || Agent == null || !Agent.isActiveAndEnabled) return;
+            if (Culled || IsDown || Anim == null || Agent == null || !Agent.isActiveAndEnabled) return;
             SetAnimFloat(SpeedId, Agent.velocity.magnitude);
             SetAnimFloat(MotionSpeedId, 1f);
             SetAnimBool(GroundedId, true);

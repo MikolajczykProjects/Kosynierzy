@@ -78,14 +78,16 @@ namespace Kosynierzy
 
         /// <summary>
         /// Static props (barrel, table, lamp post, microphone…) carve a hole in the NavMesh at runtime. The box is the union
-        /// of the prop's solid colliders in its own local space; props with a footprint below 0.2 m x 0.2 m or lower than 0.25 m are skipped.
+        /// of the prop's solid colliders in its own local space; props with a footprint below 1.2 m2 or lower than 0.5 m are skipped.
         /// </summary>
+        const float MinCarveFootprint = 1.2f; // m2; only big props carve
+
         static void AddCarveObstacle(GameObject go, string prefabName)
         {
             if (!prefabName.StartsWith("OB_") || NoCarve.Contains(prefabName)) return;
             if (go.GetComponent<NavMeshObstacle>() != null) return;
             if (!TryLocalColliderBounds(go.transform, out var b)) return;
-            if (b.size.x * b.size.z < 0.04f || b.size.y < 0.25f) return;
+            if (b.size.x * b.size.z < MinCarveFootprint || b.size.y < 0.5f) return; // small props: no carving (each one re-carves the NavMesh tiles = lag)
 
             var obstacle = go.AddComponent<NavMeshObstacle>();
             obstacle.shape = NavMeshObstacleShape.Box;
