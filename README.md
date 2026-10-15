@@ -4,6 +4,8 @@
 
 Zespół **Kosynierzy** · Hackaton 2026 · Unity 6.6 (URP)
 
+<p align="center">🎮 <b><a href="https://mikolajczykprojects.github.io/Kosynierzy/">Zagraj w przeglądarce — live demo</a></b> (WebGL, najlepiej Chrome/Edge na PC)</p>
+
 <p align="center">
   <a href="docs/trailer/Sender-Gleiwitz-trailer.mp4">
     <img src="docs/trailer/teaser.gif" alt="Sender Gleiwitz — trailer" width="100%">
