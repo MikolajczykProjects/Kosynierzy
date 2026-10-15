@@ -570,8 +570,8 @@ namespace Kosynierzy
                 if (k >= 1f) l.enabled = false;
                 else l.intensity = lightPeak[i] * (1f - k) * (1f - k);
             }
-            casings.Tick(Time.deltaTime);
-            decals.Tick();
+            if (casings != null) casings.Tick(Time.deltaTime);
+            if (decals != null) decals.Tick();
             if (Time.unscaledTime >= nextShade)
             {
                 nextShade = Time.unscaledTime + 0.5f;

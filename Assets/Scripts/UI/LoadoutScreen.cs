@@ -34,6 +34,7 @@ namespace Kosynierzy
         static readonly Color CardFocus = new(0.137f, 0.157f, 0.18f, 0.92f);
 
         readonly List<Category> categories = new();
+        bool built;
         readonly List<List<CardView>> cards = new();
         readonly List<Text> counts = new();
         int catIndex, cardIndex;
@@ -91,8 +92,11 @@ namespace Kosynierzy
             prevTab.AddBinding("<Gamepad>/leftShoulder");
             navigate.Enable(); confirm.Enable(); nextTab.Enable(); prevTab.Enable();
 
-            BuildUi();
-            SelectCategory(0);
+            // A failed build must never leave the game frozen behind an invisible screen: keep the defaults and go on.
+            // CreateCanvas makes the canvas inactive (so Selectables colour on enable) — switch it on here.
+            try { BuildUi(); foreach (Transform c in transform) c.gameObject.SetActive(true); SelectCategory(0); }
+            catch (Exception e) { Debug.LogException(e); built = false; ConfirmAll(); return; }
+            built = true;
         }
 
         void OnDestroy()
@@ -516,6 +520,9 @@ namespace Kosynierzy
 
         void Update()
         {
+            if (!built || categories.Count == 0) return;
+            catIndex = Mathf.Clamp(catIndex, 0, categories.Count - 1);
+            cardIndex = Mathf.Clamp(cardIndex, 0, Mathf.Max(0, categories[catIndex].Weapons.Count - 1));
             var cat = categories[catIndex];
             if (navigate.WasPressedThisFrame())
             {
