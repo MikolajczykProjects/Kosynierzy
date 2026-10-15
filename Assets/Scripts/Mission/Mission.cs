@@ -223,10 +223,46 @@ namespace Kosynierzy
             Door("miasto_dziura_plot", "spawn_radio_tyl", "Przeciśnij się przez dziurę w płocie", prefab: "OB_Plot_Dziura");
         }
 
+        /// <summary>
+        /// City entrance doors stand where the point is (often floating at door height): drop to the ground, push against the
+        /// nearest building wall (0.15 m outward, facing away from it) and make the door big (1.4x).
+        /// </summary>
+        static void SnapEntranceDoor(Transform door)
+        {
+            Vector3 pos = door.position;
+            Vector3 origin = pos + Vector3.up * 3f;
+            float groundY = pos.y;
+            if (Physics.Raycast(origin, Vector3.down, out var down, 6f, ~0, QueryTriggerInteraction.Ignore) && down.normal.y > 0.5f)
+                groundY = down.point.y;
+            pos.y = groundY;
+
+            float best = 8f;
+            Vector3 wallPoint = default, wallNormal = default;
+            bool found = false;
+            Vector3 chest = pos + Vector3.up * 1.2f;
+            for (int i = 0; i < 8; i++)
+            {
+                Vector3 dir = Quaternion.Euler(0f, i * 45f, 0f) * Vector3.forward;
+                if (Physics.Raycast(chest, dir, out var h, best, ~0, QueryTriggerInteraction.Ignore)
+                    && Mathf.Abs(h.normal.y) < 0.4f && h.collider.GetComponentInParent<FirstPersonController>() == null)
+                {
+                    best = h.distance; wallPoint = h.point; wallNormal = new Vector3(h.normal.x, 0f, h.normal.z).normalized; found = true;
+                }
+            }
+            if (found && wallNormal.sqrMagnitude > 0.1f)
+            {
+                pos = new Vector3(wallPoint.x, groundY, wallPoint.z) + wallNormal * 0.15f;
+                door.rotation = Quaternion.LookRotation(wallNormal, Vector3.up);
+            }
+            door.position = pos;
+            door.localScale *= 1.4f;
+        }
+
         void Door(string doorPoint, string target, string prompt, bool exitInFront = false, string prefab = "OB_Drzwi")
         {
             if (!Points.Has(doorPoint) || !Points.Has(target)) return;
             var go = Spawner.Spawn(prefab, doorPoint);
+            if (prefab == "OB_Drzwi" && doorPoint.StartsWith("miasto_drzwi_")) SnapEntranceDoor(go.transform);
             var it = go.GetComponent<Interactable>();
             if (it == null) it = go.AddComponent<Interactable>();
             if (go.GetComponentInChildren<Collider>() == null) go.AddComponent<BoxCollider>();
@@ -468,6 +504,15 @@ namespace Kosynierzy
 
             Current = steps[index];
             StepStarted?.Invoke(Current);
+            // Next objective far away in the city (> 300 m): a fade and a jump to ~100 m before it, not a ten-minute walk.
+            if (!fromLoad && !(Current is FollowCarStep))
+            {
+                var mp = Current.MarkerPosition;
+                var pl = FindAnyObjectByType<FirstPersonController>();
+                if (mp.HasValue && pl != null && mp.Value.x < 1900f && pl.transform.position.x < 1900f
+                    && Vector3.ProjectOnPlane(mp.Value - pl.transform.position, Vector3.up).magnitude > 300f)
+                    Cutscene.Travel(mp.Value, Current.Title);
+            }
             Current.Begin();
             if (Current.Done) CompleteCurrent();
         }
