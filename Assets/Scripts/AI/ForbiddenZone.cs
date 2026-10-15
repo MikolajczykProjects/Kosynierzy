@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Kosynierzy
 {
     /// <summary>
-    /// Area where SD and Schupo fill their "?" meter 3x faster (Naujocks' room, the radio grounds). The trigger
-    /// collider on this object is the area (a BoxCollider is added when there is none); the object is moved to the
-    /// Ignore Raycast layer so player raycasts pass through. IsInside(point) checks every enabled zone.
+    /// Area where SD and Schupo fill their "?" meter 3x faster (Naujocks' room, the radio grounds). The Box/SphereCollider
+    /// on this object is the area (a BoxCollider is added when there is none); it is read once and disabled at runtime,
+    /// so player raycasts (E, photos) pass through. IsInside(point) checks every enabled zone.
     /// EnsureDefaults() creates sphere zones at hotel_pokoj_mapa (6 m) and around the radio_sd_* centroid (25 m)
     /// when the scene has no hand-made zones.
     /// </summary>
@@ -16,7 +17,7 @@ namespace Kosynierzy
         const int IgnoreRaycastLayer = 2;
         static readonly List<ForbiddenZone> active = new();
 
-        Collider area;
+        VolumeShape shape;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics() => active.Clear();
@@ -25,17 +26,19 @@ namespace Kosynierzy
 
         void Awake()
         {
-            area = GetComponent<Collider>();
-            if (area == null) area = gameObject.AddComponent<BoxCollider>();
-            area.isTrigger = true;
+            if (!VolumeShape.TryRead(this, out shape))
+            {
+                var box = gameObject.AddComponent<BoxCollider>();
+                box.isTrigger = true;
+                VolumeShape.TryRead(this, out shape);
+            }
             if (gameObject.layer == 0) gameObject.layer = IgnoreRaycastLayer;
         }
 
         void OnEnable() => active.Add(this);
         void OnDisable() => active.Remove(this);
 
-        public bool Contains(Vector3 point) =>
-            area != null && area.enabled && (area.ClosestPoint(point) - point).sqrMagnitude < 0.0001f;
+        public bool Contains(Vector3 point) => shape.Contains(point);
 
         public static bool IsInside(Vector3 point)
         {
@@ -65,6 +68,7 @@ namespace Kosynierzy
         {
             var go = new GameObject(zoneName) { layer = IgnoreRaycastLayer };
             go.transform.position = center;
+            go.AddComponent<NavMeshModifier>().ignoreFromBuild = true;
             var sphere = go.AddComponent<SphereCollider>();
             sphere.isTrigger = true;
             sphere.radius = radius;
@@ -73,16 +77,14 @@ namespace Kosynierzy
 
         void OnDrawGizmos()
         {
-            var c = area != null ? area : GetComponent<Collider>();
-            if (c == null) return;
             Gizmos.color = new Color(1f, 0.25f, 0.2f, 0.12f);
-            if (c is BoxCollider box)
+            if (TryGetComponent<BoxCollider>(out var box))
             {
                 Gizmos.matrix = transform.localToWorldMatrix;
                 Gizmos.DrawCube(box.center, box.size);
                 Gizmos.matrix = Matrix4x4.identity;
             }
-            else if (c is SphereCollider sphere)
+            else if (TryGetComponent<SphereCollider>(out var sphere))
             {
                 float scale = Mathf.Max(transform.lossyScale.x, Mathf.Max(transform.lossyScale.y, transform.lossyScale.z));
                 Gizmos.DrawSphere(transform.TransformPoint(sphere.center), sphere.radius * scale);

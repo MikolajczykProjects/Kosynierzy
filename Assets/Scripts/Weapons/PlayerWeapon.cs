@@ -50,16 +50,16 @@ namespace Kosynierzy
         [SerializeField] float emptyReloadTime = 2f;
 
         [Header("Aim down sights")]
-        [SerializeField] float aimFovMultiplier = 0.78f;
+        [SerializeField] float aimFovMultiplier = 0.72f;
         [SerializeField] float aimSensitivityMultiplier = 0.65f;
-        [SerializeField] float aimSpeed = 12f;
+        [SerializeField] float aimSpeed = 9f;
 
         [Header("Viewmodel")]
         [Tooltip("Weapon model root; kicked, swayed and posed procedurally. Optional.")]
         [SerializeField] Transform viewModel;
         [SerializeField] Vector3 aimPosition = new(0f, -0.13f, 0.32f);
-        [SerializeField] Vector3 sprintPosOffset = new(-0.06f, -0.06f, -0.04f);
-        [SerializeField] Vector3 sprintRotOffset = new(10f, -35f, 8f);
+        [SerializeField] Vector3 sprintPosOffset = new(-0.05f, -0.07f, -0.05f);
+        [SerializeField] Vector3 sprintRotOffset = new(38f, 12f, -10f); // muzzle down, close to the body
         [SerializeField] float kickBack = 0.07f;
         [SerializeField] float kickRotate = 5f;
         [SerializeField] float swayAmount = 1.6f;
@@ -266,6 +266,53 @@ namespace Kosynierzy
             reserveAmmo -= taken;
             IsReloading = false;
             ReloadFinished?.Invoke();
+        }
+
+        // Ammo kept per weapon so switching pistol <-> rifle doesn't refill anything.
+        readonly System.Collections.Generic.Dictionary<string, (int mag, int reserve)> ammoById = new();
+        float muzzleScale = 1f;
+
+        public WeaponDef Definition { get; private set; }
+        public event Action<WeaponDef> DefinitionChanged;
+
+        /// <summary>
+        /// Switch to another firearm from the catalog (loadout / armoury / hotbar): stats, ammo state,
+        /// viewmodel and poses. The first time a weapon is used it starts with a full magazine + StartReserve.
+        /// </summary>
+        public void ApplyDefinition(WeaponDef def, Transform model, Transform muzzlePoint, Vector3 hipPosition, Vector3 aimPos)
+        {
+            if (Definition != null) ammoById[Definition.Id] = (AmmoInMagazine, reserveAmmo);
+            Definition = def;
+            damage = def.Damage; fireRate = def.FireRate; bulletSpeed = def.BulletSpeed; automatic = def.Automatic;
+            hipSpread = def.HipSpread; aimSpread = def.AimSpread; recoilUp = def.RecoilUp; recoilSide = def.RecoilSide;
+            reloadTime = def.ReloadTime; emptyReloadTime = def.EmptyReloadTime; shotNoiseRadius = def.NoiseRadius;
+            magazineSize = def.Magazine; muzzleScale = def.MuzzleScale;
+            if (ammoById.TryGetValue(def.Id, out var a)) { AmmoInMagazine = a.mag; reserveAmmo = a.reserve; }
+            else { AmmoInMagazine = def.Magazine; reserveAmmo = def.StartReserve; }
+            IsReloading = false;
+            bloom = 0f;
+            SetViewModel(model, muzzlePoint, hipPosition, aimPos);
+            DefinitionChanged?.Invoke(def);
+        }
+
+        /// <summary>
+        /// Swap in a viewmodel built at runtime (PlayerHands): hip pose, aim pose that puts the sights on the
+        /// camera axis, and the muzzle point for tracers/flash.
+        /// </summary>
+        public void SetViewModel(Transform model, Transform muzzlePoint, Vector3 hipPosition, Vector3 aimPos)
+        {
+            viewModel = model;
+            muzzle = muzzlePoint;
+            aimPosition = aimPos;
+            restPos = hipPosition;
+            restRot = Quaternion.identity;
+            model.localPosition = hipPosition;
+            model.localRotation = Quaternion.identity;
+            // Poses tuned for the pistol viewmodel (override older values saved in the scene).
+            sprintPosOffset = new Vector3(-0.05f, -0.07f, -0.05f);
+            sprintRotOffset = new Vector3(38f, 12f, -10f);
+            aimSpeed = 9f;
+            aimFovMultiplier = 0.72f;
         }
 
         public void AddReserveAmmo(int amount)

@@ -105,6 +105,7 @@ namespace Kosynierzy.EditorTools
             P("hotel_kolumna", 995, 8, 0);
             Block(new Vector3(995, 2, 8.8f), new Vector3(0.8f, 4, 0.8f)); // column
             P("hotel_pokoj_drzwi", 1000, 14, 0);
+            InnerWall(14f, 985f, 1015f, 1000f); // lobby | Naujocks' room
             P("hotel_pokoj_mapa", 998, 20, 0);
             P("hotel_pokoj_lista", 1003, 20, 0);
             Block(new Vector3(998, 0.4f, 20), new Vector3(1.6f, 0.8f, 1f)); // desk
@@ -115,12 +116,12 @@ namespace Kosynierzy.EditorTools
 
             Floor(new Vector3(1100, 0, 5), 16);
             P("spawn_ksiegarnia", 1100, 0, 0);
-            P("ksiegarnia_drzwi_wyjscie", 1100, -3, 180);
+            P("ksiegarnia_drzwi_wyjscie", 1100, -2, 180);
             P("ksiegarnia_zofia", 1100, 6, 180);
 
             Floor(new Vector3(1200, 0, 5), 16);
             P("spawn_fotograf", 1200, 0, 0);
-            P("fotograf_drzwi_wyjscie", 1200, -3, 180);
+            P("fotograf_drzwi_wyjscie", 1200, -2, 180);
             P("fotograf_wlasciciel", 1202, 6, 180);
             P("fotograf_gestapo", 1197, 6, 180);
             P("fotograf_ciemnia", 1200, 10, 0);
@@ -161,14 +162,42 @@ namespace Kosynierzy.EditorTools
             return go;
         }
 
+        // Closed interior: floor, four walls, ceiling (player feedback: rooms were open to the void).
         static void Floor(Vector3 center, float size)
         {
+            const float height = 3.6f, t = 0.3f;
             var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
             go.name = "Podloga_Wnetrza";
             go.transform.SetParent(blocks);
             go.transform.position = center - Vector3.up * 0.5f;
             go.transform.localScale = new Vector3(size, 1f, size);
             go.GetComponent<Renderer>().sharedMaterial = floorMat;
+
+            float half = size * 0.5f;
+            Block(center + new Vector3(0f, height * 0.5f, half), new Vector3(size, height, t)).name = "Sciana";
+            Block(center + new Vector3(0f, height * 0.5f, -half), new Vector3(size, height, t)).name = "Sciana";
+            Block(center + new Vector3(half, height * 0.5f, 0f), new Vector3(t, height, size)).name = "Sciana";
+            Block(center + new Vector3(-half, height * 0.5f, 0f), new Vector3(t, height, size)).name = "Sciana";
+            var ceiling = Block(center + new Vector3(0f, height + t * 0.5f, 0f), new Vector3(size, t, size));
+            ceiling.name = "Sufit";
+            // A warm lamp so interiors are readable at any time of day.
+            var lamp = new GameObject("Lampa_Wnetrza").AddComponent<Light>();
+            lamp.transform.SetParent(blocks);
+            lamp.transform.position = center + Vector3.up * (height - 0.4f);
+            lamp.type = LightType.Point;
+            lamp.range = size;
+            lamp.intensity = 1.6f;
+            lamp.color = new Color(1f, 0.82f, 0.6f);
+        }
+
+        // Inner wall with a 1.4 m doorway at doorX (hotel lobby | Naujocks' room).
+        static void InnerWall(float z, float xMin, float xMax, float doorX)
+        {
+            const float height = 3.6f, t = 0.25f, gap = 1.4f;
+            float leftEnd = doorX - gap * 0.5f, rightStart = doorX + gap * 0.5f;
+            Block(new Vector3((xMin + leftEnd) * 0.5f, height * 0.5f, z), new Vector3(leftEnd - xMin, height, t)).name = "Sciana";
+            Block(new Vector3((rightStart + xMax) * 0.5f, height * 0.5f, z), new Vector3(xMax - rightStart, height, t)).name = "Sciana";
+            Block(new Vector3(doorX, height - 0.55f, z), new Vector3(gap, 1.1f, t)).name = "Nadproze";
         }
 
         static Material Mat(string name, Color c)

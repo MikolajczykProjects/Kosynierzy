@@ -119,12 +119,43 @@ namespace Kosynierzy
             this.dialogAfter = dialogAfter; this.after = after;
         }
 
-        public override void Begin() => SpawnInteractable(prefab, point, prompt, () =>
+        /// <summary>Hide the used object (a door that swings open, a cache emptied…).</summary>
+        public bool HideOnUse;
+        Interactable spawned;
+
+        public override void Begin() => spawned = SpawnInteractable(prefab, point, prompt, () =>
         {
+            if (HideOnUse && spawned != null)
+            {
+                var anim = spawned.GetComponentInChildren<Animator>();
+                if (anim != null) foreach (var p in anim.parameters) if (p.name == "Otworz") anim.SetTrigger("Otworz");
+                if (anim == null) spawned.gameObject.SetActive(false);
+                else foreach (var c in spawned.GetComponentsInChildren<Collider>()) c.enabled = false;
+            }
             after?.Invoke();
             if (dialogAfter != null) Dialog.Play(dialogAfter, () => Done = true);
             else Done = true;
         });
+    }
+
+    /// <summary>Reach ANY of several points — lets the player choose the approach (gate or fence hole).</summary>
+    public class ReachAnyStep : MissionStep
+    {
+        readonly string[] points;
+        readonly float radius;
+
+        public ReachAnyStep(string title, float radius, params string[] points)
+        {
+            Title = title; this.radius = radius; this.points = points; MarkerPoint = points[0];
+        }
+
+        public override void Tick()
+        {
+            var p = Player;
+            if (p == null) return;
+            foreach (var name in points)
+                if (Points.Has(name) && Vector3.Distance(p.transform.position, Points.Position(name)) <= radius) { Done = true; return; }
+        }
     }
 
     /// <summary>Photograph evidence placed at points (Evidence components on placeholders or map objects).</summary>

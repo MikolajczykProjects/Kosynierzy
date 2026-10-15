@@ -27,6 +27,8 @@ namespace Kosynierzy
         static readonly int HandsUpId = Animator.StringToHash("RecePodniesione");
 
         [SerializeField] CharacterType type = CharacterType.Civilian;
+        [Tooltip("HUD name under the crosshair; empty = default for the type (\"SD\", \"Cywil — nie strzelaj\", …).")]
+        [SerializeField] string labelOverride = "";
 
         readonly Dictionary<int, AnimatorControllerParameterType> animParams = new();
         bool paramsCached;
@@ -39,7 +41,28 @@ namespace Kosynierzy
         public CharacterType Type { get => type; set => type = value; }
         /// <summary>Shooting this character fails the mission.</summary>
         public bool IsInnocent => type != CharacterType.Enemy;
+        /// <summary>A legitimate target (only SD).</summary>
+        public bool IsHostile => type == CharacterType.Enemy;
+        /// <summary>Polish name the HUD shows when the crosshair is on this character.</summary>
+        public string Label
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(labelOverride)) return labelOverride;
+                return type switch
+                {
+                    CharacterType.Enemy => "SD",
+                    CharacterType.Police => "Schupo — nie strzelaj",
+                    CharacterType.Civilian => "Cywil — nie strzelaj",
+                    CharacterType.Worker => "Pracownik stacji — nie strzelaj",
+                    _ => "Sojusznik — nie strzelaj",
+                };
+            }
+            set => labelOverride = value;
+        }
         public bool IsDown { get; private set; }
+        /// <summary>Downed by a silent takedown (set just before the kill).</summary>
+        public bool SilentKill { get; private set; }
         public Health Health { get; private set; }
         public NavMeshAgent Agent { get; private set; }
         public Animator Anim { get; private set; }
@@ -123,6 +146,9 @@ namespace Kosynierzy
 
         // ---------- Rules ----------
 
+        /// <summary>The next death is a silent takedown (no shot, no noise).</summary>
+        public void MarkSilentKill() => SilentKill = true;
+
         void OnAnyHit(HitResult hit)
         {
             if (hit.FromPlayer && IsInnocent && hit.Health != null && hit.Health == Health)
@@ -163,6 +189,10 @@ namespace Kosynierzy
                 var death = GetComponent<DeathEffect>();
                 if (death == null || !death.enabled) StartCoroutine(Fall());
             }
+
+            var body = GetComponent<Body>();
+            if (body == null) body = gameObject.AddComponent<Body>();
+            body.Init(type, SilentKill);
 
             Downed?.Invoke(this);
             AnyDowned?.Invoke(this);

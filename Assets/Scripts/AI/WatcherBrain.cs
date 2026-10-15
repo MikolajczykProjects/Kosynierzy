@@ -3,10 +3,11 @@ using UnityEngine;
 namespace Kosynierzy
 {
     /// <summary>
-    /// NPC that watches for the player (SD, Schupo): a sight cone with line of sight from the eyes (1.6 m) to the
-    /// player's camera (triggers, itself and other people ignored), day / night / lamp-light sight ranges, hearing
-    /// through Noise.Emitted, and the "?" suspicion meter (0..1) that SuspicionIndicator draws above the head.
-    /// The meter fills faster when the player is close, sprints or stands in a ForbiddenZone (3x).
+    /// NPC that watches for the player (SD, Schupo) and feeds Detection: a sight cone with line of sight from the eyes
+    /// (1.6 m) to the player's camera (triggers, itself and other people ignored), day / night / lamp-light sight ranges,
+    /// hiding spots, hearing through Noise.Emitted (quiet sounds only along a short walking path) and bodies in view.
+    /// The "?" meter (0..1) fills Hitman-style: faster when the player is close, lit, moving fast or in a ForbiddenZone
+    /// (3x); slower crouched, in darkness or far away; it drains while the player is out of sight.
     /// </summary>
     public abstract class WatcherBrain : NpcBrain
     {
@@ -21,21 +22,27 @@ namespace Kosynierzy
         [SerializeField] float nightSightRange = 10f;
         [Tooltip("After dark while the player is outside lamp light.")]
         [SerializeField] float darkSightRange = 6f;
+        [Tooltip("Sight range multiplier for a player crouching in darkness.")]
+        [SerializeField] float darkCrouchMultiplier = 0.65f;
         [Tooltip("Once alarmed: sight range multiplier; the cone also widens to 240° (tracking a known target).")]
         [SerializeField] float alertedRangeMultiplier = 1.5f;
+        [Tooltip("An alarmed NPC still sees a player in a hiding spot closer than this.")]
+        [SerializeField] float hidingSpotRevealDistance = 2.5f;
 
         [Header("Suspicion '?' meter (fill per second)")]
-        [Tooltip("Fill speed with the player at the edge of sight range.")]
-        [SerializeField] float fillFar = 0.35f;
-        [Tooltip("Fill speed with the player right in front.")]
-        [SerializeField] float fillNear = 1.6f;
-        [SerializeField] float sprintMultiplier = 1.8f;
-        [SerializeField] float crouchMultiplier = 0.6f;
+        [Tooltip("Fill speed with the player at the edge of sight range (before exposure multipliers).")]
+        [SerializeField] float fillFar = 0.18f;
+        [Tooltip("Fill speed with the player right in front (before exposure multipliers).")]
+        [SerializeField] float fillNear = 1.1f;
+        [Tooltip("Multiplier at Detection.Visibility01 = 0 (hidden, dark, crouched, still).")]
+        [SerializeField] float hiddenMultiplier = 0.3f;
+        [Tooltip("Multiplier at Detection.Visibility01 = 1 (lit, standing, moving).")]
+        [SerializeField] float exposedMultiplier = 1.6f;
+        [SerializeField] float sprintMultiplier = 1.3f;
         [SerializeField] float forbiddenZoneMultiplier = 3f;
         [Tooltip("Meter drop per second while the player is out of sight.")]
-        [SerializeField] float decayPerSecond = 0.12f;
+        [SerializeField] float decayPerSecond = 0.15f;
 
-        readonly RaycastHit[] hits = new RaycastHit[16];
         float perceptionTimer;
 
         /// <summary>The "?" meter, 0..1 (1 = alarm / report).</summary>
@@ -44,12 +51,15 @@ namespace Kosynierzy
         public float PlayerDistance { get; private set; } = float.MaxValue;
         public Vector3 LastKnownPlayerPosition { get; protected set; }
         public float LastSeenTime { get; private set; } = -999f;
-        /// <summary>Red "!" above the head.</summary>
+        /// <summary>Red/blue "!" above the head.</summary>
         public abstract bool IsAlerted { get; }
-        /// <summary>Yellow "?" with the meter above the head.</summary>
+        /// <summary>"?" with the meter above the head.</summary>
         public abstract bool ShowSuspicion { get; }
+        /// <summary>Level reported to Detection (HUD).</summary>
+        public abstract AwarenessLevel Awareness { get; }
+        public virtual bool IsPolice => false;
 
-        protected Vector3 Eye => transform.position + Vector3.up * eyeHeight;
+        protected override Vector3 Eye => transform.position + Vector3.up * eyeHeight;
 
         protected override void Awake()
         {
@@ -58,11 +68,16 @@ namespace Kosynierzy
             LastKnownPlayerPosition = transform.position;
         }
 
-        protected virtual void OnEnable() => Noise.Emitted += HandleNoise;
+        protected virtual void OnEnable()
+        {
+            Noise.Emitted += HandleNoise;
+            Detection.Register(this);
+        }
 
         protected virtual void OnDisable()
         {
             Noise.Emitted -= HandleNoise;
+            Detection.Unregister(this);
             PlayerVisible = false;
         }
 
@@ -71,20 +86,28 @@ namespace Kosynierzy
             if (IsDown || !isActiveAndEnabled) return;
             if ((position - transform.position).sqrMagnitude > radius * radius) return;
             if (source != null && source.IsChildOf(transform)) return;
+            // Sneaking (crouched steps, radius 1.5 m) is silent, so a takedown from behind stays possible.
+            if (kind == NoiseKind.Footstep && radius < 2f) return;
+            // Gunshots carry everywhere; steps and the like only along a short walking path.
+            if (kind != NoiseKind.Gunshot && !HeardAlongPath(position, radius)) return;
             OnHeard(position, kind, source);
         }
 
-        /// <summary>A noise reached this NPC (already inside its radius).</summary>
+        /// <summary>A noise reached this NPC.</summary>
         protected abstract void OnHeard(Vector3 position, NoiseKind kind, Transform source);
 
-        /// <summary>Current sight range: day 18 m; night 10 m in lamp light, 6 m outside it.</summary>
+        /// <summary>A body came into view (each body once per NPC).</summary>
+        protected abstract void OnBodySeen(Body body);
+
+        /// <summary>Current sight range: day 18 m; night 10 m in lamp light, 6 m outside it (less when crouched).</summary>
         public float SightRange()
         {
             if (!LightZones.IsNight) return daySightRange;
-            return LightZones.PlayerLit ? nightSightRange : darkSightRange;
+            if (LightZones.PlayerLit) return nightSightRange;
+            return darkSightRange * (PlayerTarget.IsCrouching ? darkCrouchMultiplier : 1f);
         }
 
-        /// <summary>Call every frame; refreshes PlayerVisible about 7x per second.</summary>
+        /// <summary>Call every frame; refreshes PlayerVisible about 7x per second and looks for bodies 2x per second.</summary>
         protected void UpdateSenses(bool alerted)
         {
             if (PlayerTarget.IsGone)
@@ -92,6 +115,10 @@ namespace Kosynierzy
                 PlayerVisible = false;
                 return;
             }
+
+            var body = SpotBody(LightZones.IsNight ? nightSightRange : daySightRange, darkSightRange, viewAngle);
+            if (body != null) OnBodySeen(body);
+
             perceptionTimer -= Time.deltaTime;
             if (perceptionTimer > 0f) return;
             perceptionTimer = PerceptionInterval;
@@ -101,8 +128,10 @@ namespace Kosynierzy
             Vector3 target = PlayerTarget.Eye;
             Vector3 toTarget = target - eye;
             PlayerDistance = toTarget.magnitude;
-            PlayerVisible = PlayerDistance <= range && InCone(toTarget, alerted ? 240f : viewAngle) && IsClear(eye, target);
-            if (PlayerVisible)
+            bool visible = PlayerDistance <= range && InCone(toTarget, alerted ? 240f : viewAngle) && IsClear(eye, target);
+            if (visible && Detection.InHidingSpot && !(alerted && PlayerDistance < hidingSpotRevealDistance)) visible = false;
+            PlayerVisible = visible;
+            if (visible)
             {
                 LastSeenTime = Time.time;
                 LastKnownPlayerPosition = PlayerTarget.Feet;
@@ -126,36 +155,10 @@ namespace Kosynierzy
         {
             float closeness = 1f - Mathf.Clamp01(PlayerDistance / Mathf.Max(0.1f, SightRange()));
             float rate = Mathf.Lerp(fillFar, fillNear, closeness * closeness);
+            rate *= Mathf.Lerp(hiddenMultiplier, exposedMultiplier, Detection.Visibility01);
             if (PlayerTarget.IsSprinting) rate *= sprintMultiplier;
-            else if (PlayerTarget.IsCrouching) rate *= crouchMultiplier;
             if (PlayerTarget.InForbiddenZone) rate *= forbiddenZoneMultiplier;
             return rate;
-        }
-
-        /// <summary>No solid collider between the points except this NPC, the player and other people.</summary>
-        protected bool IsClear(Vector3 from, Vector3 to) => FirstBlocker(from, to, true) == null;
-
-        /// <summary>Nearest solid collider between the points, ignoring this NPC and the player (and people if asked).</summary>
-        protected Collider FirstBlocker(Vector3 from, Vector3 to, bool ignoreCharacters)
-        {
-            Vector3 delta = to - from;
-            float length = delta.magnitude;
-            if (length < 0.01f) return null;
-            int count = Physics.RaycastNonAlloc(from, delta / length, hits, length, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
-            Collider best = null;
-            float bestDistance = float.MaxValue;
-            for (int i = 0; i < count; i++)
-            {
-                var col = hits[i].collider;
-                if (col.transform.IsChildOf(transform) || PlayerTarget.IsPlayerCollider(col.transform)) continue;
-                if (ignoreCharacters && col.GetComponentInParent<Character>() != null) continue;
-                if (hits[i].distance < bestDistance)
-                {
-                    bestDistance = hits[i].distance;
-                    best = col;
-                }
-            }
-            return best;
         }
 
         protected virtual void OnDrawGizmosSelected()

@@ -16,8 +16,8 @@ namespace Kosynierzy
         /// <summary>"Spróbuj od punktu kontrolnego" pressed; raised right after the game is unpaused.</summary>
         public static event Action RestartFromCheckpointRequested;
 
-        const string QuitLabel = "Wyjdź z gry";
-        const string QuitConfirmLabel = "Na pewno? Naciśnij ponownie";
+        const string QuitLabel = "WYJDŹ Z GRY";
+        const string QuitConfirmLabel = "NA PEWNO? NACIŚNIJ PONOWNIE";
 
         [SerializeField] int sortingOrder = 100;
         [Tooltip("Optional font for all menus; the built-in LegacyRuntime font is used when empty.")]
@@ -177,16 +177,21 @@ namespace Kosynierzy
             canvas = SettingsMenuUi.CreateCanvas("PauseCanvas", transform, sortingOrder);
             var panel = SettingsMenuUi.CreateDimmedPanel(canvas.transform, new Vector2(680f, 540f));
 
-            var title = SettingsMenuUi.CreateText("Title", panel, "PAUZA", 64, TextAnchor.MiddleCenter, FontStyle.Bold, SettingsMenuUi.TextColor);
-            SettingsMenuUi.PinTop(title.rectTransform, 26f, 90f, 40f);
+            var title = UiTheme.CreateHeading("Title", panel, "Pauza", 60, UiTheme.Ink);
+            SettingsMenuUi.PinTop(title.rectTransform, 28f, 84f, 40f);
+            var rule = UiTheme.CreateRule("Rule", panel, UiTheme.FadedInk);
+            SettingsMenuUi.PinTop(rule.rectTransform, 120f, 2f, 56f);
+            var stamp = UiTheme.CreateStamp(panel, "Tajne", UiTheme.StampRed, 24);
+            stamp.anchorMin = stamp.anchorMax = new Vector2(1f, 1f);
+            stamp.anchoredPosition = new Vector2(-96f, -46f);
 
             var column = SettingsMenuUi.CreateColumn("Buttons", panel, 14f);
             SettingsMenuUi.Stretch(column, 56f, 56f, 140f, 40f);
 
-            resumeButton = SettingsMenuUi.CreateButton(column, "Wznów", 64f, 32, Resume, out _);
-            settingsButton = SettingsMenuUi.CreateButton(column, "Ustawienia", 64f, 32, OpenSettings, out _);
-            var checkpointButton = SettingsMenuUi.CreateButton(column, "Spróbuj od punktu kontrolnego", 64f, 30, RestartFromCheckpoint, out _);
-            var quitButton = SettingsMenuUi.CreateButton(column, QuitLabel, 64f, 32, Quit, out quitText);
+            resumeButton = SettingsMenuUi.CreateButton(column, "Wznów", 64f, 28, Resume, out _);
+            settingsButton = SettingsMenuUi.CreateButton(column, "Ustawienia", 64f, 28, OpenSettings, out _);
+            var checkpointButton = SettingsMenuUi.CreateButton(column, "Spróbuj od punktu kontrolnego", 64f, 25, RestartFromCheckpoint, out _);
+            var quitButton = SettingsMenuUi.CreateButton(column, QuitLabel, 64f, 28, Quit, out quitText);
 
             SettingsMenuUi.LinkVertical(new UnityEngine.UI.Selectable[] { resumeButton, settingsButton, checkpointButton, quitButton });
         }

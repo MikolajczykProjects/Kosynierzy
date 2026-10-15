@@ -123,8 +123,11 @@ namespace Kosynierzy
             canvas = SettingsMenuUi.CreateCanvas("SettingsCanvas", transform, sortingOrder);
             var panel = SettingsMenuUi.CreateDimmedPanel(canvas.transform, new Vector2(1180f, 990f));
 
-            var title = SettingsMenuUi.CreateText("Title", panel, "USTAWIENIA", 52, TextAnchor.MiddleCenter, FontStyle.Bold, SettingsMenuUi.TextColor);
+            var title = UiTheme.CreateHeading("Title", panel, "Ustawienia", 50, UiTheme.Ink);
             SettingsMenuUi.PinTop(title.rectTransform, 20f, 70f, 48f);
+            var stamp = UiTheme.CreateStamp(panel, "Akta", UiTheme.Olive, 22);
+            stamp.anchorMin = stamp.anchorMax = new Vector2(1f, 1f);
+            stamp.anchoredPosition = new Vector2(-110f, -52f);
 
             var tabBar = SettingsMenuUi.CreateRect("Tabs", panel);
             SettingsMenuUi.PinTop(tabBar, 104f, 56f, 48f);
@@ -135,8 +138,8 @@ namespace Kosynierzy
             for (int i = 0; i < TabNames.Length; i++)
             {
                 int tab = i;
-                var button = SettingsMenuUi.CreateButton(tabBar, TabNames[i], 56f, 30, () => ShowTab(tab, true), out _);
-                var marker = SettingsMenuUi.CreateImage("ActiveMarker", button.transform, SettingsMenuUi.AccentColor, false);
+                var button = SettingsMenuUi.CreateButton(tabBar, TabNames[i], 56f, 26, () => ShowTab(tab, true), out _);
+                var marker = SettingsMenuUi.CreateImage("ActiveMarker", button.transform, UiTheme.StampRed, false);
                 marker.rectTransform.anchorMin = new Vector2(0f, 0f);
                 marker.rectTransform.anchorMax = new Vector2(1f, 0f);
                 marker.rectTransform.pivot = new Vector2(0.5f, 0f);
@@ -154,8 +157,8 @@ namespace Kosynierzy
             BuildAudioPage(AddPage(content, "Dzwiek", out var audioItems), audioItems);
             BuildContentPage(AddPage(content, "Tresci", out var contentItems), contentItems);
 
-            var hint = SettingsMenuUi.CreateText("Hint", panel, "Esc / B – wróć      LB / RB – zakładki      ‹ › – zmień wartość",
-                22, TextAnchor.MiddleLeft, FontStyle.Normal, SettingsMenuUi.MutedTextColor);
+            var hint = SettingsMenuUi.CreateText("Hint", panel, "Esc / B – wróć    LB / RB – zakładki    ‹ › – zmień",
+                20, TextAnchor.MiddleLeft, FontStyle.Normal, SettingsMenuUi.MutedTextColor);
             var hintRt = hint.rectTransform;
             hintRt.anchorMin = new Vector2(0f, 0f);
             hintRt.anchorMax = new Vector2(1f, 0f);
@@ -163,7 +166,7 @@ namespace Kosynierzy
             hintRt.offsetMin = new Vector2(48f, 28f);
             hintRt.offsetMax = new Vector2(-400f, 88f);
 
-            backButton = SettingsMenuUi.CreateButton(panel, "Wróć", 60f, 32, Close, out _);
+            backButton = SettingsMenuUi.CreateButton(panel, "Wróć", 60f, 28, Close, out _);
             var backRt = (RectTransform)backButton.transform;
             backRt.anchorMin = backRt.anchorMax = backRt.pivot = new Vector2(1f, 0f);
             backRt.sizeDelta = new Vector2(320f, 60f);

@@ -22,3 +22,10 @@
 | 15.10.2026 | Vis wz. 35: magazine 8, start 8 + 0, fire only while aiming (RMB), shot noise 30 m | Team doc KROK 3 |
 | 15.10.2026 | Player health 1 → any hit = mission fail; enemies down with one hit and stay on the ground | Team doc "jedno trafienie = koniec" |
 | 15.10.2026 | Placeholder map (Kosynierzy/Create Placeholder Map) with all contract points; interiors at x ≥ 1000 | Play the whole story before Mapa_Gliwice.prefab arrives |
+| 15.10.2026 | UI style "wartime documents": aged paper, typewriter (Courier New from the OS), stamp red, olive; one UiTheme for HUD and menus; no Figma | User: every UI more war-like; speed — styled directly in Unity, colours/fonts in one place |
+| 15.10.2026 | Inventory + PlayerHands: 1 Vis, 2 camera (from Zofia, with a 3D hand-over), 3 bayonet; placeholder viewmodels from primitives until OB_Pistolet_Vis | User: items in hands, camera as a real held object later |
+| 15.10.2026 | ADS aligns the pistol's sights on the screen centre; sprint pose = muzzle down | User: aiming weak, gun held wrong while running |
+| 15.10.2026 | Checkpoint at EVERY mission step (with player position); act set-up actions replayed on resume | User: "not everywhere are checkpoints" |
+| 15.10.2026 | Procedural placeholder SFX (gunshots, steps, clicks, shutter, chimes) when SfxBank slots are empty | User: no gunshot sounds; sound team's clips override |
+| 15.10.2026 | Stealth à la Hitman: detection meter, hiding spots, silent bayonet takedowns from behind, body discovery and civilian panic; "!"/"?" only over SD/Schupo | User playtest feedback |
+| 15.10.2026 | Act 3 entry: fence hole (quiet) OR gate (guarded); optional tasks list (cards, cache, railwayman, workers) | User: game too linear |

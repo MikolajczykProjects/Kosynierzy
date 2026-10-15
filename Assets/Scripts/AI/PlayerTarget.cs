@@ -58,6 +58,8 @@ namespace Kosynierzy
         public static Vector3 Chest => Feet + Vector3.up * (IsCrouching ? 0.7f : 1.25f);
 
         public static bool IsCrouching => Find() && player.IsCrouching;
+        /// <summary>Horizontal speed in m/s.</summary>
+        public static float Speed => Find() ? player.CurrentSpeed : 0f;
         public static bool IsSprinting => Find() && (player.IsSprinting || player.IsSliding);
 
         /// <summary>Player dead or mission already failed — the AI stops shooting.</summary>

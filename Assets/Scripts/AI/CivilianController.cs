@@ -5,12 +5,16 @@ using UnityEngine.AI;
 namespace Kosynierzy
 {
     /// <summary>
-    /// Townsperson. Strolls between crowd points (miasto_tlum_*, preferring nearby ones) or around its start;
-    /// a gunshot within 30 m makes it run away from the sound, and it calms down ~10 s after the last shot.
+    /// Townsperson. Strolls between crowd points (miasto_tlum_*, preferring nearby ones) or around its start.
+    /// Panic ("sianie paniki"): a body in view or the player's gunshot within 30 m → scream (bark_cywil_panika if the
+    /// dialogue file has it), run to the nearest Schupo / SD and raise their alarm at that spot, then flee.
+    /// Shots fired by SD only make it flee. It calms down ~10 s after the last scare.
     /// </summary>
     [RequireComponent(typeof(NavMeshAgent))]
     public class CivilianController : NpcBrain
     {
+        enum Mode { Wander, Reporting, Fleeing }
+
         static readonly float[] FleeAngles = { 0f, 35f, -35f, 70f, -70f, 110f, -110f };
 
         [Tooltip("Stroll stops; empty = random walks around the start (Wander Radius).")]
@@ -19,18 +23,25 @@ namespace Kosynierzy
         [SerializeField] Vector2 walkSpeedRange = new(1.1f, 1.5f);
         [SerializeField] Vector2 waitTime = new(2f, 6f);
         [SerializeField] float runSpeed = 4.5f;
-        [Tooltip("Gunshots closer than this make the civilian flee.")]
+        [Tooltip("Gunshots closer than this scare the civilian.")]
         [SerializeField] float fleeHearing = 30f;
         [Tooltip("How far each flee leg goes.")]
         [SerializeField] float fleeDistance = 15f;
-        [Tooltip("Seconds after the last gunshot before calming down.")]
+        [Tooltip("Seconds after the last scare before calming down.")]
         [SerializeField] float calmDownAfter = 10f;
+        [Tooltip("Runs to a Schupo / SD within this distance to raise the alarm; farther away it only flees.")]
+        [SerializeField] float reportSearchRadius = 60f;
+        [SerializeField] float bodySightRange = 12f;
+        [SerializeField] float bodySightRangeDark = 5f;
 
         readonly List<Vector3> points = new();
-        float walkSpeed, fleeUntil;
-        Vector3 fleeFrom, fleeTarget;
+        Mode mode;
+        float walkSpeed, calmAt, reportStart;
+        Vector3 scareFrom, fleeTarget;
+        NpcBrain reportTo;
 
-        public bool IsFleeing { get; private set; }
+        public bool IsFleeing => mode == Mode.Fleeing;
+        public bool IsPanicking => mode != Mode.Wander;
         protected override CharacterType DefaultType => CharacterType.Civilian;
 
         protected override void Awake()
@@ -57,35 +68,122 @@ namespace Kosynierzy
         {
             if (kind != NoiseKind.Gunshot || IsDown) return;
             if ((position - transform.position).sqrMagnitude > fleeHearing * fleeHearing) return;
-            fleeFrom = position;
-            fleeUntil = Time.time + calmDownAfter;
-            if (IsFleeing) return;
-            IsFleeing = true;
-            fleeTarget = PickFleePoint();
+            bool soldierFired = source != null && source.GetComponentInParent<EnemyController>() != null;
+            if (soldierFired) Flee(position);
+            else Panic(position);
         }
 
         void Update()
         {
             if (IsDown) return;
-            if (IsFleeing)
+
+            var body = SpotBody(bodySightRange, bodySightRangeDark, 140f);
+            if (body != null) Panic(body.Position);
+
+            switch (mode)
             {
-                if (Time.time >= fleeUntil)
-                {
-                    IsFleeing = false;
-                    Halt();
-                    ResetRoam();
-                    return;
-                }
-                if (Arrived(fleeTarget, 1.5f)) fleeTarget = PickFleePoint();
-                MoveTo(fleeTarget, runSpeed);
+                case Mode.Wander:
+                    Roam(points, true, wanderRadius, walkSpeed, waitTime);
+                    break;
+                case Mode.Reporting:
+                    UpdateReport();
+                    break;
+                case Mode.Fleeing:
+                    if (Time.time >= calmAt)
+                    {
+                        mode = Mode.Wander;
+                        Halt();
+                        ResetRoam();
+                        return;
+                    }
+                    if (Arrived(fleeTarget, 1.5f)) fleeTarget = PickFleePoint();
+                    MoveTo(fleeTarget, runSpeed);
+                    break;
+            }
+        }
+
+        /// <summary>Scream and run to the nearest Schupo / SD to raise the alarm at this position.</summary>
+        void Panic(Vector3 position)
+        {
+            calmAt = Time.time + calmDownAfter;
+            if (mode == Mode.Reporting) return;
+            scareFrom = position;
+            Bark("bark_cywil_panika");
+            reportTo = NearestAuthority();
+            if (reportTo == null)
+            {
+                Flee(position);
                 return;
             }
-            Roam(points, true, wanderRadius, walkSpeed, waitTime);
+            mode = Mode.Reporting;
+            reportStart = Time.time;
+        }
+
+        void Flee(Vector3 from)
+        {
+            scareFrom = from;
+            calmAt = Time.time + calmDownAfter;
+            if (mode == Mode.Fleeing || mode == Mode.Reporting) return;
+            mode = Mode.Fleeing;
+            fleeTarget = PickFleePoint();
+        }
+
+        void UpdateReport()
+        {
+            if (reportTo == null || reportTo.IsDown || !reportTo.isActiveAndEnabled)
+            {
+                reportTo = NearestAuthority();
+                if (reportTo == null)
+                {
+                    mode = Mode.Wander;
+                    Flee(scareFrom);
+                    return;
+                }
+            }
+
+            Vector3 target = reportTo.transform.position;
+            if (FlatDistanceTo(target) <= 2.5f || Time.time - reportStart > 25f)
+            {
+                if (reportTo is EnemyController soldier) soldier.RaiseAlarm(scareFrom, true);
+                else if (reportTo is PoliceController police) police.ReportFrom(scareFrom, true);
+                reportTo = null;
+                mode = Mode.Wander;
+                Flee(scareFrom);
+                return;
+            }
+            MoveTo(target, runSpeed);
+        }
+
+        NpcBrain NearestAuthority()
+        {
+            NpcBrain best = null;
+            float bestSqr = reportSearchRadius * reportSearchRadius;
+            foreach (var e in EnemyController.All)
+            {
+                if (e.IsDown) continue;
+                float sqr = (e.transform.position - transform.position).sqrMagnitude;
+                if (sqr < bestSqr)
+                {
+                    bestSqr = sqr;
+                    best = e;
+                }
+            }
+            foreach (var p in FindObjectsByType<PoliceController>(FindObjectsInactive.Exclude))
+            {
+                if (p.IsDown || !p.isActiveAndEnabled) continue;
+                float sqr = (p.transform.position - transform.position).sqrMagnitude;
+                if (sqr < bestSqr)
+                {
+                    bestSqr = sqr;
+                    best = p;
+                }
+            }
+            return best;
         }
 
         Vector3 PickFleePoint()
         {
-            Vector3 away = transform.position - fleeFrom;
+            Vector3 away = transform.position - scareFrom;
             away.y = 0f;
             if (away.sqrMagnitude < 0.01f)
             {

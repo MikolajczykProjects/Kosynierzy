@@ -57,15 +57,35 @@ namespace Kosynierzy
             {
                 if (e.Id != id || e.Clips == null || e.Clips.Length == 0) continue;
                 var clip = e.Clips[Random.Range(0, e.Clips.Length)];
-                if (clip == null) return;
-                var src = sources[next];
-                next = (next + 1) % sources.Length;
-                src.transform.position = position ?? transform.position;
-                src.spatialBlend = position.HasValue ? 1f : 0f;
-                src.pitch = 1f + Random.Range(-e.PitchJitter, e.PitchJitter);
-                src.PlayOneShot(clip, e.Volume <= 0f ? 1f : e.Volume);
+                if (clip == null) break;
+                Emit(clip, position, e.Volume <= 0f ? 1f : e.Volume, e.PitchJitter);
                 return;
             }
+            // No clip from the sound team yet → synthesised placeholder.
+            var fallback = ProceduralSfx.Get(id);
+            if (fallback != null) Emit(fallback, position, FallbackVolume(id), 0.06f);
         }
+
+        void Emit(AudioClip clip, Vector3? position, float volume, float jitter)
+        {
+            var src = sources[next];
+            next = (next + 1) % sources.Length;
+            src.transform.position = position ?? transform.position;
+            src.spatialBlend = position.HasValue ? 1f : 0f;
+            src.minDistance = 3f;
+            src.maxDistance = 120f;
+            src.rolloffMode = AudioRolloffMode.Logarithmic;
+            src.pitch = 1f + Random.Range(-jitter, jitter);
+            src.PlayOneShot(clip, volume);
+        }
+
+        static float FallbackVolume(Sfx id) => id switch
+        {
+            Sfx.Footstep => 0.35f,
+            Sfx.Shot => 0.9f,
+            Sfx.EnemyShot => 1f,
+            Sfx.QuestStep or Sfx.QuestComplete => 0.5f,
+            _ => 0.7f,
+        };
     }
 }

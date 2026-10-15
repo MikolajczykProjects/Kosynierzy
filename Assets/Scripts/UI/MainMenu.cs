@@ -110,32 +110,40 @@ namespace Kosynierzy
             canvas = SettingsMenuUi.CreateCanvas("MainMenuCanvas", transform, sortingOrder);
             var root = (RectTransform)canvas.transform;
 
-            var background = SettingsMenuUi.CreateImage("Background", root, new Color(0.07f, 0.06f, 0.05f, 1f), true);
+            var background = SettingsMenuUi.CreateImage("Background", root, UiTheme.Dark, true);
             SettingsMenuUi.Stretch(background.rectTransform);
+            var vignette = SettingsMenuUi.CreateImage("Vignette", root, new Color(0f, 0f, 0f, 0.8f), false);
+            vignette.sprite = UiTheme.VignetteSprite;
+            SettingsMenuUi.Stretch(vignette.rectTransform);
 
-            var titleText = SettingsMenuUi.CreateText("Title", root, title, 96, TextAnchor.MiddleCenter, FontStyle.Bold, SettingsMenuUi.TextColor);
-            SettingsMenuUi.PinTop(titleText.rectTransform, 150f, 120f, 80f);
+            var titleText = UiTheme.CreateHeading("Title", root, title, 104, UiTheme.MutedWhite);
+            titleText.horizontalOverflow = HorizontalWrapMode.Overflow;
+            SettingsMenuUi.PinTop(titleText.rectTransform, 130f, 130f, 80f);
 
-            var bar = SettingsMenuUi.CreateImage("AccentBar", root, SettingsMenuUi.AccentColor, false);
-            var barRt = bar.rectTransform;
-            barRt.anchorMin = barRt.anchorMax = new Vector2(0.5f, 1f);
-            barRt.pivot = new Vector2(0.5f, 1f);
-            barRt.sizeDelta = new Vector2(520f, 6f);
-            barRt.anchoredPosition = new Vector2(0f, -280f);
+            var rule = UiTheme.CreateRule("Rule", root, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.5f));
+            SettingsMenuUi.Place(rule.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -272f), new Vector2(760f, 2f));
 
-            var subtitleText = SettingsMenuUi.CreateText("Subtitle", root, subtitle, 44, TextAnchor.MiddleCenter, FontStyle.Normal, SettingsMenuUi.AccentColor);
-            SettingsMenuUi.PinTop(subtitleText.rectTransform, 296f, 60f, 80f);
+            var date = UiTheme.CreateStamp(root, subtitle, UiTheme.AlertRed, 40);
+            date.anchorMin = date.anchorMax = new Vector2(0.5f, 1f);
+            date.anchoredPosition = new Vector2(0f, -330f);
 
-            var column = SettingsMenuUi.CreateColumn("Buttons", root, 16f);
-            column.anchorMin = column.anchorMax = new Vector2(0.5f, 0.5f);
-            column.pivot = new Vector2(0.5f, 1f);
-            column.sizeDelta = new Vector2(560f, 4 * 68f + 3 * 16f);
-            column.anchoredPosition = new Vector2(0f, -10f);
+            // The menu itself is a paper dossier with a "TAJNE" stamp.
+            var dossier = UiTheme.CreatePaper(root, "Dossier", new Vector2(620f, 4 * 64f + 3 * 14f + 120f), out var dossierRoot);
+            dossierRoot.anchoredPosition = new Vector2(0f, -150f);
+            var caption = SettingsMenuUi.CreateText("Caption", dossier, "Ekspozytura nr 4 · Oddział II", 20, TextAnchor.MiddleLeft,
+                FontStyle.Normal, UiTheme.FadedInk);
+            SettingsMenuUi.PinTop(caption.rectTransform, 18f, 30f, 40f);
+            var stamp = UiTheme.CreateStamp(dossier, "Tajne", UiTheme.StampRed, 26);
+            stamp.anchorMin = stamp.anchorMax = new Vector2(1f, 1f);
+            stamp.anchoredPosition = new Vector2(-100f, -34f);
 
-            newGameButton = SettingsMenuUi.CreateButton(column, "Nowa gra", 68f, 34, () => StartGame(false), out _);
-            var historicalButton = SettingsMenuUi.CreateButton(column, "Tryb historyczny", 68f, 34, () => StartGame(true), out _);
-            settingsButton = SettingsMenuUi.CreateButton(column, "Ustawienia", 68f, 34, OpenSettings, out _);
-            var quitButton = SettingsMenuUi.CreateButton(column, "Wyjście", 68f, 34, Quit, out _);
+            var column = SettingsMenuUi.CreateColumn("Buttons", dossier, 14f);
+            SettingsMenuUi.Stretch(column, 48f, 48f, 80f, 40f);
+
+            newGameButton = SettingsMenuUi.CreateButton(column, "Nowa gra", 64f, 30, () => StartGame(false), out _);
+            var historicalButton = SettingsMenuUi.CreateButton(column, "Tryb historyczny", 64f, 30, () => StartGame(true), out _);
+            settingsButton = SettingsMenuUi.CreateButton(column, "Ustawienia", 64f, 30, OpenSettings, out _);
+            var quitButton = SettingsMenuUi.CreateButton(column, "Wyjście", 64f, 30, Quit, out _);
             SettingsMenuUi.LinkVertical(new UnityEngine.UI.Selectable[] { newGameButton, historicalButton, settingsButton, quitButton });
         }
     }

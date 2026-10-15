@@ -38,10 +38,8 @@ namespace Kosynierzy
              "a Hitler mówił w Reichstagu, że „od 5:45 odpowiadamy ogniem”."),
         };
 
-        static readonly Color Parchment = new(0.93f, 0.87f, 0.72f, 1f);
-        static readonly Color ParchmentEdge = new(0.36f, 0.25f, 0.15f, 1f);
-        static readonly Color Ink = new(0.2f, 0.13f, 0.07f, 1f);
-        static readonly Color FadedInk = new(0.45f, 0.33f, 0.2f, 1f);
+        static readonly Color Ink = UiTheme.Ink;
+        static readonly Color FadedInk = UiTheme.FadedInk;
         const float InputDelay = 0.3f; // the E that picked the card up must not close it
 
         static HistoryCardView instance;
@@ -57,6 +55,7 @@ namespace Kosynierzy
         Canvas canvas;
         CanvasGroup group;
         UnityEngine.UI.Text headerText, titleText, bodyText;
+        RectTransform archiveStamp, noteStamp;
         InputAction closeAction;
         readonly PlayerControlLock controlLock = new();
         bool open, pendingUnlock;
@@ -114,7 +113,9 @@ namespace Kosynierzy
             bool hasHeader = !string.IsNullOrEmpty(header);
             headerText.text = hasHeader ? header : "";
             headerText.gameObject.SetActive(hasHeader);
-            titleText.text = title ?? "";
+            archiveStamp.gameObject.SetActive(hasHeader);
+            noteStamp.gameObject.SetActive(!hasHeader);
+            titleText.text = (title ?? "").ToUpperInvariant();
             bodyText.text = body ?? "";
 
             pendingUnlock = false;
@@ -162,32 +163,34 @@ namespace Kosynierzy
             group.blocksRaycasts = false;
             var root = canvas.transform;
 
-            var dim = SettingsMenuUi.CreateImage("Dim", root, new Color(0f, 0f, 0f, 0.55f), false);
+            var dim = SettingsMenuUi.CreateImage("Dim", root, UiTheme.WithAlpha(UiTheme.Dark, 0.6f), false);
             SettingsMenuUi.Stretch(dim.rectTransform);
 
-            var edge = SettingsMenuUi.CreateImage("Edge", root, ParchmentEdge, false);
-            Centre(edge.rectTransform, new Vector2(1016f, 636f));
-            var paper = SettingsMenuUi.CreateImage("Parchment", root, Parchment, false);
-            Centre(paper.rectTransform, new Vector2(1000f, 620f));
-            var panel = paper.rectTransform;
+            var panel = UiTheme.CreatePaper(root, "Card", new Vector2(1000f, 620f), out var cardRoot);
+            cardRoot.localRotation = Quaternion.Euler(0f, 0f, 0.8f); // a sheet dropped on the desk, not a window
 
-            headerText = SettingsMenuUi.CreateText("Header", panel, "", 24, TextAnchor.MiddleCenter, FontStyle.Bold, FadedInk);
-            SettingsMenuUi.PinTop(headerText.rectTransform, 30f, 32f, 60f);
+            headerText = SettingsMenuUi.CreateText("Header", panel, "", 22, TextAnchor.MiddleLeft, FontStyle.Bold, FadedInk);
+            SettingsMenuUi.PinTop(headerText.rectTransform, 28f, 30f, 60f);
 
-            titleText = SettingsMenuUi.CreateText("Title", panel, "", 44, TextAnchor.MiddleCenter, FontStyle.Bold, Ink);
-            SettingsMenuUi.PinTop(titleText.rectTransform, 70f, 64f, 60f);
+            archiveStamp = UiTheme.CreateStamp(panel, "Archiwum", UiTheme.Olive, 22);
+            noteStamp = UiTheme.CreateStamp(panel, "Notatka", UiTheme.StampRed, 22);
+            foreach (var s in new[] { archiveStamp, noteStamp })
+            {
+                s.anchorMin = s.anchorMax = new Vector2(1f, 1f);
+                s.anchoredPosition = new Vector2(-130f, -48f);
+            }
 
-            var rule = SettingsMenuUi.CreateImage("Rule", panel, FadedInk, false);
-            var ruleRt = rule.rectTransform;
-            ruleRt.anchorMin = ruleRt.anchorMax = ruleRt.pivot = new Vector2(0.5f, 1f);
-            ruleRt.sizeDelta = new Vector2(220f, 3f);
-            ruleRt.anchoredPosition = new Vector2(0f, -146f);
+            titleText = UiTheme.CreateHeading("Title", panel, "", 42, Ink);
+            SettingsMenuUi.PinTop(titleText.rectTransform, 74f, 64f, 60f);
 
-            bodyText = SettingsMenuUi.CreateText("Body", panel, "", 30, TextAnchor.UpperLeft, FontStyle.Normal, Ink);
+            var rule = UiTheme.CreateRule("Rule", panel, FadedInk);
+            SettingsMenuUi.PinTop(rule.rectTransform, 148f, 2f, 60f);
+
+            bodyText = SettingsMenuUi.CreateText("Body", panel, "", 28, TextAnchor.UpperLeft, FontStyle.Normal, Ink);
             bodyText.lineSpacing = 1.15f;
-            SettingsMenuUi.Stretch(bodyText.rectTransform, 70f, 70f, 172f, 80f);
+            SettingsMenuUi.Stretch(bodyText.rectTransform, 70f, 70f, 176f, 80f);
 
-            var hint = SettingsMenuUi.CreateText("Hint", panel, "E — zamknij", 24, TextAnchor.MiddleRight, FontStyle.Italic, FadedInk);
+            var hint = SettingsMenuUi.CreateText("Hint", panel, "E — zamknij", 22, TextAnchor.MiddleRight, FontStyle.Bold, FadedInk);
             var hintRt = hint.rectTransform;
             hintRt.anchorMin = new Vector2(0f, 0f);
             hintRt.anchorMax = new Vector2(1f, 0f);

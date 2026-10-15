@@ -32,6 +32,17 @@ namespace Kosynierzy
         public string CurrentActName { get; private set; } = "";
         public bool Finished { get; private set; }
 
+        /// <summary>Side goals for the HUD's objectives panel ("Opcjonalne").</summary>
+        public class OptionalTask
+        {
+            public string Title;
+            public Func<bool> IsDone;
+            public Func<string> Progress;
+        }
+
+        public readonly List<OptionalTask> Optional = new();
+        bool cacheLooted, railwaymanTalked, workersFreed;
+
         public event Action<MissionStep> StepStarted;
         public event Action<MissionStep> StepCompleted;
         public event Action<string> ActStarted;
@@ -68,16 +79,46 @@ namespace Kosynierzy
                 start = Checkpoints.ResumeStep;
                 Checkpoints.ResumeStep = -1;
                 Checkpoints.RestoreProgress();
+                Inventory.NewGame(GameProgress.HasCamera);
             }
             else
             {
                 GameProgress.NewGame();
+                WeaponCatalog.NewGame();
+                Inventory.NewGame(false);
             }
             // Radio NPCs appear in act 3 (index of the act-3 start step or later → active).
             int act3 = acts.Count > 2 ? acts[2].Step : int.MaxValue;
             SetRadioGuards(start >= act3);
-            StartStep(start, true);
+
+            // New game: pick the loadout first (CS2-style screen), then the story starts.
+            if (!WeaponCatalog.LoadoutChosen)
+            {
+                int s = start;
+                LoadoutScreen.Open(LoadoutMode.Start, () => { Inventory.NewGame(GameProgress.HasCamera); StartStep(s, true); });
+            }
+            else StartStep(start, true);
         }
+
+        /// <summary>Act 3: a weapons crate at the back entrance opens the rifle choice (optional).</summary>
+        void SpawnArmoury()
+        {
+            if (!Points.Has("spawn_radio_tyl") || armouryUsed) return;
+            var p = Points.Get("spawn_radio_tyl");
+            var go = Spawner.Spawn("OB_Skrzynia_Bron", p.position + p.right * 2.5f + p.forward * 1.5f, p.rotation);
+            var it = go.GetComponent<Interactable>();
+            if (it == null) it = go.AddComponent<Interactable>();
+            if (go.GetComponentInChildren<Collider>() == null) go.AddComponent<BoxCollider>();
+            it.SetPrompt("Zbrojownia — wybierz karabin");
+            it.SetSingleUse(true);
+            it.Interacted += _ => LoadoutScreen.Open(LoadoutMode.Armoury, () =>
+            {
+                armouryUsed = true;
+                if (WeaponCatalog.SelectedRifle != null) Inventory.GiveWeapon(WeaponCatalog.SelectedRifle);
+            });
+        }
+
+        bool armouryUsed;
 
         // ------------------------------------------------------------------ story
 
@@ -88,10 +129,10 @@ namespace Kosynierzy
             steps.Add(new DialogStep("a1_intro", "Gliwice, 31 sierpnia 1939"));
             steps.Add(new ReachStep("miasto_drzwi_ksiegarnia", "Idź do księgarni pani Zofii na Ringu"));
             steps.Add(new TalkStep("CH_Zofia", "ksiegarnia_zofia", "a1_zofia", "Porozmawiaj z panią Zofią",
-                () => { GameProgress.HasCamera = true; Popup("Masz aparat — F: tryb zdjęcia"); }));
+                () => Inventory.GiveCamera()));
             steps.Add(new ReachStep("miasto_drzwi_hotel", "Idź do hotelu Haus Oberschlesien"));
             steps.Add(new TalkStep("CH_Recepcjonista", "hotel_recepcja", "a1_recepcja", "Zagadaj recepcjonistę"));
-            steps.Add(new InteractStep("OB_Drzwi", "hotel_pokoj_drzwi", "Otwórz", "Wejdź do pokoju Naujocksa"));
+            steps.Add(new InteractStep("OB_Drzwi", "hotel_pokoj_drzwi", "Otwórz", "Wejdź do pokoju Naujocksa") { HideOnUse = true });
             steps.Add(new PhotoStep("Sfotografuj mapę i listę (F)",
                 new PhotoStep.Target { Point = "hotel_pokoj_mapa", Id = "mapa", Name = "Mapa z zaznaczoną radiostacją", Thought = "a1_mysl_mapa" },
                 new PhotoStep.Target { Point = "hotel_pokoj_lista", Id = "lista", Name = "Lista „polskich ubrań”", Thought = "a1_mysl_lista" }));
@@ -110,9 +151,10 @@ namespace Kosynierzy
 
             // AKT 3 (20:00) Radiostacja
             AddAct("Akt 3 — Radiostacja", "miasto_dziura_plot", 20f);
-            steps.Add(new InteractStep("OB_Plot_Dziura", "miasto_dziura_plot", "Przeciśnij się przez dziurę w płocie",
-                "Wejdź na teren radiostacji od tyłu", null, () => TeleportTo("spawn_radio_tyl")));
-            steps.Add(new ActionStep(() => { SetHour(20f); SpawnWorkersDoor(); SetRadioGuards(true); }));
+            // Two approaches: quietly through the fence hole (doors network) or through the guarded gate.
+            steps.Add(new ReachAnyStep("Wejdź na teren radiostacji — po cichu dziurą w płocie albo bramą", 4f,
+                "spawn_radio_tyl", "spawn_radio_brama") { MarkerPoint = "miasto_dziura_plot" });
+            steps.Add(new ActionStep(() => { SetHour(20f); SpawnWorkersDoor(); SetRadioGuards(true); SpawnArmoury(); }));
             steps.Add(new DialogStep("a3_komunikat", "SD nadaje przez mikrofon burzowy!"));
             steps.Add(new CableStep("radio_technika_kable", "radio_kartka_grubera", "a3_sygnal_urwany",
                 "Przetnij właściwą linię wzmacniacza (kartka Grubera)"));
@@ -144,12 +186,13 @@ namespace Kosynierzy
             Door("fotograf_drzwi_wyjscie", "miasto_drzwi_fotograf", "Wyjdź na ulicę", exitInFront: true);
             Door("miasto_drzwi_radio", "spawn_radio_brama", "Wejdź na teren radiostacji");
             Door("radio_drzwi_wyjscie", "miasto_drzwi_radio", "Wyjdź", exitInFront: true);
+            Door("miasto_dziura_plot", "spawn_radio_tyl", "Przeciśnij się przez dziurę w płocie", prefab: "OB_Plot_Dziura");
         }
 
-        void Door(string doorPoint, string target, string prompt, bool exitInFront = false)
+        void Door(string doorPoint, string target, string prompt, bool exitInFront = false, string prefab = "OB_Drzwi")
         {
             if (!Points.Has(doorPoint) || !Points.Has(target)) return;
-            var go = Spawner.Spawn("OB_Drzwi", doorPoint);
+            var go = Spawner.Spawn(prefab, doorPoint);
             var it = go.GetComponent<Interactable>();
             if (it == null) it = go.AddComponent<Interactable>();
             if (go.GetComponentInChildren<Collider>() == null) go.AddComponent<BoxCollider>();
@@ -169,6 +212,16 @@ namespace Kosynierzy
 
         void BuildSideContent()
         {
+            Optional.Add(new OptionalTask { Title = "Karty historii", IsDone = () => GameProgress.HistoryCards.Count >= GameProgress.HistoryCardTotal,
+                Progress = () => $"{GameProgress.HistoryCards.Count}/{GameProgress.HistoryCardTotal}" });
+            if (Points.Has("miasto_skrytka_most"))
+                Optional.Add(new OptionalTask { Title = "Skrytka pod mostem (+8 naboi)", IsDone = () => cacheLooted });
+            if (Points.Has("miasto_kolejarz"))
+                Optional.Add(new OptionalTask { Title = "Kolejarz — rozkład transportów", IsDone = () => railwaymanTalked });
+            if (Points.Has("radio_piwnica_drzwi"))
+                Optional.Add(new OptionalTask { Title = "Uwolnij pracowników stacji (akt 3)", IsDone = () => workersFreed });
+            Optional.Add(new OptionalTask { Title = "Zbrojownia — karabin (akt 3)", IsDone = () => WeaponCatalog.SelectedRifle != null });
+
             // 6 history cards.
             for (int i = 1; i <= GameProgress.HistoryCardTotal; i++)
             {
@@ -197,6 +250,7 @@ namespace Kosynierzy
                 {
                     var w = FindAnyObjectByType<PlayerWeapon>();
                     if (w != null) w.AddReserveAmmo(8);
+                    cacheLooted = true;
                     if (Dialog.Exists("pob_skrytka")) Dialog.Play("pob_skrytka", null, false);
                 };
             }
@@ -209,7 +263,7 @@ namespace Kosynierzy
                 if (it == null) it = go.AddComponent<Interactable>();
                 it.SetPrompt("Porozmawiaj");
                 it.SetSingleUse(true);
-                it.Interacted += _ => Dialog.Play("pob_kolejarz");
+                it.Interacted += _ => { railwaymanTalked = true; Dialog.Play("pob_kolejarz"); };
             }
         }
 
@@ -224,6 +278,7 @@ namespace Kosynierzy
             it.SetSingleUse(true);
             it.Interacted += _ =>
             {
+                workersFreed = true;
                 if (NpcDirector.Instance != null) NpcDirector.Instance.FreeWorkers();
                 Dialog.Play("a3_gruber");
                 Popup("Pracownicy stacji uwolnieni");
@@ -292,10 +347,17 @@ namespace Kosynierzy
                 var act = acts[actIdx];
                 CurrentActName = act.Name;
                 SetHour(act.Hour);
-                if (fromLoad || index == 0) TeleportTo(act.Spawn, instant: true);
-                if (!GameMode.Historical) Checkpoints.Save(index);
+                bool atSavedSpot = fromLoad && Checkpoints.HasPosition && index == Checkpoints.SavedStep && index != act.Step;
+                if (atSavedSpot) FindAnyObjectByType<FirstPersonController>()?.Teleport(Checkpoints.SavedPosition, Checkpoints.SavedYaw);
+                else if (fromLoad || index == 0) TeleportTo(act.Spawn, instant: true);
+                // Resuming mid-act: replay the act's set-up actions (time of day, spawns, alarm) skipped so far.
+                if (fromLoad)
+                    for (int i = act.Step; i < index; i++)
+                        if (steps[i] is ActionStep setup && !(i == steps.Count - 1)) setup.Begin();
                 ActStarted?.Invoke(act.Name);
             }
+            // Checkpoint at every step (player feedback), none in historical mode.
+            if (!GameMode.Historical && !fromLoad) Checkpoints.Save(index);
 
             Current = steps[index];
             StepStarted?.Invoke(Current);

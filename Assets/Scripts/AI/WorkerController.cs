@@ -47,6 +47,7 @@ namespace Kosynierzy
         {
             if (IsFreed || IsDown) return;
             IsFreed = true;
+            LowerPlaceholderArms();
             hasExit = FindExit(out exitPoint);
         }
 
@@ -55,8 +56,15 @@ namespace Kosynierzy
         {
             if (IsDown) return;
             IsFreed = true;
+            LowerPlaceholderArms();
             exitPoint = destination;
             hasExit = true;
+        }
+
+        void LowerPlaceholderArms()
+        {
+            var arms = transform.Find("ArmsUp");
+            if (arms != null) arms.gameObject.SetActive(false);
         }
 
         bool FindExit(out Vector3 point)

@@ -23,6 +23,7 @@ namespace Kosynierzy.EditorTools
 
             if (fps.GetComponent<PlayerNoise>() == null) Undo.AddComponent<PlayerNoise>(fps.gameObject);
             if (cam != null && cam.GetComponent<PhotoCamera>() == null) Undo.AddComponent<PhotoCamera>(cam.gameObject);
+            if (cam != null && cam.GetComponent<PlayerHands>() == null) Undo.AddComponent<PlayerHands>(cam.gameObject);
 
             var health = fps.GetComponent<Health>();
             if (health == null) health = Undo.AddComponent<Health>(fps.gameObject);

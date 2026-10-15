@@ -194,10 +194,10 @@ namespace Kosynierzy
             blackGroup = canvas.gameObject.AddComponent<CanvasGroup>();
             var root = canvas.transform;
 
-            var black = SettingsMenuUi.CreateImage("Black", root, Color.black, true);
+            var black = SettingsMenuUi.CreateImage("Black", root, UiTheme.Dark, true);
             SettingsMenuUi.Stretch(black.rectTransform);
 
-            boardText = SettingsMenuUi.CreateText("Board", root, "", 46, TextAnchor.MiddleCenter, FontStyle.Normal, Color.white);
+            boardText = SettingsMenuUi.CreateText("Board", root, "", 40, TextAnchor.MiddleCenter, FontStyle.Normal, UiTheme.MutedWhite);
             var boardRt = boardText.rectTransform;
             boardRt.anchorMin = boardRt.anchorMax = boardRt.pivot = new Vector2(0.5f, 0.5f);
             boardRt.sizeDelta = new Vector2(1300f, 600f);
@@ -206,14 +206,14 @@ namespace Kosynierzy
             textGroup = boardText.gameObject.AddComponent<CanvasGroup>();
 
             hintText = SettingsMenuUi.CreateText("Hint", root, "Spacja / E — dalej", 22, TextAnchor.LowerRight, FontStyle.Normal,
-                new Color(1f, 1f, 1f, 0.35f));
+                UiTheme.WithAlpha(UiTheme.MutedWhite, 0.35f));
             SettingsMenuUi.Stretch(hintText.rectTransform, 40f, 40f, 40f, 32f);
 
             var panel = SettingsMenuUi.CreateRect("End", root);
             SettingsMenuUi.Stretch(panel);
             endPanel = panel.gameObject;
 
-            var title = SettingsMenuUi.CreateText("Koniec", panel, "KONIEC", 120, TextAnchor.MiddleCenter, FontStyle.Bold, Color.white);
+            var title = UiTheme.CreateHeading("Koniec", panel, "Koniec", 120, UiTheme.MutedWhite);
             var titleRt = title.rectTransform;
             titleRt.anchorMin = titleRt.anchorMax = titleRt.pivot = new Vector2(0.5f, 0.5f);
             titleRt.sizeDelta = new Vector2(1200f, 160f);
@@ -225,8 +225,8 @@ namespace Kosynierzy
             column.sizeDelta = new Vector2(520f, 2 * 66f + 16f);
             column.anchoredPosition = new Vector2(0f, -10f);
 
-            menuButton = SettingsMenuUi.CreateButton(column, "Menu główne", 66f, 32, GoToMenu, out _);
-            replayButton = SettingsMenuUi.CreateButton(column, "Zagraj ponownie", 66f, 32, PlayAgain, out _);
+            menuButton = SettingsMenuUi.CreateButton(column, "Menu główne", 66f, 30, GoToMenu, out _, dark: true);
+            replayButton = SettingsMenuUi.CreateButton(column, "Zagraj ponownie", 66f, 30, PlayAgain, out _, dark: true);
         }
     }
 }

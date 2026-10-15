@@ -3,17 +3,21 @@ using UnityEngine;
 namespace Kosynierzy
 {
     /// <summary>
-    /// Floating "?" with the suspicion meter, or a red "!" in alarm / while reporting, above an SD or Schupo head.
+    /// Floating "?" with the suspicion meter, or "!" in alarm / while reporting, above an SD (orange / red) or a Schupo
+    /// (light blue / blue) head. Never on civilians or workers: it disables itself without a WatcherBrain.
     /// Drawn with IMGUI only when the head is in front of the camera, on screen and within Max Distance.
     /// </summary>
     [DisallowMultipleComponent]
     public class SuspicionIndicator : MonoBehaviour
     {
+        static readonly Color SoldierQuestion = new(1f, 0.72f, 0.2f, 1f);
+        static readonly Color SoldierAlarm = new(0.95f, 0.15f, 0.12f, 1f);
+        static readonly Color PoliceQuestion = new(0.55f, 0.8f, 1f, 1f);
+        static readonly Color PoliceAlarm = new(0.25f, 0.5f, 1f, 1f);
+
         [Tooltip("Height of the glyph above the feet.")]
-        [SerializeField] float heightAboveFeet = 2.15f;
+        [SerializeField] float heightAboveFeet = 2.2f;
         [SerializeField] float maxDistance = 30f;
-        [SerializeField] Color suspicionColor = new(1f, 0.85f, 0.25f, 1f);
-        [SerializeField] Color alarmColor = new(0.95f, 0.15f, 0.12f, 1f);
 
         static GUIStyle style;
         WatcherBrain brain;
@@ -22,6 +26,9 @@ namespace Kosynierzy
         {
             brain = GetComponent<WatcherBrain>();
             useGUILayout = false;
+            var character = GetComponent<Character>();
+            bool watcherType = character == null || character.Type == CharacterType.Enemy || character.Type == CharacterType.Police;
+            if (brain == null || !watcherType) enabled = false;
         }
 
         void OnGUI()
@@ -44,6 +51,10 @@ namespace Kosynierzy
                 style.normal.textColor = Color.white;
             }
 
+            bool police = brain.IsPolice;
+            Color question = police ? PoliceQuestion : SoldierQuestion;
+            Color alarmColor = police ? PoliceAlarm : SoldierAlarm;
+
             float scale = Mathf.Lerp(1f, 0.55f, screen.z / maxDistance) * (Screen.height / 1080f);
             float x = screen.x, y = Screen.height - screen.y;
             style.fontSize = Mathf.Max(10, Mathf.RoundToInt((alarm ? 46f : 38f) * scale));
@@ -53,7 +64,7 @@ namespace Kosynierzy
             Color previous = GUI.color;
             GUI.color = new Color(0f, 0f, 0f, 0.7f);
             GUI.Label(new Rect(rect.x + 2f, rect.y + 2f, rect.width, rect.height), glyph, style);
-            GUI.color = alarm ? alarmColor : suspicionColor;
+            GUI.color = alarm ? alarmColor : question;
             GUI.Label(rect, glyph, style);
 
             if (!alarm)
@@ -63,7 +74,7 @@ namespace Kosynierzy
                 GUI.color = new Color(0f, 0f, 0f, 0.6f);
                 GUI.DrawTexture(bar, Texture2D.whiteTexture);
                 float s = Mathf.Clamp01(brain.Suspicion);
-                GUI.color = Color.Lerp(suspicionColor, alarmColor, s * s);
+                GUI.color = Color.Lerp(question, alarmColor, s * s);
                 GUI.DrawTexture(new Rect(bar.x + 1f, bar.y + 1f, (bar.width - 2f) * s, bar.height - 2f), Texture2D.whiteTexture);
             }
             GUI.color = previous;

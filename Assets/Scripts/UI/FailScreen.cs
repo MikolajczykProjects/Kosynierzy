@@ -16,8 +16,8 @@ namespace Kosynierzy
     {
         const string MenuSceneName = "Menu";
         const float ShowDelay = 0.8f;
-        static readonly Color Background = new(0.03f, 0.02f, 0.02f, 0.92f);
-        static readonly Color FailRed = new(0.8f, 0.22f, 0.17f, 1f);
+        static readonly Color Background = UiTheme.WithAlpha(UiTheme.Dark, 0.9f);
+        static readonly Color FailRed = UiTheme.StampRed;
 
         static FailScreen instance;
 
@@ -162,21 +162,30 @@ namespace Kosynierzy
             var background = SettingsMenuUi.CreateImage("Background", root, Background, true);
             SettingsMenuUi.Stretch(background.rectTransform);
 
-            var title = SettingsMenuUi.CreateText("Title", root, "PORAŻKA", 110, TextAnchor.MiddleCenter, FontStyle.Bold, FailRed);
-            Place(title.rectTransform, 0f, 250f, new Vector2(1400f, 140f));
+            // A field report on paper with a big red stamp.
+            var report = UiTheme.CreatePaper(root, "Report", new Vector2(980f, 600f), out _);
+            var header = SettingsMenuUi.CreateText("Header", report, "RAPORT · AGENT »KRUK« · 31.08.1939", 22, TextAnchor.MiddleLeft,
+                FontStyle.Bold, UiTheme.FadedInk);
+            SettingsMenuUi.PinTop(header.rectTransform, 26f, 30f, 48f);
+            var rule = UiTheme.CreateRule("Rule", report, UiTheme.FadedInk);
+            SettingsMenuUi.PinTop(rule.rectTransform, 64f, 2f, 48f);
 
-            messageText = SettingsMenuUi.CreateText("Message", root, "", 36, TextAnchor.MiddleCenter, FontStyle.Normal, SettingsMenuUi.TextColor);
-            Place(messageText.rectTransform, 0f, 90f, new Vector2(1300f, 150f));
+            var stamp = UiTheme.CreateStamp(report, "Porażka", FailRed, 64, -7f);
+            stamp.anchorMin = stamp.anchorMax = new Vector2(0.5f, 1f);
+            stamp.anchoredPosition = new Vector2(0f, -150f);
 
-            var column = SettingsMenuUi.CreateColumn("Buttons", root, 16f);
-            column.anchorMin = column.anchorMax = new Vector2(0.5f, 0.5f);
-            column.pivot = new Vector2(0.5f, 1f);
-            column.sizeDelta = new Vector2(640f, 3 * 66f + 2 * 16f);
-            column.anchoredPosition = new Vector2(0f, -40f);
+            messageText = SettingsMenuUi.CreateText("Message", report, "", 30, TextAnchor.MiddleCenter, FontStyle.Normal, UiTheme.Ink);
+            SettingsMenuUi.PinTop(messageText.rectTransform, 230f, 110f, 70f);
 
-            checkpointButton = SettingsMenuUi.CreateButton(column, "Spróbuj od punktu kontrolnego", 66f, 32, RetryFromCheckpoint, out _);
-            restartButton = SettingsMenuUi.CreateButton(column, "Zacznij od nowa", 66f, 32, StartOver, out _);
-            menuButton = SettingsMenuUi.CreateButton(column, "Menu główne", 66f, 32, GoToMenu, out _);
+            var column = SettingsMenuUi.CreateColumn("Buttons", report, 12f);
+            column.anchorMin = column.anchorMax = new Vector2(0.5f, 0f);
+            column.pivot = new Vector2(0.5f, 0f);
+            column.sizeDelta = new Vector2(640f, 2 * 60f + 12f);
+            column.anchoredPosition = new Vector2(0f, 40f);
+
+            checkpointButton = SettingsMenuUi.CreateButton(column, "Spróbuj od punktu kontrolnego", 60f, 26, RetryFromCheckpoint, out _);
+            restartButton = SettingsMenuUi.CreateButton(column, "Zacznij od nowa", 60f, 26, StartOver, out _);
+            menuButton = SettingsMenuUi.CreateButton(column, "Menu główne", 60f, 26, GoToMenu, out _);
         }
 
         static void Place(RectTransform rt, float x, float y, Vector2 size)

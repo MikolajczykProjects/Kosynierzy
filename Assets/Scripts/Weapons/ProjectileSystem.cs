@@ -181,6 +181,7 @@ namespace Kosynierzy
                 hit.rigidbody.AddForceAtPosition(dir * b.Shot.Impulse, hit.point, ForceMode.Impulse);
 
             VfxLibrary.PlayImpact(hit.point, hit.normal, health != null ? ImpactKind.Flesh : ImpactKind.Ground);
+            if (health == null) SfxBank.PlayAt(SfxBank.Sfx.BulletImpact, hit.point);
 
             // Final tracer frame reaches the hit point.
             b.Position = hit.point;

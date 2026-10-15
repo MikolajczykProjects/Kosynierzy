@@ -74,6 +74,15 @@ namespace Kosynierzy
         public override bool IsAlerted => State == EnemyState.Alarm;
         public override bool ShowSuspicion =>
             State == EnemyState.Suspicious || State == EnemyState.Search || Suspicion > 0.02f;
+        public override AwarenessLevel Awareness => State switch
+        {
+            EnemyState.Suspicious => AwarenessLevel.Suspicious,
+            EnemyState.Search => AwarenessLevel.Searching,
+            EnemyState.Alarm => AwarenessLevel.Alarmed,
+            _ => AwarenessLevel.Unaware,
+        };
+        /// <summary>Frozen by a silent takedown in progress.</summary>
+        public bool IsBeingTakenDown { get; private set; }
 
         protected override CharacterType DefaultType => CharacterType.Enemy;
 
@@ -136,9 +145,28 @@ namespace Kosynierzy
             EnterAlarm(lastKnownPlayerPosition, callOthers);
         }
 
+        /// <summary>Walk over and search here (a body was found, a Schupo reported something).</summary>
+        public void Investigate(Vector3 position)
+        {
+            if (IsDown || !isActiveAndEnabled || State == EnemyState.Alarm) return;
+            alertness = 1.5f;
+            heardNoise = true;
+            Suspicion = Mathf.Max(Suspicion, 0.4f);
+            EnterSearch(position, "bark_sd_szukanie");
+        }
+
+        /// <summary>Called by TakedownTarget: stop moving, seeing and shooting until the kill lands.</summary>
+        public void BeginTakedown()
+        {
+            IsBeingTakenDown = true;
+            IsAiming = false;
+            Halt();
+            character.SetAnimBool(AimId, false);
+        }
+
         void Update()
         {
-            if (IsDown) return;
+            if (IsDown || IsBeingTakenDown) return;
             UpdateSenses(State == EnemyState.Alarm);
             switch (State)
             {
@@ -155,7 +183,7 @@ namespace Kosynierzy
         void UpdatePatrol()
         {
             UpdateSuspicion(alertness);
-            if (PlayerVisible && Suspicion > 0.1f)
+            if (PlayerVisible && Suspicion > 0.15f)
             {
                 EnterSuspicious(LastKnownPlayerPosition);
                 return;
@@ -199,16 +227,16 @@ namespace Kosynierzy
                 return;
             }
 
-            // Stare first; after a moment of seeing someone, step closer for a better look.
-            if (PlayerVisible && Time.time - stateStart > 1.5f && FlatDistanceTo(investigatePoint) > 5f)
-                MoveTo(investigatePoint, walkSpeed);
+            // Hitman-style: a short stare, then walk over for a closer look while the meter keeps filling.
+            bool staring = Time.time - stateStart < 1f;
+            if (!staring && FlatDistanceTo(investigatePoint) > 2.5f) MoveTo(investigatePoint, walkSpeed * 0.9f);
             else
             {
                 Halt();
                 FaceTowards(investigatePoint, 240f);
             }
 
-            if (Time.time - lastStimulus > 2.5f)
+            if (Time.time - lastStimulus > 3f)
             {
                 if (Suspicion > 0.25f || heardNoise) EnterSearch(investigatePoint);
                 else ReturnToPatrol();
@@ -217,14 +245,32 @@ namespace Kosynierzy
 
         // ---------- Search ----------
 
-        void EnterSearch(Vector3 point)
+        void EnterSearch(Vector3 point, string bark = "bark_sd_szukanie")
         {
             State = EnemyState.Search;
             investigatePoint = point;
             stateStart = Time.time;
             searchArrived = -1f;
             IsAiming = false;
-            Bark("bark_sd_szukanie");
+            Bark(bark, "bark_sd_szukanie");
+        }
+
+        protected override void OnBodySeen(Body body)
+        {
+            if (State == EnemyState.Alarm) return;
+            body.MarkDiscovered();
+            alertness = 1.5f;
+            heardNoise = true;
+            Suspicion = Mathf.Max(Suspicion, 0.5f);
+            EnterSearch(body.Position, "bark_sd_cialo");
+            // Comrades nearby come to look too.
+            float r2 = callRadius * callRadius * 0.36f;
+            for (int i = 0; i < active.Count; i++)
+            {
+                var other = active[i];
+                if (other == this || other.IsDown) continue;
+                if ((other.transform.position - transform.position).sqrMagnitude <= r2) other.Investigate(body.Position);
+            }
         }
 
         void UpdateSearch()

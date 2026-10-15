@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,17 +9,16 @@ namespace Kosynierzy
     /// <summary>
     /// Turns a spawned character (art prefab CH_* or Spawner's grey placeholder capsule) into a working NPC, adding
     /// only what is missing: NavMeshAgent snapped to the NavMesh (disabled when there is none nearby), body
-    /// CapsuleCollider, one-hit Health that leaves the body, head Hitbox for soldiers, DeathEffect when the model has
-    /// no "Trafiony" animation, Character, the AI for its type and the "?"/"!" indicator. Safe to call twice; also
-    /// works in edit mode (test-setup menu). Placeholders get a feet pivot, a facing visor and a colour per type.
+    /// CapsuleCollider, one-hit Health that leaves the body, head Hitbox and silent TakedownTarget for SD, DeathEffect
+    /// when the model has no "Trafiony" animation, Character, the AI for its type and the "?"/"!" indicator (SD and
+    /// Schupo only). Placeholders (prefab missing) get a feet pivot and a readable look per type (PlaceholderLooks).
+    /// Safe to call twice; also works in edit mode (test-setup menu).
     /// </summary>
     public static class NpcFactory
     {
         public const float AgentRadius = 0.35f;
         public const float AgentHeight = 1.8f;
 
-        static readonly int BaseColorId = Shader.PropertyToID("_BaseColor");
-        static readonly int ColorId = Shader.PropertyToID("_Color");
         static readonly HashSet<string> warnedFields = new();
         static bool warnedNoNavMesh;
 
@@ -29,21 +29,23 @@ namespace Kosynierzy
             warnedFields.Clear();
         }
 
-        /// <summary>Placeholder colour per type (also used for the test-setup materials).</summary>
-        public static Color TintFor(CharacterType type) => type switch
-        {
-            CharacterType.Enemy => new Color(0.37f, 0.40f, 0.31f),    // SD grey-green
-            CharacterType.Police => new Color(0.22f, 0.34f, 0.30f),   // Schupo dark green
-            CharacterType.Civilian => new Color(0.55f, 0.43f, 0.32f), // brown coat
-            CharacterType.Worker => new Color(0.30f, 0.42f, 0.56f),   // blue overalls
-            _ => new Color(0.62f, 0.56f, 0.40f),                      // ally
-        };
+        /// <summary>Placeholder body colour per type (also used for the test-setup materials).</summary>
+        public static Color TintFor(CharacterType type) => PlaceholderLooks.BodyColor(type);
 
-        public static GameObject Setup(GameObject go, CharacterType type)
+        /// <summary>Spawner's grey capsule: no art prefab registered under this name.</summary>
+        public static bool IsPlaceholder(GameObject go) =>
+            go != null && !Spawner.HasPrefab(go.name) && go.transform.childCount == 0 &&
+            go.GetComponent<MeshFilter>() != null && go.GetComponent<MeshRenderer>() != null;
+
+        public static GameObject Setup(GameObject go, CharacterType type) => Setup(go, type, IsPlaceholder(go));
+
+        /// <param name="placeholder">Treat the object as a grey placeholder capsule (rebuild its look).</param>
+        public static GameObject Setup(GameObject go, CharacterType type, bool placeholder)
         {
             if (go == null) return null;
-            bool placeholder = NormalizePlaceholder(go);
+            if (placeholder) placeholder = NormalizePlaceholder(go);
             bool soldier = type == CharacterType.Enemy;
+            bool watcher = soldier || type == CharacterType.Police;
 
             SetupAgent(go);
             EnsureBodyCollider(go, placeholder, soldier);
@@ -66,6 +68,9 @@ namespace Kosynierzy
             var rb = go.GetComponent<Rigidbody>();
             if (rb != null) rb.isKinematic = true;
 
+            // Later NavMesh bakes must not cut holes around NPCs.
+            GetOrAdd<NavMeshModifier>(go).ignoreFromBuild = true;
+
             GetOrAdd<Character>(go).Type = type;
             switch (type)
             {
@@ -74,8 +79,14 @@ namespace Kosynierzy
                 case CharacterType.Civilian: GetOrAdd<CivilianController>(go); break;
                 case CharacterType.Worker: GetOrAdd<WorkerController>(go); break;
             }
-            if (type == CharacterType.Enemy || type == CharacterType.Police) GetOrAdd<SuspicionIndicator>(go);
-            if (placeholder) Tint(go, TintFor(type));
+
+            if (soldier) GetOrAdd<TakedownTarget>(go);
+            else Kill(go.GetComponent<TakedownTarget>());
+
+            if (watcher) GetOrAdd<SuspicionIndicator>(go);
+            else Kill(go.GetComponent<SuspicionIndicator>());
+
+            if (placeholder) PlaceholderLooks.Build(go, type);
             return go;
         }
 
@@ -120,17 +131,7 @@ namespace Kosynierzy
             body.transform.localPosition = new Vector3(0f, halfHeight, 0f);
             body.transform.localScale = scale;
             body.AddComponent<MeshFilter>().sharedMesh = filter.sharedMesh;
-            var bodyRenderer = body.AddComponent<MeshRenderer>();
-            bodyRenderer.sharedMaterials = renderer.sharedMaterials;
-
-            // A light visor on the face shows which way the placeholder looks.
-            var visor = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            visor.name = "Visor";
-            visor.layer = go.layer;
-            Kill(visor.GetComponent<Collider>());
-            visor.transform.SetParent(go.transform, false);
-            visor.transform.localPosition = new Vector3(0f, 1.55f, 0.25f);
-            visor.transform.localScale = new Vector3(0.4f, 0.1f, 0.16f);
+            body.AddComponent<MeshRenderer>().sharedMaterials = renderer.sharedMaterials;
 
             renderer.enabled = false;
             Kill(renderer);
@@ -145,7 +146,7 @@ namespace Kosynierzy
             else if (!warnedNoNavMesh)
             {
                 warnedNoNavMesh = true;
-                Debug.LogWarning($"Kosynierzy: brak NavMesh przy '{go.name}' ({go.transform.position}) — NPC bez NavMesh stoją w miejscu. Zbakuj NavMeshSurface na mapie.");
+                Debug.LogWarning($"Kosynierzy: brak NavMesh przy '{go.name}' ({go.transform.position}) — NPC bez NavMesh stoją w miejscu. Zbakuj NavMesh (Kosynierzy > Bake NavMesh).");
             }
 
             var agent = go.GetComponent<NavMeshAgent>();
@@ -170,8 +171,9 @@ namespace Kosynierzy
             agent.acceleration = 14f;
             agent.stoppingDistance = 0.3f;
             agent.autoBraking = true;
-            agent.obstacleAvoidanceType = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
-            agent.avoidancePriority = Random.Range(40, 60);
+            agent.autoRepath = true;
+            agent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+            agent.avoidancePriority = Random.Range(35, 65);
             agent.enabled = onMesh;
             if (onMesh && Application.isPlaying && agent.isOnNavMesh) agent.Warp(hit.position);
         }
@@ -204,17 +206,6 @@ namespace Kosynierzy
             head.transform.localPosition = new Vector3(0f, 1.6f, 0f);
             head.AddComponent<SphereCollider>().radius = 0.17f;
             head.AddComponent<Hitbox>();
-        }
-
-        static void Tint(GameObject go, Color color)
-        {
-            var body = go.transform.Find("Body");
-            if (body == null || !body.TryGetComponent<Renderer>(out var r)) return;
-            var block = new MaterialPropertyBlock();
-            r.GetPropertyBlock(block);
-            block.SetColor(BaseColorId, color);
-            block.SetColor(ColorId, color);
-            r.SetPropertyBlock(block);
         }
 
         static T GetOrAdd<T>(GameObject go) where T : Component

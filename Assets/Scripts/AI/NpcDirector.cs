@@ -25,6 +25,8 @@ namespace Kosynierzy
         [SerializeField] bool spawnOnStart = true;
         [Tooltip("Create sphere ForbiddenZones (hotel room 6 m, radio grounds 25 m) when the scene has no hand-made zones.")]
         [SerializeField] bool createDefaultZones = true;
+        [Tooltip("Create HidingSpots (placeholder bushes where no art stands) at miasto_zagajnik_krzaki and miasto_oslona_* not covered yet.")]
+        [SerializeField] bool createDefaultHidingSpots = true;
         [Tooltip("A city SD walks to the next miasto_patrol_sd point when it is closer than this; otherwise it wanders around its own point.")]
         [SerializeField] float maxPatrolLeg = 40f;
         [SerializeField] float cityWanderRadius = 6f;
@@ -58,6 +60,11 @@ namespace Kosynierzy
         {
             if (spawnOnStart) SpawnAll();
             if (createDefaultZones) ForbiddenZone.EnsureDefaults();
+            if (createDefaultHidingSpots)
+            {
+                int made = HidingSpot.EnsureDefaults(transform);
+                if (made > 0) Debug.Log($"Kosynierzy: NpcDirector — {made} kryjówek (krzaki / osłony) przy punktach mapy.");
+            }
         }
 
         // ---------- Mission API ----------
