@@ -78,12 +78,15 @@ namespace Kosynierzy
         }
 
         /// <summary>Plays one random line of a bark set as 3D audio at a character (no subtitles freeze).</summary>
+        /// <summary>Team A writes "Audio/a1_intro_01" (new package) or "a1_intro_01" (old); both map to Resources/Audio.</summary>
+        static string AudioPath(string audio) => audio.StartsWith("Audio/") ? audio : "Audio/" + audio;
+
         public static void Bark(string id, Vector3 position)
         {
             var lines = GetLines(id);
             if (lines == null || lines.Count == 0) return;
             var line = lines[UnityEngine.Random.Range(0, lines.Count)];
-            var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>("Audio/" + line.Audio);
+            var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>(AudioPath(line.Audio));
             if (clip != null) AudioSource.PlayClipAtPoint(clip, position);
             BarkShown?.Invoke(line, position);
         }
@@ -156,7 +159,7 @@ namespace Kosynierzy
                 CurrentLine = line;
                 SetTalking(ref speakerAnim, line.Who);
 
-                var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>("Audio/" + line.Audio);
+                var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>(AudioPath(line.Audio));
                 string shown = string.IsNullOrEmpty(line.Subtitle) ? line.Text : line.Subtitle;
                 float duration = clip != null ? clip.length + 0.25f : Mathf.Max(2f, (shown?.Length ?? 0) * 0.06f);
                 if (clip != null) voice.PlayOneShot(clip);

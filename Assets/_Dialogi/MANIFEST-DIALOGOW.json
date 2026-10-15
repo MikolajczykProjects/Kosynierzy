@@ -1,0 +1,3632 @@
+{
+  "gra": "SENDER GLEIWITZ 31.08.1939",
+  "wersja_manifestu": "1.0",
+  "opis": "Kompletny katalog wszystkich kwestii dialogowych i narracyjnych z metadanymi dla AI programisty Unity",
+  "sceny": [
+    {
+      "scena_id": "a1_intro",
+      "akt": "Akt 1 (15:30) Dworzec i hotel",
+      "miejsce_lokacja": "Dworzec kolejowy Bahnhof Gleiwitz, peron",
+      "punkt_prefab_unity": "spawn_dworzec",
+      "domyslny_wyzwalacz_unity": "Automatycznie po załadowaniu sceny i spawnie gracza",
+      "akcja_po_ukonczeniu_sceny": "Ustawienie celu w HUD: 'Idź do księgarni na Ringu'",
+      "notatka_rezyserska_sceny": "Młody chłopak wysiada z pociągu w upalny dzień. Stara się zachować spokój, ale czuje presję samotnej misji.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_intro_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_intro_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Gliwice. Wpół do czwartej, a upał jak w piecu.",
+          "napis_na_ekranie_pl": "Gliwice. Wpół do czwartej, a upał jak w piecu.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_intro_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_intro_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Po tej stronie granicy jestem Johann Krause, kupiec z Bytomia.",
+          "napis_na_ekranie_pl": "Po tej stronie granicy jestem Johann Krause, kupiec z Bytomia.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_intro_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_intro_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Centrala wie, że Niemcy coś szykują. Nie wie, gdzie ani kiedy.",
+          "napis_na_ekranie_pl": "Centrala wie, że Niemcy coś szykują. Nie wie, gdzie ani kiedy.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a1_intro_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_intro_04",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Najpierw księgarnia na Ringu. Spokojnie. Kupiec się nie spieszy.",
+          "napis_na_ekranie_pl": "Najpierw księgarnia na Ringu. Spokojnie. Kupiec się nie spieszy.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "pob_kolejarz",
+      "akt": "Akt 1 (15:35) Dworzec - misja poboczna",
+      "miejsce_lokacja": "Peron dworca przy lokomotywie",
+      "punkt_prefab_unity": "miasto_kolejarz",
+      "domyslny_wyzwalacz_unity": "Klawisz [E] przy postaci kolejarza",
+      "akcja_po_ukonczeniu_sceny": "Otrzymanie rozkładu transportów wojskowych, wpis do dziennika",
+      "notatka_rezyserska_sceny": "Gwara śląska, ściszony głos za dymem lokomotywy, lęk przed patrolami Schupo.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "pob_kolejarz_01.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_kolejarz_01",
+          "kto_mowi_kod": "kolejarz",
+          "kto_mowi_opis": "szorstki kolejarz 52 lata, cicha wściekłość, odwaga, gwara śląska",
+          "do_kogo_mowi": "Kolejarz do Kruka / Kruk do Kolejarza",
+          "tekst_wypowiadany": "Panoczku, niy stójcie tak na widoku. Podejdźcie bliżej.",
+          "napis_na_ekranie_pl": "Panie, nie stójcie tak na widoku. Podejdźcie bliżej.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "0jV1tzvbVAfi2gnVsmGg",
+          "parametry_glosu": {
+            "stability": 0.52,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "pob_kolejarz_02.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_kolejarz_02",
+          "kto_mowi_kod": "kolejarz",
+          "kto_mowi_opis": "szorstki kolejarz 52 lata, cicha wściekłość, odwaga, gwara śląska",
+          "do_kogo_mowi": "Kolejarz do Kruka / Kruk do Kolejarza",
+          "tekst_wypowiadany": "Kożdo noc jadom tu cugi z wojskiym na wschód. Armaty pod plandekami.",
+          "napis_na_ekranie_pl": "Co noc jadą tu pociągi z wojskiem na wschód. Armaty pod plandekami.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "0jV1tzvbVAfi2gnVsmGg",
+          "parametry_glosu": {
+            "stability": 0.52,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "pob_kolejarz_03.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_kolejarz_03",
+          "kto_mowi_kod": "kolejarz",
+          "kto_mowi_opis": "szorstki kolejarz 52 lata, cicha wściekłość, odwaga, gwara śląska",
+          "do_kogo_mowi": "Kolejarz do Kruka / Kruk do Kolejarza",
+          "tekst_wypowiadany": "Mom rozpiska, kiedy kery jedzie. Weź pan, ino cicho, bo mie zawrom.",
+          "napis_na_ekranie_pl": "Mam rozkład, kiedy który jedzie. Weź pan, tylko cicho, bo mnie zamkną.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "0jV1tzvbVAfi2gnVsmGg",
+          "parametry_glosu": {
+            "stability": 0.52,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "pob_kolejarz_04.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_kolejarz_04",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Kolejarz do Kruka / Kruk do Kolejarza",
+          "tekst_wypowiadany": "Nikt się nie dowie. Dziękuję.",
+          "napis_na_ekranie_pl": "Nikt się nie dowie. Dziękuję.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "pob_kolejarz_05.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_kolejarz_05",
+          "kto_mowi_kod": "kolejarz",
+          "kto_mowi_opis": "szorstki kolejarz 52 lata, cicha wściekłość, odwaga, gwara śląska",
+          "do_kogo_mowi": "Kolejarz do Kruka / Kruk do Kolejarza",
+          "tekst_wypowiadany": "Niy dziynkujcie. Jo tu mom dzieci. Idźcie z Bogiym.",
+          "napis_na_ekranie_pl": "Nie dziękujcie. Ja tu mam dzieci. Idźcie z Bogiem.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "0jV1tzvbVAfi2gnVsmGg",
+          "parametry_glosu": {
+            "stability": 0.52,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_zofia",
+      "akt": "Akt 1 (15:45) Księgarnia na Ringu",
+      "miejsce_lokacja": "Księgarnia na Ringu, zaplecze za regałami",
+      "punkt_prefab_unity": "ksiegarnia_zofia",
+      "domyslny_wyzwalacz_unity": "Interakcja [E] z panią Zofią w księgarni",
+      "akcja_po_ukonczeniu_sceny": "Gracz otrzymuje aparat fotograficzny Leica; cel misji: 'Zbadaj hotel Haus Oberschlesien'",
+      "notatka_rezyserska_sceny": "Konspiracyjny półszept, matczyna opiekuńczość i lęk przed obserwowaniem lokalu przez Gestapo.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_zofia_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Haben Sie Eichendorff? Die Ausgabe von neunzehnhundertzwölf.",
+          "napis_na_ekranie_pl": "Ma pani Eichendorffa? Wydanie z 1912 roku.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_zofia_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_02",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Nur die von neunzehnhundertzwanzig. Die ältere ist längst vergriffen.",
+          "napis_na_ekranie_pl": "Tylko z 1920. Starsze dawno się wyczerpało.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_zofia_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_03",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Dobrze, że pan jest. Mówmy cicho, tutaj ściany mają uszy.",
+          "napis_na_ekranie_pl": "Dobrze, że pan jest. Mówmy cicho, tutaj ściany mają uszy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a1_zofia_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_04",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Od kilku dni w Haus Oberschlesien na Wilhelmstraße mieszkają inżynierowie z Berlina.",
+          "napis_na_ekranie_pl": "Od kilku dni w Haus Oberschlesien na Wilhelmstraße mieszkają „inżynierowie z Berlina”.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a1_zofia_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_05",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Nie wyglądają na inżynierów. Ich szef nazywa się Naujocks.",
+          "napis_na_ekranie_pl": "Nie wyglądają na inżynierów. Ich szef nazywa się Naujocks.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 6,
+          "plik_audio": "a1_zofia_06.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_06",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Gdzie mają pokój?",
+          "napis_na_ekranie_pl": "Gdzie mają pokój?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 7,
+          "plik_audio": "a1_zofia_07.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_07",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Na piętrze. A w holu stoi telefon. Berlin dzwoni na niego bez przerwy.",
+          "napis_na_ekranie_pl": "Na piętrze. A w holu stoi telefon. Berlin dzwoni na niego bez przerwy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 8,
+          "plik_audio": "a1_zofia_08.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_08",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Niech pan to weźmie. Leica, film założony.",
+          "napis_na_ekranie_pl": "Niech pan to weźmie. Leica, film założony.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 9,
+          "plik_audio": "a1_zofia_09.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_09",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Słowu nikt nie uwierzy. Zdjęciu tak.",
+          "napis_na_ekranie_pl": "Słowu nikt nie uwierzy. Zdjęciu tak.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 10,
+          "plik_audio": "a1_zofia_10.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_10",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Oddam pani aparat.",
+          "napis_na_ekranie_pl": "Oddam pani aparat.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 11,
+          "plik_audio": "a1_zofia_11.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_zofia_11",
+          "kto_mowi_kod": "zofia",
+          "kto_mowi_opis": "kobieta 60 lat, ciepła, matczyna, cicha konspiracja, delikatna chrypka",
+          "do_kogo_mowi": "Zofia do Kruka / Kruk do Zofii",
+          "tekst_wypowiadany": "Aparat jest najmniej ważny. Niech pan wróci z filmem.",
+          "napis_na_ekranie_pl": "Aparat jest najmniej ważny. Niech pan wróci z filmem.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "vvl4R8NViXQLMnIESlif",
+          "parametry_glosu": {
+            "stability": 0.48,
+            "similarity_boost": 0.75,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_recepcja",
+      "akt": "Akt 1 (16:00) Hotel Haus Oberschlesien",
+      "miejsce_lokacja": "Hol hotelu, lada recepcji",
+      "punkt_prefab_unity": "hotel_recepcja",
+      "domyslny_wyzwalacz_unity": "Podejście do lady recepcji w holu",
+      "akcja_po_ukonczeniu_sceny": "Odblokowanie schodów na piętro do pokoju Naujocksa",
+      "notatka_rezyserska_sceny": "Elegancki, formalny język niemiecki, dystyngowany recepcjonista kontra wyluzowany kupiec Krause.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_recepcja_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_recepcja_01",
+          "kto_mowi_kod": "recepcjonista",
+          "kto_mowi_opis": "dystyngowany starszy hotelarz 62 lata, nienaganna przedwojenna uprzejmość",
+          "do_kogo_mowi": "Recepcjonista do Kruka / Kruk do Recepcjonisty",
+          "tekst_wypowiadany": "Guten Tag. Wünschen der Herr ein Zimmer?",
+          "napis_na_ekranie_pl": "Dzień dobry. Czy szanowny pan życzy sobie pokój?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "ivIjMdROHsHFVqBOKoSO",
+          "parametry_glosu": {
+            "stability": 0.65,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_recepcja_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_recepcja_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Recepcjonista do Kruka / Kruk do Recepcjonisty",
+          "tekst_wypowiadany": "Nein, danke. Ich bin hier mit einem Geschäftsfreund verabredet.",
+          "napis_na_ekranie_pl": "Nie, dziękuję. Jestem tu umówiony ze wspólnikiem.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_recepcja_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_recepcja_03",
+          "kto_mowi_kod": "recepcjonista",
+          "kto_mowi_opis": "dystyngowany starszy hotelarz 62 lata, nienaganna przedwojenna uprzejmość",
+          "do_kogo_mowi": "Recepcjonista do Kruka / Kruk do Recepcjonisty",
+          "tekst_wypowiadany": "Dann darf ich an die Bar bitten. Gleich links, mein Herr.",
+          "napis_na_ekranie_pl": "W takim razie zapraszam do baru. Zaraz na lewo, proszę pana.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "ivIjMdROHsHFVqBOKoSO",
+          "parametry_glosu": {
+            "stability": 0.65,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a1_recepcja_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_recepcja_04",
+          "kto_mowi_kod": "recepcjonista",
+          "kto_mowi_opis": "dystyngowany starszy hotelarz 62 lata, nienaganna przedwojenna uprzejmość",
+          "do_kogo_mowi": "Recepcjonista do Kruka / Kruk do Recepcjonisty",
+          "tekst_wypowiadany": "Verzeihen Sie die Unruhe heute. Wir haben Herren aus Berlin im Haus.",
+          "napis_na_ekranie_pl": "Proszę wybaczyć dzisiejszy ruch. Mamy gości z Berlina.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "ivIjMdROHsHFVqBOKoSO",
+          "parametry_glosu": {
+            "stability": 0.65,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a1_recepcja_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_recepcja_05",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Recepcjonista do Kruka / Kruk do Recepcjonisty",
+          "tekst_wypowiadany": "Ich habe Zeit. Danke sehr.",
+          "napis_na_ekranie_pl": "Mam czas. Dziękuję bardzo.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_mysl_mapa",
+      "akt": "Akt 1 (16:10) Pokój Naujocksa",
+      "miejsce_lokacja": "Piętro hotelu, pokój Naujocksa, biurko",
+      "punkt_prefab_unity": "hotel_pokoj_mapa",
+      "domyslny_wyzwalacz_unity": "Zrobienie zdjęcia mapy aparatem Leica [PPM -> LPM]",
+      "akcja_po_ukonczeniu_sceny": "Zaliczenie dowodu 1/6, cel: 'Odszukaj listę zaopatrzenia'",
+      "notatka_rezyserska_sceny": "Szybki, przyciszony oddech, świadomość bycia w jaskini lwa, dłonie nie mogą drżeć.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_mysl_mapa_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_mapa_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Plan Gliwic. Radiostacja przy Tarnowitzer Landstraße, zakreślona na czerwono.",
+          "napis_na_ekranie_pl": "Plan Gliwic. Radiostacja przy Tarnowitzer Landstraße, zakreślona na czerwono.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_mysl_mapa_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_mapa_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Obok ołówkiem: dwudziesta. Tylko dzisiaj czy jutro?",
+          "napis_na_ekranie_pl": "Obok ołówkiem: 20:00. Tylko dzisiaj czy jutro?",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_mysl_mapa_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_mapa_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Zdjęcie. Ręce nie mogą drżeć.",
+          "napis_na_ekranie_pl": "Zdjęcie. Ręce nie mogą drżeć.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_mysl_lista",
+      "akt": "Akt 1 (16:12) Pokój Naujocksa",
+      "miejsce_lokacja": "Piętro hotelu, pokój Naujocksa, stolik",
+      "punkt_prefab_unity": "hotel_pokoj_lista",
+      "domyslny_wyzwalacz_unity": "Zrobienie zdjęcia listy zaopatrzenia",
+      "akcja_po_ukonczeniu_sceny": "Zaliczenie dowodu 2/6, cel: 'Zejdź do holu i podsłuchaj rozmowę'",
+      "notatka_rezyserska_sceny": "Zrozumienie intrygi: niemieccy dywersanci przebierają się za Polaków.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_mysl_lista_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_lista_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Lista zaopatrzenia. Polskie ubrania cywilne, siedem kompletów.",
+          "napis_na_ekranie_pl": "Lista zaopatrzenia. „Polskie ubrania cywilne, siedem kompletów”.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_mysl_lista_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_lista_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Po co inżynierom z Berlina polskie ubrania?",
+          "napis_na_ekranie_pl": "Po co inżynierom z Berlina polskie ubrania?",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_mysl_lista_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_lista_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Chcą, żeby to wyglądało na nas.",
+          "napis_na_ekranie_pl": "Chcą, żeby to wyglądało na nas.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_telefon",
+      "akt": "Akt 1 (16:20) Hol hotelu",
+      "miejsce_lokacja": "Hol hotelu, budka telefoniczna na ścianie",
+      "punkt_prefab_unity": "hotel_telefon",
+      "domyslny_wyzwalacz_unity": "Gracz kuca za kolumną hotel_kolumna",
+      "akcja_po_ukonczeniu_sceny": "Rozpoczęcie sceny a1_mysl_haslo, Naujocks wychodzi z hotelu",
+      "notatka_rezyserska_sceny": "Lodowaty, służbisty pruski ton Naujocksa, krótkie odpowiedzi, padają słowa Großmutter gestorben.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_telefon_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_telefon_01",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Naujocks do Heydricha (w słuchawce telefonu)",
+          "tekst_wypowiadany": "Naujocks.",
+          "napis_na_ekranie_pl": "Naujocks.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_telefon_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_telefon_02",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Naujocks do Heydricha (w słuchawce telefonu)",
+          "tekst_wypowiadany": "Ja, ich höre.",
+          "napis_na_ekranie_pl": "Tak, słucham.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_telefon_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_telefon_03",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Naujocks do Heydricha (w słuchawce telefonu)",
+          "tekst_wypowiadany": "Bitte wiederholen.",
+          "napis_na_ekranie_pl": "Proszę powtórzyć.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a1_telefon_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_telefon_04",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Naujocks do Heydricha (w słuchawce telefonu)",
+          "tekst_wypowiadany": "Großmutter gestorben. Verstanden.",
+          "napis_na_ekranie_pl": "Babcia umarła. Zrozumiałem.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a1_telefon_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_telefon_05",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Naujocks do Heydricha (w słuchawce telefonu)",
+          "tekst_wypowiadany": "Heute Abend, wie besprochen. Meine Leute sind bereit.",
+          "napis_na_ekranie_pl": "Dziś wieczorem, jak ustalono. Moi ludzie są gotowi.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_mysl_haslo",
+      "akt": "Akt 1 (16:22) Hol hotelu",
+      "miejsce_lokacja": "Hol hotelu za kolumną",
+      "punkt_prefab_unity": "hotel_kolumna",
+      "domyslny_wyzwalacz_unity": "Po odłożeniu słuchawki przez Naujocksa",
+      "akcja_po_ukonczeniu_sceny": "Koniec Aktu 1, przejście do Aktu 2: 'Śledź auto SD na północ'",
+      "notatka_rezyserska_sceny": "Kruk łączy fakty: hasło oznacza start prowokacji dziś o 20:00.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_mysl_haslo_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_haslo_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Babcia umarła. Nikt nie odbiera takiej wiadomości tak spokojnie.",
+          "napis_na_ekranie_pl": "Babcia umarła. Nikt nie odbiera takiej wiadomości tak spokojnie.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_mysl_haslo_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_mysl_haslo_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "To hasło. Zaczynają dziś. Na mapie była dwudziesta.",
+          "napis_na_ekranie_pl": "To hasło. Zaczynają dziś. Na mapie była 20:00.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_start",
+      "akt": "Akt 2 (16:30) Przez miasto",
+      "miejsce_lokacja": "Wilhelmstraße przed hotelem",
+      "punkt_prefab_unity": "miasto_drzwi_hotel",
+      "domyslny_wyzwalacz_unity": "Wyjście z hotelu na ulicę, start auta SD",
+      "akcja_po_ukonczeniu_sceny": "Rozpoczęcie sekwencji śledzenia auta SD (dystans 8-40 m)",
+      "notatka_rezyserska_sceny": "Czujność, wtopienie się w tłum przechodniów.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_start_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_start_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Czarne auto spod hotelu. Rusza na północ.",
+          "napis_na_ekranie_pl": "Czarne auto spod hotelu. Rusza na północ.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_start_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_start_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Trzymam się za nim. Nie za blisko.",
+          "napis_na_ekranie_pl": "Trzymam się za nim. Nie za blisko.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "pob_fotograf_przed",
+      "akt": "Akt 2 (17:00) Studio fotograficzne",
+      "miejsce_lokacja": "Zakład fotograficzny na Ringu",
+      "punkt_prefab_unity": "spawn_fotograf",
+      "domyslny_wyzwalacz_unity": "Wejście do zakładu fotograficznego",
+      "akcja_po_ukonczeniu_sceny": "Wejście agenta Gestapo do lokalu",
+      "notatka_rezyserska_sceny": "Fotograf jest spięty, przeczuwa kłopoty.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "pob_fotograf_przed_01.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_przed_01",
+          "kto_mowi_kod": "fotograf",
+          "kto_mowi_opis": "zastraszony świadek 42 lata, paranoiczny szept w ciemni",
+          "do_kogo_mowi": "Fotograf do Kruka",
+          "tekst_wypowiadany": "Niech pan mówi ciszej. Na zapleczu siedzi jeden z Gestapo.",
+          "napis_na_ekranie_pl": "Niech pan mówi ciszej. Na zapleczu siedzi jeden z Gestapo.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "arOJlj7dMnHAkvd6RbFT",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "pob_fotograf_przed_02.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_przed_02",
+          "kto_mowi_kod": "fotograf",
+          "kto_mowi_opis": "zastraszony świadek 42 lata, paranoiczny szept w ciemni",
+          "do_kogo_mowi": "Fotograf do Kruka",
+          "tekst_wypowiadany": "Pilnuje mnie od rana. Myśli, że robię odbitki dla Polaków.",
+          "napis_na_ekranie_pl": "Pilnuje mnie od rana. Myśli, że robię odbitki dla Polaków.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "arOJlj7dMnHAkvd6RbFT",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "pob_fotograf_przed_03.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_przed_03",
+          "kto_mowi_kod": "fotograf",
+          "kto_mowi_opis": "zastraszony świadek 42 lata, paranoiczny szept w ciemni",
+          "do_kogo_mowi": "Fotograf do Kruka",
+          "tekst_wypowiadany": "I ma rację. Niech pan uważa, idzie tutaj.",
+          "napis_na_ekranie_pl": "I ma rację. Niech pan uważa, idzie tutaj.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "arOJlj7dMnHAkvd6RbFT",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "pob_fotograf_gestapo",
+      "akt": "Akt 2 (17:02) Studio fotograficzne",
+      "miejsce_lokacja": "Zakład fotograficzny na Ringu",
+      "punkt_prefab_unity": "fotograf_gestapo",
+      "domyslny_wyzwalacz_unity": "Dialog automatyczny w zakładzie fotografa",
+      "akcja_po_ukonczeniu_sceny": "Gestapo odchodzi przekonane o tożsamości kupca z Bytomia",
+      "notatka_rezyserska_sceny": "Cyniczne przesłuchanie z drapieżnym spokojem; Kruk blefuje śląskim akcentem.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "pob_fotograf_gestapo_01.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_01",
+          "kto_mowi_kod": "gestapo",
+          "kto_mowi_opis": "cyniczny tajniak 38 lat, cichy drapieżny baryton, powolna groźba",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Moment mal. Sie da. Ihre Papiere.",
+          "napis_na_ekranie_pl": "Chwileczkę. Pan tam. Dokumenty.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "XLrJ2VcairEfAqTy97xO",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.3
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "pob_fotograf_gestapo_02.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Bitte sehr. Krause, Johann. Kaufmann aus Beuthen.",
+          "napis_na_ekranie_pl": "Proszę bardzo. Krause, Johann. Kupiec z Bytomia.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "pob_fotograf_gestapo_03.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_03",
+          "kto_mowi_kod": "gestapo",
+          "kto_mowi_opis": "cyniczny tajniak 38 lat, cichy drapieżny baryton, powolna groźba",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Und was sucht ein Kaufmann aus Beuthen beim Fotografen in Gleiwitz?",
+          "napis_na_ekranie_pl": "A czego szuka kupiec z Bytomia u fotografa w Gliwicach?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "XLrJ2VcairEfAqTy97xO",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.3
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "pob_fotograf_gestapo_04.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_04",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Ich hole Bilder ab. Von der Hochzeit meiner Schwester.",
+          "napis_na_ekranie_pl": "Odbieram zdjęcia. Ze ślubu mojej siostry.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "pob_fotograf_gestapo_05.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_05",
+          "kto_mowi_kod": "gestapo",
+          "kto_mowi_opis": "cyniczny tajniak 38 lat, cichy drapieżny baryton, powolna groźba",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Sie sprechen wie ein Pole.",
+          "napis_na_ekranie_pl": "Mówi pan jak Polak.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "XLrJ2VcairEfAqTy97xO",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.3
+          }
+        },
+        {
+          "numer_kolejny": 6,
+          "plik_audio": "pob_fotograf_gestapo_06.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_06",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Ich spreche wie ein Oberschlesier. Wie die halbe Stadt.",
+          "napis_na_ekranie_pl": "Mówię jak Górnoślązak. Jak pół miasta.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 7,
+          "plik_audio": "pob_fotograf_gestapo_07.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_gestapo_07",
+          "kto_mowi_kod": "gestapo",
+          "kto_mowi_opis": "cyniczny tajniak 38 lat, cichy drapieżny baryton, powolna groźba",
+          "do_kogo_mowi": "Gestapo do Kruka / Kruk do Gestapo",
+          "tekst_wypowiadany": "Na gut. Gehen Sie. Und halten Sie sich von Ärger fern.",
+          "napis_na_ekranie_pl": "No dobrze. Proszę iść. I trzymać się z dala od kłopotów.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "XLrJ2VcairEfAqTy97xO",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.3
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "pob_fotograf_po",
+      "akt": "Akt 2 (17:05) Studio fotograficzne",
+      "miejsce_lokacja": "Ciemnia fotograficzna na zapleczu",
+      "punkt_prefab_unity": "fotograf_ciemnia",
+      "domyslny_wyzwalacz_unity": "Przejście za ladę do ciemni",
+      "akcja_po_ukonczeniu_sceny": "Zabezpieczenie zapasowej kopii kliszy",
+      "notatka_rezyserska_sceny": "Cichy szept przy czerwonym świetle ciemni.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "pob_fotograf_po_01.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_po_01",
+          "kto_mowi_kod": "fotograf",
+          "kto_mowi_opis": "zastraszony świadek 42 lata, paranoiczny szept w ciemni",
+          "do_kogo_mowi": "Fotograf do Kruka / Kruk do Fotografa",
+          "tekst_wypowiadany": "Poszedł. Myślałem, że już po nas.",
+          "napis_na_ekranie_pl": "Poszedł. Myślałem, że już po nas.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "arOJlj7dMnHAkvd6RbFT",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "pob_fotograf_po_02.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_po_02",
+          "kto_mowi_kod": "fotograf",
+          "kto_mowi_opis": "zastraszony świadek 42 lata, paranoiczny szept w ciemni",
+          "do_kogo_mowi": "Fotograf do Kruka / Kruk do Fotografa",
+          "tekst_wypowiadany": "Wywołam to w ciemni. Po dwie odbitki z każdej klatki.",
+          "napis_na_ekranie_pl": "Wywołam to w ciemni. Po dwie odbitki z każdej klatki.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "arOJlj7dMnHAkvd6RbFT",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "pob_fotograf_po_03.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_po_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Fotograf do Kruka / Kruk do Fotografa",
+          "tekst_wypowiadany": "Jedna kopia zostaje u pana. Gdyby mnie złapali.",
+          "napis_na_ekranie_pl": "Jedna kopia zostaje u pana. Gdyby mnie złapali.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "pob_fotograf_po_04.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_fotograf_po_04",
+          "kto_mowi_kod": "fotograf",
+          "kto_mowi_opis": "zastraszony świadek 42 lata, paranoiczny szept w ciemni",
+          "do_kogo_mowi": "Fotograf do Kruka / Kruk do Fotografa",
+          "tekst_wypowiadany": "Schowam ją za ramą portretu ślubnego. Tam nikt nie zagląda.",
+          "napis_na_ekranie_pl": "Schowam ją za ramą portretu ślubnego. Tam nikt nie zagląda.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "arOJlj7dMnHAkvd6RbFT",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "pob_skrytka",
+      "akt": "Akt 2 (17:30) Rzeka Kłodnica",
+      "miejsce_lokacja": "Pod mostem przy Tarnowitzer Landstraße",
+      "punkt_prefab_unity": "miasto_skrytka_most",
+      "domyslny_wyzwalacz_unity": "Otwarcie skrzynki OB_Skrytka pod mostem",
+      "akcja_po_ukonczeniu_sceny": "Dodanie 8 nabojów do pistoletu Vis wz. 35",
+      "notatka_rezyserska_sceny": "Ulga po znalezieniu skrytki wywiadu, nadzieja, że broń nie będzie potrzebna.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "pob_skrytka_01.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_skrytka_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Skrytka pod mostem na Kłodnicy. Trzeci kamień od lewej, tak jak mówili w Katowicach.",
+          "napis_na_ekranie_pl": "Skrytka pod mostem na Kłodnicy. Trzeci kamień od lewej, tak jak mówili w Katowicach.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "pob_skrytka_02.mp3",
+          "sciezka_zasobu_unity": "Audio/pob_skrytka_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Osiem naboi do Visa. Oby zostały w magazynku.",
+          "napis_na_ekranie_pl": "Osiem naboi do Visa. Oby zostały w magazynku.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_zmrok",
+      "akt": "Akt 2 (19:00) Zmrok w mieście",
+      "miejsce_lokacja": "Tarnowitzer Landstraße, północ Gliwic",
+      "punkt_prefab_unity": "miasto_auto_sd_trasa_3",
+      "domyslny_wyzwalacz_unity": "Godzina 19:00 w zegarze gry, włączenie latarni ulicznych",
+      "akcja_po_ukonczeniu_sceny": "Zmniejszenie zasięgu wzroku wrogów w cieniu, latarnie stają się źródłem ryzyka",
+      "notatka_rezyserska_sceny": "Niepokój, zmierzch, narastający chłód i świadomość uciekającego czasu.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_zmrok_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zmrok_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Dziewiętnasta. Zmierzcha, a powietrze dalej stoi.",
+          "napis_na_ekranie_pl": "19:00. Zmierzcha, a powietrze dalej stoi.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_zmrok_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zmrok_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Zapalają latarnie. Każda to świadek. Trzymam się cienia.",
+          "napis_na_ekranie_pl": "Zapalają latarnie. Każda to świadek. Trzymam się cienia.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_auto_daleko",
+      "akt": "Akt 2 (16:30-19:30) Śledzenie auta",
+      "miejsce_lokacja": "Ulica w Gliwicach",
+      "punkt_prefab_unity": "miasto_auto_sd_trasa_1",
+      "domyslny_wyzwalacz_unity": "Dystans gracza do auta SD przekracza 40 m",
+      "akcja_po_ukonczeniu_sceny": "Ostrzeżenie na ekranie, ryzyko zerwania śledzenia",
+      "notatka_rezyserska_sceny": "Nerwowe ponaglenie samego siebie.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_auto_daleko_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_auto_daleko_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Tracę ich. Szybciej, zanim skręcą.",
+          "napis_na_ekranie_pl": "Tracę ich. Szybciej, zanim skręcą.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_auto_daleko_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_auto_daleko_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Gdzie to auto? Bez niego nie znajdę reszty.",
+          "napis_na_ekranie_pl": "Gdzie to auto? Bez niego nie znajdę reszty.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_auto_blisko",
+      "akt": "Akt 2 (16:30-19:30) Śledzenie auta",
+      "miejsce_lokacja": "Ulica w Gliwicach",
+      "punkt_prefab_unity": "miasto_auto_sd_trasa_2",
+      "domyslny_wyzwalacz_unity": "Dystans gracza do auta SD spada poniżej 8 m",
+      "akcja_po_ukonczeniu_sceny": "Pasek podejrzenia kierowcy rośnie",
+      "notatka_rezyserska_sceny": "Przymuszenie się do zwolnienia kroku.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_auto_blisko_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_auto_blisko_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Za blisko. Kierowca patrzy w lusterko.",
+          "napis_na_ekranie_pl": "Za blisko. Kierowca patrzy w lusterko.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_auto_blisko_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_auto_blisko_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Zwolnij. Kupiec z Bytomia nie goni samochodów.",
+          "napis_na_ekranie_pl": "Zwolnij. Kupiec z Bytomia nie goni samochodów.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_most",
+      "akt": "Akt 2 (19:15) Most na Kłodnicy",
+      "miejsce_lokacja": "Most przy Tarnowitzer Landstraße",
+      "punkt_prefab_unity": "miasto_skrytka_most",
+      "domyslny_wyzwalacz_unity": "Wejście na most, widok na 111-metrową wieżę",
+      "akcja_po_ukonczeniu_sceny": "Aktualizacja celu: 'Dotrzyj w rejon radiostacji przed 20:00'",
+      "notatka_rezyserska_sceny": "Widok drewnianej wieży dominującej nad horyzontem.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_most_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_most_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Kłodnica. Nad dachami wieża radiostacji, ponad sto metrów drewna.",
+          "napis_na_ekranie_pl": "Kłodnica. Nad dachami wieża radiostacji, ponad sto metrów drewna.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_most_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_most_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Do ósmej zostało niewiele.",
+          "napis_na_ekranie_pl": "Do ósmej zostało niewiele.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_zagajnik",
+      "akt": "Akt 2 (19:40) Zagajnik przy radiostacji",
+      "miejsce_lokacja": "Zagajnik na zachód od radiostacji",
+      "punkt_prefab_unity": "miasto_zagajnik_auto",
+      "domyslny_wyzwalacz_unity": "Gracz dociera do punktu miasto_zagajnik_krzaki i kuca",
+      "akcja_po_ukonczeniu_sceny": "Rozpoczęcie sceny a2_mysl_konserwa, możliwość zrobienia zdjęcia",
+      "notatka_rezyserska_sceny": "Niemieccy żołnierze wyciągają z auta nieprzytomnego Honioka. Szorstkie dialogi.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_zagajnik_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zagajnik_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierze SD do Naujocksa i między sobą",
+          "tekst_wypowiadany": "Er ist bewusstlos. Wohin mit ihm?",
+          "napis_na_ekranie_pl": "Jest nieprzytomny. Gdzie go dać?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_zagajnik_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zagajnik_02",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Żołnierze SD do Naujocksa i między sobą",
+          "tekst_wypowiadany": "Unsere Konserve. Er kommt später zum Eingang.",
+          "napis_na_ekranie_pl": "Nasza konserwa. Później pójdzie pod wejście.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a2_zagajnik_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zagajnik_03",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Żołnierze SD do Naujocksa i między sobą",
+          "tekst_wypowiadany": "Jetzt umziehen. Die Zivilsachen liegen im Wagen.",
+          "napis_na_ekranie_pl": "Teraz się przebrać. Cywilne rzeczy leżą w aucie.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a2_zagajnik_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zagajnik_04",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Żołnierze SD do Naujocksa i między sobą",
+          "tekst_wypowiadany": "Ab jetzt seid ihr Polen. Wer Polnisch kann, ruft. Die anderen schweigen.",
+          "napis_na_ekranie_pl": "Od teraz jesteście Polakami. Kto zna polski, krzyczy. Reszta milczy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a2_zagajnik_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zagajnik_05",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierze SD do Naujocksa i między sobą",
+          "tekst_wypowiadany": "Und wenn uns jemand sieht?",
+          "napis_na_ekranie_pl": "A jeśli ktoś nas zobaczy?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 6,
+          "plik_audio": "a2_zagajnik_06.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_zagajnik_06",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Żołnierze SD do Naujocksa i między sobą",
+          "tekst_wypowiadany": "Dann hat er Polen gesehen. Um acht sind wir drin.",
+          "napis_na_ekranie_pl": "To widział Polaków. O ósmej jesteśmy w środku.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a2_mysl_konserwa",
+      "akt": "Akt 2 (19:45) Zagajnik przy radiostacji",
+      "miejsce_lokacja": "Zagajnik w krzakach",
+      "punkt_prefab_unity": "miasto_zagajnik_krzaki",
+      "domyslny_wyzwalacz_unity": "Zrobienie zdjęcia auta z nieprzytomnym Honiokiem",
+      "akcja_po_ukonczeniu_sceny": "Zaliczenie dowodu 3/6, przejście do Aktu 3: 'Przedostań się do radiostacji'",
+      "notatka_rezyserska_sceny": "Głęboki szok i bezsilność: Kruk widzi człowieka przeznaczonego na rzeź, ale nie może go odbić w pojedynkę.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a2_mysl_konserwa_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_mysl_konserwa_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Przywieźli go nieprzytomnego. To nie żołnierz, to ktoś stąd.",
+          "napis_na_ekranie_pl": "Przywieźli go nieprzytomnego. To nie żołnierz, to ktoś stąd.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a2_mysl_konserwa_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_mysl_konserwa_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Ich jest sześciu, ja jeden. Nie odbiję go.",
+          "napis_na_ekranie_pl": "Ich jest sześciu, ja jeden. Nie odbiję go.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a2_mysl_konserwa_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a2_mysl_konserwa_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Zostaje mi zdjęcie. Żeby kiedyś ktoś zapytał, kim był.",
+          "napis_na_ekranie_pl": "Zostaje mi zdjęcie. Żeby kiedyś ktoś zapytał, kim był.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a1_hotel_goscie",
+      "akt": "Akt 1 (16:00) Hol hotelu",
+      "miejsce_lokacja": "Hol hotelu Haus Oberschlesien",
+      "punkt_prefab_unity": "hotel_kolumna",
+      "domyslny_wyzwalacz_unity": "Ambientowe dialogi w holu hotelowym",
+      "akcja_po_ukonczeniu_sceny": "Budowanie tła epoki",
+      "notatka_rezyserska_sceny": "Plotki o inżynierach z Berlina.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a1_hotel_goscie_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_hotel_goscie_01",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Goście hotelowi między sobą",
+          "tekst_wypowiadany": "Bei dieser Hitze sollte man gar nicht arbeiten.",
+          "napis_na_ekranie_pl": "W taki upał w ogóle nie powinno się pracować.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a1_hotel_goscie_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_hotel_goscie_02",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Goście hotelowi między sobą",
+          "tekst_wypowiadany": "Herr Ober, noch ein Bier, bitte. Aber kalt.",
+          "napis_na_ekranie_pl": "Kelner, jeszcze jedno piwo. Ale zimne.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a1_hotel_goscie_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_hotel_goscie_03",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Goście hotelowi między sobą",
+          "tekst_wypowiadany": "Man sagt, die Grenze wird bald ganz geschlossen.",
+          "napis_na_ekranie_pl": "Mówią, że granicę wkrótce całkiem zamkną.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a1_hotel_goscie_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a1_hotel_goscie_04",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Goście hotelowi między sobą",
+          "tekst_wypowiadany": "Meine Frau will morgen nach Breslau, solange die Züge noch fahren.",
+          "napis_na_ekranie_pl": "Żona chce jutro jechać do Wrocławia, póki jeszcze jeżdżą pociągi.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_przechodnie",
+      "akt": "Akty 1 i 2 (Całe miasto)",
+      "miejsce_lokacja": "Ulice Wilhelmstraße i Ring",
+      "punkt_prefab_unity": "miasto_tlum_1",
+      "domyslny_wyzwalacz_unity": "Losowo podczas mijania tłumu na chodnikach",
+      "akcja_po_ukonczeniu_sceny": "Tło życia miejskiego w 1939 r.",
+      "notatka_rezyserska_sceny": "Gawędy o pogodzie, zbliżającej się wojnie i cenach.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_przechodnie_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_01",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Was für eine Hitze. Seit Tagen kein Tropfen Regen.",
+          "napis_na_ekranie_pl": "Co za upał. Od dni ani kropli deszczu.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_przechodnie_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_02",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Ale gorko. Bez dyszczu ziymniaki ani niy urosnom.",
+          "napis_na_ekranie_pl": "Ale gorąco. Bez deszczu ziemniaki nawet nie urosną.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_przechodnie_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_03",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Mein Schwager hat gestern seinen Gestellungsbefehl bekommen.",
+          "napis_na_ekranie_pl": "Szwagier dostał wczoraj wezwanie do wojska.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "bark_przechodnie_04.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_04",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Żniwa jeszcze niy zebrane, a już godajom o wojnie.",
+          "napis_na_ekranie_pl": "Żniwa jeszcze niezebrane, a już mówią o wojnie.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "bark_przechodnie_05.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_05",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Seit Montag gibt es Butter nur noch auf Karte.",
+          "napis_na_ekranie_pl": "Od poniedziałku masło jest już tylko na kartki.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 6,
+          "plik_audio": "bark_przechodnie_06.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_06",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Ludzie wykupujom cuker i mąka, jakby jutro miało niy być.",
+          "napis_na_ekranie_pl": "Ludzie wykupują cukier i mąkę, jakby jutra miało nie być.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 7,
+          "plik_audio": "bark_przechodnie_07.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_07",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Im Radio sagen sie, an der Grenze wird geschossen.",
+          "napis_na_ekranie_pl": "W radiu mówią, że na granicy strzelają.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        },
+        {
+          "numer_kolejny": 8,
+          "plik_audio": "bark_przechodnie_08.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_przechodnie_08",
+          "kto_mowi_kod": "przechodzien",
+          "kto_mowi_opis": "cywil z Gliwic 30 lat, codzienny ton przechodzący w panikę",
+          "do_kogo_mowi": "Przechodnie między sobą",
+          "tekst_wypowiadany": "Wojna, niy wojna, a na gruba i tak trza iść.",
+          "napis_na_ekranie_pl": "Wojna czy nie wojna, a do kopalni i tak trzeba iść.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "FbVL7HHG6LeuYWuP1Tue",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.2
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_wejscie",
+      "akt": "Akt 3 (20:00) Radiostacja",
+      "miejsce_lokacja": "Teren stacji za szopą, dziura w płocie",
+      "punkt_prefab_unity": "spawn_radio_tyl",
+      "domyslny_wyzwalacz_unity": "Przejście przez dziurę w siatce za radiostacją",
+      "akcja_po_ukonczeniu_sceny": "Cel misji: 'Wejdź do budynku nadajnika'",
+      "notatka_rezyserska_sceny": "Koncentracja przed skokiem w niebezpieczeństwo.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_wejscie_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_wejscie_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Ósma. Od frontu stoi auto i palą się światła. Wchodzę od tyłu.",
+          "napis_na_ekranie_pl": "Ósma. Od frontu stoi auto i palą się światła. Wchodzę od tyłu.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_wejscie_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_wejscie_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Płot przy szopie jest niski. Nikt go nie pilnuje, bo oni nie spodziewają się świadków.",
+          "napis_na_ekranie_pl": "Płot przy szopie jest niski. Nikt go nie pilnuje, bo oni nie spodziewają się świadków.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_wejscie_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_wejscie_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Kupiec z Bytomia został w mieście. Tutaj jestem tylko okiem aparatu.",
+          "napis_na_ekranie_pl": "Kupiec z Bytomia został w mieście. Tutaj jestem tylko okiem aparatu.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_sd_udaja",
+      "akt": "Akt 3 (20:01) Wnętrze radiostacji",
+      "miejsce_lokacja": "Hol budynku nadajnika",
+      "punkt_prefab_unity": "radio_drzwi_wyjscie",
+      "domyslny_wyzwalacz_unity": "Wtargnięcie napastników do wnętrza",
+      "akcja_po_ukonczeniu_sceny": "Obezwładnienie załogi i zamknięcie w piwnicy",
+      "notatka_rezyserska_sceny": "Komicznie zły, przerysowany 'polski' w wykonaniu Niemców: 'Rence do góry!'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_sd_udaja_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sd_udaja_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "SD do załogi stacji (udają powstańców)",
+          "tekst_wypowiadany": "Rence do góry. Tu polska powstańcy.",
+          "napis_na_ekranie_pl": "Ręce do góry. Tu polscy powstańcy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_sd_udaja_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sd_udaja_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "SD do załogi stacji (udają powstańców)",
+          "tekst_wypowiadany": "Na ziemia, szybko. Niech żyje Polska.",
+          "napis_na_ekranie_pl": "Na ziemię, szybko. Niech żyje Polska.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_sd_udaja_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sd_udaja_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "SD do załogi stacji (udają powstańców)",
+          "tekst_wypowiadany": "Lauter. Man soll uns bis zur Straße hören.",
+          "napis_na_ekranie_pl": "Głośniej. Mają nas słyszeć aż na ulicy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a3_sd_udaja_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sd_udaja_04",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "SD do załogi stacji (udają powstańców)",
+          "tekst_wypowiadany": "Schneller. Wir haben nur ein paar Minuten.",
+          "napis_na_ekranie_pl": "Szybciej. Mamy tylko kilka minut.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a3_sd_udaja_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sd_udaja_05",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "SD do załogi stacji (udają powstańców)",
+          "tekst_wypowiadany": "Zwei Mann in den Senderaum. Der Rest hält die Tür.",
+          "napis_na_ekranie_pl": "Dwóch do sali nadawczej. Reszta pilnuje drzwi.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_brak_sygnalu",
+      "akt": "Akt 3 (20:02) Sterownia radiostacji",
+      "miejsce_lokacja": "Sterownia nadajnika",
+      "punkt_prefab_unity": "radio_sterownia_mikrofon",
+      "domyslny_wyzwalacz_unity": "Nieudana próba odpalenia głównego pulpitu",
+      "akcja_po_ukonczeniu_sceny": "Podłączenie mikrofonu burzowego, przygotowanie odezwy",
+      "notatka_rezyserska_sceny": "Frustracja i nerwy dywersantów, którzy nie znają obsługi aparatury.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_brak_sygnalu_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_brak_sygnalu_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "SD do Naujocksa",
+          "tekst_wypowiadany": "Der Sender geht nicht. Wir finden den richtigen Schalter nicht.",
+          "napis_na_ekranie_pl": "Nadajnik nie działa. Nie możemy znaleźć właściwego przełącznika.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_brak_sygnalu_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_brak_sygnalu_02",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "SD do Naujocksa",
+          "tekst_wypowiadany": "Was heißt, er geht nicht? Wo ist der Techniker?",
+          "napis_na_ekranie_pl": "Jak to nie działa? Gdzie jest technik?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_brak_sygnalu_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_brak_sygnalu_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "SD do Naujocksa",
+          "tekst_wypowiadany": "Im Keller eingesperrt. Wie befohlen.",
+          "napis_na_ekranie_pl": "Zamknięty w piwnicy. Tak jak pan kazał.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a3_brak_sygnalu_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_brak_sygnalu_04",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "SD do Naujocksa",
+          "tekst_wypowiadany": "Dann das Gewittermikrofon. Damit warnen sie vor Unwettern. Es geht direkt hinaus.",
+          "napis_na_ekranie_pl": "To mikrofon burzowy. Nim ostrzegają przed burzą. Idzie prosto w eter.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a3_brak_sygnalu_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_brak_sygnalu_05",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "SD do Naujocksa",
+          "tekst_wypowiadany": "Gefunden. Es ist an.",
+          "napis_na_ekranie_pl": "Jest. Włączony.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_komunikat",
+      "akt": "Akt 3 (20:03) Sterownia radiostacji",
+      "miejsce_lokacja": "Sterownia, mikrofon burzowy",
+      "punkt_prefab_unity": "radio_sterownia_mikrofon",
+      "domyslny_wyzwalacz_unity": "Włączenie mikrofonu burzowego, start zegara 90 sekund",
+      "akcja_po_ukonczeniu_sceny": "Pasek czasu na HUD: 90 s na przecięcie linii wzmacniacza",
+      "notatka_rezyserska_sceny": "Niemiec czyta po polsku z łamanym, twardym akcentem; trzęsący się ze stresu głos.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_komunikat_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_komunikat_01",
+          "kto_mowi_kod": "heinz",
+          "kto_mowi_opis": "esesman przebrany za powstańca, histeria i panika, niemiecki akcent w odezwie",
+          "do_kogo_mowi": "Heinz do mikrofonu (w eter radiowy)",
+          "tekst_wypowiadany": "Uwaga! Tu Gliwice. Rozgłośnia znajduje się w rękach polskich.",
+          "napis_na_ekranie_pl": "Uwaga! Tu Gliwice. Rozgłośnia znajduje się w rękach polskich.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "2wDJWNGYHVUm5Ckr5hV9",
+          "parametry_glosu": {
+            "stability": 0.28,
+            "similarity_boost": 0.7,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_komunikat_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_komunikat_02",
+          "kto_mowi_kod": "heinz",
+          "kto_mowi_opis": "esesman przebrany za powstańca, histeria i panika, niemiecki akcent w odezwie",
+          "do_kogo_mowi": "Heinz do mikrofonu (w eter radiowy)",
+          "tekst_wypowiadany": "Wzywamy wszystkich Polaków na Śląsku.",
+          "napis_na_ekranie_pl": "Wzywamy wszystkich Polaków na Śląsku.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "2wDJWNGYHVUm5Ckr5hV9",
+          "parametry_glosu": {
+            "stability": 0.28,
+            "similarity_boost": 0.7,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_komunikat_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_komunikat_03",
+          "kto_mowi_kod": "heinz",
+          "kto_mowi_opis": "esesman przebrany za powstańca, histeria i panika, niemiecki akcent w odezwie",
+          "do_kogo_mowi": "Heinz do mikrofonu (w eter radiowy)",
+          "tekst_wypowiadany": "Godzina wolności wybiła.",
+          "napis_na_ekranie_pl": "Godzina wolności wybiła.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "2wDJWNGYHVUm5Ckr5hV9",
+          "parametry_glosu": {
+            "stability": 0.28,
+            "similarity_boost": 0.7,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a3_komunikat_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_komunikat_04",
+          "kto_mowi_kod": "heinz",
+          "kto_mowi_opis": "esesman przebrany za powstańca, histeria i panika, niemiecki akcent w odezwie",
+          "do_kogo_mowi": "Heinz do mikrofonu (w eter radiowy)",
+          "tekst_wypowiadany": "Reicht das? Hört uns da draußen überhaupt jemand?",
+          "napis_na_ekranie_pl": "Wystarczy? Czy ktoś nas tam w ogóle słyszy?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "2wDJWNGYHVUm5Ckr5hV9",
+          "parametry_glosu": {
+            "stability": 0.28,
+            "similarity_boost": 0.7,
+            "style": 0.45
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_mysl_kable",
+      "akt": "Akt 3 (20:03) Pokój techniczny łącznicy",
+      "miejsce_lokacja": "Pokój techniczny z szafami łącznicy",
+      "punkt_prefab_unity": "radio_technika_kable",
+      "domyslny_wyzwalacz_unity": "Podejście do tablicy OB_Lacznica i kartki Grubera",
+      "akcja_po_ukonczeniu_sceny": "Początek mini-gry przecinania kabli (kabel 1, 2, 3)",
+      "notatka_rezyserska_sceny": "Wyścig z czasem, sekundy uciekają, pomyłka kosztuje życie.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_mysl_kable_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_mysl_kable_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Kartka przy szafie, podpisana Gruber. Linia, wzmacniacz, zasilanie. W tej kolejności.",
+          "napis_na_ekranie_pl": "Kartka przy szafie, podpisana Gruber. Linia, wzmacniacz, zasilanie. W tej kolejności.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_mysl_kable_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_mysl_kable_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Jeśli odepnę ich od linii, nie powiedzą wszystkiego, co chcieli.",
+          "napis_na_ekranie_pl": "Jeśli odepnę ich od linii, nie powiedzą wszystkiego, co chcieli.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_mysl_kable_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_mysl_kable_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Dziewięćdziesiąt sekund. Potem ktoś tu zajrzy.",
+          "napis_na_ekranie_pl": "90 sekund. Potem ktoś tu zajrzy.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_kabel_zly",
+      "akt": "Akt 3 (20:04) Pokój techniczny",
+      "miejsce_lokacja": "Tablica łącznicy",
+      "punkt_prefab_unity": "radio_technika_kable",
+      "domyslny_wyzwalacz_unity": "Gracz przeciął niewłaściwy kabel (zwarcie, iskry)",
+      "akcja_po_ukonczeniu_sceny": "Utrata 15 sekund z licznika, strażnik idzie sprawdzić hałas",
+      "notatka_rezyserska_sceny": "Panika, snop iskier, kroki na korytarzu.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_kabel_zly_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_kabel_zly_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Nie ten. Iskra.",
+          "napis_na_ekranie_pl": "Nie ten. Iskra.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_kabel_zly_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_kabel_zly_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Kruk do siebie / SD na korytarzu",
+          "tekst_wypowiadany": "Was war das? Hinten hat es geknallt.",
+          "napis_na_ekranie_pl": "Co to było? Z tyłu coś trzasnęło.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_kabel_zly_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_kabel_zly_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Kruk do siebie / SD na korytarzu",
+          "tekst_wypowiadany": "Geh nachsehen. Sofort.",
+          "napis_na_ekranie_pl": "Idź zobacz. Natychmiast.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_sygnal_urwany",
+      "akt": "Akt 3 (20:04) Pokój techniczny i sterownia",
+      "miejsce_lokacja": "Tablica łącznicy",
+      "punkt_prefab_unity": "radio_technika_kable",
+      "domyslny_wyzwalacz_unity": "Przecięcie właściwego kabla (sukces mini-gry)",
+      "akcja_po_ukonczeniu_sceny": "Zatrzymanie licznika, cel: 'Opcjonalnie: uwolnij załogę z piwnicy'",
+      "notatka_rezyserska_sceny": "Mikrofon gaśnie, Heinz krzyczy w panice, Kruk oddycha z ulgą.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_sygnal_urwany_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sygnal_urwany_01",
+          "kto_mowi_kod": "heinz",
+          "kto_mowi_opis": "esesman przebrany za powstańca, histeria i panika, niemiecki akcent w odezwie",
+          "do_kogo_mowi": "Heinz, Naujocks, Kruk",
+          "tekst_wypowiadany": "Die Leitung ist tot. Ich bin nicht mehr drauf.",
+          "napis_na_ekranie_pl": "Linia padła. Już nie nadaję.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "2wDJWNGYHVUm5Ckr5hV9",
+          "parametry_glosu": {
+            "stability": 0.28,
+            "similarity_boost": 0.7,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_sygnal_urwany_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sygnal_urwany_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Heinz, Naujocks, Kruk",
+          "tekst_wypowiadany": "Wer war das? Ist hier noch jemand?",
+          "napis_na_ekranie_pl": "Kto to zrobił? Jest tu jeszcze ktoś?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_sygnal_urwany_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sygnal_urwany_03",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Heinz, Naujocks, Kruk",
+          "tekst_wypowiadany": "Egal. Es hat gereicht. Alle raus.",
+          "napis_na_ekranie_pl": "Nieważne. Wystarczyło. Wszyscy wychodzić.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a3_sygnal_urwany_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_sygnal_urwany_04",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Urwałem im głos. Ale kilka zdań i tak poszło w eter.",
+          "napis_na_ekranie_pl": "Urwałem im głos. Ale kilka zdań i tak poszło w eter.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_czas_minal",
+      "akt": "Akt 3 (20:05) Pokój techniczny",
+      "miejsce_lokacja": "Pokój techniczny",
+      "punkt_prefab_unity": "radio_technika_kable",
+      "domyslny_wyzwalacz_unity": "Upłynięcie 90 sekund przed przecięciem kabla",
+      "akcja_po_ukonczeniu_sceny": "Komunikat poszedł w całości; misja kontynuowana z gorszym wynikiem",
+      "notatka_rezyserska_sceny": "Gorzka świadomość porażki technicznej, konieczność ratowania dowodów zdjęciowych.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_czas_minal_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_czas_minal_01",
+          "kto_mowi_kod": "heinz",
+          "kto_mowi_opis": "esesman przebrany za powstańca, histeria i panika, niemiecki akcent w odezwie",
+          "do_kogo_mowi": "Heinz / Kruk do siebie",
+          "tekst_wypowiadany": "Fertig. Es ist draußen.",
+          "napis_na_ekranie_pl": "Gotowe. Poszło.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "2wDJWNGYHVUm5Ckr5hV9",
+          "parametry_glosu": {
+            "stability": 0.28,
+            "similarity_boost": 0.7,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_czas_minal_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_czas_minal_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Za późno. Komunikat poszedł w eter.",
+          "napis_na_ekranie_pl": "Za późno. Komunikat poszedł w eter.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_czas_minal_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_czas_minal_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Historii nie zatrzymam. Ale zdjęcia muszą dotrzeć do Katowic.",
+          "napis_na_ekranie_pl": "Historii nie zatrzymam. Ale zdjęcia muszą dotrzeć do Katowic.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a3_gruber",
+      "akt": "Akt 3 (20:06) Piwnica radiostacji",
+      "miejsce_lokacja": "Piwnica pod budynkiem stacji",
+      "punkt_prefab_unity": "radio_piwnica_drzwi",
+      "domyslny_wyzwalacz_unity": "Otwarcie rygla drzwi piwnicy klawiszem [E]",
+      "akcja_po_ukonczeniu_sceny": "Uwolnienie zakładników, wyłączenie animacji podniesionych rąk",
+      "notatka_rezyserska_sceny": "Gruber płacze z wdzięczności, Kruk nakazuje natychmiastową ucieczkę po odjeździe SD.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a3_gruber_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_gruber_01",
+          "kto_mowi_kod": "gruber",
+          "kto_mowi_opis": "przerażony technik 58 lat, drżący głos, błaga o litość, gwara śląska",
+          "do_kogo_mowi": "Gruber do Kruka / Kruk do Grubera",
+          "tekst_wypowiadany": "Wer ist da? Nicht schießen. Hier unten sind nur Arbeiter.",
+          "napis_na_ekranie_pl": "Kto tam? Nie strzelać. Tu na dole są tylko pracownicy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "mFrk0Tpozvhs8rg1Xz1Q",
+          "parametry_glosu": {
+            "stability": 0.32,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a3_gruber_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_gruber_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Gruber do Kruka / Kruk do Grubera",
+          "tekst_wypowiadany": "Cicho. Nie jestem z nimi. Wypuszczę was.",
+          "napis_na_ekranie_pl": "Cicho. Nie jestem z nimi. Wypuszczę was.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a3_gruber_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_gruber_03",
+          "kto_mowi_kod": "gruber",
+          "kto_mowi_opis": "przerażony technik 58 lat, drżący głos, błaga o litość, gwara śląska",
+          "do_kogo_mowi": "Gruber do Kruka / Kruk do Grubera",
+          "tekst_wypowiadany": "Godosz po naszymu. Panie, to niy som żodne Polacy. To som Niymcy z Berlina.",
+          "napis_na_ekranie_pl": "Mówisz po naszemu. Panie, to nie są żadni Polacy. To Niemcy z Berlina.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "mFrk0Tpozvhs8rg1Xz1Q",
+          "parametry_glosu": {
+            "stability": 0.32,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a3_gruber_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_gruber_04",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Gruber do Kruka / Kruk do Grubera",
+          "tekst_wypowiadany": "Wiem. Wyjdźcie tylnymi drzwiami, jak tylko odjadą. Mnie tu nie było.",
+          "napis_na_ekranie_pl": "Wiem. Wyjdźcie tylnymi drzwiami, jak tylko odjadą. Mnie tu nie było.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a3_gruber_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a3_gruber_05",
+          "kto_mowi_kod": "gruber",
+          "kto_mowi_opis": "przerażony technik 58 lat, drżący głos, błaga o litość, gwara śląska",
+          "do_kogo_mowi": "Gruber do Kruka / Kruk do Grubera",
+          "tekst_wypowiadany": "Jo nic niy widzioł. Ale zapamiyntom.",
+          "napis_na_ekranie_pl": "Ja nic nie widziałem. Ale zapamiętam.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "mFrk0Tpozvhs8rg1Xz1Q",
+          "parametry_glosu": {
+            "stability": 0.32,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_pracownik",
+      "akt": "Akt 3 (20:06) Piwnica radiostacji",
+      "miejsce_lokacja": "Piwnica radiostacji",
+      "punkt_prefab_unity": "radio_piwnica_pracownik_1",
+      "domyslny_wyzwalacz_unity": "Podejście do uwięzionych pracowników",
+      "akcja_po_ukonczeniu_sceny": "Budowanie dramatyzmu sytuacji zakładników",
+      "notatka_rezyserska_sceny": "Lęk o rodziny, szept w ciemnej piwnicy.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_pracownik_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_pracownik_01",
+          "kto_mowi_kod": "pracownik",
+          "kto_mowi_opis": "pracownik radiostacji w piwnicy 32 lata, przerażony zakładnik",
+          "do_kogo_mowi": "Pracownicy stacji w ciemności",
+          "tekst_wypowiadany": "Gruber, co sie tam dzieje na górze?",
+          "napis_na_ekranie_pl": "Gruber, co się tam dzieje na górze?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "UA21kkxC9NlmPHRAJR4X",
+          "parametry_glosu": {
+            "stability": 0.35,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_pracownik_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_pracownik_02",
+          "kto_mowi_kod": "pracownik",
+          "kto_mowi_opis": "pracownik radiostacji w piwnicy 32 lata, przerażony zakładnik",
+          "do_kogo_mowi": "Pracownicy stacji w ciemności",
+          "tekst_wypowiadany": "Ich habe Frau und Kinder zu Hause. Bitte.",
+          "napis_na_ekranie_pl": "Mam w domu żonę i dzieci. Proszę.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "UA21kkxC9NlmPHRAJR4X",
+          "parametry_glosu": {
+            "stability": 0.35,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_pracownik_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_pracownik_03",
+          "kto_mowi_kod": "pracownik",
+          "kto_mowi_opis": "pracownik radiostacji w piwnicy 32 lata, przerażony zakładnik",
+          "do_kogo_mowi": "Pracownicy stacji w ciemności",
+          "tekst_wypowiadany": "Niy wyłaź jeszcze. Oni majom broń.",
+          "napis_na_ekranie_pl": "Nie wychodź jeszcze. Oni mają broń.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "UA21kkxC9NlmPHRAJR4X",
+          "parametry_glosu": {
+            "stability": 0.35,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a4_mysl_honiok",
+      "akt": "Akt 4 (20:10) Wyjście ze stacji",
+      "miejsce_lokacja": "Trawnik przy schodach wyjściowych z radiostacji",
+      "punkt_prefab_unity": "radio_cialo_honiok",
+      "domyslny_wyzwalacz_unity": "Zrobienie zdjęcia ciała Franciszka Honioka i kartki 'Konserve'",
+      "akcja_po_ukonczeniu_sceny": "Zaliczenie dowodu 4/6, włączenie globalnego alarmu SD",
+      "notatka_rezyserska_sceny": "Głęboki, bolesny szacunek dla zamordowanego Ślązaka: 'Dla nich był rekwizytem, dla mnie jest Franciszkiem Honiokiem'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a4_mysl_honiok_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_mysl_honiok_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Przy wejściu leży człowiek przykryty płaszczem. Ten z zagajnika.",
+          "napis_na_ekranie_pl": "Przy wejściu leży człowiek przykryty płaszczem. Ten z zagajnika.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a4_mysl_honiok_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_mysl_honiok_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Na kartce nazwisko. Honiok, Franz. I jedno słowo: Konserve.",
+          "napis_na_ekranie_pl": "Na kartce nazwisko. Honiok, Franz. I jedno słowo: „Konserve”.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a4_mysl_honiok_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_mysl_honiok_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Dla nich był rekwizytem. Dla mnie jest Franciszkiem Honiokiem. Nikt nie powie, że go tu nie było.",
+          "napis_na_ekranie_pl": "Dla nich był rekwizytem. Dla mnie jest Franciszkiem Honiokiem. Nikt nie powie, że go tu nie było.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a4_alarm",
+      "akt": "Akt 4 (20:11) Teren radiostacji",
+      "miejsce_lokacja": "Plac wokół stacji i wieży",
+      "punkt_prefab_unity": "spawn_radio_brama",
+      "domyslny_wyzwalacz_unity": "Po zrobieniu zdjęcia ciała Honioka",
+      "akcja_po_ukonczeniu_sceny": "Wszyscy wrogowie w trybie agresywnym, start pościgu na wschód",
+      "notatka_rezyserska_sceny": "Reflektory, krzyki, syrena alarmowa, komenda 'Strzelać bez ostrzeżenia!'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a4_alarm_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_alarm_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Naujocks i SD do całego oddziału",
+          "tekst_wypowiadany": "Da ist einer! Am Zaun!",
+          "napis_na_ekranie_pl": "Tam ktoś jest! Przy płocie!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a4_alarm_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_alarm_02",
+          "kto_mowi_kod": "naujocks",
+          "kto_mowi_opis": "dowódca SD 28 lat, chłodny pruski oficer, żelazna dyscyplina, bez krzyku",
+          "do_kogo_mowi": "Naujocks i SD do całego oddziału",
+          "tekst_wypowiadany": "Holt ihn. Lebend. Er hat eine Kamera.",
+          "napis_na_ekranie_pl": "Złapcie go. Żywego. Ma aparat.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "L6FaeBIcMeJ6Sqcs4Hd8",
+          "parametry_glosu": {
+            "stability": 0.78,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a4_alarm_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_alarm_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Naujocks i SD do całego oddziału",
+          "tekst_wypowiadany": "Licht! Macht das Licht an!",
+          "napis_na_ekranie_pl": "Światło! Zapalcie światło!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a4_ucieczka",
+      "akt": "Akt 4 (20:12) Ucieczka przez pola",
+      "miejsce_lokacja": "Pola na wschód od radiostacji",
+      "punkt_prefab_unity": "miasto_stodola",
+      "domyslny_wyzwalacz_unity": "Sprint przez pola (opcjonalnie rower OB_Rower)",
+      "akcja_po_ukonczeniu_sceny": "Kierunek: stodoła kuriera Sowy",
+      "notatka_rezyserska_sceny": "Zadyszka, bieg w ciemności rowami melioracyjnymi, za plecami światła pościgu.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a4_ucieczka_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_ucieczka_01",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Na wschód, przez pola. W stodole czeka Sowa.",
+          "napis_na_ekranie_pl": "Na wschód, przez pola. W stodole czeka Sowa.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a4_ucieczka_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_ucieczka_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Rowem, nie drogą. Na drodze widać każdego.",
+          "napis_na_ekranie_pl": "Rowem, nie drogą. Na drodze widać każdego.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a4_ucieczka_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_ucieczka_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Do siebie (Myśl wewnętrzna bohatera - gracz słyszy głos w głowie)",
+          "tekst_wypowiadany": "Film jest w kieszeni. Tylko to się teraz liczy.",
+          "napis_na_ekranie_pl": "Film jest w kieszeni. Tylko to się teraz liczy.",
+          "czy_to_mysl_wewnetrzna": true,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a4_sowa",
+      "akt": "Akt 4 (20:20) Drewniana stodoła",
+      "miejsce_lokacja": "Stodoła na wschodnim krańcu mapy",
+      "punkt_prefab_unity": "miasto_stodola",
+      "domyslny_wyzwalacz_unity": "Wejście do stodoły i interakcja z Sową",
+      "akcja_po_ukonczeniu_sceny": "Przekazanie naświetlonej rolki filmu OB_Film, start plansz epilogu",
+      "notatka_rezyserska_sceny": "Ulga, pośpiech, ostatnie instrukcje: 'Do Katowic przed północą. Jeśli cię zatrzymają, prześwietl kliszę'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a4_sowa_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_sowa_01",
+          "kto_mowi_kod": "sowa",
+          "kto_mowi_opis": "kurier wywiadu 35 lat, czysta adrenalina, pośpiech, deadline o północy",
+          "do_kogo_mowi": "Sowa do Kruka / Kruk do Sowy",
+          "tekst_wypowiadany": "Późno dzisiaj na grzyby.",
+          "napis_na_ekranie_pl": "Późno dzisiaj na grzyby.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "eAurr6ahmFxiNrobmaQm",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a4_sowa_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_sowa_02",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Sowa do Kruka / Kruk do Sowy",
+          "tekst_wypowiadany": "Po deszczu będą lepsze.",
+          "napis_na_ekranie_pl": "Po deszczu będą lepsze.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a4_sowa_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_sowa_03",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Sowa do Kruka / Kruk do Sowy",
+          "tekst_wypowiadany": "Jeden film. Mapa, lista, zagajnik, radiostacja. I człowiek, którego zostawili przy wejściu.",
+          "napis_na_ekranie_pl": "Jeden film. Mapa, lista, zagajnik, radiostacja. I człowiek, którego zostawili przy wejściu.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a4_sowa_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_sowa_04",
+          "kto_mowi_kod": "sowa",
+          "kto_mowi_opis": "kurier wywiadu 35 lat, czysta adrenalina, pośpiech, deadline o północy",
+          "do_kogo_mowi": "Sowa do Kruka / Kruk do Sowy",
+          "tekst_wypowiadany": "Schowom go w ramie kola. Do Katowic przed północą.",
+          "napis_na_ekranie_pl": "Schowam go w ramie roweru. Do Katowic przed północą.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "eAurr6ahmFxiNrobmaQm",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        },
+        {
+          "numer_kolejny": 5,
+          "plik_audio": "a4_sowa_05.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_sowa_05",
+          "kto_mowi_kod": "kruk",
+          "kto_mowi_opis": "młody 24-26 lat, lekki tenor, wyluzowany kupiec, w środku czujny i zaniepokojony",
+          "do_kogo_mowi": "Sowa do Kruka / Kruk do Sowy",
+          "tekst_wypowiadany": "Jeśli cię zatrzymają, prześwietl go. Lepiej nic, niż żeby trafił do nich.",
+          "napis_na_ekranie_pl": "Jeśli cię zatrzymają, prześwietl go. Lepiej nic, niż żeby trafił do nich.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "N1jcGOKY7QOwYTeGgJf5",
+          "parametry_glosu": {
+            "stability": 0.4,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 6,
+          "plik_audio": "a4_sowa_06.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_sowa_06",
+          "kto_mowi_kod": "sowa",
+          "kto_mowi_opis": "kurier wywiadu 35 lat, czysta adrenalina, pośpiech, deadline o północy",
+          "do_kogo_mowi": "Sowa do Kruka / Kruk do Sowy",
+          "tekst_wypowiadany": "Niy zatrzymajom. A ty idź inszom drogom. Rano bydzie wojna.",
+          "napis_na_ekranie_pl": "Nie zatrzymają. A ty idź inną drogą. Rano będzie wojna.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "eAurr6ahmFxiNrobmaQm",
+          "parametry_glosu": {
+            "stability": 0.45,
+            "similarity_boost": 0.75,
+            "style": 0.35
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "a4_radio_spiker",
+      "akt": "Akt 4 (20:25) Epilog radiowy",
+      "miejsce_lokacja": "Odbiornik radiowy w stodole",
+      "punkt_prefab_unity": "miasto_stodola",
+      "domyslny_wyzwalacz_unity": "Po przekazaniu filmu Sowie",
+      "akcja_po_ukonczeniu_sceny": "Rozpoczęcie plansz tekstowych epilogu z głosem lektora",
+      "notatka_rezyserska_sceny": "Oficjalna niemiecka propaganda obwiniająca Polskę o napaść graniczną.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "a4_radio_spiker_01.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_radio_spiker_01",
+          "kto_mowi_kod": "spiker",
+          "kto_mowi_opis": "spiker radiowy 38 lat, pompatyczna propaganda 1939, tubalny głośnik",
+          "do_kogo_mowi": "Spiker niemiecki do radiosłuchaczy",
+          "tekst_wypowiadany": "Hier ist der Reichssender Breslau.",
+          "napis_na_ekranie_pl": "Tu Rozgłośnia Rzeszy we Wrocławiu.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "wDJXTgDLENK5kcYJAKCC",
+          "parametry_glosu": {
+            "stability": 0.75,
+            "similarity_boost": 0.8,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "a4_radio_spiker_02.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_radio_spiker_02",
+          "kto_mowi_kod": "spiker",
+          "kto_mowi_opis": "spiker radiowy 38 lat, pompatyczna propaganda 1939, tubalny głośnik",
+          "do_kogo_mowi": "Spiker niemiecki do radiosłuchaczy",
+          "tekst_wypowiadany": "Gestern gegen zwanzig Uhr haben polnische Aufständische den Sender Gleiwitz überfallen.",
+          "napis_na_ekranie_pl": "Wczoraj około 20:00 polscy powstańcy napadli na radiostację w Gliwicach.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "wDJXTgDLENK5kcYJAKCC",
+          "parametry_glosu": {
+            "stability": 0.75,
+            "similarity_boost": 0.8,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "a4_radio_spiker_03.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_radio_spiker_03",
+          "kto_mowi_kod": "spiker",
+          "kto_mowi_opis": "spiker radiowy 38 lat, pompatyczna propaganda 1939, tubalny głośnik",
+          "do_kogo_mowi": "Spiker niemiecki do radiosłuchaczy",
+          "tekst_wypowiadany": "Die Polizei hat die Angreifer zurückgeschlagen. Ein Aufständischer wurde getötet.",
+          "napis_na_ekranie_pl": "Policja odparła napastników. Jeden z powstańców zginął.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "wDJXTgDLENK5kcYJAKCC",
+          "parametry_glosu": {
+            "stability": 0.75,
+            "similarity_boost": 0.8,
+            "style": 0.45
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "a4_radio_spiker_04.mp3",
+          "sciezka_zasobu_unity": "Audio/a4_radio_spiker_04",
+          "kto_mowi_kod": "spiker",
+          "kto_mowi_opis": "spiker radiowy 38 lat, pompatyczna propaganda 1939, tubalny głośnik",
+          "do_kogo_mowi": "Spiker niemiecki do radiosłuchaczy",
+          "tekst_wypowiadany": "Weitere Meldungen folgen.",
+          "napis_na_ekranie_pl": "Dalsze komunikaty wkrótce.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "wDJXTgDLENK5kcYJAKCC",
+          "parametry_glosu": {
+            "stability": 0.75,
+            "similarity_boost": 0.8,
+            "style": 0.45
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_sd_podejrzenie",
+      "akt": "Dowolny moment (AI Patrolu)",
+      "miejsce_lokacja": "Wokół patroli SD",
+      "punkt_prefab_unity": "miasto_patrol_sd_1",
+      "domyslny_wyzwalacz_unity": "Wykrycie hałasu lub dostrzeżenie gracza w stożku wzroku",
+      "akcja_po_ukonczeniu_sceny": "Podejście do źródła hałasu",
+      "notatka_rezyserska_sceny": "Podejrzliwe, twarde niemieckie barks.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_sd_podejrzenie_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_podejrzenie_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do drugiego strażnika",
+          "tekst_wypowiadany": "Hast du das gehört?",
+          "napis_na_ekranie_pl": "Słyszałeś to?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_sd_podejrzenie_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_podejrzenie_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do drugiego strażnika",
+          "tekst_wypowiadany": "Da hinten hat sich etwas bewegt.",
+          "napis_na_ekranie_pl": "Tam z tyłu coś się poruszyło.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_sd_podejrzenie_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_podejrzenie_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do drugiego strażnika",
+          "tekst_wypowiadany": "Wer ist da? Zeig dich.",
+          "napis_na_ekranie_pl": "Kto tam? Pokaż się.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "bark_sd_podejrzenie_04.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_podejrzenie_04",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do drugiego strażnika",
+          "tekst_wypowiadany": "Wahrscheinlich eine Katze. Ich sehe trotzdem nach.",
+          "napis_na_ekranie_pl": "Pewnie kot. I tak sprawdzę.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_sd_alarm",
+      "akt": "Dowolny moment (AI Walki)",
+      "miejsce_lokacja": "Wokół patroli SD",
+      "punkt_prefab_unity": "miasto_patrol_sd_1",
+      "domyslny_wyzwalacz_unity": "Pełne zdemaskowanie gracza",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie ognia, wezwanie posiłków w promieniu 25 m",
+      "notatka_rezyserska_sceny": "Wściekły krzyk bojowy, strzały.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_sd_alarm_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_alarm_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do innych patroli",
+          "tekst_wypowiadany": "Da ist er! Hinterher!",
+          "napis_na_ekranie_pl": "Tam jest! Za nim!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_sd_alarm_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_alarm_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do innych patroli",
+          "tekst_wypowiadany": "Ein Fremder auf dem Gelände!",
+          "napis_na_ekranie_pl": "Obcy na terenie!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_sd_alarm_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_alarm_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do innych patroli",
+          "tekst_wypowiadany": "Er läuft zum Zaun!",
+          "napis_na_ekranie_pl": "Biegnie do płotu!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "bark_sd_alarm_04.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_alarm_04",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD do innych patroli",
+          "tekst_wypowiadany": "Nicht entkommen lassen!",
+          "napis_na_ekranie_pl": "Nie dajcie mu uciec!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_sd_szukanie",
+      "akt": "Dowolny moment (AI Szukania)",
+      "miejsce_lokacja": "Miejsce ostatniej pozycji gracza",
+      "punkt_prefab_unity": "miasto_patrol_sd_1",
+      "domyslny_wyzwalacz_unity": "Gracz zniknął za osłoną, wrogowie przeszukują teren",
+      "akcja_po_ukonczeniu_sceny": "Sprawdzanie zaułków i krzaków",
+      "notatka_rezyserska_sceny": "Czujne sprawdzanie cieni z bronią w gotowości.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_sd_szukanie_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_szukanie_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Durchsucht die Schuppen.",
+          "napis_na_ekranie_pl": "Przeszukać szopy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_sd_szukanie_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_szukanie_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Er kann nicht weit sein.",
+          "napis_na_ekranie_pl": "Nie mógł daleko odejść.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_sd_szukanie_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_szukanie_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Leuchte unter die Bäume.",
+          "napis_na_ekranie_pl": "Poświeć pod drzewa.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "bark_sd_szukanie_04.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_szukanie_04",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Jeden Winkel. Verstanden?",
+          "napis_na_ekranie_pl": "Każdy kąt. Zrozumiano?",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_sd_zgubil",
+      "akt": "Dowolny moment (AI Powrót)",
+      "miejsce_lokacja": "Trasa patrolu",
+      "punkt_prefab_unity": "miasto_patrol_sd_1",
+      "domyslny_wyzwalacz_unity": "Brak śladu gracza po 15 sekundach szukania",
+      "akcja_po_ukonczeniu_sceny": "Powrót do standardowej trasy patrolu",
+      "notatka_rezyserska_sceny": "Zniecierpliwienie, machnięcie ręką.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_sd_zgubil_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_zgubil_01",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Weg. Einfach weg.",
+          "napis_na_ekranie_pl": "Zniknął. Po prostu zniknął.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_sd_zgubil_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_zgubil_02",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Verdammt, er ist uns entwischt.",
+          "napis_na_ekranie_pl": "Cholera, wymknął się nam.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_sd_zgubil_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_zgubil_03",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Zurück zum Wagen. Der Chef wartet nicht.",
+          "napis_na_ekranie_pl": "Wracamy do auta. Szef nie będzie czekał.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "bark_sd_zgubil_04.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_sd_zgubil_04",
+          "kto_mowi_kod": "sd",
+          "kto_mowi_opis": "młodzi żołnierze 22 lata, agresywny krzyk, szczekliwe komendy",
+          "do_kogo_mowi": "Żołnierz SD",
+          "tekst_wypowiadany": "Wenn er etwas gesehen hat, haben wir ein Problem.",
+          "napis_na_ekranie_pl": "Jeśli coś widział, mamy problem.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "OCOe3k9UcQJpPvNvnzKA",
+          "parametry_glosu": {
+            "stability": 0.5,
+            "similarity_boost": 0.75,
+            "style": 0.4
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "bark_schupo",
+      "akt": "Dowolny moment (AI Policji)",
+      "miejsce_lokacja": "Ulice Wilhelmstraße i Ring",
+      "punkt_prefab_unity": "miasto_schupo_1",
+      "domyslny_wyzwalacz_unity": "Zauważenie biegnącego lub kucającego gracza",
+      "akcja_po_ukonczeniu_sceny": "Bieg do najbliższego patrolu SD w celu podniesienia alarmu",
+      "notatka_rezyserska_sceny": "Służbiste pouczenia i wezwania do okazania dokumentów.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "bark_schupo_01.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_schupo_01",
+          "kto_mowi_kod": "schupo",
+          "kto_mowi_opis": "niemiecki policjant miejski 40 lat, suchy urzędowy ton",
+          "do_kogo_mowi": "Policjant Schupo do gracza",
+          "tekst_wypowiadany": "Halt! Stehenbleiben! Polizei!",
+          "napis_na_ekranie_pl": "Stój! Nie ruszać się! Policja!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "Tm8JgWUX1fDvT1iYCp6O",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 2,
+          "plik_audio": "bark_schupo_02.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_schupo_02",
+          "kto_mowi_kod": "schupo",
+          "kto_mowi_opis": "niemiecki policjant miejski 40 lat, suchy urzędowy ton",
+          "do_kogo_mowi": "Policjant Schupo do gracza",
+          "tekst_wypowiadany": "Sie da! Hände aus den Taschen!",
+          "napis_na_ekranie_pl": "Pan tam! Ręce z kieszeni!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "Tm8JgWUX1fDvT1iYCp6O",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 3,
+          "plik_audio": "bark_schupo_03.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_schupo_03",
+          "kto_mowi_kod": "schupo",
+          "kto_mowi_opis": "niemiecki policjant miejski 40 lat, suchy urzędowy ton",
+          "do_kogo_mowi": "Policjant Schupo do gracza",
+          "tekst_wypowiadany": "Hierher, meine Herren! Hier läuft einer weg!",
+          "napis_na_ekranie_pl": "Tutaj, panowie! Tu ktoś ucieka!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "Tm8JgWUX1fDvT1iYCp6O",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        },
+        {
+          "numer_kolejny": 4,
+          "plik_audio": "bark_schupo_04.mp3",
+          "sciezka_zasobu_unity": "Audio/bark_schupo_04",
+          "kto_mowi_kod": "schupo",
+          "kto_mowi_opis": "niemiecki policjant miejski 40 lat, suchy urzędowy ton",
+          "do_kogo_mowi": "Policjant Schupo do gracza",
+          "tekst_wypowiadany": "Holt die Herren vom Sender. Schnell!",
+          "napis_na_ekranie_pl": "Wołajcie panów z radiostacji. Szybko!",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "Tm8JgWUX1fDvT1iYCp6O",
+          "parametry_glosu": {
+            "stability": 0.6,
+            "similarity_boost": 0.75,
+            "style": 0.25
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "porazka_zdemaskowany",
+      "akt": "Ekran Porażki 1",
+      "miejsce_lokacja": "Ekran gry",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Gracz trafiony kulą wroga",
+      "akcja_po_ukonczeniu_sceny": "Wyświetlenie planszy porażki z przyciskiem powrotu do checkpointa",
+      "notatka_rezyserska_sceny": "Głęboki, poważny ton dokumentalny: 'Agent Kruk zdemaskowany. Prowokacja przeszła bez świadków'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "porazka_zdemaskowany_01.mp3",
+          "sciezka_zasobu_unity": "Audio/porazka_zdemaskowany_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor do gracza",
+          "tekst_wypowiadany": "Agent Kruk zdemaskowany. Prowokacja przeszła bez świadków.",
+          "napis_na_ekranie_pl": "Agent »Kruk« zdemaskowany. Prowokacja przeszła bez świadków.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "porazka_cywil",
+      "akt": "Ekran Porażki 2",
+      "miejsce_lokacja": "Ekran gry",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Gracz postrzelił cywila, policjanta Schupo lub pracownika",
+      "akcja_po_ukonczeniu_sceny": "Plansza porażki",
+      "notatka_rezyserska_sceny": "Stanowczy, etyczny osąd: 'Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "porazka_cywil_01.mp3",
+          "sciezka_zasobu_unity": "Audio/porazka_cywil_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor do gracza",
+          "tekst_wypowiadany": "Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.",
+          "napis_na_ekranie_pl": "Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "porazka_czas",
+      "akt": "Ekran Porażki 3",
+      "miejsce_lokacja": "Ekran gry",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Komunikat w radiostacji poszedł bez przecięcia kabli i gracz został złapany",
+      "akcja_po_ukonczeniu_sceny": "Plansza porażki",
+      "notatka_rezyserska_sceny": "Smutna konstatacja kłamstwa, które stało się faktem medialnym.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "porazka_czas_01.mp3",
+          "sciezka_zasobu_unity": "Audio/porazka_czas_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor do gracza",
+          "tekst_wypowiadany": "Świt. Film nie dotarł do Katowic. Świat usłyszał tylko wersję z Berlina.",
+          "napis_na_ekranie_pl": "Świt. Film nie dotarł do Katowic. Świat usłyszał tylko wersję z Berlina.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "karta_1",
+      "akt": "Karta Historii 1 (Ratusz)",
+      "miejsce_lokacja": "Rynek przy ratuszu",
+      "punkt_prefab_unity": "miasto_karta_1",
+      "domyslny_wyzwalacz_unity": "Podniesienie Karty Historii nr 1",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie karty edukacyjnej w UI",
+      "notatka_rezyserska_sceny": "Fakty historyczne o Operacji Himmler.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "karta_1_01.mp3",
+          "sciezka_zasobu_unity": "Audio/karta_1_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Po podziale Górnego Śląska w tysiąc dziewięćset dwudziestym drugim roku Gliwice zostały w Niemczech, a Katowice znalazły się w Polsce. Na Ringu stał ratusz i fontanna z Neptunem. W mieście mieszkali obok siebie Niemcy, Ślązacy i Polacy.",
+          "napis_na_ekranie_pl": "Po podziale Górnego Śląska w 1922 roku Gliwice zostały w Niemczech, a Katowice znalazły się w Polsce. Na Ringu stał ratusz i fontanna z Neptunem. W mieście mieszkali obok siebie Niemcy, Ślązacy i Polacy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "karta_2",
+      "akt": "Karta Historii 2 (Kościół)",
+      "miejsce_lokacja": "Kościół Wszystkich Świętych",
+      "punkt_prefab_unity": "miasto_karta_2",
+      "domyslny_wyzwalacz_unity": "Podniesienie Karty Historii nr 2",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie karty w UI",
+      "notatka_rezyserska_sceny": "Fakty o granicy polsko-niemieckiej w 1939 r.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "karta_2_01.mp3",
+          "sciezka_zasobu_unity": "Audio/karta_2_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Gotycki kościół Wszystkich Świętych to jeden z najstarszych budynków Gliwic. W mieście żyła polska mniejszość, która miała swoje organizacje, w tym Związek Polaków w Niemczech. Po wybuchu wojny wielu polskich działaczy ze Śląska aresztowano.",
+          "napis_na_ekranie_pl": "Gotycki kościół Wszystkich Świętych to jeden z najstarszych budynków Gliwic. W mieście żyła polska mniejszość, która miała swoje organizacje, w tym Związek Polaków w Niemczech. Po wybuchu wojny wielu polskich działaczy ze Śląska aresztowano.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "karta_3",
+      "akt": "Karta Historii 3 (Willa)",
+      "miejsce_lokacja": "Tarnowitzer Landstraße",
+      "punkt_prefab_unity": "miasto_karta_3",
+      "domyslny_wyzwalacz_unity": "Podniesienie Karty Historii nr 3",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie karty w UI",
+      "notatka_rezyserska_sceny": "Fakty o Alfredzie Naujocksie.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "karta_3_01.mp3",
+          "sciezka_zasobu_unity": "Audio/karta_3_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Tej samej nocy Niemcy zorganizowali kilka prowokacji wzdłuż granicy. Oprócz radiostacji w Gliwicach napadnięto na komorę celną w Stodołach, po niemiecku Hochlinden, i na leśniczówkę w Byczynie, po niemiecku Pitschen. Każda z nich miała wyglądać na polski atak.",
+          "napis_na_ekranie_pl": "Tej samej nocy Niemcy zorganizowali kilka prowokacji wzdłuż granicy. Oprócz radiostacji w Gliwicach napadnięto na komorę celną w Stodołach (Hochlinden) i na leśniczówkę w Byczynie (Pitschen). Każda z nich miała wyglądać na polski atak.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "karta_4",
+      "akt": "Karta Historii 4 (Dworzec)",
+      "miejsce_lokacja": "Bahnhof Gleiwitz",
+      "punkt_prefab_unity": "miasto_karta_4",
+      "domyslny_wyzwalacz_unity": "Podniesienie Karty Historii nr 4",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie karty w UI",
+      "notatka_rezyserska_sceny": "Fakty o Ekspozyturze nr 4 polskiego wywiadu w Katowicach.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "karta_4_01.mp3",
+          "sciezka_zasobu_unity": "Audio/karta_4_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Granica z Polską biegła zaledwie kilka kilometrów od Gliwic. Między Gliwicami a Katowicami jeździły pociągi, a wielu Ślązaków miało rodzinę i pracę po obu stronach granicy.",
+          "napis_na_ekranie_pl": "Granica z Polską biegła zaledwie kilka kilometrów od Gliwic. Między Gliwicami a Katowicami jeździły pociągi, a wielu Ślązaków miało rodzinę i pracę po obu stronach granicy.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "karta_5",
+      "akt": "Karta Historii 5 (Most)",
+      "miejsce_lokacja": "Most na Kłodnicy",
+      "punkt_prefab_unity": "miasto_karta_5",
+      "domyslny_wyzwalacz_unity": "Podniesienie Karty Historii nr 5",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie karty w UI",
+      "notatka_rezyserska_sceny": "Fakty o mikrofonie burzowym Gewittermikrofon.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "karta_5_01.mp3",
+          "sciezka_zasobu_unity": "Audio/karta_5_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Na przełomie osiemnastego i dziewiętnastego wieku przekopano Kanał Kłodnicki, który połączył Gliwice z Odrą. Barkami płynęły węgiel i żelazo. Gliwice z królewską odlewnią żeliwa i kopalniami w okolicy były jednym z ośrodków górnośląskiego przemysłu.",
+          "napis_na_ekranie_pl": "Na przełomie XVIII i XIX wieku przekopano Kanał Kłodnicki, który połączył Gliwice z Odrą. Barkami płynęły węgiel i żelazo. Gliwice z królewską odlewnią żeliwa i kopalniami w okolicy były jednym z ośrodków górnośląskiego przemysłu.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "karta_6",
+      "akt": "Karta Historii 6 (Stodoła)",
+      "miejsce_lokacja": "Stodoła na wschodzie",
+      "punkt_prefab_unity": "miasto_karta_6",
+      "domyslny_wyzwalacz_unity": "Podniesienie Karty Historii nr 6",
+      "akcja_po_ukonczeniu_sceny": "Otwarcie karty w UI",
+      "notatka_rezyserska_sceny": "Fakty o drewnianej wieży radiostacji 111 m.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "karta_6_01.mp3",
+          "sciezka_zasobu_unity": "Audio/karta_6_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Franciszek Honiok pochodził z Łubia, po niemiecku Hohenlieben, i walczył w powstaniu śląskim po stronie polskiej. Gestapo zatrzymało go trzydziestego sierpnia tysiąc dziewięćset trzydziestego dziewiątego roku, a w planie napastników nazywano go Konserve. Zabito go i zostawiono przy radiostacji jako fałszywy dowód polskiego ataku.",
+          "napis_na_ekranie_pl": "Franciszek Honiok pochodził z Łubia (Hohenlieben) i walczył w powstaniu śląskim po stronie polskiej. Gestapo zatrzymało go 30 sierpnia 1939 roku, a w planie napastników nazywano go „Konserve”. Zabito go i zostawiono przy radiostacji jako fałszywy dowód polskiego ataku.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "epilog_1",
+      "akt": "Epilog (1.09.1939)",
+      "miejsce_lokacja": "Czarna plansza",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Plansza 1 po ucieczce",
+      "akcja_po_ukonczeniu_sceny": "Przejście do planszy 2",
+      "notatka_rezyserska_sceny": "Westerplatte i wybuch II wojny światowej.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "epilog_1_01.mp3",
+          "sciezka_zasobu_unity": "Audio/epilog_1_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Pierwszego września o czwartej czterdzieści pięć niemiecki okręt otworzył ogień do Westerplatte. Niemcy zaatakowały Polskę bez wypowiedzenia wojny.",
+          "napis_na_ekranie_pl": "1 września, 4:45. Niemiecki okręt otworzył ogień do Westerplatte. Niemcy zaatakowały Polskę bez wypowiedzenia wojny.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "epilog_2",
+      "akt": "Epilog (1.09.1939)",
+      "miejsce_lokacja": "Czarna plansza",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Plansza 2",
+      "akcja_po_ukonczeniu_sceny": "Przejście do planszy 3",
+      "notatka_rezyserska_sceny": "Przemówienie Hitlera w Reichstagu: 'Od 5:45 odpowiadamy ogniem'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "epilog_2_01.mp3",
+          "sciezka_zasobu_unity": "Audio/epilog_2_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Tego samego dnia Hitler powiedział w Reichstagu: od piątej czterdzieści pięć odpowiadamy ogniem. Na usprawiedliwienie wojny pokazywano światu napady, które Niemcy sami zorganizowali.",
+          "napis_na_ekranie_pl": "Tego samego dnia Hitler powiedział w Reichstagu: „Od 5:45 odpowiadamy ogniem”. Na usprawiedliwienie wojny pokazywano światu napady, które Niemcy sami zorganizowali.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "epilog_3",
+      "akt": "Epilog (Kim był Honiok)",
+      "miejsce_lokacja": "Czarna plansza",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Plansza 3",
+      "akcja_po_ukonczeniu_sceny": "Przejście do planszy 4",
+      "notatka_rezyserska_sceny": "Wspomnienie Franciszka Honioka, pierwszej ofiary II wojny światowej.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "epilog_3_01.mp3",
+          "sciezka_zasobu_unity": "Audio/epilog_3_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Franciszka Honioka nazywa się często pierwszą ofiarą drugiej wojny światowej. Zginął, zanim wojna się zaczęła.",
+          "napis_na_ekranie_pl": "Franciszka Honioka nazywa się często pierwszą ofiarą II wojny światowej. Zginął, zanim wojna się zaczęła.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "epilog_4",
+      "akt": "Epilog (Prawda)",
+      "miejsce_lokacja": "Czarna plansza",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Plansza 4",
+      "akcja_po_ukonczeniu_sceny": "Przejście do planszy 5",
+      "notatka_rezyserska_sceny": "Zeznania Naujocksa przed Trybunałem w Norymberdze 20.11.1945 r.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "epilog_4_01.mp3",
+          "sciezka_zasobu_unity": "Audio/epilog_4_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Jan Wrona, Kruk, to postać fikcyjna. Prawdę o prowokacji ujawnił sam Alfred Naujoks w zeznaniu złożonym w Norymberdze w tysiąc dziewięćset czterdziestym piątym roku.",
+          "napis_na_ekranie_pl": "Jan Wrona „Kruk” to postać fikcyjna. Prawdę o prowokacji ujawnił sam Alfred Naujocks w zeznaniu złożonym w Norymberdze w 1945 roku.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "epilog_5",
+      "akt": "Epilog (Pamięć)",
+      "miejsce_lokacja": "Czarna plansza",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Plansza 5",
+      "akcja_po_ukonczeniu_sceny": "Przejście do planszy 6",
+      "notatka_rezyserska_sceny": "Dziś przy Tarnogórskiej 129 mieści się Muzeum w Gliwicach.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "epilog_5_01.mp3",
+          "sciezka_zasobu_unity": "Audio/epilog_5_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Drewniana wieża radiostacji stoi do dziś. Można ją zobaczyć w Muzeum Radiostacja Gliwice, przy ulicy Tarnogórskiej sto dwadzieścia dziewięć.",
+          "napis_na_ekranie_pl": "Drewniana wieża radiostacji stoi do dziś. Można ją zobaczyć w Muzeum Radiostacja Gliwice, ul. Tarnogórska 129.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    },
+    {
+      "scena_id": "epilog_6",
+      "akt": "Epilog (Finał)",
+      "miejsce_lokacja": "Czarna plansza",
+      "punkt_prefab_unity": "brak",
+      "domyslny_wyzwalacz_unity": "Plansza 6",
+      "akcja_po_ukonczeniu_sceny": "Napisy końcowe i powrót do Menu",
+      "notatka_rezyserska_sceny": "Ostatnie zdanie: 'Prowokacja trwała kilka minut. Wojna trwała sześć lat'.",
+      "kwestie": [
+        {
+          "numer_kolejny": 1,
+          "plik_audio": "epilog_6_01.mp3",
+          "sciezka_zasobu_unity": "Audio/epilog_6_01",
+          "kto_mowi_kod": "lektor",
+          "kto_mowi_opis": "filmowy lektor dokumentalny 50 lat, głęboki smutek i powaga Norymbergi",
+          "do_kogo_mowi": "Lektor",
+          "tekst_wypowiadany": "Prowokacja trwała kilka minut. Wojna trwała sześć lat.",
+          "napis_na_ekranie_pl": "Prowokacja trwała kilka minut. Wojna trwała sześć lat.",
+          "czy_to_mysl_wewnetrzna": false,
+          "voice_id_elevenlabs": "6ZMCIhvS2s87muWOFffc",
+          "parametry_glosu": {
+            "stability": 0.8,
+            "similarity_boost": 0.8,
+            "style": 0.15
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1471 @@
+{
+  "a1_intro": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Gliwice. Wpół do czwartej, a upał jak w piecu.",
+        "napis": "Gliwice. Wpół do czwartej, a upał jak w piecu.",
+        "mysl": true,
+        "audio": "Audio/a1_intro_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Po tej stronie granicy jestem Johann Krause, kupiec z Bytomia.",
+        "napis": "Po tej stronie granicy jestem Johann Krause, kupiec z Bytomia.",
+        "mysl": true,
+        "audio": "Audio/a1_intro_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Centrala wie, że Niemcy coś szykują. Nie wie, gdzie ani kiedy.",
+        "napis": "Centrala wie, że Niemcy coś szykują. Nie wie, gdzie ani kiedy.",
+        "mysl": true,
+        "audio": "Audio/a1_intro_03"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Najpierw księgarnia na Ringu. Spokojnie. Kupiec się nie spieszy.",
+        "napis": "Najpierw księgarnia na Ringu. Spokojnie. Kupiec się nie spieszy.",
+        "mysl": true,
+        "audio": "Audio/a1_intro_04"
+      }
+    ]
+  },
+  "pob_kolejarz": {
+    "linie": [
+      {
+        "kto": "kolejarz",
+        "tekst": "Panoczku, niy stójcie tak na widoku. Podejdźcie bliżej.",
+        "napis": "Panie, nie stójcie tak na widoku. Podejdźcie bliżej.",
+        "mysl": false,
+        "audio": "Audio/pob_kolejarz_01"
+      },
+      {
+        "kto": "kolejarz",
+        "tekst": "Kożdo noc jadom tu cugi z wojskiym na wschód. Armaty pod plandekami.",
+        "napis": "Co noc jadą tu pociągi z wojskiem na wschód. Armaty pod plandekami.",
+        "mysl": false,
+        "audio": "Audio/pob_kolejarz_02"
+      },
+      {
+        "kto": "kolejarz",
+        "tekst": "Mom rozpiska, kiedy kery jedzie. Weź pan, ino cicho, bo mie zawrom.",
+        "napis": "Mam rozkład, kiedy który jedzie. Weź pan, tylko cicho, bo mnie zamkną.",
+        "mysl": false,
+        "audio": "Audio/pob_kolejarz_03"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Nikt się nie dowie. Dziękuję.",
+        "napis": "Nikt się nie dowie. Dziękuję.",
+        "mysl": false,
+        "audio": "Audio/pob_kolejarz_04"
+      },
+      {
+        "kto": "kolejarz",
+        "tekst": "Niy dziynkujcie. Jo tu mom dzieci. Idźcie z Bogiym.",
+        "napis": "Nie dziękujcie. Ja tu mam dzieci. Idźcie z Bogiem.",
+        "mysl": false,
+        "audio": "Audio/pob_kolejarz_05"
+      }
+    ]
+  },
+  "a1_zofia": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Haben Sie Eichendorff? Die Ausgabe von neunzehnhundertzwölf.",
+        "napis": "Ma pani Eichendorffa? Wydanie z 1912 roku.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_01"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Nur die von neunzehnhundertzwanzig. Die ältere ist längst vergriffen.",
+        "napis": "Tylko z 1920. Starsze dawno się wyczerpało.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_02"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Dobrze, że pan jest. Mówmy cicho, tutaj ściany mają uszy.",
+        "napis": "Dobrze, że pan jest. Mówmy cicho, tutaj ściany mają uszy.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_03"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Od kilku dni w Haus Oberschlesien na Wilhelmstraße mieszkają inżynierowie z Berlina.",
+        "napis": "Od kilku dni w Haus Oberschlesien na Wilhelmstraße mieszkają „inżynierowie z Berlina”.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_04"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Nie wyglądają na inżynierów. Ich szef nazywa się Naujocks.",
+        "napis": "Nie wyglądają na inżynierów. Ich szef nazywa się Naujocks.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_05"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Gdzie mają pokój?",
+        "napis": "Gdzie mają pokój?",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_06"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Na piętrze. A w holu stoi telefon. Berlin dzwoni na niego bez przerwy.",
+        "napis": "Na piętrze. A w holu stoi telefon. Berlin dzwoni na niego bez przerwy.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_07"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Niech pan to weźmie. Leica, film założony.",
+        "napis": "Niech pan to weźmie. Leica, film założony.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_08"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Słowu nikt nie uwierzy. Zdjęciu tak.",
+        "napis": "Słowu nikt nie uwierzy. Zdjęciu tak.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_09"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Oddam pani aparat.",
+        "napis": "Oddam pani aparat.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_10"
+      },
+      {
+        "kto": "zofia",
+        "tekst": "Aparat jest najmniej ważny. Niech pan wróci z filmem.",
+        "napis": "Aparat jest najmniej ważny. Niech pan wróci z filmem.",
+        "mysl": false,
+        "audio": "Audio/a1_zofia_11"
+      }
+    ]
+  },
+  "a1_recepcja": {
+    "linie": [
+      {
+        "kto": "recepcjonista",
+        "tekst": "Guten Tag. Wünschen der Herr ein Zimmer?",
+        "napis": "Dzień dobry. Czy szanowny pan życzy sobie pokój?",
+        "mysl": false,
+        "audio": "Audio/a1_recepcja_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Nein, danke. Ich bin hier mit einem Geschäftsfreund verabredet.",
+        "napis": "Nie, dziękuję. Jestem tu umówiony ze wspólnikiem.",
+        "mysl": false,
+        "audio": "Audio/a1_recepcja_02"
+      },
+      {
+        "kto": "recepcjonista",
+        "tekst": "Dann darf ich an die Bar bitten. Gleich links, mein Herr.",
+        "napis": "W takim razie zapraszam do baru. Zaraz na lewo, proszę pana.",
+        "mysl": false,
+        "audio": "Audio/a1_recepcja_03"
+      },
+      {
+        "kto": "recepcjonista",
+        "tekst": "Verzeihen Sie die Unruhe heute. Wir haben Herren aus Berlin im Haus.",
+        "napis": "Proszę wybaczyć dzisiejszy ruch. Mamy gości z Berlina.",
+        "mysl": false,
+        "audio": "Audio/a1_recepcja_04"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Ich habe Zeit. Danke sehr.",
+        "napis": "Mam czas. Dziękuję bardzo.",
+        "mysl": false,
+        "audio": "Audio/a1_recepcja_05"
+      }
+    ]
+  },
+  "a1_mysl_mapa": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Plan Gliwic. Radiostacja przy Tarnowitzer Landstraße, zakreślona na czerwono.",
+        "napis": "Plan Gliwic. Radiostacja przy Tarnowitzer Landstraße, zakreślona na czerwono.",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_mapa_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Obok ołówkiem: dwudziesta. Tylko dzisiaj czy jutro?",
+        "napis": "Obok ołówkiem: 20:00. Tylko dzisiaj czy jutro?",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_mapa_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Zdjęcie. Ręce nie mogą drżeć.",
+        "napis": "Zdjęcie. Ręce nie mogą drżeć.",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_mapa_03"
+      }
+    ]
+  },
+  "a1_mysl_lista": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Lista zaopatrzenia. Polskie ubrania cywilne, siedem kompletów.",
+        "napis": "Lista zaopatrzenia. „Polskie ubrania cywilne, siedem kompletów”.",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_lista_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Po co inżynierom z Berlina polskie ubrania?",
+        "napis": "Po co inżynierom z Berlina polskie ubrania?",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_lista_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Chcą, żeby to wyglądało na nas.",
+        "napis": "Chcą, żeby to wyglądało na nas.",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_lista_03"
+      }
+    ]
+  },
+  "a1_telefon": {
+    "linie": [
+      {
+        "kto": "naujocks",
+        "tekst": "Naujocks.",
+        "napis": "Naujocks.",
+        "mysl": false,
+        "audio": "Audio/a1_telefon_01"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Ja, ich höre.",
+        "napis": "Tak, słucham.",
+        "mysl": false,
+        "audio": "Audio/a1_telefon_02"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Bitte wiederholen.",
+        "napis": "Proszę powtórzyć.",
+        "mysl": false,
+        "audio": "Audio/a1_telefon_03"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Großmutter gestorben. Verstanden.",
+        "napis": "Babcia umarła. Zrozumiałem.",
+        "mysl": false,
+        "audio": "Audio/a1_telefon_04"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Heute Abend, wie besprochen. Meine Leute sind bereit.",
+        "napis": "Dziś wieczorem, jak ustalono. Moi ludzie są gotowi.",
+        "mysl": false,
+        "audio": "Audio/a1_telefon_05"
+      }
+    ]
+  },
+  "a1_mysl_haslo": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Babcia umarła. Nikt nie odbiera takiej wiadomości tak spokojnie.",
+        "napis": "Babcia umarła. Nikt nie odbiera takiej wiadomości tak spokojnie.",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_haslo_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "To hasło. Zaczynają dziś. Na mapie była dwudziesta.",
+        "napis": "To hasło. Zaczynają dziś. Na mapie była 20:00.",
+        "mysl": true,
+        "audio": "Audio/a1_mysl_haslo_02"
+      }
+    ]
+  },
+  "a2_start": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Czarne auto spod hotelu. Rusza na północ.",
+        "napis": "Czarne auto spod hotelu. Rusza na północ.",
+        "mysl": true,
+        "audio": "Audio/a2_start_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Trzymam się za nim. Nie za blisko.",
+        "napis": "Trzymam się za nim. Nie za blisko.",
+        "mysl": true,
+        "audio": "Audio/a2_start_02"
+      }
+    ]
+  },
+  "pob_fotograf_przed": {
+    "linie": [
+      {
+        "kto": "fotograf",
+        "tekst": "Niech pan mówi ciszej. Na zapleczu siedzi jeden z Gestapo.",
+        "napis": "Niech pan mówi ciszej. Na zapleczu siedzi jeden z Gestapo.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_przed_01"
+      },
+      {
+        "kto": "fotograf",
+        "tekst": "Pilnuje mnie od rana. Myśli, że robię odbitki dla Polaków.",
+        "napis": "Pilnuje mnie od rana. Myśli, że robię odbitki dla Polaków.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_przed_02"
+      },
+      {
+        "kto": "fotograf",
+        "tekst": "I ma rację. Niech pan uważa, idzie tutaj.",
+        "napis": "I ma rację. Niech pan uważa, idzie tutaj.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_przed_03"
+      }
+    ]
+  },
+  "pob_fotograf_gestapo": {
+    "linie": [
+      {
+        "kto": "gestapo",
+        "tekst": "Moment mal. Sie da. Ihre Papiere.",
+        "napis": "Chwileczkę. Pan tam. Dokumenty.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Bitte sehr. Krause, Johann. Kaufmann aus Beuthen.",
+        "napis": "Proszę bardzo. Krause, Johann. Kupiec z Bytomia.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_02"
+      },
+      {
+        "kto": "gestapo",
+        "tekst": "Und was sucht ein Kaufmann aus Beuthen beim Fotografen in Gleiwitz?",
+        "napis": "A czego szuka kupiec z Bytomia u fotografa w Gliwicach?",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_03"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Ich hole Bilder ab. Von der Hochzeit meiner Schwester.",
+        "napis": "Odbieram zdjęcia. Ze ślubu mojej siostry.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_04"
+      },
+      {
+        "kto": "gestapo",
+        "tekst": "Sie sprechen wie ein Pole.",
+        "napis": "Mówi pan jak Polak.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_05"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Ich spreche wie ein Oberschlesier. Wie die halbe Stadt.",
+        "napis": "Mówię jak Górnoślązak. Jak pół miasta.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_06"
+      },
+      {
+        "kto": "gestapo",
+        "tekst": "Na gut. Gehen Sie. Und halten Sie sich von Ärger fern.",
+        "napis": "No dobrze. Proszę iść. I trzymać się z dala od kłopotów.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_gestapo_07"
+      }
+    ]
+  },
+  "pob_fotograf_po": {
+    "linie": [
+      {
+        "kto": "fotograf",
+        "tekst": "Poszedł. Myślałem, że już po nas.",
+        "napis": "Poszedł. Myślałem, że już po nas.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_po_01"
+      },
+      {
+        "kto": "fotograf",
+        "tekst": "Wywołam to w ciemni. Po dwie odbitki z każdej klatki.",
+        "napis": "Wywołam to w ciemni. Po dwie odbitki z każdej klatki.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_po_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Jedna kopia zostaje u pana. Gdyby mnie złapali.",
+        "napis": "Jedna kopia zostaje u pana. Gdyby mnie złapali.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_po_03"
+      },
+      {
+        "kto": "fotograf",
+        "tekst": "Schowam ją za ramą portretu ślubnego. Tam nikt nie zagląda.",
+        "napis": "Schowam ją za ramą portretu ślubnego. Tam nikt nie zagląda.",
+        "mysl": false,
+        "audio": "Audio/pob_fotograf_po_04"
+      }
+    ]
+  },
+  "pob_skrytka": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Skrytka pod mostem na Kłodnicy. Trzeci kamień od lewej, tak jak mówili w Katowicach.",
+        "napis": "Skrytka pod mostem na Kłodnicy. Trzeci kamień od lewej, tak jak mówili w Katowicach.",
+        "mysl": true,
+        "audio": "Audio/pob_skrytka_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Osiem naboi do Visa. Oby zostały w magazynku.",
+        "napis": "Osiem naboi do Visa. Oby zostały w magazynku.",
+        "mysl": true,
+        "audio": "Audio/pob_skrytka_02"
+      }
+    ]
+  },
+  "a2_zmrok": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Dziewiętnasta. Zmierzcha, a powietrze dalej stoi.",
+        "napis": "19:00. Zmierzcha, a powietrze dalej stoi.",
+        "mysl": true,
+        "audio": "Audio/a2_zmrok_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Zapalają latarnie. Każda to świadek. Trzymam się cienia.",
+        "napis": "Zapalają latarnie. Każda to świadek. Trzymam się cienia.",
+        "mysl": true,
+        "audio": "Audio/a2_zmrok_02"
+      }
+    ]
+  },
+  "a2_auto_daleko": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Tracę ich. Szybciej, zanim skręcą.",
+        "napis": "Tracę ich. Szybciej, zanim skręcą.",
+        "mysl": true,
+        "audio": "Audio/a2_auto_daleko_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Gdzie to auto? Bez niego nie znajdę reszty.",
+        "napis": "Gdzie to auto? Bez niego nie znajdę reszty.",
+        "mysl": true,
+        "audio": "Audio/a2_auto_daleko_02"
+      }
+    ]
+  },
+  "a2_auto_blisko": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Za blisko. Kierowca patrzy w lusterko.",
+        "napis": "Za blisko. Kierowca patrzy w lusterko.",
+        "mysl": true,
+        "audio": "Audio/a2_auto_blisko_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Zwolnij. Kupiec z Bytomia nie goni samochodów.",
+        "napis": "Zwolnij. Kupiec z Bytomia nie goni samochodów.",
+        "mysl": true,
+        "audio": "Audio/a2_auto_blisko_02"
+      }
+    ]
+  },
+  "a2_most": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Kłodnica. Nad dachami wieża radiostacji, ponad sto metrów drewna.",
+        "napis": "Kłodnica. Nad dachami wieża radiostacji, ponad sto metrów drewna.",
+        "mysl": true,
+        "audio": "Audio/a2_most_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Do ósmej zostało niewiele.",
+        "napis": "Do ósmej zostało niewiele.",
+        "mysl": true,
+        "audio": "Audio/a2_most_02"
+      }
+    ]
+  },
+  "a2_zagajnik": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Er ist bewusstlos. Wohin mit ihm?",
+        "napis": "Jest nieprzytomny. Gdzie go dać?",
+        "mysl": false,
+        "audio": "Audio/a2_zagajnik_01"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Unsere Konserve. Er kommt später zum Eingang.",
+        "napis": "Nasza konserwa. Później pójdzie pod wejście.",
+        "mysl": false,
+        "audio": "Audio/a2_zagajnik_02"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Jetzt umziehen. Die Zivilsachen liegen im Wagen.",
+        "napis": "Teraz się przebrać. Cywilne rzeczy leżą w aucie.",
+        "mysl": false,
+        "audio": "Audio/a2_zagajnik_03"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Ab jetzt seid ihr Polen. Wer Polnisch kann, ruft. Die anderen schweigen.",
+        "napis": "Od teraz jesteście Polakami. Kto zna polski, krzyczy. Reszta milczy.",
+        "mysl": false,
+        "audio": "Audio/a2_zagajnik_04"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Und wenn uns jemand sieht?",
+        "napis": "A jeśli ktoś nas zobaczy?",
+        "mysl": false,
+        "audio": "Audio/a2_zagajnik_05"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Dann hat er Polen gesehen. Um acht sind wir drin.",
+        "napis": "To widział Polaków. O ósmej jesteśmy w środku.",
+        "mysl": false,
+        "audio": "Audio/a2_zagajnik_06"
+      }
+    ]
+  },
+  "a2_mysl_konserwa": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Przywieźli go nieprzytomnego. To nie żołnierz, to ktoś stąd.",
+        "napis": "Przywieźli go nieprzytomnego. To nie żołnierz, to ktoś stąd.",
+        "mysl": true,
+        "audio": "Audio/a2_mysl_konserwa_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Ich jest sześciu, ja jeden. Nie odbiję go.",
+        "napis": "Ich jest sześciu, ja jeden. Nie odbiję go.",
+        "mysl": true,
+        "audio": "Audio/a2_mysl_konserwa_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Zostaje mi zdjęcie. Żeby kiedyś ktoś zapytał, kim był.",
+        "napis": "Zostaje mi zdjęcie. Żeby kiedyś ktoś zapytał, kim był.",
+        "mysl": true,
+        "audio": "Audio/a2_mysl_konserwa_03"
+      }
+    ]
+  },
+  "a1_hotel_goscie": {
+    "linie": [
+      {
+        "kto": "przechodzien",
+        "tekst": "Bei dieser Hitze sollte man gar nicht arbeiten.",
+        "napis": "W taki upał w ogóle nie powinno się pracować.",
+        "mysl": false,
+        "audio": "Audio/a1_hotel_goscie_01"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Herr Ober, noch ein Bier, bitte. Aber kalt.",
+        "napis": "Kelner, jeszcze jedno piwo. Ale zimne.",
+        "mysl": false,
+        "audio": "Audio/a1_hotel_goscie_02"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Man sagt, die Grenze wird bald ganz geschlossen.",
+        "napis": "Mówią, że granicę wkrótce całkiem zamkną.",
+        "mysl": false,
+        "audio": "Audio/a1_hotel_goscie_03"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Meine Frau will morgen nach Breslau, solange die Züge noch fahren.",
+        "napis": "Żona chce jutro jechać do Wrocławia, póki jeszcze jeżdżą pociągi.",
+        "mysl": false,
+        "audio": "Audio/a1_hotel_goscie_04"
+      }
+    ]
+  },
+  "bark_przechodnie": {
+    "linie": [
+      {
+        "kto": "przechodzien",
+        "tekst": "Was für eine Hitze. Seit Tagen kein Tropfen Regen.",
+        "napis": "Co za upał. Od dni ani kropli deszczu.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_01"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Ale gorko. Bez dyszczu ziymniaki ani niy urosnom.",
+        "napis": "Ale gorąco. Bez deszczu ziemniaki nawet nie urosną.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_02"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Mein Schwager hat gestern seinen Gestellungsbefehl bekommen.",
+        "napis": "Szwagier dostał wczoraj wezwanie do wojska.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_03"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Żniwa jeszcze niy zebrane, a już godajom o wojnie.",
+        "napis": "Żniwa jeszcze niezebrane, a już mówią o wojnie.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_04"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Seit Montag gibt es Butter nur noch auf Karte.",
+        "napis": "Od poniedziałku masło jest już tylko na kartki.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_05"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Ludzie wykupujom cuker i mąka, jakby jutro miało niy być.",
+        "napis": "Ludzie wykupują cukier i mąkę, jakby jutra miało nie być.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_06"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Im Radio sagen sie, an der Grenze wird geschossen.",
+        "napis": "W radiu mówią, że na granicy strzelają.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_07"
+      },
+      {
+        "kto": "przechodzien",
+        "tekst": "Wojna, niy wojna, a na gruba i tak trza iść.",
+        "napis": "Wojna czy nie wojna, a do kopalni i tak trzeba iść.",
+        "mysl": false,
+        "audio": "Audio/bark_przechodnie_08"
+      }
+    ]
+  },
+  "a3_wejscie": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Ósma. Od frontu stoi auto i palą się światła. Wchodzę od tyłu.",
+        "napis": "Ósma. Od frontu stoi auto i palą się światła. Wchodzę od tyłu.",
+        "mysl": true,
+        "audio": "Audio/a3_wejscie_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Płot przy szopie jest niski. Nikt go nie pilnuje, bo oni nie spodziewają się świadków.",
+        "napis": "Płot przy szopie jest niski. Nikt go nie pilnuje, bo oni nie spodziewają się świadków.",
+        "mysl": true,
+        "audio": "Audio/a3_wejscie_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Kupiec z Bytomia został w mieście. Tutaj jestem tylko okiem aparatu.",
+        "napis": "Kupiec z Bytomia został w mieście. Tutaj jestem tylko okiem aparatu.",
+        "mysl": true,
+        "audio": "Audio/a3_wejscie_03"
+      }
+    ]
+  },
+  "a3_sd_udaja": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Rence do góry. Tu polska powstańcy.",
+        "napis": "Ręce do góry. Tu polscy powstańcy.",
+        "mysl": false,
+        "audio": "Audio/a3_sd_udaja_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Na ziemia, szybko. Niech żyje Polska.",
+        "napis": "Na ziemię, szybko. Niech żyje Polska.",
+        "mysl": false,
+        "audio": "Audio/a3_sd_udaja_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Lauter. Man soll uns bis zur Straße hören.",
+        "napis": "Głośniej. Mają nas słyszeć aż na ulicy.",
+        "mysl": false,
+        "audio": "Audio/a3_sd_udaja_03"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Schneller. Wir haben nur ein paar Minuten.",
+        "napis": "Szybciej. Mamy tylko kilka minut.",
+        "mysl": false,
+        "audio": "Audio/a3_sd_udaja_04"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Zwei Mann in den Senderaum. Der Rest hält die Tür.",
+        "napis": "Dwóch do sali nadawczej. Reszta pilnuje drzwi.",
+        "mysl": false,
+        "audio": "Audio/a3_sd_udaja_05"
+      }
+    ]
+  },
+  "a3_brak_sygnalu": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Der Sender geht nicht. Wir finden den richtigen Schalter nicht.",
+        "napis": "Nadajnik nie działa. Nie możemy znaleźć właściwego przełącznika.",
+        "mysl": false,
+        "audio": "Audio/a3_brak_sygnalu_01"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Was heißt, er geht nicht? Wo ist der Techniker?",
+        "napis": "Jak to nie działa? Gdzie jest technik?",
+        "mysl": false,
+        "audio": "Audio/a3_brak_sygnalu_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Im Keller eingesperrt. Wie befohlen.",
+        "napis": "Zamknięty w piwnicy. Tak jak pan kazał.",
+        "mysl": false,
+        "audio": "Audio/a3_brak_sygnalu_03"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Dann das Gewittermikrofon. Damit warnen sie vor Unwettern. Es geht direkt hinaus.",
+        "napis": "To mikrofon burzowy. Nim ostrzegają przed burzą. Idzie prosto w eter.",
+        "mysl": false,
+        "audio": "Audio/a3_brak_sygnalu_04"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Gefunden. Es ist an.",
+        "napis": "Jest. Włączony.",
+        "mysl": false,
+        "audio": "Audio/a3_brak_sygnalu_05"
+      }
+    ]
+  },
+  "a3_komunikat": {
+    "linie": [
+      {
+        "kto": "heinz",
+        "tekst": "Uwaga! Tu Gliwice. Rozgłośnia znajduje się w rękach polskich.",
+        "napis": "Uwaga! Tu Gliwice. Rozgłośnia znajduje się w rękach polskich.",
+        "mysl": false,
+        "audio": "Audio/a3_komunikat_01"
+      },
+      {
+        "kto": "heinz",
+        "tekst": "Wzywamy wszystkich Polaków na Śląsku.",
+        "napis": "Wzywamy wszystkich Polaków na Śląsku.",
+        "mysl": false,
+        "audio": "Audio/a3_komunikat_02"
+      },
+      {
+        "kto": "heinz",
+        "tekst": "Godzina wolności wybiła.",
+        "napis": "Godzina wolności wybiła.",
+        "mysl": false,
+        "audio": "Audio/a3_komunikat_03"
+      },
+      {
+        "kto": "heinz",
+        "tekst": "Reicht das? Hört uns da draußen überhaupt jemand?",
+        "napis": "Wystarczy? Czy ktoś nas tam w ogóle słyszy?",
+        "mysl": false,
+        "audio": "Audio/a3_komunikat_04"
+      }
+    ]
+  },
+  "a3_mysl_kable": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Kartka przy szafie, podpisana Gruber. Linia, wzmacniacz, zasilanie. W tej kolejności.",
+        "napis": "Kartka przy szafie, podpisana Gruber. Linia, wzmacniacz, zasilanie. W tej kolejności.",
+        "mysl": true,
+        "audio": "Audio/a3_mysl_kable_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Jeśli odepnę ich od linii, nie powiedzą wszystkiego, co chcieli.",
+        "napis": "Jeśli odepnę ich od linii, nie powiedzą wszystkiego, co chcieli.",
+        "mysl": true,
+        "audio": "Audio/a3_mysl_kable_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Dziewięćdziesiąt sekund. Potem ktoś tu zajrzy.",
+        "napis": "90 sekund. Potem ktoś tu zajrzy.",
+        "mysl": true,
+        "audio": "Audio/a3_mysl_kable_03"
+      }
+    ]
+  },
+  "a3_kabel_zly": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Nie ten. Iskra.",
+        "napis": "Nie ten. Iskra.",
+        "mysl": true,
+        "audio": "Audio/a3_kabel_zly_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Was war das? Hinten hat es geknallt.",
+        "napis": "Co to było? Z tyłu coś trzasnęło.",
+        "mysl": false,
+        "audio": "Audio/a3_kabel_zly_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Geh nachsehen. Sofort.",
+        "napis": "Idź zobacz. Natychmiast.",
+        "mysl": false,
+        "audio": "Audio/a3_kabel_zly_03"
+      }
+    ]
+  },
+  "a3_sygnal_urwany": {
+    "linie": [
+      {
+        "kto": "heinz",
+        "tekst": "Die Leitung ist tot. Ich bin nicht mehr drauf.",
+        "napis": "Linia padła. Już nie nadaję.",
+        "mysl": false,
+        "audio": "Audio/a3_sygnal_urwany_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Wer war das? Ist hier noch jemand?",
+        "napis": "Kto to zrobił? Jest tu jeszcze ktoś?",
+        "mysl": false,
+        "audio": "Audio/a3_sygnal_urwany_02"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Egal. Es hat gereicht. Alle raus.",
+        "napis": "Nieważne. Wystarczyło. Wszyscy wychodzić.",
+        "mysl": false,
+        "audio": "Audio/a3_sygnal_urwany_03"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Urwałem im głos. Ale kilka zdań i tak poszło w eter.",
+        "napis": "Urwałem im głos. Ale kilka zdań i tak poszło w eter.",
+        "mysl": true,
+        "audio": "Audio/a3_sygnal_urwany_04"
+      }
+    ]
+  },
+  "a3_czas_minal": {
+    "linie": [
+      {
+        "kto": "heinz",
+        "tekst": "Fertig. Es ist draußen.",
+        "napis": "Gotowe. Poszło.",
+        "mysl": false,
+        "audio": "Audio/a3_czas_minal_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Za późno. Komunikat poszedł w eter.",
+        "napis": "Za późno. Komunikat poszedł w eter.",
+        "mysl": true,
+        "audio": "Audio/a3_czas_minal_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Historii nie zatrzymam. Ale zdjęcia muszą dotrzeć do Katowic.",
+        "napis": "Historii nie zatrzymam. Ale zdjęcia muszą dotrzeć do Katowic.",
+        "mysl": true,
+        "audio": "Audio/a3_czas_minal_03"
+      }
+    ]
+  },
+  "a3_gruber": {
+    "linie": [
+      {
+        "kto": "gruber",
+        "tekst": "Wer ist da? Nicht schießen. Hier unten sind nur Arbeiter.",
+        "napis": "Kto tam? Nie strzelać. Tu na dole są tylko pracownicy.",
+        "mysl": false,
+        "audio": "Audio/a3_gruber_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Cicho. Nie jestem z nimi. Wypuszczę was.",
+        "napis": "Cicho. Nie jestem z nimi. Wypuszczę was.",
+        "mysl": false,
+        "audio": "Audio/a3_gruber_02"
+      },
+      {
+        "kto": "gruber",
+        "tekst": "Godosz po naszymu. Panie, to niy som żodne Polacy. To som Niymcy z Berlina.",
+        "napis": "Mówisz po naszemu. Panie, to nie są żadni Polacy. To Niemcy z Berlina.",
+        "mysl": false,
+        "audio": "Audio/a3_gruber_03"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Wiem. Wyjdźcie tylnymi drzwiami, jak tylko odjadą. Mnie tu nie było.",
+        "napis": "Wiem. Wyjdźcie tylnymi drzwiami, jak tylko odjadą. Mnie tu nie było.",
+        "mysl": false,
+        "audio": "Audio/a3_gruber_04"
+      },
+      {
+        "kto": "gruber",
+        "tekst": "Jo nic niy widzioł. Ale zapamiyntom.",
+        "napis": "Ja nic nie widziałem. Ale zapamiętam.",
+        "mysl": false,
+        "audio": "Audio/a3_gruber_05"
+      }
+    ]
+  },
+  "bark_pracownik": {
+    "linie": [
+      {
+        "kto": "pracownik",
+        "tekst": "Gruber, co sie tam dzieje na górze?",
+        "napis": "Gruber, co się tam dzieje na górze?",
+        "mysl": false,
+        "audio": "Audio/bark_pracownik_01"
+      },
+      {
+        "kto": "pracownik",
+        "tekst": "Ich habe Frau und Kinder zu Hause. Bitte.",
+        "napis": "Mam w domu żonę i dzieci. Proszę.",
+        "mysl": false,
+        "audio": "Audio/bark_pracownik_02"
+      },
+      {
+        "kto": "pracownik",
+        "tekst": "Niy wyłaź jeszcze. Oni majom broń.",
+        "napis": "Nie wychodź jeszcze. Oni mają broń.",
+        "mysl": false,
+        "audio": "Audio/bark_pracownik_03"
+      }
+    ]
+  },
+  "a4_mysl_honiok": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Przy wejściu leży człowiek przykryty płaszczem. Ten z zagajnika.",
+        "napis": "Przy wejściu leży człowiek przykryty płaszczem. Ten z zagajnika.",
+        "mysl": true,
+        "audio": "Audio/a4_mysl_honiok_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Na kartce nazwisko. Honiok, Franz. I jedno słowo: Konserve.",
+        "napis": "Na kartce nazwisko. Honiok, Franz. I jedno słowo: „Konserve”.",
+        "mysl": true,
+        "audio": "Audio/a4_mysl_honiok_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Dla nich był rekwizytem. Dla mnie jest Franciszkiem Honiokiem. Nikt nie powie, że go tu nie było.",
+        "napis": "Dla nich był rekwizytem. Dla mnie jest Franciszkiem Honiokiem. Nikt nie powie, że go tu nie było.",
+        "mysl": true,
+        "audio": "Audio/a4_mysl_honiok_03"
+      }
+    ]
+  },
+  "a4_alarm": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Da ist einer! Am Zaun!",
+        "napis": "Tam ktoś jest! Przy płocie!",
+        "mysl": false,
+        "audio": "Audio/a4_alarm_01"
+      },
+      {
+        "kto": "naujocks",
+        "tekst": "Holt ihn. Lebend. Er hat eine Kamera.",
+        "napis": "Złapcie go. Żywego. Ma aparat.",
+        "mysl": false,
+        "audio": "Audio/a4_alarm_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Licht! Macht das Licht an!",
+        "napis": "Światło! Zapalcie światło!",
+        "mysl": false,
+        "audio": "Audio/a4_alarm_03"
+      }
+    ]
+  },
+  "a4_ucieczka": {
+    "linie": [
+      {
+        "kto": "kruk",
+        "tekst": "Na wschód, przez pola. W stodole czeka Sowa.",
+        "napis": "Na wschód, przez pola. W stodole czeka Sowa.",
+        "mysl": true,
+        "audio": "Audio/a4_ucieczka_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Rowem, nie drogą. Na drodze widać każdego.",
+        "napis": "Rowem, nie drogą. Na drodze widać każdego.",
+        "mysl": true,
+        "audio": "Audio/a4_ucieczka_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Film jest w kieszeni. Tylko to się teraz liczy.",
+        "napis": "Film jest w kieszeni. Tylko to się teraz liczy.",
+        "mysl": true,
+        "audio": "Audio/a4_ucieczka_03"
+      }
+    ]
+  },
+  "a4_sowa": {
+    "linie": [
+      {
+        "kto": "sowa",
+        "tekst": "Późno dzisiaj na grzyby.",
+        "napis": "Późno dzisiaj na grzyby.",
+        "mysl": false,
+        "audio": "Audio/a4_sowa_01"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Po deszczu będą lepsze.",
+        "napis": "Po deszczu będą lepsze.",
+        "mysl": false,
+        "audio": "Audio/a4_sowa_02"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Jeden film. Mapa, lista, zagajnik, radiostacja. I człowiek, którego zostawili przy wejściu.",
+        "napis": "Jeden film. Mapa, lista, zagajnik, radiostacja. I człowiek, którego zostawili przy wejściu.",
+        "mysl": false,
+        "audio": "Audio/a4_sowa_03"
+      },
+      {
+        "kto": "sowa",
+        "tekst": "Schowom go w ramie kola. Do Katowic przed północą.",
+        "napis": "Schowam go w ramie roweru. Do Katowic przed północą.",
+        "mysl": false,
+        "audio": "Audio/a4_sowa_04"
+      },
+      {
+        "kto": "kruk",
+        "tekst": "Jeśli cię zatrzymają, prześwietl go. Lepiej nic, niż żeby trafił do nich.",
+        "napis": "Jeśli cię zatrzymają, prześwietl go. Lepiej nic, niż żeby trafił do nich.",
+        "mysl": false,
+        "audio": "Audio/a4_sowa_05"
+      },
+      {
+        "kto": "sowa",
+        "tekst": "Niy zatrzymajom. A ty idź inszom drogom. Rano bydzie wojna.",
+        "napis": "Nie zatrzymają. A ty idź inną drogą. Rano będzie wojna.",
+        "mysl": false,
+        "audio": "Audio/a4_sowa_06"
+      }
+    ]
+  },
+  "a4_radio_spiker": {
+    "linie": [
+      {
+        "kto": "spiker",
+        "tekst": "Hier ist der Reichssender Breslau.",
+        "napis": "Tu Rozgłośnia Rzeszy we Wrocławiu.",
+        "mysl": false,
+        "audio": "Audio/a4_radio_spiker_01"
+      },
+      {
+        "kto": "spiker",
+        "tekst": "Gestern gegen zwanzig Uhr haben polnische Aufständische den Sender Gleiwitz überfallen.",
+        "napis": "Wczoraj około 20:00 polscy powstańcy napadli na radiostację w Gliwicach.",
+        "mysl": false,
+        "audio": "Audio/a4_radio_spiker_02"
+      },
+      {
+        "kto": "spiker",
+        "tekst": "Die Polizei hat die Angreifer zurückgeschlagen. Ein Aufständischer wurde getötet.",
+        "napis": "Policja odparła napastników. Jeden z powstańców zginął.",
+        "mysl": false,
+        "audio": "Audio/a4_radio_spiker_03"
+      },
+      {
+        "kto": "spiker",
+        "tekst": "Weitere Meldungen folgen.",
+        "napis": "Dalsze komunikaty wkrótce.",
+        "mysl": false,
+        "audio": "Audio/a4_radio_spiker_04"
+      }
+    ]
+  },
+  "bark_sd_podejrzenie": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Hast du das gehört?",
+        "napis": "Słyszałeś to?",
+        "mysl": false,
+        "audio": "Audio/bark_sd_podejrzenie_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Da hinten hat sich etwas bewegt.",
+        "napis": "Tam z tyłu coś się poruszyło.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_podejrzenie_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Wer ist da? Zeig dich.",
+        "napis": "Kto tam? Pokaż się.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_podejrzenie_03"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Wahrscheinlich eine Katze. Ich sehe trotzdem nach.",
+        "napis": "Pewnie kot. I tak sprawdzę.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_podejrzenie_04"
+      }
+    ]
+  },
+  "bark_sd_alarm": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Da ist er! Hinterher!",
+        "napis": "Tam jest! Za nim!",
+        "mysl": false,
+        "audio": "Audio/bark_sd_alarm_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Ein Fremder auf dem Gelände!",
+        "napis": "Obcy na terenie!",
+        "mysl": false,
+        "audio": "Audio/bark_sd_alarm_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Er läuft zum Zaun!",
+        "napis": "Biegnie do płotu!",
+        "mysl": false,
+        "audio": "Audio/bark_sd_alarm_03"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Nicht entkommen lassen!",
+        "napis": "Nie dajcie mu uciec!",
+        "mysl": false,
+        "audio": "Audio/bark_sd_alarm_04"
+      }
+    ]
+  },
+  "bark_sd_szukanie": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Durchsucht die Schuppen.",
+        "napis": "Przeszukać szopy.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_szukanie_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Er kann nicht weit sein.",
+        "napis": "Nie mógł daleko odejść.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_szukanie_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Leuchte unter die Bäume.",
+        "napis": "Poświeć pod drzewa.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_szukanie_03"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Jeden Winkel. Verstanden?",
+        "napis": "Każdy kąt. Zrozumiano?",
+        "mysl": false,
+        "audio": "Audio/bark_sd_szukanie_04"
+      }
+    ]
+  },
+  "bark_sd_zgubil": {
+    "linie": [
+      {
+        "kto": "sd",
+        "tekst": "Weg. Einfach weg.",
+        "napis": "Zniknął. Po prostu zniknął.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_zgubil_01"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Verdammt, er ist uns entwischt.",
+        "napis": "Cholera, wymknął się nam.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_zgubil_02"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Zurück zum Wagen. Der Chef wartet nicht.",
+        "napis": "Wracamy do auta. Szef nie będzie czekał.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_zgubil_03"
+      },
+      {
+        "kto": "sd",
+        "tekst": "Wenn er etwas gesehen hat, haben wir ein Problem.",
+        "napis": "Jeśli coś widział, mamy problem.",
+        "mysl": false,
+        "audio": "Audio/bark_sd_zgubil_04"
+      }
+    ]
+  },
+  "bark_schupo": {
+    "linie": [
+      {
+        "kto": "schupo",
+        "tekst": "Halt! Stehenbleiben! Polizei!",
+        "napis": "Stój! Nie ruszać się! Policja!",
+        "mysl": false,
+        "audio": "Audio/bark_schupo_01"
+      },
+      {
+        "kto": "schupo",
+        "tekst": "Sie da! Hände aus den Taschen!",
+        "napis": "Pan tam! Ręce z kieszeni!",
+        "mysl": false,
+        "audio": "Audio/bark_schupo_02"
+      },
+      {
+        "kto": "schupo",
+        "tekst": "Hierher, meine Herren! Hier läuft einer weg!",
+        "napis": "Tutaj, panowie! Tu ktoś ucieka!",
+        "mysl": false,
+        "audio": "Audio/bark_schupo_03"
+      },
+      {
+        "kto": "schupo",
+        "tekst": "Holt die Herren vom Sender. Schnell!",
+        "napis": "Wołajcie panów z radiostacji. Szybko!",
+        "mysl": false,
+        "audio": "Audio/bark_schupo_04"
+      }
+    ]
+  },
+  "porazka_zdemaskowany": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Agent Kruk zdemaskowany. Prowokacja przeszła bez świadków.",
+        "napis": "Agent »Kruk« zdemaskowany. Prowokacja przeszła bez świadków.",
+        "mysl": false,
+        "audio": "Audio/porazka_zdemaskowany_01"
+      }
+    ]
+  },
+  "porazka_cywil": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.",
+        "napis": "Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.",
+        "mysl": false,
+        "audio": "Audio/porazka_cywil_01"
+      }
+    ]
+  },
+  "porazka_czas": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Świt. Film nie dotarł do Katowic. Świat usłyszał tylko wersję z Berlina.",
+        "napis": "Świt. Film nie dotarł do Katowic. Świat usłyszał tylko wersję z Berlina.",
+        "mysl": false,
+        "audio": "Audio/porazka_czas_01"
+      }
+    ]
+  },
+  "karta_1": {
+    "tytul": "Ratusz i Ring w Gliwicach",
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Po podziale Górnego Śląska w tysiąc dziewięćset dwudziestym drugim roku Gliwice zostały w Niemczech, a Katowice znalazły się w Polsce. Na Ringu stał ratusz i fontanna z Neptunem. W mieście mieszkali obok siebie Niemcy, Ślązacy i Polacy.",
+        "napis": "Po podziale Górnego Śląska w 1922 roku Gliwice zostały w Niemczech, a Katowice znalazły się w Polsce. Na Ringu stał ratusz i fontanna z Neptunem. W mieście mieszkali obok siebie Niemcy, Ślązacy i Polacy.",
+        "mysl": false,
+        "audio": "Audio/karta_1_01"
+      }
+    ]
+  },
+  "karta_2": {
+    "tytul": "Kościół Wszystkich Świętych",
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Gotycki kościół Wszystkich Świętych to jeden z najstarszych budynków Gliwic. W mieście żyła polska mniejszość, która miała swoje organizacje, w tym Związek Polaków w Niemczech. Po wybuchu wojny wielu polskich działaczy ze Śląska aresztowano.",
+        "napis": "Gotycki kościół Wszystkich Świętych to jeden z najstarszych budynków Gliwic. W mieście żyła polska mniejszość, która miała swoje organizacje, w tym Związek Polaków w Niemczech. Po wybuchu wojny wielu polskich działaczy ze Śląska aresztowano.",
+        "mysl": false,
+        "audio": "Audio/karta_2_01"
+      }
+    ]
+  },
+  "karta_3": {
+    "tytul": "Operacja Himmler",
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Tej samej nocy Niemcy zorganizowali kilka prowokacji wzdłuż granicy. Oprócz radiostacji w Gliwicach napadnięto na komorę celną w Stodołach, po niemiecku Hochlinden, i na leśniczówkę w Byczynie, po niemiecku Pitschen. Każda z nich miała wyglądać na polski atak.",
+        "napis": "Tej samej nocy Niemcy zorganizowali kilka prowokacji wzdłuż granicy. Oprócz radiostacji w Gliwicach napadnięto na komorę celną w Stodołach (Hochlinden) i na leśniczówkę w Byczynie (Pitschen). Każda z nich miała wyglądać na polski atak.",
+        "mysl": false,
+        "audio": "Audio/karta_3_01"
+      }
+    ]
+  },
+  "karta_4": {
+    "tytul": "Dworzec w Gliwicach",
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Granica z Polską biegła zaledwie kilka kilometrów od Gliwic. Między Gliwicami a Katowicami jeździły pociągi, a wielu Ślązaków miało rodzinę i pracę po obu stronach granicy.",
+        "napis": "Granica z Polską biegła zaledwie kilka kilometrów od Gliwic. Między Gliwicami a Katowicami jeździły pociągi, a wielu Ślązaków miało rodzinę i pracę po obu stronach granicy.",
+        "mysl": false,
+        "audio": "Audio/karta_4_01"
+      }
+    ]
+  },
+  "karta_5": {
+    "tytul": "Kłodnica i Kanał Kłodnicki",
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Na przełomie osiemnastego i dziewiętnastego wieku przekopano Kanał Kłodnicki, który połączył Gliwice z Odrą. Barkami płynęły węgiel i żelazo. Gliwice z królewską odlewnią żeliwa i kopalniami w okolicy były jednym z ośrodków górnośląskiego przemysłu.",
+        "napis": "Na przełomie XVIII i XIX wieku przekopano Kanał Kłodnicki, który połączył Gliwice z Odrą. Barkami płynęły węgiel i żelazo. Gliwice z królewską odlewnią żeliwa i kopalniami w okolicy były jednym z ośrodków górnośląskiego przemysłu.",
+        "mysl": false,
+        "audio": "Audio/karta_5_01"
+      }
+    ]
+  },
+  "karta_6": {
+    "tytul": "Franciszek Honiok",
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Franciszek Honiok pochodził z Łubia, po niemiecku Hohenlieben, i walczył w powstaniu śląskim po stronie polskiej. Gestapo zatrzymało go trzydziestego sierpnia tysiąc dziewięćset trzydziestego dziewiątego roku, a w planie napastników nazywano go Konserve. Zabito go i zostawiono przy radiostacji jako fałszywy dowód polskiego ataku.",
+        "napis": "Franciszek Honiok pochodził z Łubia (Hohenlieben) i walczył w powstaniu śląskim po stronie polskiej. Gestapo zatrzymało go 30 sierpnia 1939 roku, a w planie napastników nazywano go „Konserve”. Zabito go i zostawiono przy radiostacji jako fałszywy dowód polskiego ataku.",
+        "mysl": false,
+        "audio": "Audio/karta_6_01"
+      }
+    ]
+  },
+  "epilog_1": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Pierwszego września o czwartej czterdzieści pięć niemiecki okręt otworzył ogień do Westerplatte. Niemcy zaatakowały Polskę bez wypowiedzenia wojny.",
+        "napis": "1 września, 4:45. Niemiecki okręt otworzył ogień do Westerplatte. Niemcy zaatakowały Polskę bez wypowiedzenia wojny.",
+        "mysl": false,
+        "audio": "Audio/epilog_1_01"
+      }
+    ]
+  },
+  "epilog_2": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Tego samego dnia Hitler powiedział w Reichstagu: od piątej czterdzieści pięć odpowiadamy ogniem. Na usprawiedliwienie wojny pokazywano światu napady, które Niemcy sami zorganizowali.",
+        "napis": "Tego samego dnia Hitler powiedział w Reichstagu: „Od 5:45 odpowiadamy ogniem”. Na usprawiedliwienie wojny pokazywano światu napady, które Niemcy sami zorganizowali.",
+        "mysl": false,
+        "audio": "Audio/epilog_2_01"
+      }
+    ]
+  },
+  "epilog_3": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Franciszka Honioka nazywa się często pierwszą ofiarą drugiej wojny światowej. Zginął, zanim wojna się zaczęła.",
+        "napis": "Franciszka Honioka nazywa się często pierwszą ofiarą II wojny światowej. Zginął, zanim wojna się zaczęła.",
+        "mysl": false,
+        "audio": "Audio/epilog_3_01"
+      }
+    ]
+  },
+  "epilog_4": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Jan Wrona, Kruk, to postać fikcyjna. Prawdę o prowokacji ujawnił sam Alfred Naujoks w zeznaniu złożonym w Norymberdze w tysiąc dziewięćset czterdziestym piątym roku.",
+        "napis": "Jan Wrona „Kruk” to postać fikcyjna. Prawdę o prowokacji ujawnił sam Alfred Naujocks w zeznaniu złożonym w Norymberdze w 1945 roku.",
+        "mysl": false,
+        "audio": "Audio/epilog_4_01"
+      }
+    ]
+  },
+  "epilog_5": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Drewniana wieża radiostacji stoi do dziś. Można ją zobaczyć w Muzeum Radiostacja Gliwice, przy ulicy Tarnogórskiej sto dwadzieścia dziewięć.",
+        "napis": "Drewniana wieża radiostacji stoi do dziś. Można ją zobaczyć w Muzeum Radiostacja Gliwice, ul. Tarnogórska 129.",
+        "mysl": false,
+        "audio": "Audio/epilog_5_01"
+      }
+    ]
+  },
+  "epilog_6": {
+    "linie": [
+      {
+        "kto": "lektor",
+        "tekst": "Prowokacja trwała kilka minut. Wojna trwała sześć lat.",
+        "napis": "Prowokacja trwała kilka minut. Wojna trwała sześć lat.",
+        "mysl": false,
+        "audio": "Audio/epilog_6_01"
+      }
+    ]
+  }
+}
