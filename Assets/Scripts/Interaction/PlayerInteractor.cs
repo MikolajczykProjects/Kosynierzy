@@ -31,7 +31,7 @@ namespace Kosynierzy
         void Update()
         {
             CurrentTarget = null;
-            if (GameState.IsPaused || Dialog.IsPlaying || HistoryCardView.IsOpen || MissionFail.IsFailed) return;
+            if (GameState.IsPaused || Dialog.BlocksPlayer || HistoryCardView.IsOpen || MissionFail.IsFailed) return;
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, reach, mask, QueryTriggerInteraction.Collide))
             {

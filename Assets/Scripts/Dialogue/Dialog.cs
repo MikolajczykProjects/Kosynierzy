@@ -37,7 +37,23 @@ namespace Kosynierzy
         InputAction nextAction;
         Coroutine running;
 
+        FirstPersonController frozenPlayer;
+        PlayerWeapon frozenWeapon;
+
         public static bool IsPlaying => instance != null && instance.running != null;
+        /// <summary>True only for a conversation that froze the player (thoughts and barks never block interaction).</summary>
+        public static bool BlocksPlayer => instance != null && instance.running != null && instance.frozenPlayer != null;
+
+        /// <summary>Re-enables whatever this dialogue switched off; safe to call any number of times.</summary>
+        void ReleasePlayer()
+        {
+            if (frozenPlayer != null) frozenPlayer.enabled = true;
+            if (frozenWeapon != null) frozenWeapon.enabled = true;
+            frozenPlayer = null;
+            frozenWeapon = null;
+        }
+
+        void OnDisable() => ReleasePlayer();
         public static Line CurrentLine { get; private set; }
         /// <summary>Raised when a dialogue finishes (id) — quests can listen.</summary>
         public static event Action<string> Finished;
@@ -97,7 +113,7 @@ namespace Kosynierzy
         public static void Play(string id, Action onEnd = null, bool freezePlayer = true)
         {
             var d = Instance;
-            if (d.running != null) d.StopCoroutine(d.running);
+            if (d.running != null) { d.StopCoroutine(d.running); d.voice.Stop(); d.ReleasePlayer(); CurrentLine = null; }
             d.running = d.StartCoroutine(d.Run(id, onEnd, freezePlayer));
         }
 
@@ -145,12 +161,16 @@ namespace Kosynierzy
                 lines = new List<Line> { new() { Who = "", Subtitle = $"[dialog: {id}]" } };
             }
 
-            var player = UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
-            var weapon = UnityEngine.Object.FindAnyObjectByType<PlayerWeapon>();
-            if (freezePlayer)
+            // Thoughts (mysl) never freeze the player: a dialogue freezes only if it has at least one spoken line.
+            bool spoken = false;
+            foreach (var l in lines) if (!l.Thought) { spoken = true; break; }
+            if (freezePlayer && spoken)
             {
-                if (player) player.enabled = false;
-                if (weapon) weapon.enabled = false;
+                var player = UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
+                var weapon = UnityEngine.Object.FindAnyObjectByType<PlayerWeapon>();
+                // Only take over components that are on; a lock (loadout) that already switched them off keeps ownership.
+                if (player != null && player.enabled) { player.enabled = false; frozenPlayer = player; }
+                if (weapon != null && weapon.enabled) { weapon.enabled = false; frozenWeapon = weapon; }
             }
 
             Animator speakerAnim = null;
@@ -176,11 +196,7 @@ namespace Kosynierzy
 
             if (speakerAnim != null) SetBool(speakerAnim, "Rozmowa", false);
             CurrentLine = null;
-            if (freezePlayer)
-            {
-                if (player) player.enabled = true;
-                if (weapon) weapon.enabled = true;
-            }
+            ReleasePlayer();
             running = null;
             Finished?.Invoke(id);
             onEnd?.Invoke();

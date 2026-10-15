@@ -106,8 +106,9 @@ namespace Kosynierzy
 
         void Awake()
         {
+            requireAimToFire = false; // playtest 15.10: LMB must fire from the hip; scenes saved with true are overridden
             cam = GetComponentInParent<Camera>();
-            player = GetComponentInParent<FirstPersonController>();
+            player =GetComponentInParent<FirstPersonController>();
             AmmoInMagazine = magazineSize;
             if (viewModel != null)
             {
