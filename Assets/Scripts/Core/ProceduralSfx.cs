@@ -13,22 +13,58 @@ namespace Kosynierzy
     {
         const int Rate = 44100;
         static readonly Dictionary<SfxBank.Sfx, AudioClip[]> cache = new();
+        static readonly Dictionary<string, AudioClip[]> shotCache = new();
         static System.Random rng = new(1939);
+
+        /// <summary>
+        /// Weapon id ("vis", "browning", "nagant", "wz29", "k98", "erma") the next Sfx.Shot should sound like; set by
+        /// PlayerWeapon.ApplyDefinition. Only matters while SfxBank has no clip for Shot.
+        /// </summary>
+        public static string ShotProfile = "vis";
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() => ShotProfile = "vis";
 
         public static AudioClip Get(SfxBank.Sfx id)
         {
-            if (!cache.TryGetValue(id, out var clips))
+            if (id == SfxBank.Sfx.Shot) return Pick(ShotClips(ShotProfile));
+            // A cached clip can be destroyed behind our back (scene unload with Enter Play Mode options): rebuild then.
+            if (!cache.TryGetValue(id, out var clips) || (clips != null && clips.Length > 0 && clips[0] == null))
             {
                 clips = Build(id);
                 cache[id] = clips;
             }
-            return clips == null || clips.Length == 0 ? null : clips[UnityEngine.Random.Range(0, clips.Length)];
+            return Pick(clips);
         }
+
+        static AudioClip Pick(AudioClip[] clips) =>
+            clips == null || clips.Length == 0 ? null : clips[UnityEngine.Random.Range(0, clips.Length)];
+
+        static AudioClip[] ShotClips(string profile)
+        {
+            profile ??= "vis";
+            if (!shotCache.TryGetValue(profile, out var clips) || clips == null || clips.Length == 0 || clips[0] == null)
+            {
+                clips = BuildShot(profile);
+                shotCache[profile] = clips;
+            }
+            return clips;
+        }
+
+        // Peak targets (last argument) keep the weapons in order of loudness: rifle > Vis > Erma > Browning > Nagant.
+        static AudioClip[] BuildShot(string profile) => profile switch
+        {
+            "browning" => Variants(3, i => Gunshot($"browning_{i}", 0.28f, 3000f, 160f, 0.7f)),
+            "nagant" => Variants(3, i => Gunshot($"nagant_{i}", 0.35f, 1300f, 85f, 0.5f)),
+            "wz29" or "k98" => Variants(3, i => Gunshot($"karabin_{i}", 0.7f, 1500f, 70f, 0.95f)),
+            "erma" => Variants(3, i => Gunshot($"erma_{i}", 0.3f, 2300f, 110f, 0.8f)),
+            _ => Variants(3, i => Gunshot($"vis_{i}", 0.35f, 2600f, 120f, 0.85f)),
+        };
 
         static AudioClip[] Build(SfxBank.Sfx id) => id switch
         {
-            SfxBank.Sfx.Shot => Variants(3, i => Gunshot($"vis_{i}", 0.35f, 2600f, 120f, 0.9f)),
-            SfxBank.Sfx.EnemyShot => Variants(3, i => Gunshot($"rifle_{i}", 0.6f, 1700f, 80f, 1f)),
+            SfxBank.Sfx.Shot => BuildShot("vis"), // normally routed through ShotClips (weapon profile)
+            SfxBank.Sfx.EnemyShot => Variants(3, i => Gunshot($"rifle_{i}", 0.6f, 1700f, 80f, 0.95f)),
             SfxBank.Sfx.DryFire => One(Click("dry", 0.02f, 3200f, 0.6f)),
             SfxBank.Sfx.ReloadStart => One(Concat("reload_out", Click("a", 0.03f, 1800f, 0.7f), Silence(0.12f), Click("b", 0.04f, 1200f, 0.8f))),
             SfxBank.Sfx.ReloadEnd => One(Concat("reload_in", Click("c", 0.035f, 1500f, 0.9f), Silence(0.08f), Click("d", 0.03f, 2400f, 0.7f))),
@@ -63,17 +99,27 @@ namespace Kosynierzy
 
         static AudioClip Make(string name, float[] data)
         {
+            // Never hand over samples beyond ±0.95: thuds used to peak at 1.08 and gunshots were hard-clipped.
+            float peak = 0f;
+            for (int i = 0; i < data.Length; i++) peak = Mathf.Max(peak, Mathf.Abs(data[i]));
+            if (peak > 0.95f)
+            {
+                float k = 0.95f / peak;
+                for (int i = 0; i < data.Length; i++) data[i] *= k;
+            }
             var clip = AudioClip.Create("sfx_" + name, data.Length, 1, Rate, false);
             clip.SetData(data, 0);
             return clip;
         }
 
         // Sharp crack (filtered noise with a very fast attack) + low body thump + short room tail.
-        static AudioClip Gunshot(string name, float length, float crackHz, float bodyHz, float gain)
+        // 'peak' is the loudest sample of the finished clip (≤ 0.95): the raw mix is scaled to it instead of being clipped.
+        static AudioClip Gunshot(string name, float length, float crackHz, float bodyHz, float peak)
         {
             int n = Mathf.RoundToInt(length * Rate);
             var d = new float[n];
             float lp = 0f, a = Mathf.Clamp01(crackHz / Rate * 6.28f);
+            float max = 0.0001f;
             for (int i = 0; i < n; i++)
             {
                 float t = i / (float)Rate;
@@ -81,8 +127,11 @@ namespace Kosynierzy
                 float crack = lp * Mathf.Exp(-t * 38f) * 1.6f;
                 float body = Mathf.Sin(2f * Mathf.PI * bodyHz * t * (1f - t * 0.8f)) * Mathf.Exp(-t * 22f) * 0.9f;
                 float tail = lp * Mathf.Exp(-t * 7f) * 0.25f;
-                d[i] = Mathf.Clamp((crack + body + tail) * gain, -1f, 1f);
+                d[i] = crack + body + tail;
+                max = Mathf.Max(max, Mathf.Abs(d[i]));
             }
+            float k = Mathf.Min(peak, 0.95f) / max;
+            for (int i = 0; i < n; i++) d[i] *= k;
             return Make(name, d);
         }
 

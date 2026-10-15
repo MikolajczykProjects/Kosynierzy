@@ -37,6 +37,7 @@ namespace Kosynierzy
 
         bool lowHealth, slowForced;
         float slowAutoTime;
+        float lastShotPulse = -10f;
         Volume baseVolume;
         float nextBaseSearch;
 
@@ -92,6 +93,11 @@ namespace Kosynierzy
         {
             var s = Instance;
             if (s == null) return;
+            // Flash frequency scales with fire rate: the Erma fires 9 shots/s, which would strobe the whole screen
+            // (WCAG 2.3.1: < 3 flashes/s). Shots closer together than 0.25 s only add a quarter of the pulse.
+            float now = Time.unscaledTime;
+            if (now - s.lastShotPulse < 0.25f) strength *= 0.25f;
+            s.lastShotPulse = now;
             s.FindBase(out float baseExposure, out float baseBloom);
             Set(s.shotColor.postExposure, baseExposure + 0.22f);
             Set(s.shotBloom.intensity, baseBloom + 1.1f);

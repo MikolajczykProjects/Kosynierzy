@@ -48,8 +48,21 @@ namespace Kosynierzy
             }
         }
 
-        public static void Play(Sfx id) => instance?.PlayInternal(id, null);
-        public static void PlayAt(Sfx id, Vector3 position) => instance?.PlayInternal(id, position);
+        // Explicit null checks: "?." would call into a destroyed bank (fake null) right after a scene reload.
+        public static void Play(Sfx id)
+        {
+            if (instance != null) instance.PlayInternal(id, null);
+        }
+
+        public static void PlayAt(Sfx id, Vector3 position)
+        {
+            if (instance != null) instance.PlayInternal(id, position);
+        }
+
+        void OnDestroy()
+        {
+            if (instance == this) instance = null;
+        }
 
         void PlayInternal(Sfx id, Vector3? position)
         {
@@ -81,9 +94,11 @@ namespace Kosynierzy
 
         static float FallbackVolume(Sfx id) => id switch
         {
+            // Clips are normalised to peaks of 0.5–0.95 (ProceduralSfx), so these volumes decide the mix:
+            // the player's shot ≈ -6 dBFS, an SD rifle ≈ -2.5 dBFS at 3 m (and quieter with distance), steps ≈ -20 dBFS.
             Sfx.Footstep => 0.35f,
-            Sfx.Shot => 0.9f,
-            Sfx.EnemyShot => 1f,
+            Sfx.Shot => 0.6f,
+            Sfx.EnemyShot => 0.8f,
             Sfx.QuestStep or Sfx.QuestComplete => 0.5f,
             _ => 0.7f,
         };

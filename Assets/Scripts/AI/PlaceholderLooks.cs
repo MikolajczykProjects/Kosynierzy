@@ -21,8 +21,11 @@ namespace Kosynierzy
         static readonly Color WorkerCoat = Hex(0xC9C9C2);
         static readonly Color AllyBody = Hex(0x4A3626);
         static readonly Color Skin = Hex(0xD7B08A);
-        static readonly Color[] MenCoats = { Hex(0x7A5C3E), Hex(0x6E6A62), Hex(0x5F5548), Hex(0x8B7355), Hex(0x4F4A44) };
-        static readonly Color[] WomenCoats = { Hex(0x9C8466), Hex(0xA39272), Hex(0x7D4E45), Hex(0x55606E), Hex(0x8A7A6A) };
+        // Civilian coats keep CIE76 dE >= 17 from the SD body (0x5E6650) and >= 18 from the Schupo body (0x2F4A44)
+        // so they read apart at 20 m before the helmet / shako shapes do (the old grey 0x6E6A62 and dark brown 0x5F5548
+        // were only dE 10.3 / 10.8 from the SD).
+        static readonly Color[] MenCoats = { Hex(0x7A5C3E), Hex(0x4A5878), Hex(0x6B4B3C), Hex(0x8B7355), Hex(0x4D4156) };
+        static readonly Color[] WomenCoats = { Hex(0x9C8466), Hex(0xA39272), Hex(0x7D4E45), Hex(0x55606E), Hex(0x9B7A78) };
         static readonly Color[] Hats = { Hex(0x2E2A26), Hex(0x3D352C), Hex(0x4A4A48), Hex(0x5A4632) };
 
         /// <summary>Body colour of a placeholder of this type (also used for the test-setup materials).</summary>

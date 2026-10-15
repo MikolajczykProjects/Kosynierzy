@@ -25,8 +25,10 @@ namespace Kosynierzy.EditorTools
                 Undo.RegisterCreatedObjectUndo(go, "Add VFX Library");
                 vfx = go.AddComponent<VfxLibrary>();
             }
+            // Both shaders are only reached by Shader.Find at runtime: referencing them here keeps them in builds.
             var vso = new SerializedObject(vfx);
-            vso.FindProperty("particleShader").objectReferenceValue = Shader.Find("Universal Render Pipeline/Particles/Unlit");
+            AssignShader(vso, "particleShader", "Universal Render Pipeline/Particles/Unlit");
+            AssignShader(vso, "litShader", "Universal Render Pipeline/Lit");
             vso.ApplyModifiedPropertiesWithoutUndo();
 
             var hud = Object.FindAnyObjectByType<CombatHud>();
@@ -54,6 +56,18 @@ namespace Kosynierzy.EditorTools
             UpgradeEnemyPrefab();
             EditorSceneManager.MarkSceneDirty(scene);
             Debug.Log("Kosynierzy: combat upgraded (VFX library, feedback, sound bank, enemy head hitbox + death effect).");
+        }
+
+        static void AssignShader(SerializedObject so, string field, string shaderName)
+        {
+            var prop = so.FindProperty(field);
+            var shader = Shader.Find(shaderName);
+            if (prop == null || shader == null)
+            {
+                Debug.LogWarning($"Kosynierzy: could not assign '{field}' on the VfxLibrary (field or shader '{shaderName}' not found).");
+                return;
+            }
+            prop.objectReferenceValue = shader;
         }
 
         static void FillSfxSlots(SfxBank bank)

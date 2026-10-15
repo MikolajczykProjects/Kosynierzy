@@ -177,6 +177,8 @@ namespace Kosynierzy
             transform.position = position;
             controller.enabled = true;
             yaw = newYaw;
+            // Look() only turns the body while this component is enabled (a dialogue may have it off), so turn it here too.
+            transform.rotation = Quaternion.Euler(0f, newYaw, 0f);
             pitch = 0f;
             horizontalVelocity = Vector3.zero;
             verticalVelocity = 0f;

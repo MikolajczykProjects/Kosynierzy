@@ -37,6 +37,7 @@ namespace Kosynierzy
         readonly List<Vector3> points = new();
         Mode mode;
         float walkSpeed, calmAt, reportStart;
+        bool reportIsAlarm;
         Vector3 scareFrom, fleeTarget;
         NpcBrain reportTo;
 
@@ -67,10 +68,12 @@ namespace Kosynierzy
         void OnNoise(Vector3 position, float radius, NoiseKind kind, Transform source)
         {
             if (kind != NoiseKind.Gunshot || IsDown) return;
-            if ((position - transform.position).sqrMagnitude > fleeHearing * fleeHearing) return;
+            // Never hears farther than the shot carries: a Nagant (12 m) does not scare a street 25 m away.
+            float hearing = Mathf.Min(radius, fleeHearing);
+            if ((position - transform.position).sqrMagnitude > hearing * hearing) return;
             bool soldierFired = source != null && source.GetComponentInParent<EnemyController>() != null;
             if (soldierFired) Flee(position);
-            else Panic(position);
+            else Panic(position, true);
         }
 
         void Update()
@@ -78,7 +81,7 @@ namespace Kosynierzy
             if (IsDown) return;
 
             var body = SpotBody(bodySightRange, bodySightRangeDark, 140f);
-            if (body != null) Panic(body.Position);
+            if (body != null) Panic(body.Position, false);
 
             switch (mode)
             {
@@ -102,11 +105,19 @@ namespace Kosynierzy
             }
         }
 
-        /// <summary>Scream and run to the nearest Schupo / SD to raise the alarm at this position.</summary>
-        void Panic(Vector3 position)
+        /// <summary>
+        /// Scream and run to the nearest Schupo / SD. <paramref name="shots"/> = the player's gunshot: they get a full alarm;
+        /// a body only sends them to search there (a corpse nobody can pin on the player must not turn the whole district hostile).
+        /// </summary>
+        void Panic(Vector3 position, bool shots)
         {
             calmAt = Time.time + calmDownAfter;
-            if (mode == Mode.Reporting) return;
+            if (mode == Mode.Reporting)
+            {
+                if (shots) reportIsAlarm = true; // a shot upgrades a body report in progress
+                return;
+            }
+            reportIsAlarm = shots;
             scareFrom = position;
             Bark("bark_cywil_panika");
             reportTo = NearestAuthority();
@@ -144,8 +155,12 @@ namespace Kosynierzy
             Vector3 target = reportTo.transform.position;
             if (FlatDistanceTo(target) <= 2.5f || Time.time - reportStart > 25f)
             {
-                if (reportTo is EnemyController soldier) soldier.RaiseAlarm(scareFrom, true);
-                else if (reportTo is PoliceController police) police.ReportFrom(scareFrom, true);
+                if (reportTo is EnemyController soldier)
+                {
+                    if (reportIsAlarm) soldier.RaiseAlarm(scareFrom, true);
+                    else soldier.Investigate(scareFrom);
+                }
+                else if (reportTo is PoliceController police) police.ReportFrom(scareFrom, reportIsAlarm);
                 reportTo = null;
                 mode = Mode.Wander;
                 Flee(scareFrom);
