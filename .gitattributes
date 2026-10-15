@@ -1,0 +1,16 @@
+# Unity: text assets merge as text, binaries never get line-ending conversion
+* text=auto
+*.cs text diff=csharp
+*.unity text eol=lf
+*.prefab text eol=lf
+*.mat text eol=lf
+*.asset text eol=lf
+*.meta text eol=lf
+*.controller text eol=lf
+*.anim text eol=lf
+*.fbx binary
+*.png binary
+*.jpg binary
+*.wav binary
+*.mp3 binary
+*.ogg binary

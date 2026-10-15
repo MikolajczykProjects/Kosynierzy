@@ -1,0 +1,154 @@
+SENDER GLEIWITZ 31.08.1939 — PODZIAŁ RÓL I WSPÓLNE ZASADY (Unity, low poly 3D)
+================================================================================
+Ten plik czytają WSZYSCY. Każdy ma jeszcze swój plik z rolą.
+
+GRA W 3 ZDANIACH
+- Gra 3D z kamerą zza pleców (third person), styl low poly, płaskie kolory.
+- Grasz Janem Wroną „Krukiem”, polskim agentem wywiadu (Ekspozytura nr 4, Katowice).
+  31.08.1939 w Gliwicach zbierasz dowody, że napad SD na radiostację to niemiecka
+  prowokacja: zdjęcia, rozkazy, kartka „Honiok, Franz. Konserve”. Uciekasz z filmem.
+- Jedno trafienie = koniec misji. Strzał do cywila, policjanta albo pracownika
+  stacji też kończy misję. Wojny nie zmienisz, możesz tylko ocalić prawdę.
+
+ŻADNYCH SWASTYK ANI SYMBOLI NAZISTOWSKICH. Nigdzie: mundury, auta, flagi, ściany.
+SD = szaro-zielone mundury bez naszywek. Bez krwi i makabry (Honiok przykryty płaszczem).
+
+
+ROLE
+--------------------------------------------------------------------------------
+A. NATANIEL — MAPA + DIALOGI          plik: ROLA-A-MAPA-DIALOGI.txt
+   Całe Gliwice 1939 w low poly, wnętrza, kolizje, nazwane punkty.
+   Dialogi z głosami (ElevenLabs) i napisami.
+
+B. UNITY — CAŁY KOD I SPINANIE        plik: ROLA-B-UNITY.txt
+   Jedyna osoba, która pisze kod gry i edytuje główną scenę.
+   Projekt, git, ruch, kamera, strzelanie, AI wrogów, zadania, UI, ekrany.
+
+C. POSTACIE                           plik: ROLA-C-POSTACIE.txt
+   Wszystkie postacie low poly z riggiem Humanoid i wbudowanymi animacjami.
+   Jeden wspólny Animator Controller.
+
+D. OBIEKTY                            plik: ROLA-D-OBIEKTY.txt
+   Wszystkie przedmioty, rekwizyty, broń, pojazdy, drzwi, latarnie.
+   Wbudowane animacje obiektów (drzwi, kable, karty, koła, światło).
+
+Zasada: C i D NIE piszą kodu gry. Robią modele, materiały, animacje i prefaby.
+B bierze gotowe prefaby i podpina pod nie logikę.
+
+
+WERSJA I PROJEKT
+--------------------------------------------------------------------------------
+- Unity 6 (6000.x), szablon „Universal 3D” (URP). WSZYSCY ta sama wersja Unity.
+- Projekt zakłada B w pierwszych 15 min i wrzuca na GitHub. Reszta: git clone.
+- Edit > Project Settings > Editor: Asset Serialization = Force Text,
+  Version Control = Visible Meta Files (w Unity 6 to domyślne).
+
+
+FOLDERY — KAŻDY MA SWÓJ I NIE RUSZA CUDZYCH
+--------------------------------------------------------------------------------
+  Assets/_Mapa/        -> A (Nataniel)   prefab mapy, materiały mapy, Test_Mapa.unity
+  Assets/_Dialogi/     -> A (Nataniel)   Resources/dialogi.json, Resources/Audio/*.mp3
+  Assets/_Gra/         -> B (Unity)      kod, sceny, UI, Gra.unity, Menu.unity
+  Assets/_Postacie/    -> C (Postacie)   modele, animacje, AC_Czlowiek, prefaby CH_*
+  Assets/_Obiekty/     -> D (Obiekty)    modele, animacje, prefaby OB_*
+  Assets/ThirdParty/   -> B              paczki z Asset Store / zewnętrzne
+
+- Główną scenę Assets/_Gra/Sceny/Gra.unity edytuje TYLKO B.
+- Każdy testuje u siebie na WŁASNEJ scenie testowej w swoim folderze.
+- Dzięki temu w gicie nie ma konfliktów. Commitujesz tylko swój folder:
+    git add Assets/_Postacie   (przykład)
+    git commit -m "postacie: SD + Schupo"
+    git pull --rebase && git push
+- Pliki ProjectSettings/ i Packages/ zmienia tylko B. Potrzebujesz pakietu?
+  Napisz B na Discordzie.
+- Nie umiesz gita? Prawy klik na swój folder > Export Package > wyślij
+  .unitypackage na Discorda. B zaimportuje.
+
+
+SKALA I USTAWIENIE MODELI (bardzo ważne, inaczej nic nie pasuje)
+--------------------------------------------------------------------------------
+- 1 jednostka Unity = 1 metr. Człowiek 1,75–1,85 m. Drzwi 2,1 m. Piętro 3,5 m.
+- Pivot (punkt zaczepienia) na DOLE, na środku podstawy (postać: między stopami).
+- Przód modelu patrzy na +Z (niebieska strzałka w Unity).
+- Rotacja i skala prefabu w roocie: 0,0,0 i 1,1,1.
+- Collidery: proste (Box/Capsule), nie Mesh Collider na wszystko.
+- Materiały URP/Lit, płaskie kolory, bez ciężkich tekstur. Smoothness ok. 0,1.
+
+
+NAZWY PREFABÓW (B szuka ich po nazwie, nie zmieniać!)
+--------------------------------------------------------------------------------
+Postacie (C):  CH_Kruk, CH_Zofia, CH_Naujocks, CH_Heinz, CH_SD, CH_SD_Oficer,
+               CH_Schupo, CH_Gestapo, CH_Gruber, CH_Pracownik, CH_Fotograf,
+               CH_Kolejarz, CH_Sowa, CH_Recepcjonista,
+               CH_Cywil_M1, CH_Cywil_M2, CH_Cywil_M3,
+               CH_Cywil_K1, CH_Cywil_K2, CH_Cywil_K3, CH_Honiok
+Obiekty (D):   pełna lista w ROLA-D-OBIEKTY.txt (prefiks OB_)
+Mapa (A):      Assets/_Mapa/Mapa_Gliwice.prefab + punkty o nazwach z listy niżej
+
+
+ANIMATOR POSTACI — JEDEN DLA WSZYSTKICH (C robi, B steruje)
+--------------------------------------------------------------------------------
+Assets/_Postacie/AC_Czlowiek.controller, parametry (nazwy DOKŁADNIE takie):
+  Speed            float   prędkość w m/s (0 stoi, 1,5 chód, 2,0 skradanie, 5,5 bieg)
+  MotionSpeed      float   zawsze 1 (zgodność ze Starter Assets)
+  Grounded         bool    stoi na ziemi
+  Jump             bool    skok (może nie być używany)
+  FreeFall         bool    spada
+  Kucanie          bool    przykucnięty / skradanie
+  Celuje           bool    trzyma pistolet w gotowości
+  Strzal           trigger jeden strzał (odrzut ręki)
+  Trafiony         trigger dostał kulę -> przewraca się i zostaje na ziemi
+  Rozmowa          bool    gestykuluje przy dialogu
+  RecePodniesione  bool    ręce w górze (zakładnicy, pracownicy stacji)
+  Siedzi           bool    siedzi (recepcja, fotograf)
+  Lezy             bool    leży nieprzytomny (Honiok, ogłuszeni)
+
+
+PUNKTY NA MAPIE (A stawia, B i reszta używa po nazwach)
+--------------------------------------------------------------------------------
+Puste GameObjecty w prefabie mapy, pod obiektem „Punkty”. Strzałka +Z punktu =
+kierunek, w który patrzy postać/obiekt. Punkt stoi na ziemi, nie w ścianie.
+
+miasto:  spawn_dworzec, miasto_drzwi_hotel, miasto_drzwi_ksiegarnia,
+         miasto_drzwi_fotograf, miasto_drzwi_radio, miasto_dziura_plot,
+         miasto_kolejarz, miasto_skrytka_most, miasto_zagajnik_krzaki,
+         miasto_zagajnik_auto, miasto_stodola, miasto_rower, miasto_ciezarowka,
+         miasto_karta_1..6, miasto_patrol_sd_1..6, miasto_schupo_1..3,
+         miasto_auto_sd_trasa_1..5, miasto_tlum_1..10, miasto_oslona_1..12,
+         miasto_latarnia_1..20
+hotel:   spawn_hotel_wejscie, hotel_drzwi_wyjscie, hotel_recepcja, hotel_telefon,
+         hotel_kolumna, hotel_patrol_1..2, hotel_pokoj_drzwi, hotel_pokoj_mapa,
+         hotel_pokoj_lista, hotel_latarnia_1..3
+ksiegarnia: spawn_ksiegarnia, ksiegarnia_drzwi_wyjscie, ksiegarnia_zofia
+fotograf:   spawn_fotograf, fotograf_drzwi_wyjscie, fotograf_wlasciciel,
+            fotograf_gestapo, fotograf_ciemnia
+radio:   spawn_radio_tyl, spawn_radio_brama, radio_drzwi_wyjscie,
+         radio_sterownia_mikrofon, radio_technika_kable, radio_kartka_grubera,
+         radio_piwnica_drzwi, radio_piwnica_pracownik_1..3, radio_sd_1..5,
+         radio_cialo_honiok, radio_kartka_honiok, radio_latarnia_1..4
+
+(„_1..6” znaczy: _1, _2, _3, _4, _5, _6)
+
+
+HARMONOGRAM (liczony od startu pracy)
+--------------------------------------------------------------------------------
+0:00–0:15  B: projekt + git + Starter Assets. A, C, D: zbierają paczki modeli,
+           A wybiera głosy w ElevenLabs.
+0:15       Wszyscy klonują repo i pracują w swoich folderach.
+1:00       A: pierwsza wersja mapy z WSZYSTKIMI punktami (nawet brzydka) — push.
+           C: CH_Kruk + CH_SD z animacjami — push.
+           D: OB_Drzwi, OB_Karta_Historii, OB_Pistolet_Vis, OB_Lacznica — push.
+2:30       Pierwsze przejście całej gry od dworca do stodoły.
+3:45       KONIEC nowych rzeczy. Tylko poprawki błędów.
+4:15       Nagranie zapasowego wideo z gry (na wypadek awarii na pokazie).
+4:30       Prezentacja.
+
+Brzydkie, ale działające > ładne, ale niegotowe. Najpierw wszystko w wersji
+„pudełko”, potem upiększanie.
+
+
+KOMUNIKACJA
+--------------------------------------------------------------------------------
+- Wszystko na Discordzie, kanał #ogólny.
+- Wrzucasz coś do repo -> jedno zdanie na Discordzie: co i gdzie.
+- Brakuje ci czegoś od innej osoby -> pisz od razu, nie czekaj.

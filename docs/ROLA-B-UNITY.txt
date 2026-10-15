@@ -1,0 +1,212 @@
+ROLA B — UNITY: CAŁY KOD, RUCH, SYSTEMY I SPINANIE
+================================================================================
+Najpierw przeczytaj 00-PODZIAL-I-ZASADY.txt.
+
+Jesteś JEDYNĄ osobą, która pisze kod gry i edytuje główną scenę. Reszta dostarcza
+ci gotowe klocki: mapę z punktami (A), dialogi z audio (A), postacie z animacjami
+(C), obiekty z animacjami (D). Ty z tego robisz grę.
+
+Twoje foldery: Assets/_Gra/, Assets/ThirdParty/, ProjectSettings/, Packages/.
+Twoja scena: Assets/_Gra/Sceny/Gra.unity (plus Menu.unity).
+
+
+KROK 0 — PIERWSZE 15 MINUT (reszta na ciebie czeka!)
+--------------------------------------------------------------------------------
+1. Unity Hub > New project > Unity 6 > „Universal 3D” > nazwa: SenderGleiwitz.
+2. Project Settings > Editor: Force Text, Visible Meta Files.
+3. Window > Package Manager, zainstaluj:
+   - Input System (zgódź się na restart),
+   - Cinemachine,
+   - AI Navigation (NavMesh),
+   - z Asset Store (darmowe, od Unity Technologies): „Starter Assets – ThirdPerson”.
+     Import do projektu, potem przenieś folder StarterAssets do Assets/ThirdParty/.
+4. Utwórz puste foldery z 00-PODZIAL (_Mapa, _Dialogi, _Gra, _Postacie, _Obiekty)
+   i w każdym plik .keep, żeby git je zapisał.
+5. Wrzuć do roota .gitignore i .gitattributes dla Unity (te z paczki start-unity
+   albo standardowy Unity .gitignore z GitHuba). Pliki .fbx/.png/.mp3 przez Git LFS
+   tylko jeśli umiecie. Jak nie, zwykły git wystarczy (low poly = małe pliki).
+6. git init, commit, push na GitHub, dodaj A, C, D jako collaboratorów.
+   Na Discord: link + „klonujcie, Unity 6000.x.xx, otwierajcie, swoje foldery”.
+
+
+KROK 1 — SZKIELET Z ZAŚLEPKAMI (0:15–1:00)
+--------------------------------------------------------------------------------
+Gra ma działać ZANIM inni coś dowiozą. Wszystko ładuj po nazwie i jeśli nie ma,
+wstaw zaślepkę (szara kapsuła / szary sześcian), żeby gra się nie wywaliła.
+
+- Gra.unity: pusta płaszczyzna testowa, PlayerArmature ze Starter Assets
+  (ruch WASD, bieg Shift, kamera Cinemachine zza pleców — działa od razu).
+- Klasa Punkty: przy starcie szuka w scenie obiektu „Punkty” i robi słownik
+  nazwa -> Transform. Metoda Punkty.Daj("hotel_pokoj_mapa"). Brak punktu = warning
+  w konsoli + Vector3.zero, nie crash.
+- Klasa Spawner: Resources/fabryka albo lista prefabów w ScriptableObject
+  (nazwa CH_*/OB_* -> prefab). Na punkcie stawia prefab, brak prefabu = zaślepka.
+- Gdy A wrzuci Mapa_Gliwice.prefab: wstaw go do Gra.unity, zbakuj NavMesh
+  (NavMeshSurface na mapie), przestaw gracza na spawn_dworzec.
+
+
+KROK 2 — RUCH I KAMERA (to jest twój rdzeń)
+--------------------------------------------------------------------------------
+Bazujesz na ThirdPersonController ze Starter Assets i dopisujesz:
+- Skradanie: C (lub Ctrl) przełącza Kucanie, prędkość 2,0 m/s, mniejszy hałas,
+  niższa kapsuła. Animator: Kucanie = true.
+- Bieg: Shift, 5,5 m/s, robi hałas (promień 12 m), wrogowie słyszą.
+- Chód: 1,5–2,5 m/s, hałas 4 m.
+- Celowanie: prawy przycisk myszy -> kamera przybliża się nad ramię
+  (druga wirtualna kamera Cinemachine z większym priorytetem), Celuje = true,
+  celownik na środku ekranu.
+- Interakcja: E — najbliższy obiekt z komponentem Interakcja w promieniu 2 m,
+  podpowiedź na dole ekranu („E — Otwórz”, „E — Porozmawiaj”, „E — Weź”).
+- Aparat: F — tryb zdjęcia (czarna ramka, kamera z pierwszej osoby). LPM robi
+  zdjęcie: jeśli cel z komponentem Dowod jest w kadrze (Viewport 0,2–0,8) i
+  bliżej niż 15 m i nic go nie zasłania (Raycast) -> zaliczone, błysk + klik.
+- Gracz model: zamień siatkę PlayerArmature na CH_Kruk od C (Humanoid, ten sam
+  Animator AC_Czlowiek, który ma parametry Speed/MotionSpeed/Grounded/Jump/FreeFall
+  zgodne ze Starter Assets).
+
+
+KROK 3 — WALKA (zasada: jedno trafienie = koniec)
+--------------------------------------------------------------------------------
+- Vis wz. 35 (OB_Pistolet_Vis od D, przyczep do prawej dłoni: Animator
+  GetBoneTransform(HumanBodyBones.RightHand)). Magazynek 8, start 8 nabojów,
+  skrytka pod mostem +8 (OB_Skrytka).
+- LPM przy celowaniu: Raycast z kamery, Strzal trigger, dźwięk, błysk z lufy
+  (punkt Lufa w prefabie pistoletu), hałas 30 m.
+- Trafienie wroga: Trafiony trigger, wyłącz AI i collider postaci, zostaje na ziemi.
+- Trafienie cywila/Schupo/pracownika: od razu ekran porażki:
+  „Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.”
+- Gracz trafiony raz: ekran porażki:
+  „Agent »Kruk« zdemaskowany. Prowokacja przeszła bez świadków.”
+- Wrogowie strzelają z opóźnieniem (0,6–1,2 s od zobaczenia w trybie alarmu),
+  celność zależna od dystansu i od tego, czy gracz kuca za osłoną.
+
+
+KROK 4 — AI POSTACI (NavMeshAgent + prosty automat stanów)
+--------------------------------------------------------------------------------
+Każda postać: NavMeshAgent, komponent Postac z polem typ: Wrog / Policja / Cywil /
+Sojusznik. Animator: Speed = agent.velocity.magnitude.
+- SD (Wrog): Patrol między punktami (miasto_patrol_sd_*, hotel_patrol_*,
+  radio_sd_*) -> Podejrzenie (stożek wzroku 90°, 18 m, pasek „?” nad głową
+  napełnia się szybciej, gdy gracz biegnie/jest blisko/jest w zakazanej strefie)
+  -> Szukanie (idzie do ostatniej znanej pozycji) -> Alarm (strzela, woła resztę
+  w promieniu 25 m). Po zmroku zasięg wzroku 10 m, poza światłem latarni 6 m.
+- Schupo (Policja): nie strzela. Gdy zobaczy coś podejrzanego, biegnie do
+  najbliższego SD i podnosi mu alarm.
+- Cywile: chodzą losowo między miasto_tlum_*, na strzał uciekają (bieg).
+- Wypowiedzi wrogów: dialogi bark_sd_podejrzenie / bark_sd_alarm /
+  bark_sd_szukanie / bark_schupo (losowa linia, audio 3D na postaci).
+- Zakazane strefy (BoxCollider trigger): pokój Naujocksa, teren radiostacji.
+  W strefie wrogowie podejrzewają 3x szybciej.
+
+
+KROK 5 — DIALOGI (dane od A)
+--------------------------------------------------------------------------------
+- Plik: Resources.Load<TextAsset>("dialogi") -> JSON w formacie:
+  { "a1_zofia": { "linie": [ { "kto":"zofia", "tekst":"...", "napis":"...",
+    "mysl":false, "audio":"a1_zofia_01" } ] }, ... }
+  JsonUtility nie czyta słownika z kluczami — użyj Newtonsoft JSON
+  (Package Manager > Add by name: com.unity.nuget.newtonsoft-json).
+- Audio: Resources.Load<AudioClip>("Audio/" + audio). Brak pliku = sam napis,
+  czas wyświetlania 0,06 s na znak, min 2 s.
+- UI: pasek napisów na dole, imię postaci kolorem, myśli Kruka kursywą.
+  Spacja/E — następna linia. Na czas dialogu gracz stoi, rozmówca Rozmowa = true.
+- Funkcja Dialog.Odtworz("a1_zofia", onKoniec).
+
+
+KROK 6 — ZADANIA I AKTY (cała fabuła)
+--------------------------------------------------------------------------------
+Jeden skrypt Misja z listą kroków. Każdy krok: tekst celu w HUD + warunek + co
+się dzieje po nim. Kolejność:
+
+AKT 1 (15:30) Dworzec i hotel
+  1. start na spawn_dworzec, dialog a1_intro.
+  2. księgarnia: rozmowa z Zofią (a1_zofia) -> dostajesz aparat.
+  3. hotel: a1_recepcja, wejście do pokoju Naujocksa (hotel_pokoj_drzwi).
+  4. zdjęcie mapy (hotel_pokoj_mapa) -> a1_mysl_mapa; zdjęcie listy
+     (hotel_pokoj_lista) -> a1_mysl_lista.
+  5. hol: podsłuch rozmowy przez telefon (podejdź do hotel_kolumna, kucaj)
+     -> a1_telefon, a1_mysl_haslo („Großmutter gestorben”).
+AKT 2 (16:00–19:45) Przez miasto
+  6. a2_start, śledzisz auto SD (OB_Auto_SD jedzie po miasto_auto_sd_trasa_1..5,
+     nie możesz zgubić go > 40 m ani podejść < 8 m).
+  Poboczne (nieobowiązkowe): kolejarz (pob_kolejarz, rozkład), fotograf
+  (pob_fotograf_przed/po, agent Gestapo, zdjęcie w ciemni), skrytka pod mostem
+  (pob_skrytka, +8 nabojów), 6 Kart historii (miasto_karta_1..6).
+  7. 19:00 -> a2_zmrok, robi się ciemno (patrz krok 7).
+  8. zagajnik: kucaj w miasto_zagajnik_krzaki, scena a2_zagajnik, zdjęcie auta
+     z „konserwą” -> a2_mysl_konserwa.
+AKT 3 (20:00) Radiostacja
+  9. wejście od tyłu (miasto_dziura_plot -> spawn_radio_tyl).
+  10. a3_komunikat (SD zaczyna nadawać przez mikrofon burzowy) -> start 90 s.
+  11. pokój techniczny: mini-gra kable (OB_Lacznica, 3 kable, przetnij właściwy
+      według kartki Grubera radio_kartka_grubera; zły kabel = iskra, -15 s).
+      Sukces -> a3_sygnal_urwany. Czas minie -> komunikat leci cały, porażka.
+  12. opcjonalnie: piwnica, uwolnij pracowników (a3_gruber), RecePodniesione=false.
+AKT 4 (20:10) Konserwa i ucieczka
+  13. przy wyjściu ciało (CH_Honiok, Lezy) + kartka -> zdjęcie -> a4_mysl_honiok.
+  14. a4_alarm: wszystkie SD w trybie alarmu, uciekaj na wschód do
+      miasto_stodola (rower OB_Rower przyspiesza, opcjonalnie).
+  15. stodoła: a4_sowa, przekazanie filmu -> epilog.
+EPILOG: plansze tekstowe epilog_1..6 z lektorem, czarne tło, biały tekst,
+  ostatnia: „Prowokacja trwała kilka minut. Wojna trwała sześć lat.”
+
+
+KROK 7 — PORA DNIA I ŚWIATŁO
+--------------------------------------------------------------------------------
+- Zegar gry 15:30 -> 20:10, przesuwany krokami misji (nie realnym czasem).
+- Directional Light: 15:30 ciepłe słońce, 19:00 zachód (pomarańcz, nisko),
+  po 19:30 noc (ciemny granat, intensywność 0,1). Zmieniaj też kolor ambient i fog.
+- Latarnie OB_Latarnia: po 19:00 Animator bool Wlaczona = true.
+  Strefa światła latarni (promień 6 m) = wrogowie widzą cię dalej.
+
+
+KROK 8 — UI I EKRANY
+--------------------------------------------------------------------------------
+- HUD: cel misji (lewy górny), godzina (prawy górny), naboje (prawy dolny),
+  zdjęcia dowodów X/6, Karty historii X/6, pasek „90 s” w akcie 3.
+- Menu.unity: tytuł „SENDER GLEIWITZ 31.08.1939”, Nowa gra, Tryb historyczny
+  (bez punktów kontrolnych), Wyjście.
+- Karty historii: po podniesieniu plansza z krótkim faktem (teksty w kodzie,
+  6 faktów z FABULA.md: wieża 111 m, Naujocks, Großmutter gestorben, mikrofon
+  burzowy, Honiok, Operacja Himmler), pauza, E zamyka.
+- Ekran porażki z tekstem + „Spróbuj od punktu kontrolnego”.
+- Punkty kontrolne: na starcie każdego aktu. F8 zapis, F9 wczytanie (do testów
+  i na pokaz — możesz przeskoczyć do aktu 3 na prezentacji).
+- Skróty deweloperskie (wyłącz przed oddaniem albo zostaw na pokaz):
+  F1 = przeskocz do następnego kroku misji, F2 = pokaż punkty (robi A w mapie).
+
+
+KROK 9 — DRZWI I WNĘTRZA
+--------------------------------------------------------------------------------
+Wnętrza (hotel, księgarnia, fotograf, radiostacja) leżą w tym samym prefabie
+mapy, ale DALEKO od miasta (A ustawia je np. od x = 1000). Drzwi = teleport:
+- E przy miasto_drzwi_hotel -> OB_Drzwi Animator trigger Otworz, ekran gaśnie
+  na 0,3 s (czarny fade), gracz na spawn_hotel_wejscie. Wyjście odwrotnie.
+- Kamera Cinemachine: po teleporcie wywołaj OnTargetObjectWarped, żeby nie
+  przelatywała przez pół mapy.
+
+
+KOLEJNOŚĆ, JEŚLI ZABRAKNIE CZASU
+--------------------------------------------------------------------------------
+MUSI być (P0): ruch + kamera, mapa, drzwi, dialogi z napisami, akt 1, kable
+  w akcie 3, Honiok, epilog. Tym da się zrobić pokaz.
+POWINNO być (P1): AI SD z podejrzeniem, strzelanie i porażka, śledzenie auta,
+  zmrok, ucieczka do stodoły, HUD.
+FAJNIE, JAK BĘDZIE (P2): misje poboczne, Karty historii, rower, cywile,
+  Schupo, punkty kontrolne.
+O 2:30 musi przejść cała gra od dworca do epilogu, choćby z dziurami.
+
+
+PROMPT STARTOWY DO CLAUDE CODE (wklej w terminalu w folderze projektu)
+--------------------------------------------------------------------------------
+Robimy na hackatonie grę 3D w Unity 6 (URP, Input System, Cinemachine,
+AI Navigation, Starter Assets ThirdPerson są zainstalowane). Przeczytaj
+docs/00-PODZIAL-I-ZASADY.txt i docs/ROLA-B-UNITY.txt — jestem osobą B.
+Piszę WYŁĄCZNIE w Assets/_Gra/. Nie edytuj folderów _Mapa, _Dialogi, _Postacie,
+_Obiekty. Prefaby i punkty ładuj po nazwach z kontraktu, a jak ich nie ma —
+zaślepka + warning, nigdy crash. Kod w C#, nazwy klas po polsku bez ogonków,
+każdy system w osobnym pliku. Idziemy krokami 1→9 z mojego pliku, zacznij od
+kroku 1. Po każdym kroku powiedz mi, co mam kliknąć w edytorze (dodać komponent,
+przeciągnąć referencję), bo sceny edytuję ręcznie.
+
+(Skopiuj pliki txt do folderu docs/ w repo, żeby Claude Code je widział.)

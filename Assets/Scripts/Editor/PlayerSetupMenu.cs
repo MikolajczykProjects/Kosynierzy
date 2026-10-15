@@ -58,6 +58,56 @@ namespace Kosynierzy.EditorTools
             Debug.Log("Kosynierzy: first-person player created. Press Play, WASD to walk, Shift to sprint, mouse to look.");
         }
 
+        [MenuItem("Kosynierzy/Add Weapon And HUD")]
+        static void AddWeaponAndHud()
+        {
+            var fps = Object.FindAnyObjectByType<FirstPersonController>();
+            if (fps == null)
+            {
+                CreatePlayer();
+                fps = Object.FindAnyObjectByType<FirstPersonController>();
+            }
+            var cam = fps.GetComponentInChildren<Camera>();
+
+            if (cam.GetComponent<PlayerWeapon>() == null)
+            {
+                // Placeholder gun; the art team's model replaces this child.
+                var model = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                model.name = "WeaponModel";
+                Object.DestroyImmediate(model.GetComponent<Collider>());
+                Undo.RegisterCreatedObjectUndo(model, "Create Weapon Model");
+                model.transform.SetParent(cam.transform, false);
+                model.transform.localPosition = new Vector3(0.22f, -0.2f, 0.45f);
+                model.transform.localScale = new Vector3(0.07f, 0.09f, 0.55f);
+
+                var weapon = Undo.AddComponent<PlayerWeapon>(cam.gameObject);
+                var so = new SerializedObject(weapon);
+                so.FindProperty("viewModel").objectReferenceValue = model.transform;
+                so.ApplyModifiedPropertiesWithoutUndo();
+            }
+
+            if (cam.GetComponent<PlayerInteractor>() == null) Undo.AddComponent<PlayerInteractor>(cam.gameObject);
+
+            if (fps.GetComponent<Health>() == null)
+            {
+                var health = Undo.AddComponent<Health>(fps.gameObject);
+                var hso = new SerializedObject(health);
+                hso.FindProperty("destroyOnDeath").boolValue = false;
+                hso.ApplyModifiedPropertiesWithoutUndo();
+            }
+            if (fps.GetComponent<PlayerRespawn>() == null) Undo.AddComponent<PlayerRespawn>(fps.gameObject);
+
+            if (Object.FindAnyObjectByType<CombatHud>() == null)
+            {
+                var hud = new GameObject("HUD");
+                Undo.RegisterCreatedObjectUndo(hud, "Create HUD");
+                hud.AddComponent<CombatHud>();
+            }
+
+            EditorSceneManager.MarkSceneDirty(fps.gameObject.scene);
+            Debug.Log("Kosynierzy: weapon and HUD ready. LMB fires, R reloads.");
+        }
+
         static void CreateTestArena()
         {
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
