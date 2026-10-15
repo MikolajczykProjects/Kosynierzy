@@ -692,10 +692,10 @@ namespace Kosynierzy
             ColorLife(streak, new[] { CK(1f, 1f, 1f, 0f), CK(1f, 0.8f, 0.5f, 1f) }, new[] { AK(1f, 0f), AK(0f, 1f) });
 
             // ---- pooled world reactions
-            casings = new ShellCasings(fxRoot, cylMesh, matBrass, Mathf.Max(4, maxCasings));
-            decals = new BulletDecals(fxRoot, quadMesh, matDecal, Mathf.Max(4, maxDecals));
+            casings = new ShellCasings(fxRoot, cylMesh, matBrass, Mathf.Clamp(maxCasings, 4, 30));
+            decals = new BulletDecals(fxRoot, quadMesh, matDecal, Mathf.Clamp(maxDecals, 4, 40));
 
-            int lc = Mathf.Max(2, maxLights);
+            int lc = Mathf.Clamp(maxLights, 2, 6);
             lights = new Light[lc];
             lightStart = new float[lc];
             lightDur = new float[lc];

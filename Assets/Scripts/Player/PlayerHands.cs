@@ -128,6 +128,11 @@ namespace Kosynierzy
         void OnDisable()
         {
             foreach (var a in Actions) a.Disable();
+            // Coroutines (Swap/Stab) do not survive a disabled component; never leave the hands "busy" (weapon would stay off).
+            StopAllCoroutines();
+            IsSwapping = false;
+            stabbing = false;
+            holderLower = 0f;
             Inventory.ItemReceived -= OnItemReceived;
             WeaponCatalog.Changed -= RefreshLoadout;
             if (photo != null) photo.PhotoTaken -= OnPhotoTaken;
