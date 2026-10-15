@@ -14,7 +14,11 @@ namespace Kosynierzy
 
         public bool IsRespawning => false;
 
-        void Awake() => health = GetComponent<Health>();
+        void Awake()
+        {
+            health = GetComponent<Health>();
+            health.DestroyOnDeath = false; // the player must survive its own death: the camera/fail screen live on it
+        }
         void OnEnable() => health.Died += OnDied;
         void OnDisable() => health.Died -= OnDied;
 

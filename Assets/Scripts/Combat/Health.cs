@@ -16,6 +16,7 @@ namespace Kosynierzy
         [SerializeField] float destroyDelay = 0f;
 
         public float Max => maxHealth;
+        public bool DestroyOnDeath { get => destroyOnDeath; set => destroyOnDeath = value; }
         public float Current { get; private set; }
         public float Normalized => maxHealth > 0f ? Current / maxHealth : 0f;
         public bool IsDead { get; private set; }
