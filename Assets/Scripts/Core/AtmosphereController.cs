@@ -163,7 +163,7 @@ namespace Kosynierzy
             }
             currentHour = hour;
             ApplyHour(currentHour, markDirty: false);
-            UpdateEnvironment(force: true);
+            // Startup: no synchronous DynamicGI.UpdateEnvironment (costly); the first blend/SetTime refreshes it.
         }
 
         void OnDestroy()
