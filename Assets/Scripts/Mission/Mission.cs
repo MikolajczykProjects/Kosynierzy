@@ -227,13 +227,28 @@ namespace Kosynierzy
         /// City entrance doors stand where the point is (often floating at door height): drop to the ground, push against the
         /// nearest building wall (0.15 m outward, facing away from it) and make the door big (1.4x).
         /// </summary>
+        // Only terrain / street surfaces count as ground (a roof or a building floor above would lift the door).
+        static bool IsGroundCollider(Collider c)
+        {
+            for (var t = c.transform; t != null; t = t.parent)
+            {
+                string n = t.name;
+                if (n.Contains("Teren") || n.Contains("Ulice") || n.Contains("Ground") || n.Contains("Ulica")) return true;
+            }
+            return false;
+        }
+
         static void SnapEntranceDoor(Transform door)
         {
             Vector3 pos = door.position;
-            Vector3 origin = pos + Vector3.up * 3f;
-            float groundY = pos.y;
-            if (Physics.Raycast(origin, Vector3.down, out var down, 6f, ~0, QueryTriggerInteraction.Ignore) && down.normal.y > 0.5f)
-                groundY = down.point.y;
+            Vector3 origin = pos + Vector3.up * 1.5f;
+            float groundY = pos.y; // fallback: the map point's own height
+            float bestD = float.MaxValue;
+            foreach (var h in Physics.RaycastAll(origin, Vector3.down, 10f, ~0, QueryTriggerInteraction.Ignore))
+            {
+                if (h.normal.y < 0.5f || h.distance >= bestD || !IsGroundCollider(h.collider)) continue;
+                bestD = h.distance; groundY = h.point.y;
+            }
             pos.y = groundY;
 
             float best = 8f;
@@ -519,7 +534,7 @@ namespace Kosynierzy
                 var mp = Current.MarkerPosition;
                 var pl = FindAnyObjectByType<FirstPersonController>();
                 if (mp.HasValue && pl != null && mp.Value.x < 1900f && pl.transform.position.x < 1900f
-                    && Vector3.ProjectOnPlane(mp.Value - pl.transform.position, Vector3.up).magnitude > 300f)
+                    && Vector3.ProjectOnPlane(mp.Value - pl.transform.position, Vector3.up).magnitude > TravelDistance)
                     Cutscene.Travel(mp.Value, Current.Title);
             }
             Current.Begin();
@@ -532,6 +547,19 @@ namespace Kosynierzy
         {
             GameClock.Set(hour);
             AtmosphereController.SetTimeGlobal(hour);
+        }
+
+        const float TravelDistance = 150f;
+
+        /// <summary>After leaving an interior: when the current objective is far away in the city, jump to ~60 m before it.</summary>
+        public static void TryTravelAfterExit()
+        {
+            if (Instance == null || Instance.Current == null || Instance.Current is FollowCarStep) return;
+            var mp = Instance.Current.MarkerPosition;
+            var pl = FindAnyObjectByType<FirstPersonController>();
+            if (!mp.HasValue || pl == null || mp.Value.x >= 1900f || pl.transform.position.x >= 1900f) return;
+            if (Vector3.ProjectOnPlane(mp.Value - pl.transform.position, Vector3.up).magnitude > TravelDistance)
+                Cutscene.Travel(mp.Value, Instance.Current.Title);
         }
 
         // Farther than this from an act's spawn point = a different space (interiors lie at x >= 1000, the city within ~200 m).

@@ -63,10 +63,12 @@ namespace Kosynierzy
             if (targetOverride != null) { pos = targetOverride.position; yaw = targetOverride.eulerAngles.y; }
             else { pos = Points.Position(targetPoint); yaw = Points.Rotation(targetPoint).eulerAngles.y; }
 
+            bool leavingInterior = transform.position.x >= 1900f && pos.x < 1900f;
             ScreenFade.Transition(() =>
             {
                 var player = Object.FindAnyObjectByType<FirstPersonController>();
                 if (player != null) player.Teleport(pos + Vector3.up * 0.05f, yaw);
+                if (leavingInterior) Mission.TryTravelAfterExit();
             });
         }
     }
