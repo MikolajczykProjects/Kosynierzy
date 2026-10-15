@@ -53,6 +53,11 @@ namespace Kosynierzy
             AnimParams.SetTrigger(GetComponentInChildren<Animator>(), "Otworz");
             SfxBank.Play(SfxBank.Sfx.Pickup);
 
+            if (targetOverride == null && !Points.Has(targetPoint))
+            {
+                Debug.LogWarning($"Kosynierzy: drzwi prowadzą do nieistniejącego punktu '{targetPoint}' — zostajesz na miejscu.");
+                return;
+            }
             Vector3 pos;
             float yaw;
             if (targetOverride != null) { pos = targetOverride.position; yaw = targetOverride.eulerAngles.y; }

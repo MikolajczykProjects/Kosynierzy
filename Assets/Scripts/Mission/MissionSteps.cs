@@ -28,6 +28,30 @@ namespace Kosynierzy
         protected static FirstPersonController Player => UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
 
         /// <summary>
+        /// Position/rotation of a map point; a missing point falls back (once logged) to 3 m in front of the player,
+        /// so a step is never blocked by a wrong name.
+        /// </summary>
+        protected static void Resolve(string point, out Vector3 pos, out Quaternion rot)
+        {
+            if (Points.Has(point)) { pos = Points.Position(point); rot = Points.Rotation(point); return; }
+            var p = Player;
+            if (p != null)
+            {
+                pos = p.transform.position + Vector3.ProjectOnPlane(p.transform.forward, Vector3.up).normalized * 3f;
+                rot = Quaternion.LookRotation(-Vector3.ProjectOnPlane(p.transform.forward, Vector3.up).normalized, Vector3.up);
+            }
+            else { pos = Vector3.zero; rot = Quaternion.identity; }
+            Points.Get(point); // logs the warning once
+        }
+
+        /// <summary>Horizontal distance (+ at most 8 m of height difference) — points sit at door/floor height, interiors have storeys.</summary>
+        protected static bool Near(Vector3 a, Vector3 b, float radius)
+        {
+            var d = a - b;
+            return Mathf.Abs(d.y) < 8f && new Vector2(d.x, d.z).sqrMagnitude <= radius * radius;
+        }
+
+        /// <summary>
         /// Story characters (Zofia, the receptionist, the railwayman, "Sowa") are bystanders too: a player bullet that hits
         /// them fails the mission like any civilian (Character + one-hit Health, type Ally). No-op when already a Character.
         /// </summary>
@@ -47,7 +71,8 @@ namespace Kosynierzy
         /// <summary>Spawns a prefab (or placeholder) at a point and makes it usable with E.</summary>
         protected static Interactable SpawnInteractable(string prefab, string point, string prompt, Action onUse, bool singleUse = true)
         {
-            var go = Spawner.Spawn(prefab, point);
+            Resolve(point, out var pos, out var rot);
+            var go = Spawner.Spawn(prefab, pos, rot);
             var it = GetOrAdd<Interactable>(go);
             if (go.GetComponentInChildren<Collider>() == null) go.AddComponent<BoxCollider>();
             it.SetPrompt(prompt);
@@ -88,8 +113,9 @@ namespace Kosynierzy
 
         public override void Tick()
         {
+            if (!Points.Has(point)) { Points.Get(point); Done = true; return; } // wrong name must never block the story
             var p = Player;
-            if (p != null && Vector3.Distance(p.transform.position, Points.Position(point)) <= radius) Done = true;
+            if (p != null && Near(p.transform.position, Points.Position(point), radius)) Done = true;
         }
 
         public override string Progress
@@ -97,7 +123,7 @@ namespace Kosynierzy
             get
             {
                 var p = Player;
-                return p == null ? null : $"{Mathf.RoundToInt(Vector3.Distance(p.transform.position, Points.Position(point)))} m";
+                return p == null || !Points.Has(point) ? null : $"{Mathf.RoundToInt(Vector3.Distance(p.transform.position, Points.Position(point)))} m";
             }
         }
     }
@@ -119,7 +145,7 @@ namespace Kosynierzy
         public override void Begin()
         {
             spawned = Spawner.Find(character);
-            if (spawned == null) spawned = Spawner.Spawn(character, point);
+            if (spawned == null) { Resolve(point, out var pos, out var rot); spawned = Spawner.Spawn(character, pos, rot); }
             MakeInnocent(spawned);
             talk = GetOrAdd<Interactable>(spawned);
             talk.SetPrompt("Porozmawiaj");
@@ -192,8 +218,14 @@ namespace Kosynierzy
         {
             var p = Player;
             if (p == null) return;
+            bool any = false;
             foreach (var name in points)
-                if (Points.Has(name) && Vector3.Distance(p.transform.position, Points.Position(name)) <= radius) { Done = true; return; }
+            {
+                if (!Points.Has(name)) continue;
+                any = true;
+                if (Near(p.transform.position, Points.Position(name), radius)) { Done = true; return; }
+            }
+            if (!any) { Debug.LogWarning($"Kosynierzy: żaden z punktów kroku '{Title}' nie istnieje — pomijam."); Done = true; }
         }
     }
 
@@ -233,17 +265,17 @@ namespace Kosynierzy
         /// <summary>Grey plate at table / wall height — the placeholder path when the prop prefab is missing.</summary>
         static GameObject BuildPlate(Target t)
         {
-            var go = Spawner.CreatePlaceholder("Dowod_" + t.Id, Points.Position(t.Point), Points.Rotation(t.Point));
+            Resolve(t.Point, out var ppos, out var prot);
+            var go = Spawner.CreatePlaceholder("Dowod_" + t.Id, ppos, prot);
             go.transform.localScale = new Vector3(0.6f, 0.05f, 0.45f);
-            go.transform.position = Points.Position(t.Point) + Vector3.up * 0.9f; // sits on a table / wall height
+            go.transform.position = ppos + Vector3.up * 0.9f; // sits on a table / wall height
             return go;
         }
 
         /// <summary>The real prop for this target (root = what carries Evidence), or null when a prefab is missing.</summary>
         GameObject BuildProp(Target t)
         {
-            Vector3 pos = Points.Position(t.Point);
-            Quaternion rot = Points.Rotation(t.Point);
+            Resolve(t.Point, out Vector3 pos, out Quaternion rot);
             switch (t.Id)
             {
                 case "mapa":
@@ -327,8 +359,9 @@ namespace Kosynierzy
         public override void Tick()
         {
             if (playing) return;
+            if (!Points.Has(point)) { Points.Get(point); PlayNext(0); return; } // no such point: skip the crouch, keep the dialogues
             var p = Player;
-            bool ok = p != null && p.IsCrouching && Vector3.Distance(p.transform.position, Points.Position(point)) <= radius;
+            bool ok = p != null && p.IsCrouching && Near(p.transform.position, Points.Position(point), radius);
             held = ok ? held + Time.deltaTime : Mathf.Max(0f, held - Time.deltaTime * 0.5f);
             if (held >= seconds) PlayNext(0);
         }
@@ -405,14 +438,72 @@ namespace Kosynierzy
 
         public override void End() => AnimParams.SetFloat(carAnim, "Speed", 0f);
 
+        const float LongLeg = 300f;
+        List<Vector3> path = new();
+        bool jumping;
+
+        // Corners of a NavMesh path (streets) from a to b; straight line when there is no usable NavMesh.
+        static List<Vector3> LegPath(Vector3 a, Vector3 b)
+        {
+            var list = new List<Vector3>();
+            if (UnityEngine.AI.NavMesh.SamplePosition(a, out var ha, 15f, UnityEngine.AI.NavMesh.AllAreas) &&
+                UnityEngine.AI.NavMesh.SamplePosition(b, out var hb, 15f, UnityEngine.AI.NavMesh.AllAreas))
+            {
+                var nav = new UnityEngine.AI.NavMeshPath();
+                if (UnityEngine.AI.NavMesh.CalculatePath(ha.position, hb.position, UnityEngine.AI.NavMesh.AllAreas, nav) &&
+                    nav.status == UnityEngine.AI.NavMeshPathStatus.PathComplete && nav.corners.Length > 1)
+                {
+                    for (int i = 1; i < nav.corners.Length; i++) list.Add(nav.corners[i]);
+                    return list;
+                }
+            }
+            list.Add(b);
+            return list;
+        }
+
+        void JumpLeg(Vector3 to)
+        {
+            jumping = true;
+            var p = Player;
+            Vector3 dir = Vector3.ProjectOnPlane(to - car.transform.position, Vector3.up).normalized;
+            Vector3 back = to - dir * 18f; // the player ends 18 m behind the car: inside the 8–40 m window
+            ScreenFade.Transition(() =>
+            {
+                if (car != null) { car.transform.position = to; if (dir.sqrMagnitude > 0.01f) car.transform.rotation = Quaternion.LookRotation(dir); }
+                if (p != null)
+                {
+                    if (UnityEngine.AI.NavMesh.SamplePosition(back, out var h, 20f, UnityEngine.AI.NavMesh.AllAreas)) back = h.position;
+                    p.Teleport(back + Vector3.up * 0.05f, Quaternion.LookRotation(dir.sqrMagnitude > 0.01f ? dir : Vector3.forward).eulerAngles.y);
+                }
+                index++;
+                path.Clear();
+                graceUntil = Time.time + 5f;
+                jumping = false;
+            });
+        }
+
         public override void Tick()
         {
             if (car == null || Done) return;
             if (index >= route.Count) { AnimParams.SetFloat(carAnim, "Speed", 0f); Done = true; return; }
-            Vector3 target = route[index].position;
+            // Legs longer than LongLeg (the real map's route jumps ~900 m across the city) are a cut: fade, car and player
+            // are moved together to the end of the leg. Otherwise the straight line runs through buildings and the tail fails.
+            if (path.Count == 0 && !jumping)
+            {
+                Vector3 from = car.transform.position, to = route[index].position;
+                if (Vector3.ProjectOnPlane(to - from, Vector3.up).magnitude > LongLeg) { JumpLeg(to); return; }
+                path = LegPath(from, to);
+            }
+            if (jumping) return;
+            Vector3 target = path.Count > 0 ? path[0] : route[index].position;
             Vector3 pos = car.transform.position;
             Vector3 flat = Vector3.ProjectOnPlane(target - pos, Vector3.up);
-            if (flat.magnitude < 0.5f) { index++; return; }
+            if (flat.magnitude < 0.5f)
+            {
+                if (path.Count > 0) path.RemoveAt(0);
+                if (path.Count == 0) index++;
+                return;
+            }
             car.transform.rotation = Quaternion.Slerp(car.transform.rotation, Quaternion.LookRotation(flat), 4f * Time.deltaTime);
             car.transform.position = Vector3.MoveTowards(pos, new Vector3(target.x, pos.y, target.z), speed * Time.deltaTime);
 
@@ -469,7 +560,8 @@ namespace Kosynierzy
             correct = UnityEngine.Random.Range(0, 3);
             Mission.SetMicrophone(true); // the broadcast is running until the right line is cut (also after a checkpoint resume)
 
-            PanelFrame(Points.Position(panelPoint), Points.Rotation(panelPoint), out Vector3 panelPos, out Quaternion panelRot);
+            Resolve(panelPoint, out var basePos, out var baseRot);
+            PanelFrame(basePos, baseRot, out Vector3 panelPos, out Quaternion panelRot);
             realPanel = Spawner.HasPrefab("OB_Lacznica");
             panel = Spawner.Spawn("OB_Lacznica", panelPos, panelRot);
             spawned.Add(panel);

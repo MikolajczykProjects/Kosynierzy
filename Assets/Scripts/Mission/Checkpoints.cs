@@ -44,6 +44,14 @@ namespace Kosynierzy
             }
         }
 
+        /// <summary>Replaces the saved position (the act-start teleport was still pending when the step was saved).</summary>
+        public static void OverridePosition(Vector3 position, float yaw)
+        {
+            HasPosition = true;
+            SavedPosition = position;
+            SavedYaw = yaw;
+        }
+
         public static void RestoreProgress()
         {
             GameProgress.HasCamera = savedCamera;

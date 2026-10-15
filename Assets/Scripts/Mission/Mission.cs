@@ -26,6 +26,10 @@ namespace Kosynierzy
 
         readonly List<MissionStep> steps = new();
         readonly List<Act> acts = new();
+        // Where a checkpoint/admin jump to this step puts the player when the act's spawn is in the wrong space (interiors).
+        readonly Dictionary<int, string> stepSpawns = new();
+        int cameraStep = int.MaxValue;
+        void SpawnFor(string point) => stepSpawns[steps.Count - 1] = point;
         InputAction skipAction, saveAction, loadAction;
 
         public MissionStep Current { get; private set; }
@@ -90,6 +94,7 @@ namespace Kosynierzy
                 start = Checkpoints.ResumeStep;
                 Checkpoints.ResumeStep = -1;
                 Checkpoints.RestoreProgress();
+                if (start > cameraStep) GameProgress.HasCamera = true; // admin jump past Zofia: the photo steps need the camera
                 Inventory.NewGame(GameProgress.HasCamera);
             }
             else
@@ -142,14 +147,19 @@ namespace Kosynierzy
             steps.Add(new ReachStep("miasto_drzwi_ksiegarnia", "Idź do księgarni pani Zofii na Ringu"));
             steps.Add(new TalkStep("CH_Zofia", "ksiegarnia_zofia", "a1_zofia", "Porozmawiaj z panią Zofią",
                 () => Inventory.GiveCamera()));
+            cameraStep = steps.Count - 1; SpawnFor("spawn_ksiegarnia");
             steps.Add(new ReachStep("miasto_drzwi_hotel", "Idź do hotelu Haus Oberschlesien"));
             steps.Add(new TalkStep("CH_Recepcjonista", "hotel_recepcja", "a1_recepcja", "Zagadaj recepcjonistę"));
+            SpawnFor("spawn_hotel_wejscie");
             steps.Add(new InteractStep("OB_Drzwi", "hotel_pokoj_drzwi", "Otwórz", "Wejdź do pokoju Naujocksa") { HideOnUse = true });
+            SpawnFor("spawn_hotel_wejscie");
             steps.Add(new PhotoStep("Sfotografuj mapę i listę (F)",
                 new PhotoStep.Target { Point = "hotel_pokoj_mapa", Id = "mapa", Name = "Mapa z zaznaczoną radiostacją", Thought = "a1_mysl_mapa" },
                 new PhotoStep.Target { Point = "hotel_pokoj_lista", Id = "lista", Name = "Lista „polskich ubrań”", Thought = "a1_mysl_lista" }));
+            SpawnFor("spawn_hotel_wejscie");
             steps.Add(new CrouchListenStep("hotel_kolumna", "Podsłuchaj telefon w holu — kucnij przy kolumnie (C)", 3f, 2.5f,
                 "a1_telefon", "a1_mysl_haslo"));
+            SpawnFor("spawn_hotel_wejscie");
 
             // AKT 2 (16:00–19:45) Przez miasto
             AddAct("Akt 2 — Przez miasto", "miasto_drzwi_hotel", 16f);
@@ -159,20 +169,27 @@ namespace Kosynierzy
                 { ParkPoint = "miasto_zagajnik_auto" });
             steps.Add(new ActionStep(() => SetHour(19f)));
             steps.Add(new DialogStep("a2_zmrok", "Zapada zmrok"));
+            SpawnFor("miasto_zagajnik_krzaki");
             steps.Add(new CrouchListenStep("miasto_zagajnik_krzaki", "Ukryj się w krzakach w zagajniku (C)", 3f, 2f, "a2_zagajnik"));
+            SpawnFor("miasto_zagajnik_krzaki");
             steps.Add(new PhotoStep("Sfotografuj auto z „konserwą”",
                 new PhotoStep.Target { Point = "miasto_zagajnik_auto", Id = "konserwa", Name = "Auto SD z nieprzytomnym mężczyzną", Thought = "a2_mysl_konserwa" }));
+            SpawnFor("miasto_zagajnik_krzaki");
 
             // AKT 3 (20:00) Radiostacja
             AddAct("Akt 3 — Radiostacja", "miasto_dziura_plot", 20f);
             // Two approaches: quietly through the fence hole (doors network) or through the guarded gate.
-            steps.Add(new ReachAnyStep("Wejdź na teren radiostacji — po cichu dziurą w płocie albo bramą", 4f,
-                "spawn_radio_tyl", "spawn_radio_brama") { MarkerPoint = "miasto_dziura_plot" });
+            // Both entrances (fence hole, main door) teleport into the station interior at spawn_radio_tyl, so that is the goal;
+            // the 90 s cable timer must not start while the player is still in the yard.
+            steps.Add(new ReachAnyStep("Dostań się do stacji — po cichu dziurą w płocie albo głównym wejściem", 6f,
+                "spawn_radio_tyl") { MarkerPoint = "miasto_dziura_plot" });
             steps.Add(new ActionStep(() => { SetHour(20f); SpawnWorkersDoor(); SetRadioGuards(true); SpawnArmoury(); SpawnMicrophone(); }));
             // The storm microphone's red lamp blinks (Animator bool Nadaje) from the announcement until the right cable is cut.
             steps.Add(new DialogStep("a3_komunikat", "SD nadaje przez mikrofon burzowy!", () => SetMicrophone(true)));
+            SpawnFor("spawn_radio_tyl");
             steps.Add(new CableStep("radio_technika_kable", "radio_kartka_grubera", "a3_sygnal_urwany",
                 "Przetnij właściwą linię wzmacniacza (kartka Grubera)"));
+            SpawnFor("spawn_radio_tyl");
 
             // AKT 4 (20:10) Konserwa i ucieczka
             AddAct("Akt 4 — Konserwa i ucieczka", "radio_drzwi_wyjscie", 20.17f);
@@ -182,7 +199,9 @@ namespace Kosynierzy
             steps.Add(new DialogStep("a4_alarm", "Alarm!"));
             steps.Add(new ActionStep(AlarmAll));
             steps.Add(new ReachStep("miasto_stodola", "Uciekaj na wschód do stodoły kuriera", 4f));
+            SpawnFor("miasto_drzwi_radio");
             steps.Add(new TalkStep("CH_Sowa", "miasto_stodola", "a4_sowa", "Przekaż film kurierowi „Sowie”"));
+            SpawnFor("miasto_stodola");
             steps.Add(new ActionStep(() => Epilogue.Play()));
         }
 
@@ -199,7 +218,7 @@ namespace Kosynierzy
             Door("ksiegarnia_drzwi_wyjscie", "miasto_drzwi_ksiegarnia", "Wyjdź na ulicę", exitInFront: true);
             Door("miasto_drzwi_fotograf", "spawn_fotograf", "Wejdź do zakładu fotograficznego");
             Door("fotograf_drzwi_wyjscie", "miasto_drzwi_fotograf", "Wyjdź na ulicę", exitInFront: true);
-            Door("miasto_drzwi_radio", "spawn_radio_brama", "Wejdź na teren radiostacji");
+            Door("miasto_drzwi_radio", "spawn_radio_tyl", "Wejdź do stacji nadawczej"); // building door → interior (x 4200)
             Door("radio_drzwi_wyjscie", "miasto_drzwi_radio", "Wyjdź", exitInFront: true);
             Door("miasto_dziura_plot", "spawn_radio_tyl", "Przeciśnij się przez dziurę w płocie", prefab: "OB_Plot_Dziura");
         }
@@ -363,6 +382,14 @@ namespace Kosynierzy
         // ------------------------------------------------------------------ runner
 
         float nextAutoSave = 90f;
+        string pendingSpawn;
+
+        // A checkpoint taken mid-jump or on a stair: put the player back on the floor below the saved point.
+        static Vector3 OnGround(Vector3 p)
+        {
+            if (Physics.Raycast(p + Vector3.up * 0.5f, Vector3.down, out var hit, 6f, ~0, QueryTriggerInteraction.Ignore)) return hit.point + Vector3.up * 0.05f;
+            return p + Vector3.up * 0.05f;
+        }
 
         void Update()
         {
@@ -416,13 +443,13 @@ namespace Kosynierzy
                 if (atSavedSpot)
                 {
                     var player = FindAnyObjectByType<FirstPersonController>();
-                    if (player != null) player.Teleport(Checkpoints.SavedPosition, Checkpoints.SavedYaw);
+                    if (player != null) player.Teleport(OnGround(Checkpoints.SavedPosition), Checkpoints.SavedYaw);
                 }
-                else if (fromLoad || index == 0) TeleportTo(act.Spawn, instant: true);
+                else if (fromLoad || index == 0) TeleportTo(stepSpawns.TryGetValue(index, out var sp) ? sp : act.Spawn, instant: true);
                 // Normal progress keeps the player where he stands — except when the last act ended in another space
                 // (act 1 ends inside the hotel at x ≈ 1000, act 2 starts in the street; without this the car-tailing step
                 // fails 5 s after it starts because the player is ~990 m away).
-                else if (index == act.Step && IsFarFrom(act.Spawn, FarFromActSpawn)) TeleportTo(act.Spawn);
+                else if (index == act.Step && IsFarFrom(act.Spawn, FarFromActSpawn)) { TeleportTo(act.Spawn); pendingSpawn = act.Spawn; }
                 // Resuming mid-act: replay the act's set-up actions (time of day, spawns, alarm) skipped so far.
                 if (fromLoad)
                     for (int i = act.Step; i < index; i++)
@@ -430,7 +457,14 @@ namespace Kosynierzy
                 ActStarted?.Invoke(act.Name);
             }
             // Checkpoint at every step (player feedback), none in historical mode.
-            if (!GameMode.Historical && !fromLoad) Checkpoints.Save(index);
+            if (!GameMode.Historical && !fromLoad)
+            {
+                Checkpoints.Save(index);
+                // The act-start teleport is deferred by the fade: the checkpoint must hold where the player WILL stand.
+                if (pendingSpawn != null && Points.Has(pendingSpawn))
+                    Checkpoints.OverridePosition(Points.Position(pendingSpawn) + Vector3.up * 0.05f, Points.Rotation(pendingSpawn).eulerAngles.y);
+            }
+            pendingSpawn = null;
 
             Current = steps[index];
             StepStarted?.Invoke(Current);

@@ -15,6 +15,7 @@ namespace Kosynierzy
         static readonly Dictionary<string, Transform> map = new();
         static readonly HashSet<string> warned = new();
         static bool built;
+        static float nextRetry;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics()
@@ -22,6 +23,7 @@ namespace Kosynierzy
             map.Clear();
             warned.Clear();
             built = false;
+            nextRetry = 0f;
             SceneManager.sceneLoaded -= OnSceneLoaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -33,6 +35,7 @@ namespace Kosynierzy
         {
             map.Clear();
             built = true;
+            nextRetry = Time.realtimeSinceStartup + 2f; // an empty result (map not instantiated yet) is retried, but not every frame
             foreach (var root in Object.FindObjectsByType<Transform>(FindObjectsInactive.Include))
             {
                 if (root.name != "Punkty") continue;
@@ -41,15 +44,20 @@ namespace Kosynierzy
             }
         }
 
+        static void EnsureBuilt()
+        {
+            if (!built || (map.Count == 0 && Time.realtimeSinceStartup >= nextRetry)) Rebuild();
+        }
+
         public static bool Has(string name)
         {
-            if (!built) Rebuild();
+            EnsureBuilt();
             return map.ContainsKey(name);
         }
 
         public static Transform Get(string name)
         {
-            if (!built) Rebuild();
+            EnsureBuilt();
             if (map.TryGetValue(name, out var t) && t != null) return t;
             if (warned.Add(name)) Debug.LogWarning($"Kosynierzy: brak punktu '{name}' na mapie (Punkty) — używam (0,0,0).");
             return null;
@@ -70,7 +78,7 @@ namespace Kosynierzy
         /// <summary>All existing points prefix_1, prefix_2, … in order (stops at the first gap).</summary>
         public static List<Transform> Series(string prefix, int max = 50)
         {
-            if (!built) Rebuild();
+            EnsureBuilt();
             var list = new List<Transform>();
             for (int i = 1; i <= max; i++)
             {
@@ -84,7 +92,7 @@ namespace Kosynierzy
         {
             get
             {
-                if (!built) Rebuild();
+                EnsureBuilt();
                 return map.Values;
             }
         }
