@@ -13,6 +13,7 @@ Zespół **Kosynierzy** · Hackaton 2026 · Unity 6.6 (URP)
 </p>
 
 <p align="center">▶ <b><a href="docs/trailer/Sender-Gleiwitz-trailer.mp4">Obejrzyj cały trailer</a></b> (80 s, 720p, 9 MB, z dźwiękiem)</p>
+<p align="center"><sub>W trailerze: modele 3D z gry (postacie Kruk, Zofia, oddział SD, mieszkańcy Gliwic oraz broń ze zbrojowni) wyrenderowane w Blenderze z plików FBX w <code>Assets/</code>.</sub></p>
 
 ---
 
