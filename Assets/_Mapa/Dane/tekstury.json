@@ -1,0 +1,218 @@
+{
+ "tynk_bez": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_ochra": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_piasek": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_szarozielony": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_losos": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_kremowy": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_szary": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_brudny": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_rozowy": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_zolty": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_bialy": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "tynk_niebieski": {
+  "tex": "tynk",
+  "kafel": 3
+ },
+ "cegla": {
+  "tex": "cegla",
+  "kafel": 1.2
+ },
+ "cegla_ciemna": {
+  "tex": "cegla",
+  "kafel": 1.2
+ },
+ "cegla_jasna": {
+  "tex": "cegla",
+  "kafel": 1.2
+ },
+ "klinkier": {
+  "tex": "cegla",
+  "kafel": 1.2
+ },
+ "dachowka": {
+  "tex": "dachowka",
+  "kafel": 1.5
+ },
+ "dachowka_ciemna": {
+  "tex": "dachowka",
+  "kafel": 1.5
+ },
+ "dachowka_brazowa": {
+  "tex": "dachowka",
+  "kafel": 1.5
+ },
+ "lupek": {
+  "tex": "lupek",
+  "kafel": 1.5
+ },
+ "blacha": {
+  "tex": "blacha",
+  "kafel": 1.5
+ },
+ "blacha_miedz": {
+  "tex": "blacha",
+  "kafel": 1.5
+ },
+ "bruk": {
+  "tex": "bruk",
+  "kafel": 1.5
+ },
+ "bruk_jasny": {
+  "tex": "bruk",
+  "kafel": 1.5
+ },
+ "asfalt": {
+  "tex": "kostka",
+  "kafel": 1.5
+ },
+ "chodnik": {
+  "tex": "chodnik",
+  "kafel": 1.0
+ },
+ "trawa": {
+  "tex": "trawa",
+  "kafel": 4
+ },
+ "trawa_ciemna": {
+  "tex": "trawa",
+  "kafel": 4
+ },
+ "trawa_sucha": {
+  "tex": "trawa",
+  "kafel": 4
+ },
+ "zywoplot": {
+  "tex": "trawa",
+  "kafel": 4
+ },
+ "ziemia": {
+  "tex": "ziemia",
+  "kafel": 1.5
+ },
+ "polna_droga": {
+  "tex": "ziemia",
+  "kafel": 1.5
+ },
+ "zwir": {
+  "tex": "zwir",
+  "kafel": 1.0
+ },
+ "pole_zaorane": {
+  "tex": "pole",
+  "kafel": 6
+ },
+ "pole_zielone": {
+  "tex": "pole",
+  "kafel": 6
+ },
+ "zyto_scierniska": {
+  "tex": "pole",
+  "kafel": 6
+ },
+ "kora": {
+  "tex": "kora",
+  "kafel": 1.0
+ },
+ "kora_jasna": {
+  "tex": "kora",
+  "kafel": 1.0
+ },
+ "lisc_1": {
+  "tex": "lisc",
+  "kafel": 2
+ },
+ "lisc_2": {
+  "tex": "lisc",
+  "kafel": 2
+ },
+ "lisc_3": {
+  "tex": "lisc",
+  "kafel": 2
+ },
+ "lisc_jesien": {
+  "tex": "lisc",
+  "kafel": 2
+ },
+ "iglaste": {
+  "tex": "lisc",
+  "kafel": 2
+ },
+ "drewno": {
+  "tex": "drewno",
+  "kafel": 1.0
+ },
+ "drewno_ciemne": {
+  "tex": "drewno",
+  "kafel": 1.0
+ },
+ "modrzew": {
+  "tex": "drewno",
+  "kafel": 1.0
+ },
+ "modrzew_ciemny": {
+  "tex": "drewno",
+  "kafel": 1.0
+ },
+ "deska_szara": {
+  "tex": "drewno",
+  "kafel": 1.0
+ },
+ "kamien": {
+  "tex": "kamien",
+  "kafel": 1.0
+ },
+ "kamien_ciemny": {
+  "tex": "kamien",
+  "kafel": 1.0
+ },
+ "piaskowiec": {
+  "tex": "kamien",
+  "kafel": 1.0
+ },
+ "cokol": {
+  "tex": "kamien",
+  "kafel": 1.0
+ },
+ "papa": {
+  "tex": "papa",
+  "kafel": 1.0
+ },
+ "woda": {
+  "tex": "woda",
+  "kafel": 8
+ }
+}

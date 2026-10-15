@@ -1,0 +1,46 @@
+{
+"punkty": [
+{
+"n": "miasto_drzwi_hotel",
+"p": [
+0.0,
+-1.0,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "miasto_auto_sd_trasa_1",
+"p": [
+15.0,
+-12.0,
+0.0
+],
+"yaw": 0.0
+}
+],
+"swiatla": [
+{
+"p": [
+-3.0,
+2.0,
+4.2
+],
+"kolor": "#ffe3b0",
+"zasieg": 10.0,
+"moc": 2.5,
+"typ": "point"
+},
+{
+"p": [
+3.0,
+2.0,
+4.2
+],
+"kolor": "#ffe3b0",
+"zasieg": 10.0,
+"moc": 2.5,
+"typ": "point"
+}
+]
+}

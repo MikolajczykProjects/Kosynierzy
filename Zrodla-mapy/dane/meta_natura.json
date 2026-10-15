@@ -1,0 +1,170 @@
+{
+ "punkty": [],
+ "swiatla": [],
+ "statystyki": {
+  "drzewa": 3847,
+  "krzaki": 304,
+  "sektory": [
+   {
+    "sektor": [
+     0,
+     0
+    ],
+    "plik": "Natura_0_0.fbx",
+    "ile": 93
+   },
+   {
+    "sektor": [
+     0,
+     1
+    ],
+    "plik": "Natura_0_1.fbx",
+    "ile": 71
+   },
+   {
+    "sektor": [
+     0,
+     2
+    ],
+    "plik": "Natura_0_2.fbx",
+    "ile": 319
+   },
+   {
+    "sektor": [
+     0,
+     3
+    ],
+    "plik": "Natura_0_3.fbx",
+    "ile": 16
+   },
+   {
+    "sektor": [
+     0,
+     4
+    ],
+    "plik": "Natura_0_4.fbx",
+    "ile": 2
+   },
+   {
+    "sektor": [
+     1,
+     0
+    ],
+    "plik": "Natura_1_0.fbx",
+    "ile": 317
+   },
+   {
+    "sektor": [
+     1,
+     1
+    ],
+    "plik": "Natura_1_1.fbx",
+    "ile": 189
+   },
+   {
+    "sektor": [
+     1,
+     2
+    ],
+    "plik": "Natura_1_2.fbx",
+    "ile": 340
+   },
+   {
+    "sektor": [
+     1,
+     3
+    ],
+    "plik": "Natura_1_3.fbx",
+    "ile": 37
+   },
+   {
+    "sektor": [
+     1,
+     4
+    ],
+    "plik": "Natura_1_4.fbx",
+    "ile": 10
+   },
+   {
+    "sektor": [
+     2,
+     0
+    ],
+    "plik": "Natura_2_0.fbx",
+    "ile": 300
+   },
+   {
+    "sektor": [
+     2,
+     1
+    ],
+    "plik": "Natura_2_1.fbx",
+    "ile": 379
+   },
+   {
+    "sektor": [
+     2,
+     2
+    ],
+    "plik": "Natura_2_2.fbx",
+    "ile": 72
+   },
+   {
+    "sektor": [
+     2,
+     3
+    ],
+    "plik": "Natura_2_3.fbx",
+    "ile": 568
+   },
+   {
+    "sektor": [
+     2,
+     4
+    ],
+    "plik": "Natura_2_4.fbx",
+    "ile": 75
+   },
+   {
+    "sektor": [
+     3,
+     0
+    ],
+    "plik": "Natura_3_0.fbx",
+    "ile": 140
+   },
+   {
+    "sektor": [
+     3,
+     1
+    ],
+    "plik": "Natura_3_1.fbx",
+    "ile": 128
+   },
+   {
+    "sektor": [
+     3,
+     2
+    ],
+    "plik": "Natura_3_2.fbx",
+    "ile": 27
+   },
+   {
+    "sektor": [
+     3,
+     3
+    ],
+    "plik": "Natura_3_3.fbx",
+    "ile": 1012
+   },
+   {
+    "sektor": [
+     3,
+     4
+    ],
+    "plik": "Natura_3_4.fbx",
+    "ile": 56
+   }
+  ]
+ }
+}

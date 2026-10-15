@@ -1,0 +1,211 @@
+{
+"punkty": [
+{
+"n": "spawn_fotograf",
+"p": [
+0.0,
+4.4,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "fotograf_drzwi_wyjscie",
+"p": [
+0.0,
+5.0,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "fotograf_wlasciciel",
+"p": [
+-0.6,
+2.0,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "fotograf_gestapo",
+"p": [
+2.9,
+-0.4,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "fotograf_ciemnia",
+"p": [
+2.7,
+-4.8,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "fotograf_ciemnia_drzwi",
+"p": [
+2.7,
+-3.4,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "fotograf_zaplecze_drzwi",
+"p": [
+2.7,
+1.5,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "fotograf_studio_aparat",
+"p": [
+-1.5,
+-1.2,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "fotograf_studio_podest",
+"p": [
+-1.5,
+-4.2,
+0.28
+],
+"yaw": 0.0
+},
+{
+"n": "fotograf_studio_lampa_1",
+"p": [
+-3.2,
+-2.6,
+0.0
+],
+"yaw": 135.0
+},
+{
+"n": "fotograf_studio_lampa_2",
+"p": [
+0.6,
+-2.4,
+0.0
+],
+"yaw": 225.0
+},
+{
+"n": "fotograf_zaplecze_biurko",
+"p": [
+3.3,
+-2.6,
+0.0
+],
+"yaw": 90.0
+},
+{
+"n": "fotograf_ciemnia_powiekszalnik",
+"p": [
+3.45,
+-4.4,
+0.85
+],
+"yaw": 270.0
+}
+],
+"swiatla": [
+{
+"p": [
+-1.0,
+4.4,
+2.4499999999999997
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.4,
+"typ": "point"
+},
+{
+"p": [
+1.6,
+4.4,
+2.4499999999999997
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.4,
+"typ": "point"
+},
+{
+"p": [
+-1.95,
+2.0,
+2.2
+],
+"kolor": "#ffc77a",
+"zasieg": 3.5,
+"moc": 0.6,
+"typ": "point"
+},
+{
+"p": [
+0.4,
+2.0,
+2.2
+],
+"kolor": "#ffc77a",
+"zasieg": 3.5,
+"moc": 0.6,
+"typ": "point"
+},
+{
+"p": [
+-1.5,
+-1.0,
+2.8
+],
+"kolor": "#ffd59a",
+"zasieg": 6.0,
+"moc": 1.2,
+"typ": "point"
+},
+{
+"p": [
+-1.5,
+-4.0,
+2.8
+],
+"kolor": "#ffd59a",
+"zasieg": 6.0,
+"moc": 1.2,
+"typ": "point"
+},
+{
+"p": [
+2.7,
+-1.0,
+2.4
+],
+"kolor": "#ffcf8a",
+"zasieg": 5.0,
+"moc": 1.0,
+"typ": "point"
+},
+{
+"p": [
+2.7,
+-5.5,
+2.3
+],
+"kolor": "#ff2a1a",
+"zasieg": 4.0,
+"moc": 1.0,
+"typ": "point"
+}
+]
+}

@@ -1,0 +1,496 @@
+{
+ "tynk_bez": {
+  "kolor": "#d9c7a3",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_ochra": {
+  "kolor": "#d2a85f",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_piasek": {
+  "kolor": "#c9b48a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_szarozielony": {
+  "kolor": "#a3a98c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_losos": {
+  "kolor": "#d39a7f",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_kremowy": {
+  "kolor": "#e6dcc0",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_szary": {
+  "kolor": "#a8a49a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_brudny": {
+  "kolor": "#9a8f7b",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_rozowy": {
+  "kolor": "#c99a8f",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_zolty": {
+  "kolor": "#d8bd6a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_bialy": {
+  "kolor": "#e8e2d2",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tynk_niebieski": {
+  "kolor": "#93a3a6",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "cokol": {
+  "kolor": "#6e655a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "kamien": {
+  "kolor": "#a39a8a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "kamien_ciemny": {
+  "kolor": "#7b7469",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "piaskowiec": {
+  "kolor": "#b9a684",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "cegla": {
+  "kolor": "#9a4b33",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "cegla_ciemna": {
+  "kolor": "#743727",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "cegla_jasna": {
+  "kolor": "#b06a4c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "klinkier": {
+  "kolor": "#5e3328",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "dachowka": {
+  "kolor": "#9b4a32",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "dachowka_ciemna": {
+  "kolor": "#6f3424",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "dachowka_brazowa": {
+  "kolor": "#5a3a2c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "blacha": {
+  "kolor": "#6d7275",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "blacha_miedz": {
+  "kolor": "#5f8a78",
+  "smooth": 0.3,
+  "metal": 0.3
+ },
+ "papa": {
+  "kolor": "#3c3a38",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "lupek": {
+  "kolor": "#4a4d55",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "okno": {
+  "kolor": "#1d2633",
+  "smooth": 0.75,
+  "metal": 0.2
+ },
+ "okno_swiatlo": {
+  "kolor": "#2a2f38",
+  "smooth": 0.7,
+  "metal": 0.0,
+  "emisja": "#ffbe6a",
+  "emisja_noca": true
+ },
+ "rama": {
+  "kolor": "#e9e3d3",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "rama_ciemna": {
+  "kolor": "#4b3a2c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "drzwi": {
+  "kolor": "#5a3b26",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "drzwi_ciemne": {
+  "kolor": "#3a2618",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "markiza_czerwona": {
+  "kolor": "#9c3a2e",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "markiza_zielona": {
+  "kolor": "#3f5e44",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "markiza_kremowa": {
+  "kolor": "#d8cfb0",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "szyld": {
+  "kolor": "#2b2620",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "szyld_zloty": {
+  "kolor": "#b8964a",
+  "smooth": 0.45,
+  "metal": 0.7
+ },
+ "bruk": {
+  "kolor": "#5d5a55",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "bruk_jasny": {
+  "kolor": "#77736b",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "chodnik": {
+  "kolor": "#9b968c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "kraweznik": {
+  "kolor": "#b1aca1",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "asfalt": {
+  "kolor": "#4a4846",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "ziemia": {
+  "kolor": "#7a6648",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "zwir": {
+  "kolor": "#9a8f7a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "polna_droga": {
+  "kolor": "#8c7a58",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "trawa": {
+  "kolor": "#6f8a45",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "trawa_ciemna": {
+  "kolor": "#55703a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "trawa_sucha": {
+  "kolor": "#9a9a55",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "zyto_scierniska": {
+  "kolor": "#c9b06a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "pole_zaorane": {
+  "kolor": "#6b5238",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "pole_zielone": {
+  "kolor": "#7d9448",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "lisc_1": {
+  "kolor": "#4f6e34",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "lisc_2": {
+  "kolor": "#64823c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "lisc_3": {
+  "kolor": "#7b8f3f",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "lisc_jesien": {
+  "kolor": "#9a8a3a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "iglaste": {
+  "kolor": "#344f33",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "kora": {
+  "kolor": "#4e3b2b",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "kora_jasna": {
+  "kolor": "#6b5640",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "zywoplot": {
+  "kolor": "#4a6a33",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "woda": {
+  "kolor": "#3f5a66",
+  "smooth": 0.85,
+  "metal": 0.0,
+  "alfa": 0.82
+ },
+ "dno": {
+  "kolor": "#3b3a30",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "drewno": {
+  "kolor": "#7a5634",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "drewno_ciemne": {
+  "kolor": "#4f3622",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "modrzew": {
+  "kolor": "#8a6440",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "modrzew_ciemny": {
+  "kolor": "#6a4a2e",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "deska_szara": {
+  "kolor": "#7d7468",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "slupek": {
+  "kolor": "#5a4a3a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "metal": {
+  "kolor": "#4f5356",
+  "smooth": 0.35,
+  "metal": 0.6
+ },
+ "metal_ciemny": {
+  "kolor": "#2f3234",
+  "smooth": 0.3,
+  "metal": 0.6
+ },
+ "szyna": {
+  "kolor": "#5b5550",
+  "smooth": 0.45,
+  "metal": 0.7
+ },
+ "podklad": {
+  "kolor": "#4a3a2c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "zielen_okienna": {
+  "kolor": "#3f5a40",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "czarny": {
+  "kolor": "#1c1c1c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "bialy": {
+  "kolor": "#e8e6e0",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "zloto": {
+  "kolor": "#b8964a",
+  "smooth": 0.5,
+  "metal": 0.8
+ },
+ "czerwony": {
+  "kolor": "#8e2b22",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tkanina_zielona": {
+  "kolor": "#3e5a3c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tkanina_bordo": {
+  "kolor": "#6e2a2a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tkanina_bez": {
+  "kolor": "#cdbb98",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "parkiet": {
+  "kolor": "#8a5f3a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "posadzka_jasna": {
+  "kolor": "#d8cfbd",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "posadzka_ciemna": {
+  "kolor": "#3e3a36",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "dywan_czerwony": {
+  "kolor": "#7a2f2a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tapeta_zielona": {
+  "kolor": "#7d8a6a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tapeta_bordo": {
+  "kolor": "#7a4a44",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tapeta_kremowa": {
+  "kolor": "#d6c9a8",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "tapeta_niebieska": {
+  "kolor": "#7f8e96",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "boazeria": {
+  "kolor": "#5e3f26",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "sufit": {
+  "kolor": "#e4ddcc",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "kafle_biale": {
+  "kolor": "#dcdad2",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "beton": {
+  "kolor": "#8d8a84",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "lampa": {
+  "kolor": "#fff1c8",
+  "smooth": 0.12,
+  "metal": 0.0,
+  "emisja": "#ffe0a0"
+ },
+ "ksiazka_1": {
+  "kolor": "#7a2f2a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "ksiazka_2": {
+  "kolor": "#3e5a3c",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "ksiazka_3": {
+  "kolor": "#2f3f5e",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "ksiazka_4": {
+  "kolor": "#b8964a",
+  "smooth": 0.12,
+  "metal": 0.0
+ },
+ "ksiazka_5": {
+  "kolor": "#5e3f26",
+  "smooth": 0.12,
+  "metal": 0.0
+ }
+}

@@ -1,0 +1,254 @@
+SENDER GLEIWITZ 31.08.1939 — KWESTIE DO NAGRANIA (ElevenLabs)
+
+Model: eleven_multilingual_v2. Ustawienia głosów (stability itd.) są w glosy.json.
+Nazwa pliku audio = kod przed tekstem, np. a1_intro_01.mp3 (scena_numer linii). Gra szuka plików po tym kodzie.
+Linie oznaczone [MYŚL] czytać ciszej, prawie szeptem.
+
+WYMOWA:
+- Naujocks: „Naujoks”
+- Tarnowitzer Landstraße: „Tarnowicer Landsztrase”
+- Gleiwitz: „Glajwic”, Großmutter gestorben: „Grosmuter gesztorben”
+- Honiok: „Honiok” (polskie o), Konserve: „Konzerwe”
+
+Razem linii: 177
+
+======================================================================
+GŁOS: KRUK  (58 linii) — młody mężczyzna ok. 26 lat, spokojny, cichy, myśli prawie szeptem
+======================================================================
+a1_intro_01  [MYŚL] Gliwice. Wpół do czwartej, a upał jak w piecu.
+a1_intro_02  [MYŚL] Po tej stronie granicy jestem Johann Krause, kupiec z Bytomia.
+a1_intro_03  [MYŚL] Centrala wie, że Niemcy coś szykują. Nie wie, gdzie ani kiedy.
+a1_intro_04  [MYŚL] Najpierw księgarnia na Ringu. Spokojnie. Kupiec się nie spieszy.
+pob_kolejarz_04  Nikt się nie dowie. Dziękuję.
+a1_zofia_01  Haben Sie Eichendorff? Die Ausgabe von neunzehnhundertzwölf.
+a1_zofia_06  Gdzie mają pokój?
+a1_zofia_10  Oddam pani aparat.
+a1_recepcja_02  Nein, danke. Ich bin hier mit einem Geschäftsfreund verabredet.
+a1_recepcja_05  Ich habe Zeit. Danke sehr.
+a1_mysl_mapa_01  [MYŚL] Plan Gliwic. Radiostacja przy Tarnowitzer Landstraße, zakreślona na czerwono.
+a1_mysl_mapa_02  [MYŚL] Obok ołówkiem: dwudziesta. Tylko dzisiaj czy jutro?
+a1_mysl_mapa_03  [MYŚL] Zdjęcie. Ręce nie mogą drżeć.
+a1_mysl_lista_01  [MYŚL] Lista zaopatrzenia. Polskie ubrania cywilne, siedem kompletów.
+a1_mysl_lista_02  [MYŚL] Po co inżynierom z Berlina polskie ubrania?
+a1_mysl_lista_03  [MYŚL] Chcą, żeby to wyglądało na nas.
+a1_mysl_haslo_01  [MYŚL] Babcia umarła. Nikt nie odbiera takiej wiadomości tak spokojnie.
+a1_mysl_haslo_02  [MYŚL] To hasło. Zaczynają dziś. Na mapie była dwudziesta.
+a2_start_01  [MYŚL] Czarne auto spod hotelu. Rusza na północ.
+a2_start_02  [MYŚL] Trzymam się za nim. Nie za blisko.
+pob_fotograf_gestapo_02  Bitte sehr. Krause, Johann. Kaufmann aus Beuthen.
+pob_fotograf_gestapo_04  Ich hole Bilder ab. Von der Hochzeit meiner Schwester.
+pob_fotograf_gestapo_06  Ich spreche wie ein Oberschlesier. Wie die halbe Stadt.
+pob_fotograf_po_03  Jedna kopia zostaje u pana. Gdyby mnie złapali.
+pob_skrytka_01  [MYŚL] Skrytka pod mostem na Kłodnicy. Trzeci kamień od lewej, tak jak mówili w Katowicach.
+pob_skrytka_02  [MYŚL] Osiem naboi do Visa. Oby zostały w magazynku.
+a2_zmrok_01  [MYŚL] Dziewiętnasta. Zmierzcha, a powietrze dalej stoi.
+a2_zmrok_02  [MYŚL] Zapalają latarnie. Każda to świadek. Trzymam się cienia.
+a2_auto_daleko_01  [MYŚL] Tracę ich. Szybciej, zanim skręcą.
+a2_auto_daleko_02  [MYŚL] Gdzie to auto? Bez niego nie znajdę reszty.
+a2_auto_blisko_01  [MYŚL] Za blisko. Kierowca patrzy w lusterko.
+a2_auto_blisko_02  [MYŚL] Zwolnij. Kupiec z Bytomia nie goni samochodów.
+a2_most_01  [MYŚL] Kłodnica. Nad dachami wieża radiostacji, ponad sto metrów drewna.
+a2_most_02  [MYŚL] Do ósmej zostało niewiele.
+a2_mysl_konserwa_01  [MYŚL] Przywieźli go nieprzytomnego. To nie żołnierz, to ktoś stąd.
+a2_mysl_konserwa_02  [MYŚL] Ich jest sześciu, ja jeden. Nie odbiję go.
+a2_mysl_konserwa_03  [MYŚL] Zostaje mi zdjęcie. Żeby kiedyś ktoś zapytał, kim był.
+a3_wejscie_01  [MYŚL] Ósma. Od frontu stoi auto i palą się światła. Wchodzę od tyłu.
+a3_wejscie_02  [MYŚL] Płot przy szopie jest niski. Nikt go nie pilnuje, bo oni nie spodziewają się świadków.
+a3_wejscie_03  [MYŚL] Kupiec z Bytomia został w mieście. Tutaj jestem tylko okiem aparatu.
+a3_mysl_kable_01  [MYŚL] Kartka przy szafie, podpisana Gruber. Linia, wzmacniacz, zasilanie. W tej kolejności.
+a3_mysl_kable_02  [MYŚL] Jeśli odepnę ich od linii, nie powiedzą wszystkiego, co chcieli.
+a3_mysl_kable_03  [MYŚL] Dziewięćdziesiąt sekund. Potem ktoś tu zajrzy.
+a3_kabel_zly_01  [MYŚL] Nie ten. Iskra.
+a3_sygnal_urwany_04  [MYŚL] Urwałem im głos. Ale kilka zdań i tak poszło w eter.
+a3_czas_minal_02  [MYŚL] Za późno. Komunikat poszedł w eter.
+a3_czas_minal_03  [MYŚL] Historii nie zatrzymam. Ale zdjęcia muszą dotrzeć do Katowic.
+a3_gruber_02  Cicho. Nie jestem z nimi. Wypuszczę was.
+a3_gruber_04  Wiem. Wyjdźcie tylnymi drzwiami, jak tylko odjadą. Mnie tu nie było.
+a4_mysl_honiok_01  [MYŚL] Przy wejściu leży człowiek przykryty płaszczem. Ten z zagajnika.
+a4_mysl_honiok_02  [MYŚL] Na kartce nazwisko. Honiok, Franz. I jedno słowo: Konserve.
+a4_mysl_honiok_03  [MYŚL] Dla nich był rekwizytem. Dla mnie jest Franciszkiem Honiokiem. Nikt nie powie, że go tu nie było.
+a4_ucieczka_01  [MYŚL] Na wschód, przez pola. W stodole czeka Sowa.
+a4_ucieczka_02  [MYŚL] Rowem, nie drogą. Na drodze widać każdego.
+a4_ucieczka_03  [MYŚL] Film jest w kieszeni. Tylko to się teraz liczy.
+a4_sowa_02  Po deszczu będą lepsze.
+a4_sowa_03  Jeden film. Mapa, lista, zagajnik, radiostacja. I człowiek, którego zostawili przy wejściu.
+a4_sowa_05  Jeśli cię zatrzymają, prześwietl go. Lepiej nic, niż żeby trafił do nich.
+
+======================================================================
+GŁOS: SD  (29 linii) — niemiecki mężczyzna, twardy, krótkie okrzyki
+======================================================================
+a2_zagajnik_01  Er ist bewusstlos. Wohin mit ihm?
+a2_zagajnik_05  Und wenn uns jemand sieht?
+a3_sd_udaja_01  Rence do góry. Tu polska powstańcy.
+a3_sd_udaja_02  Na ziemia, szybko. Niech żyje Polska.
+a3_sd_udaja_03  Lauter. Man soll uns bis zur Straße hören.
+a3_brak_sygnalu_01  Der Sender geht nicht. Wir finden den richtigen Schalter nicht.
+a3_brak_sygnalu_03  Im Keller eingesperrt. Wie befohlen.
+a3_brak_sygnalu_05  Gefunden. Es ist an.
+a3_kabel_zly_02  Was war das? Hinten hat es geknallt.
+a3_kabel_zly_03  Geh nachsehen. Sofort.
+a3_sygnal_urwany_02  Wer war das? Ist hier noch jemand?
+a4_alarm_01  Da ist einer! Am Zaun!
+a4_alarm_03  Licht! Macht das Licht an!
+bark_sd_podejrzenie_01  Hast du das gehört?
+bark_sd_podejrzenie_02  Da hinten hat sich etwas bewegt.
+bark_sd_podejrzenie_03  Wer ist da? Zeig dich.
+bark_sd_podejrzenie_04  Wahrscheinlich eine Katze. Ich sehe trotzdem nach.
+bark_sd_alarm_01  Da ist er! Hinterher!
+bark_sd_alarm_02  Ein Fremder auf dem Gelände!
+bark_sd_alarm_03  Er läuft zum Zaun!
+bark_sd_alarm_04  Nicht entkommen lassen!
+bark_sd_szukanie_01  Durchsucht die Schuppen.
+bark_sd_szukanie_02  Er kann nicht weit sein.
+bark_sd_szukanie_03  Leuchte unter die Bäume.
+bark_sd_szukanie_04  Jeden Winkel. Verstanden?
+bark_sd_zgubil_01  Weg. Einfach weg.
+bark_sd_zgubil_02  Verdammt, er ist uns entwischt.
+bark_sd_zgubil_03  Zurück zum Wagen. Der Chef wartet nicht.
+bark_sd_zgubil_04  Wenn er etwas gesehen hat, haben wir ein Problem.
+
+======================================================================
+GŁOS: NAUJOCKS  (15 linii) — mężczyzna ok. 30 lat, niemiecki, chłodny, rozkazujący, bez krzyku
+======================================================================
+a1_telefon_01  Naujocks.
+a1_telefon_02  Ja, ich höre.
+a1_telefon_03  Bitte wiederholen.
+a1_telefon_04  Großmutter gestorben. Verstanden.
+a1_telefon_05  Heute Abend, wie besprochen. Meine Leute sind bereit.
+a2_zagajnik_02  Unsere Konserve. Er kommt später zum Eingang.
+a2_zagajnik_03  Jetzt umziehen. Die Zivilsachen liegen im Wagen.
+a2_zagajnik_04  Ab jetzt seid ihr Polen. Wer Polnisch kann, ruft. Die anderen schweigen.
+a2_zagajnik_06  Dann hat er Polen gesehen. Um acht sind wir drin.
+a3_sd_udaja_04  Schneller. Wir haben nur ein paar Minuten.
+a3_sd_udaja_05  Zwei Mann in den Senderaum. Der Rest hält die Tür.
+a3_brak_sygnalu_02  Was heißt, er geht nicht? Wo ist der Techniker?
+a3_brak_sygnalu_04  Dann das Gewittermikrofon. Damit warnen sie vor Unwettern. Es geht direkt hinaus.
+a3_sygnal_urwany_03  Egal. Es hat gereicht. Alle raus.
+a4_alarm_02  Holt ihn. Lebend. Er hat eine Kamera.
+
+======================================================================
+GŁOS: LEKTOR  (15 linii) — lektor dokumentalny, głęboki, spokojny, poważny
+======================================================================
+porazka_zdemaskowany_01  Agent Kruk zdemaskowany. Prowokacja przeszła bez świadków.
+porazka_cywil_01  Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.
+porazka_czas_01  Świt. Film nie dotarł do Katowic. Świat usłyszał tylko wersję z Berlina.
+karta_1_01  Po podziale Górnego Śląska w tysiąc dziewięćset dwudziestym drugim roku Gliwice zostały w Niemczech, a Katowice znalazły się w Polsce. Na Ringu stał ratusz i fontanna z Neptunem. W mieście mieszkali obok siebie Niemcy, Ślązacy i Polacy.
+karta_2_01  Gotycki kościół Wszystkich Świętych to jeden z najstarszych budynków Gliwic. W mieście żyła polska mniejszość, która miała swoje organizacje, w tym Związek Polaków w Niemczech. Po wybuchu wojny wielu polskich działaczy ze Śląska aresztowano.
+karta_3_01  Tej samej nocy Niemcy zorganizowali kilka prowokacji wzdłuż granicy. Oprócz radiostacji w Gliwicach napadnięto na komorę celną w Stodołach, po niemiecku Hochlinden, i na leśniczówkę w Byczynie, po niemiecku Pitschen. Każda z nich miała wyglądać na polski atak.
+karta_4_01  Granica z Polską biegła zaledwie kilka kilometrów od Gliwic. Między Gliwicami a Katowicami jeździły pociągi, a wielu Ślązaków miało rodzinę i pracę po obu stronach granicy.
+karta_5_01  Na przełomie osiemnastego i dziewiętnastego wieku przekopano Kanał Kłodnicki, który połączył Gliwice z Odrą. Barkami płynęły węgiel i żelazo. Gliwice z królewską odlewnią żeliwa i kopalniami w okolicy były jednym z ośrodków górnośląskiego przemysłu.
+karta_6_01  Franciszek Honiok pochodził z Łubia, po niemiecku Hohenlieben, i walczył w powstaniu śląskim po stronie polskiej. Gestapo zatrzymało go trzydziestego sierpnia tysiąc dziewięćset trzydziestego dziewiątego roku, a w planie napastników nazywano go Konserve. Zabito go i zostawiono przy radiostacji jako fałszywy dowód polskiego ataku.
+epilog_1_01  Pierwszego września o czwartej czterdzieści pięć niemiecki okręt otworzył ogień do Westerplatte. Niemcy zaatakowały Polskę bez wypowiedzenia wojny.
+epilog_2_01  Tego samego dnia Hitler powiedział w Reichstagu: od piątej czterdzieści pięć odpowiadamy ogniem. Na usprawiedliwienie wojny pokazywano światu napady, które Niemcy sami zorganizowali.
+epilog_3_01  Franciszka Honioka nazywa się często pierwszą ofiarą drugiej wojny światowej. Zginął, zanim wojna się zaczęła.
+epilog_4_01  Jan Wrona, Kruk, to postać fikcyjna. Prawdę o prowokacji ujawnił sam Alfred Naujoks w zeznaniu złożonym w Norymberdze w tysiąc dziewięćset czterdziestym piątym roku.
+epilog_5_01  Drewniana wieża radiostacji stoi do dziś. Można ją zobaczyć w Muzeum Radiostacja Gliwice, przy ulicy Tarnogórskiej sto dwadzieścia dziewięć.
+epilog_6_01  Prowokacja trwała kilka minut. Wojna trwała sześć lat.
+
+======================================================================
+GŁOS: PRZECHODZIEN  (12 linii) — dowolny
+======================================================================
+a1_hotel_goscie_01  Bei dieser Hitze sollte man gar nicht arbeiten.
+a1_hotel_goscie_02  Herr Ober, noch ein Bier, bitte. Aber kalt.
+a1_hotel_goscie_03  Man sagt, die Grenze wird bald ganz geschlossen.
+a1_hotel_goscie_04  Meine Frau will morgen nach Breslau, solange die Züge noch fahren.
+bark_przechodnie_01  Was für eine Hitze. Seit Tagen kein Tropfen Regen.
+bark_przechodnie_02  Ale gorko. Bez dyszczu ziymniaki ani niy urosnom.
+bark_przechodnie_03  Mein Schwager hat gestern seinen Gestellungsbefehl bekommen.
+bark_przechodnie_04  Żniwa jeszcze niy zebrane, a już godajom o wojnie.
+bark_przechodnie_05  Seit Montag gibt es Butter nur noch auf Karte.
+bark_przechodnie_06  Ludzie wykupujom cuker i mąka, jakby jutro miało niy być.
+bark_przechodnie_07  Im Radio sagen sie, an der Grenze wird geschossen.
+bark_przechodnie_08  Wojna, niy wojna, a na gruba i tak trza iść.
+
+======================================================================
+GŁOS: ZOFIA  (8 linii) — kobieta ok. 50 lat, ciepła, ale ostrożna, mówi półgłosem
+======================================================================
+a1_zofia_02  Nur die von neunzehnhundertzwanzig. Die ältere ist längst vergriffen.
+a1_zofia_03  Dobrze, że pan jest. Mówmy cicho, tutaj ściany mają uszy.
+a1_zofia_04  Od kilku dni w Haus Oberschlesien na Wilhelmstraße mieszkają inżynierowie z Berlina.
+a1_zofia_05  Nie wyglądają na inżynierów. Ich szef nazywa się Naujocks.
+a1_zofia_07  Na piętrze. A w holu stoi telefon. Berlin dzwoni na niego bez przerwy.
+a1_zofia_08  Niech pan to weźmie. Leica, film założony.
+a1_zofia_09  Słowu nikt nie uwierzy. Zdjęciu tak.
+a1_zofia_11  Aparat jest najmniej ważny. Niech pan wróci z filmem.
+
+======================================================================
+GŁOS: FOTOGRAF  (6 linii) — mężczyzna ok. 40 lat, szept
+======================================================================
+pob_fotograf_przed_01  Niech pan mówi ciszej. Na zapleczu siedzi jeden z Gestapo.
+pob_fotograf_przed_02  Pilnuje mnie od rana. Myśli, że robię odbitki dla Polaków.
+pob_fotograf_przed_03  I ma rację. Niech pan uważa, idzie tutaj.
+pob_fotograf_po_01  Poszedł. Myślałem, że już po nas.
+pob_fotograf_po_02  Wywołam to w ciemni. Po dwie odbitki z każdej klatki.
+pob_fotograf_po_04  Schowam ją za ramą portretu ślubnego. Tam nikt nie zagląda.
+
+======================================================================
+GŁOS: HEINZ  (6 linii) — niemiecki mężczyzna, nerwowy; po polsku z wyraźnym niemieckim akcentem
+======================================================================
+a3_komunikat_01  Uwaga! Tu Gliwice. Rozgłośnia znajduje się w rękach polskich.
+a3_komunikat_02  Wzywamy wszystkich Polaków na Śląsku.
+a3_komunikat_03  Godzina wolności wybiła.
+a3_komunikat_04  Reicht das? Hört uns da draußen überhaupt jemand?
+a3_sygnal_urwany_01  Die Leitung ist tot. Ich bin nicht mehr drauf.
+a3_czas_minal_01  Fertig. Es ist draußen.
+
+======================================================================
+GŁOS: KOLEJARZ  (4 linii) — starszy Ślązak, gwara, rubaszny
+======================================================================
+pob_kolejarz_01  Panoczku, niy stójcie tak na widoku. Podejdźcie bliżej.
+pob_kolejarz_02  Kożdo noc jadom tu cugi z wojskiym na wschód. Armaty pod plandekami.
+pob_kolejarz_03  Mom rozpiska, kiedy kery jedzie. Weź pan, ino cicho, bo mie zawrom.
+pob_kolejarz_05  Niy dziynkujcie. Jo tu mom dzieci. Idźcie z Bogiym.
+
+======================================================================
+GŁOS: GESTAPO  (4 linii) — jak sd, inny głos
+======================================================================
+pob_fotograf_gestapo_01  Moment mal. Sie da. Ihre Papiere.
+pob_fotograf_gestapo_03  Und was sucht ein Kaufmann aus Beuthen beim Fotografen in Gleiwitz?
+pob_fotograf_gestapo_05  Sie sprechen wie ein Pole.
+pob_fotograf_gestapo_07  Na gut. Gehen Sie. Und halten Sie sich von Ärger fern.
+
+======================================================================
+GŁOS: SPIKER  (4 linii) — niemiecki spiker radiowy z lat 30., oficjalny, podniosły
+======================================================================
+a4_radio_spiker_01  Hier ist der Reichssender Breslau.
+a4_radio_spiker_02  Gestern gegen zwanzig Uhr haben polnische Aufständische den Sender Gleiwitz überfallen.
+a4_radio_spiker_03  Die Polizei hat die Angreifer zurückgeschlagen. Ein Aufständischer wurde getötet.
+a4_radio_spiker_04  Weitere Meldungen folgen.
+
+======================================================================
+GŁOS: SCHUPO  (4 linii) — niemiecki policjant, urzędowy
+======================================================================
+bark_schupo_01  Halt! Stehenbleiben! Polizei!
+bark_schupo_02  Sie da! Hände aus den Taschen!
+bark_schupo_03  Hierher, meine Herren! Hier läuft einer weg!
+bark_schupo_04  Holt die Herren vom Sender. Schnell!
+
+======================================================================
+GŁOS: RECEPCJONISTA  (3 linii) — niemiecki, uprzejmy, starszy pan
+======================================================================
+a1_recepcja_01  Guten Tag. Wünschen der Herr ein Zimmer?
+a1_recepcja_03  Dann darf ich an die Bar bitten. Gleich links, mein Herr.
+a1_recepcja_04  Verzeihen Sie die Unruhe heute. Wir haben Herren aus Berlin im Haus.
+
+======================================================================
+GŁOS: GRUBER  (3 linii) — starszy Ślązak, przestraszony, gwara
+======================================================================
+a3_gruber_01  Wer ist da? Nicht schießen. Hier unten sind nur Arbeiter.
+a3_gruber_03  Godosz po naszymu. Panie, to niy som żodne Polacy. To som Niymcy z Berlina.
+a3_gruber_05  Jo nic niy widzioł. Ale zapamiyntom.
+
+======================================================================
+GŁOS: PRACOWNIK  (3 linii) — pracownik radiostacji, niemiecki, przestraszony
+======================================================================
+bark_pracownik_01  Gruber, co sie tam dzieje na górze?
+bark_pracownik_02  Ich habe Frau und Kinder zu Hause. Bitte.
+bark_pracownik_03  Niy wyłaź jeszcze. Oni majom broń.
+
+======================================================================
+GŁOS: SOWA  (3 linii) — mężczyzna, krótko, pośpiesznie
+======================================================================
+a4_sowa_01  Późno dzisiaj na grzyby.
+a4_sowa_04  Schowom go w ramie kola. Do Katowic przed północą.
+a4_sowa_06  Niy zatrzymajom. A ty idź inszom drogom. Rano bydzie wojna.
