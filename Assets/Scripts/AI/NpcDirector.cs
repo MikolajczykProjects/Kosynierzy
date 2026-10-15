@@ -189,6 +189,9 @@ namespace Kosynierzy
             }
             if (staff.Count == 0) missing.Add("radio_piwnica_pracownik_*");
 
+            var pop = gameObject.GetComponent<CityPopulation>(); if (pop == null) pop = gameObject.AddComponent<CityPopulation>();
+            pop.Populate(crowd, city, CivilianPrefabs);
+
             string gaps = missing.Count > 0 ? $" Brak punktów: {string.Join(", ", missing)}." : "";
             Debug.Log($"Kosynierzy: NpcDirector — SD {soldiers}, Schupo {police}, cywile {civilians}, pracownicy {workers}.{gaps}");
         }

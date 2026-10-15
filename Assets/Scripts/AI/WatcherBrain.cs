@@ -44,6 +44,7 @@ namespace Kosynierzy
         [SerializeField] float decayPerSecond = 0.15f;
 
         float perceptionTimer;
+        static float nextDiagLog;
 
         /// <summary>The "?" meter, 0..1 (1 = alarm / report).</summary>
         public float Suspicion { get; protected set; }
@@ -128,6 +129,11 @@ namespace Kosynierzy
             Vector3 target = PlayerTarget.Eye;
             Vector3 toTarget = target - eye;
             PlayerDistance = toTarget.magnitude;
+            if (PlayerDistance < 25f && Time.unscaledTime > nextDiagLog && Application.isEditor)
+            {
+                nextDiagLog = Time.unscaledTime + 1f;
+                Debug.Log($"[Detect] {name} dist={PlayerDistance:0.0} range={range:0} cone={InCone(toTarget, alerted ? 240f : viewAngle)} clear={IsClear(eye, target)} hiding={Detection.InHidingSpot} susp={Suspicion:0.00} fill={FillRate():0.00}/s vis01={Detection.Visibility01:0.00}");
+            }
             bool visible = PlayerDistance <= range && InCone(toTarget, alerted ? 240f : viewAngle) && IsClear(eye, target);
             if (visible && Detection.InHidingSpot && !(alerted && PlayerDistance < hidingSpotRevealDistance)) visible = false;
             PlayerVisible = visible;

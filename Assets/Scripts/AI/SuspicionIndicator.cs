@@ -16,8 +16,8 @@ namespace Kosynierzy
         static readonly Color PoliceAlarm = new(0.25f, 0.5f, 1f, 1f);
 
         [Tooltip("Height of the glyph above the feet.")]
-        [SerializeField] float heightAboveFeet = 2.2f;
-        [SerializeField] float maxDistance = 30f;
+        [SerializeField] float heightAboveFeet = 2.35f;
+        [SerializeField] float maxDistance = 60f;
 
         static GUIStyle style;
         WatcherBrain brain;
@@ -57,7 +57,7 @@ namespace Kosynierzy
 
             float scale = Mathf.Lerp(1f, 0.55f, screen.z / maxDistance) * (Screen.height / 1080f);
             float x = screen.x, y = Screen.height - screen.y;
-            style.fontSize = Mathf.Max(10, Mathf.RoundToInt((alarm ? 46f : 38f) * scale));
+            style.fontSize = Mathf.Max(10, Mathf.RoundToInt((alarm ? 64f : 54f) * scale));
             var rect = new Rect(x - 40f * scale, y - 52f * scale, 80f * scale, 52f * scale);
             string glyph = alarm ? "!" : "?";
 
