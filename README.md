@@ -4,9 +4,13 @@
 
 Zespół **Kosynierzy** · Hackaton 2026 · Unity 6.6 (URP)
 
-[![Trailer](docs/design/ui_v2/png/A_hud_calm.png)](docs/trailer/Sender-Gleiwitz-trailer.mp4)
+<p align="center">
+  <a href="docs/trailer/Sender-Gleiwitz-trailer.mp4">
+    <img src="docs/trailer/teaser.gif" alt="Sender Gleiwitz — trailer" width="100%">
+  </a>
+</p>
 
-▶ **Trailer:** [`docs/trailer/Sender-Gleiwitz-trailer.mp4`](docs/trailer/Sender-Gleiwitz-trailer.mp4) (80 s, 1080p)
+<p align="center">▶ <b><a href="docs/trailer/Sender-Gleiwitz-trailer.mp4">Obejrzyj cały trailer</a></b> (80 s, 720p, 9 MB, z dźwiękiem)</p>
 
 ---
 
