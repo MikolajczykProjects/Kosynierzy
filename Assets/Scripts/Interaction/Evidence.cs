@@ -29,11 +29,25 @@ namespace Kosynierzy
             countsAsEvidence = counts;
         }
 
-        /// <summary>World point the camera checks (centre of renderers, else the transform).</summary>
+        Transform focusPoint;
+
+        /// <summary>
+        /// World point the camera checks: a child named "CelZdjecia" (team D's props — map table, list, note, microphone)
+        /// when there is one, else the centre of the first solid collider (a car's body, not its door mesh), else the centre
+        /// of the first renderer, else the transform.
+        /// </summary>
         public Vector3 FocusPoint
         {
             get
             {
+                if (focusPoint == null)
+                {
+                    foreach (var t in GetComponentsInChildren<Transform>(true))
+                        if (t.name == "CelZdjecia") { focusPoint = t; break; }
+                }
+                if (focusPoint != null) return focusPoint.position;
+                foreach (var c in GetComponentsInChildren<Collider>())
+                    if (c.enabled && !c.isTrigger) return c.bounds.center;
                 var r = GetComponentInChildren<Renderer>();
                 return r != null ? r.bounds.center : transform.position;
             }

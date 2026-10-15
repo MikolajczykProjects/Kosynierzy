@@ -49,8 +49,8 @@ namespace Kosynierzy
         void OnUse(Interactable _)
         {
             if (locked) return;
-            var anim = GetComponentInChildren<Animator>();
-            if (anim != null) foreach (var p in anim.parameters) if (p.name == "Otworz") anim.SetTrigger("Otworz");
+            // OB_Drzwi (AC_Drzwi): trigger "Otworz" swings the door open and closes it again after 1 s. Guarded write.
+            AnimParams.SetTrigger(GetComponentInChildren<Animator>(), "Otworz");
             SfxBank.Play(SfxBank.Sfx.Pickup);
 
             Vector3 pos;

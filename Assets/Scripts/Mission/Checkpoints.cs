@@ -24,6 +24,11 @@ namespace Kosynierzy
         static readonly List<string> savedPhotos = new();
         static readonly List<int> savedCards = new();
 
+        // Enter Play Mode Options are set to "no domain reload" in this project: statics survive a stop/play, so a
+        // checkpoint from the previous play session would otherwise offer "Spróbuj od punktu kontrolnego" in a new game.
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics() => NewGame();
+
         public static void Save(int step)
         {
             SavedStep = step;

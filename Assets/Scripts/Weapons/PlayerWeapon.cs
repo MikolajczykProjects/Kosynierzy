@@ -54,6 +54,10 @@ namespace Kosynierzy
         [SerializeField] float aimSensitivityMultiplier = 0.65f;
         [SerializeField] float aimSpeed = 9f;
 
+        // Muzzle flash size multiplier by view: hip / fully aimed (see Fire).
+        const float HipFlashScale = 0.8f;
+        const float AdsFlashScale = 0.4f;
+
         [Header("Viewmodel")]
         [Tooltip("Weapon model root; kicked, swayed and posed procedurally. Optional.")]
         [SerializeField] Transform viewModel;
@@ -71,6 +75,10 @@ namespace Kosynierzy
         Camera cam;
         FirstPersonController player;
         Light flashLight;
+        // Real team-D viewmodel glue (Animator triggers, ejection port, ADS hammer); null on placeholder models.
+        ViewmodelRig rig;
+        /// <summary>Real Vis: the last shot's slide animation (0.16 s) finishes before the reload animation starts.</summary>
+        const float LastShotReloadAnimDelay = 0.17f;
 
         float nextFireTime, bloom, aimBlend;
         float reloadStart, reloadDuration;
@@ -236,11 +244,30 @@ namespace Kosynierzy
 
             flashLight.enabled = true;
             flashUntil = Time.time + 0.045f;
-            VfxLibrary.PlayMuzzleFlash(muzzlePos, origin.rotation, muzzleScale);
-            VfxLibrary.PlayShellEject(muzzlePos, origin.rotation, player != null ? player.Velocity : Vector3.zero);
+            // The muzzle is only 0.3–0.75 m from the eye: at the authored size a pistol flash covers ~60 % of the screen
+            // height at ADS (measured analytically, docs/WS4_gameplay_report.md), so the flash shrinks while aiming.
+            float viewScale = Mathf.Lerp(HipFlashScale, AdsFlashScale, aimBlend);
+            VfxLibrary.PlayMuzzleFlash(muzzlePos, origin.rotation, muzzleScale * viewScale);
+            // Revolvers keep their casings in the drum; rifles (muzzleScale >= 1.3) throw the long casing.
+            if (Definition == null || Definition.EjectsCasings)
+                VfxLibrary.PlayShellEject(EjectionOrigin(muzzlePos, origin.rotation), origin.rotation, player != null ? player.Velocity : Vector3.zero, muzzleScale);
+
+            // Real model: hammer + slide clip (Animator trigger "Strzal"). Our flash/casings above stay the single source.
+            if (rig != null) rig.OnShot();
 
             Fired?.Invoke();
-            if (AmmoInMagazine == 0) TryReload();
+            if (AmmoInMagazine == 0) StartReload(LastShotReloadAnimDelay);
+        }
+
+        /// <summary>
+        /// ShellCasings puts a casing 0.11 m behind, 2 cm right and 1.5 cm above the point it is given (in the rotation's axes).
+        /// With a real model that has an ejection port (child "Wyrzut") the point is shifted so the casing leaves the port;
+        /// otherwise it is the muzzle, as before.
+        /// </summary>
+        Vector3 EjectionOrigin(Vector3 muzzlePos, Quaternion rot)
+        {
+            if (rig == null || rig.Ejector == null) return muzzlePos;
+            return rig.Ejector.position + rot * new Vector3(-0.02f, -0.015f, 0.11f);
         }
 
         Vector3 MuzzlePosition()
@@ -250,13 +277,17 @@ namespace Kosynierzy
             return cam != null ? cam.transform.position + cam.transform.forward * 0.5f : transform.position;
         }
 
-        public void TryReload()
+        public void TryReload() => StartReload(0f);
+
+        /// <param name="animDelay">Seconds before the reload CLIP starts on a real model (the logical reload timer starts now).</param>
+        void StartReload(float animDelay)
         {
             if (IsReloading || reserveAmmo <= 0 || AmmoInMagazine >= magazineSize) return;
             IsReloading = true;
             reloadWasEmpty = AmmoInMagazine == 0;
             reloadDuration = reloadWasEmpty ? emptyReloadTime : reloadTime;
             reloadStart = Time.time;
+            if (rig != null) rig.OnReloadStart(animDelay); // Animator trigger "Przeladuj" (Vis clip 1.8 s)
             ReloadStarted?.Invoke();
         }
 
@@ -288,6 +319,7 @@ namespace Kosynierzy
             hipSpread = def.HipSpread; aimSpread = def.AimSpread; recoilUp = def.RecoilUp; recoilSide = def.RecoilSide;
             reloadTime = def.ReloadTime; emptyReloadTime = def.EmptyReloadTime; shotNoiseRadius = def.NoiseRadius;
             magazineSize = def.Magazine; muzzleScale = def.MuzzleScale;
+            ProceduralSfx.ShotProfile = def.Id; // placeholder gunshot that sounds like this weapon (SfxBank clips override it)
             if (ammoById.TryGetValue(def.Id, out var a)) { AmmoInMagazine = a.mag; reserveAmmo = a.reserve; }
             else { AmmoInMagazine = def.Magazine; reserveAmmo = def.StartReserve; }
             IsReloading = false;
@@ -304,6 +336,7 @@ namespace Kosynierzy
         {
             viewModel = model;
             muzzle = muzzlePoint;
+            rig = model != null ? model.GetComponent<ViewmodelRig>() : null;
             aimPosition = aimPos;
             restPos = hipPosition;
             restRot = Quaternion.identity;
@@ -326,6 +359,7 @@ namespace Kosynierzy
         void AnimateViewModel(float dt, bool sprinting)
         {
             if (viewModel == null) return;
+            if (rig != null) rig.SetAim(aimBlend); // real model: flattens the cocked hammer while the sights are in use
 
             // Springs for kick (position and rotation).
             kickPosVel += (-kickPos * 260f - kickPosVel * 22f) * dt;

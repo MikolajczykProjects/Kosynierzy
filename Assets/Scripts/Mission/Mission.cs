@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -83,6 +84,7 @@ namespace Kosynierzy
             }
             else
             {
+                Checkpoints.NewGame(); // a fresh run never inherits the previous run's checkpoint (statics survive Play Mode)
                 GameProgress.NewGame();
                 WeaponCatalog.NewGame();
                 Inventory.NewGame(false);
@@ -142,7 +144,9 @@ namespace Kosynierzy
             // AKT 2 (16:00–19:45) Przez miasto
             AddAct("Akt 2 — Przez miasto", "miasto_drzwi_hotel", 16f);
             steps.Add(new DialogStep("a2_start", "Śledź auto SD"));
-            steps.Add(new FollowCarStep("OB_Auto_SD", "miasto_auto_sd_trasa", "Śledź auto SD — nie bliżej niż 8 m, nie dalej niż 40 m"));
+            // After the route the car parks at the grove point, where the photo step finds (and shoots) the same car.
+            steps.Add(new FollowCarStep("OB_Auto_SD", "miasto_auto_sd_trasa", "Śledź auto SD — nie bliżej niż 8 m, nie dalej niż 40 m")
+                { ParkPoint = "miasto_zagajnik_auto" });
             steps.Add(new ActionStep(() => SetHour(19f)));
             steps.Add(new DialogStep("a2_zmrok", "Zapada zmrok"));
             steps.Add(new CrouchListenStep("miasto_zagajnik_krzaki", "Ukryj się w krzakach w zagajniku (C)", 3f, 2f, "a2_zagajnik"));
@@ -154,8 +158,9 @@ namespace Kosynierzy
             // Two approaches: quietly through the fence hole (doors network) or through the guarded gate.
             steps.Add(new ReachAnyStep("Wejdź na teren radiostacji — po cichu dziurą w płocie albo bramą", 4f,
                 "spawn_radio_tyl", "spawn_radio_brama") { MarkerPoint = "miasto_dziura_plot" });
-            steps.Add(new ActionStep(() => { SetHour(20f); SpawnWorkersDoor(); SetRadioGuards(true); SpawnArmoury(); }));
-            steps.Add(new DialogStep("a3_komunikat", "SD nadaje przez mikrofon burzowy!"));
+            steps.Add(new ActionStep(() => { SetHour(20f); SpawnWorkersDoor(); SetRadioGuards(true); SpawnArmoury(); SpawnMicrophone(); }));
+            // The storm microphone's red lamp blinks (Animator bool Nadaje) from the announcement until the right cable is cut.
+            steps.Add(new DialogStep("a3_komunikat", "SD nadaje przez mikrofon burzowy!", () => SetMicrophone(true)));
             steps.Add(new CableStep("radio_technika_kable", "radio_kartka_grubera", "a3_sygnal_urwany",
                 "Przetnij właściwą linię wzmacniacza (kartka Grubera)"));
 
@@ -248,10 +253,10 @@ namespace Kosynierzy
                 it.SetSingleUse(true);
                 it.Interacted += _ =>
                 {
-                    var w = FindAnyObjectByType<PlayerWeapon>();
-                    if (w != null) w.AddReserveAmmo(8);
-                    cacheLooted = true;
-                    if (Dialog.Exists("pob_skrytka")) Dialog.Play("pob_skrytka", null, false);
+                    // Real OB_Skrytka (AC_Skrytka): the lid opens (trigger Otworz) and the ammo is taken 0.6 s later,
+                    // together with the box inside ("Wnetrze"). A placeholder has no lid: loot at once.
+                    if (AnimParams.SetTrigger(go, "Otworz")) StartCoroutine(LootCacheAfter(go, 0.6f));
+                    else LootCache(go);
                 };
             }
 
@@ -259,12 +264,50 @@ namespace Kosynierzy
             if (Points.Has("miasto_kolejarz"))
             {
                 var go = Spawner.Spawn("CH_Kolejarz", "miasto_kolejarz");
+                MissionStep.MakeInnocent(go);
                 var it = go.GetComponent<Interactable>();
                 if (it == null) it = go.AddComponent<Interactable>();
                 it.SetPrompt("Porozmawiaj");
                 it.SetSingleUse(true);
                 it.Interacted += _ => { railwaymanTalked = true; Dialog.Play("pob_kolejarz"); };
             }
+        }
+
+        IEnumerator LootCacheAfter(GameObject cache, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            LootCache(cache);
+        }
+
+        /// <summary>+8 rounds; the box inside the cache ("Wnetrze" → OB_Amunicja) disappears with them.</summary>
+        void LootCache(GameObject cache)
+        {
+            var w = FindAnyObjectByType<PlayerWeapon>();
+            if (w != null) w.AddReserveAmmo(8);
+            cacheLooted = true;
+            if (cache != null)
+            {
+                var inside = cache.transform.Find("Wnetrze");
+                if (inside != null) inside.gameObject.SetActive(false);
+            }
+            if (Dialog.Exists("pob_skrytka")) Dialog.Play("pob_skrytka", null, false);
+        }
+
+        // ---- storm microphone (act 3) ----
+
+        /// <summary>OB_Mikrofon_Burzowy stands at radio_sterownia_mikrofon; its lamp is off until the announcement.</summary>
+        void SpawnMicrophone()
+        {
+            if (!Points.Has("radio_sterownia_mikrofon") || Spawner.Find("OB_Mikrofon_Burzowy") != null) return;
+            var mic = Spawner.Spawn("OB_Mikrofon_Burzowy", "radio_sterownia_mikrofon");
+            AnimParams.SetBool(mic, "Nadaje", false);
+        }
+
+        /// <summary>Animator bool Nadaje (blinking red lamp) on the storm microphone, when it is in the world.</summary>
+        public static void SetMicrophone(bool broadcasting)
+        {
+            var mic = Spawner.Find("OB_Mikrofon_Burzowy");
+            if (mic != null) AnimParams.SetBool(mic, "Nadaje", broadcasting);
         }
 
         void SpawnWorkersDoor()
@@ -278,6 +321,7 @@ namespace Kosynierzy
             it.SetSingleUse(true);
             it.Interacted += _ =>
             {
+                AnimParams.SetBool(go, "Otwarte", true); // the cellar door stays open (real OB_Drzwi only)
                 workersFreed = true;
                 if (NpcDirector.Instance != null) NpcDirector.Instance.FreeWorkers();
                 Dialog.Play("a3_gruber");
@@ -312,7 +356,11 @@ namespace Kosynierzy
         {
             if (Finished || MissionFail.IsFailed || GameState.IsPaused) return;
 
-            if (skipAction.WasPressedThisFrame() && Current != null && !Dialog.IsPlaying) CompleteCurrent();
+            if (skipAction.WasPressedThisFrame() && Current != null && !Dialog.IsPlaying)
+            {
+                Current.Skip(); // e.g. the talk step still hands out the camera
+                CompleteCurrent();
+            }
             if (saveAction.WasPressedThisFrame()) { Checkpoints.Save(CurrentIndex); Popup("Zapisano (F8)"); }
             if (loadAction.WasPressedThisFrame() && Checkpoints.SavedStep >= 0) { Checkpoints.Reload(); return; }
 
@@ -348,8 +396,16 @@ namespace Kosynierzy
                 CurrentActName = act.Name;
                 SetHour(act.Hour);
                 bool atSavedSpot = fromLoad && Checkpoints.HasPosition && index == Checkpoints.SavedStep && index != act.Step;
-                if (atSavedSpot) FindAnyObjectByType<FirstPersonController>()?.Teleport(Checkpoints.SavedPosition, Checkpoints.SavedYaw);
+                if (atSavedSpot)
+                {
+                    var player = FindAnyObjectByType<FirstPersonController>();
+                    if (player != null) player.Teleport(Checkpoints.SavedPosition, Checkpoints.SavedYaw);
+                }
                 else if (fromLoad || index == 0) TeleportTo(act.Spawn, instant: true);
+                // Normal progress keeps the player where he stands — except when the last act ended in another space
+                // (act 1 ends inside the hotel at x ≈ 1000, act 2 starts in the street; without this the car-tailing step
+                // fails 5 s after it starts because the player is ~990 m away).
+                else if (index == act.Step && IsFarFrom(act.Spawn, FarFromActSpawn)) TeleportTo(act.Spawn);
                 // Resuming mid-act: replay the act's set-up actions (time of day, spawns, alarm) skipped so far.
                 if (fromLoad)
                     for (int i = act.Step; i < index; i++)
@@ -371,6 +427,16 @@ namespace Kosynierzy
         {
             GameClock.Set(hour);
             AtmosphereController.SetTimeGlobal(hour);
+        }
+
+        // Farther than this from an act's spawn point = a different space (interiors lie at x >= 1000, the city within ~200 m).
+        const float FarFromActSpawn = 300f;
+
+        static bool IsFarFrom(string point, float distance)
+        {
+            if (!Points.Has(point)) return false;
+            var p = FindAnyObjectByType<FirstPersonController>();
+            return p != null && Vector3.Distance(p.transform.position, Points.Position(point)) > distance;
         }
 
         static void TeleportTo(string point, bool instant = false)

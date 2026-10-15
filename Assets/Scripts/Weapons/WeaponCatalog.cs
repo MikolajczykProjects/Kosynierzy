@@ -17,6 +17,8 @@ namespace Kosynierzy
         public int Magazine = 8, StartReserve = 0;
         public bool Automatic;
         public float MuzzleScale = 1f;
+        /// <summary>False for revolvers: the empty casings stay in the drum.</summary>
+        public bool EjectsCasings = true;
         // Melee.
         public float MeleeRange = 1.8f, TakedownTime = 0.25f;
         /// <summary>0..1 bars for the loadout card (CS2-style).</summary>
@@ -34,7 +36,8 @@ namespace Kosynierzy
         {
             new WeaponDef { Id = "vis", Name = "Vis wz. 35", Caliber = "9 mm Parabellum", Prefab = "OB_Pistolet_Vis", Slot = WeaponSlot.Pistol,
                 Description = "Polski pistolet służbowy. Celny i niezawodny, ale słychać go z daleka.",
-                Damage = 34f, FireRate = 400f, Magazine = 8, HipSpread = 1.2f, AimSpread = 0.12f, RecoilUp = 1.6f, NoiseRadius = 30f, ReloadTime = 1.5f,
+                Damage = 34f, FireRate = 400f, Magazine = 8, HipSpread = 1.2f, AimSpread = 0.12f, RecoilUp = 1.6f, NoiseRadius = 30f,
+                ReloadTime = 1.8f, EmptyReloadTime = 2f, // = the AC_Vis "Przeladowanie" clip (1.8 s); empty = last-shot slide clip (0.17 s) + 1.8 s
                 StatDamage = 0.7f, StatAccuracy = 0.85f, StatSilence = 0.3f, StatHandling = 0.7f },
             new WeaponDef { Id = "browning", Name = "Browning wz. 1922", Caliber = "7,65 mm", Prefab = "OB_Pistolet_Browning", Slot = WeaponSlot.Pistol,
                 Description = "Mały pistolet kieszonkowy. Słabszy, ale cichszy i szybki w ręku.",
@@ -42,7 +45,7 @@ namespace Kosynierzy
                 StatDamage = 0.5f, StatAccuracy = 0.65f, StatSilence = 0.55f, StatHandling = 0.9f },
             new WeaponDef { Id = "nagant", Name = "Nagant wz. 1930", Caliber = "7,62 mm", Prefab = "OB_Rewolwer_Nagant", Slot = WeaponSlot.Pistol,
                 Description = "Rewolwer z gazoszczelnym bębnem — najcichszy strzał. Długie ładowanie nabój po naboju.",
-                Damage = 40f, FireRate = 260f, Magazine = 7, HipSpread = 1.6f, AimSpread = 0.18f, RecoilUp = 2.2f, NoiseRadius = 12f, ReloadTime = 3.2f, EmptyReloadTime = 3.6f, MuzzleScale = 0.6f,
+                Damage = 40f, FireRate = 260f, Magazine = 7, HipSpread = 1.6f, AimSpread = 0.18f, RecoilUp = 2.2f, NoiseRadius = 12f, ReloadTime = 3.2f, EmptyReloadTime = 3.6f, MuzzleScale = 0.6f, EjectsCasings = false,
                 StatDamage = 0.8f, StatAccuracy = 0.7f, StatSilence = 0.9f, StatHandling = 0.4f },
         };
 

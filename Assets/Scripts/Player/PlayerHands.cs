@@ -31,13 +31,44 @@ namespace Kosynierzy
         PhotoCamera photo;
         Transform firearmHolder, cameraHolder, meleeHolder;
         Transform cameraModel;
+        Renderer[] cameraRenderers;
+        bool cameraHidden;
         InputAction slot1, slot2, slot3, slot4, cycle, stabAction;
         float holderLower; // 0 = in hands, 1 = lowered out of view
         bool stabbing;
         Material steel, wood, skin, sleeve, black, chrome, leather, brass;
 
-        struct FirearmModel { public Transform Root, Muzzle; public Vector3 Hip, Aim; }
+        // Real (team D) viewmodels also carry the measured sight points (prefab root space) for the ADS self-check.
+        struct FirearmModel
+        {
+            public Transform Root, Muzzle, Grip;
+            public Vector3 Hip, Aim;
+            public Vector3 SightFront, SightRear;
+            public float RearmostZ;
+            public bool HasSights;
+        }
         readonly Dictionary<string, FirearmModel> firearms = new();
+        readonly HashSet<string> aimChecked = new();
+        Camera viewCam;
+        ViewmodelRig cameraRig;
+
+        // ---- real-prefab viewmodel constants (team D's OB_Pistolet_Vis / OB_Aparat; numbers from docs/PLAN_PACZKA_OBIEKTY.md §4 and the FBX data)
+        const string RealCameraPrefab = "OB_Aparat";
+        /// <summary>Where the pistol grip (child Uchwyt) sits at the hip, in camera space (where the placeholder grip was).</summary>
+        static readonly Vector3 RealHipGrip = new Vector3(0.15f, -0.16f, 0.30f);
+        /// <summary>Eye to rear sight at full ADS (the placeholder pistols use ≈ 0.13 m).</summary>
+        const float EyeToRearSight = 0.13f;
+        /// <summary>Metres the eye sits ABOVE the sight tops in ADS. 0 = sight line exactly on the camera axis (the spec).
+        /// Vis caveat: its rear sight is a solid block as tall as the front post, so with 0 the post hides behind the block;
+        /// 0.0015–0.002 makes the post tip show above the block (but breaks the 0.005 viewport check).</summary>
+        const float AimEyeLift = 0f;
+        /// <summary>Grip lean of a real pistol (top forward), degrees about X — the hand boxes follow it.</summary>
+        const float RealGripLean = 16f;
+        /// <summary>Sight z (front post centre, rear block centre) in prefab root space, measured from the FBX vertices
+        /// (Assets/_Obiekty/Modele/OB_Pistolet_Vis.fbx, 15.10.2026). Sight TOP height is measured from the mesh at runtime.</summary>
+        static readonly Dictionary<string, Vector2> SightZ = new() { ["OB_Pistolet_Vis"] = new Vector2(0.160f, -0.030f) };
+        /// <summary>Parts that stick up near the sights but are not sights (hammer, trigger, magazine) and our own hands.</summary>
+        static bool IsNotSightRenderer(string n) => n == "Kurek" || n == "Spust" || n == "Magazynek" || n.StartsWith("Hand") || n.StartsWith("Sleeve");
         readonly Dictionary<string, Transform> blades = new();
         Transform activeBlade;
         WeaponDef activeFirearm;
@@ -51,6 +82,8 @@ namespace Kosynierzy
             player = GetComponentInParent<FirstPersonController>();
             weapon = GetComponentInChildren<PlayerWeapon>();
             photo = GetComponent<PhotoCamera>();
+            viewCam = GetComponent<Camera>();
+            if (viewCam == null) viewCam = GetComponentInParent<Camera>();
 
             steel = Mat(new Color(0.16f, 0.16f, 0.17f), 0.55f);
             wood = Mat(new Color(0.36f, 0.22f, 0.12f), 0.25f);
@@ -84,6 +117,12 @@ namespace Kosynierzy
             foreach (var a in Actions) a.Enable();
             Inventory.ItemReceived += OnItemReceived;
             WeaponCatalog.Changed += RefreshLoadout;
+            if (photo == null) photo = GetComponent<PhotoCamera>();
+            if (photo != null)
+            {
+                photo.PhotoTaken -= OnPhotoTaken; // never twice
+                photo.PhotoTaken += OnPhotoTaken;
+            }
         }
 
         void OnDisable()
@@ -91,12 +130,20 @@ namespace Kosynierzy
             foreach (var a in Actions) a.Disable();
             Inventory.ItemReceived -= OnItemReceived;
             WeaponCatalog.Changed -= RefreshLoadout;
+            if (photo != null) photo.PhotoTaken -= OnPhotoTaken;
         }
 
         void OnDestroy()
         {
+            if (photo != null) photo.PhotoTaken -= OnPhotoTaken;
             foreach (var a in Actions) a.Dispose();
             if (Instance == this) Instance = null;
+        }
+
+        /// <summary>Photo printed (PhotoCamera fires it one frame after the capture, so the flash is not in the picture).</summary>
+        void OnPhotoTaken(Texture2D snapshot, string caption, bool counted)
+        {
+            if (cameraRig != null) cameraRig.PlayFlash();
         }
 
         void Start()
@@ -198,6 +245,7 @@ namespace Kosynierzy
                     foreach (var f in firearms.Values) f.Root.gameObject.SetActive(f.Root == m.Root);
                     weapon.ApplyDefinition(def, m.Root, m.Muzzle, m.Hip, m.Aim);
                     activeFirearm = def;
+                    if (m.HasSights && Debug.isDebugBuild) StartCoroutine(AimSelfCheck(def.Id, m));
                 }
             }
             var melee = WeaponCatalog.SelectedMelee;
@@ -228,6 +276,14 @@ namespace Kosynierzy
             if (cameraModel != null)
             {
                 bool raised = photo != null && photo.IsRaised;
+                // Raised = looking through the viewfinder: the body would sit 0.06 m from the eye (the near plane is 0.05)
+                // and fill the screen with black, so the model is hidden while the viewfinder UI is up.
+                if (raised != cameraHidden && cameraRenderers != null)
+                {
+                    cameraHidden = raised;
+                    foreach (var r in cameraRenderers)
+                        if (r != null) r.enabled = !raised;
+                }
                 Vector3 target = raised ? new Vector3(0f, -0.02f, 0.06f) : new Vector3(0.11f, -0.19f, 0.33f);
                 Quaternion rot = raised ? Quaternion.identity : Quaternion.Euler(8f, -12f, 4f);
                 float k = 1f - Mathf.Exp(-14f * Time.deltaTime);
@@ -347,20 +403,152 @@ namespace Kosynierzy
         FirearmModel GetFirearm(WeaponDef def)
         {
             if (firearms.TryGetValue(def.Id, out var m)) return m;
-            var prefab = Spawner.HasPrefab(def.Prefab) ? Resources.Load<PrefabRegistry>("PrefabRegistry").Find(def.Prefab) : null;
-            if (prefab != null)
-            {
-                var root = Instantiate(prefab, firearmHolder).transform;
-                root.name = def.Id;
-                foreach (var c in root.GetComponentsInChildren<Collider>()) Destroy(c);
-                var muzzle = FindDeep(root, "Lufa") ?? root;
-                // Assumes the art's sights sit on the root's local +Y ≈ the muzzle height.
-                float sightY = muzzle.localPosition.y + 0.02f;
-                m = new FirearmModel { Root = root, Muzzle = muzzle, Hip = new Vector3(0.15f, -0.15f, 0.3f), Aim = new Vector3(0f, -sightY, 0.2f) };
-            }
+            var prefab = FindTeamPrefab(def.Prefab);
+            if (prefab != null) m = BuildRealFirearm(def, prefab);
             else m = def.Slot == WeaponSlot.Rifle ? BuildRifle(def) : BuildPistol(def);
             firearms[def.Id] = m;
             return m;
+        }
+
+        /// <summary>Team prefab from the registry, or null (missing registry / prefab → caller builds a placeholder).</summary>
+        static GameObject FindTeamPrefab(string prefabName)
+        {
+            if (string.IsNullOrEmpty(prefabName) || !Spawner.HasPrefab(prefabName)) return null;
+            var registry = Resources.Load<PrefabRegistry>("PrefabRegistry");
+            return registry != null ? registry.Find(prefabName) : null;
+        }
+
+        /// <summary>
+        /// Real team-D firearm (OB_Pistolet_Vis …): pivot in the grip, +Z forward, children Lufa (muzzle), Uchwyt (grip),
+        /// Wyrzut (ejection port). Hip pose puts Uchwyt where the placeholder grip was; the ADS pose is derived from the
+        /// real sights (top of the top-most non-hammer mesh = sight tops), our hands/sleeve are added around the grip.
+        /// </summary>
+        FirearmModel BuildRealFirearm(WeaponDef def, GameObject prefab)
+        {
+            var root = Instantiate(prefab, firearmHolder).transform;
+            root.name = def.Id;
+            root.localPosition = Vector3.zero;
+            root.localRotation = Quaternion.identity;
+            root.localScale = Vector3.one;
+            PrepareViewmodel(root, firearmHolder.gameObject.layer);
+
+            var muzzle = FindDeep(root, "Lufa");
+            if (muzzle == null)
+            {
+                Debug.LogWarning($"Kosynierzy: {def.Prefab} has no child 'Lufa' — muzzle = model root.");
+                muzzle = root;
+            }
+            var grip = FindDeep(root, "Uchwyt");
+            var rig = root.gameObject.AddComponent<ViewmodelRig>();
+            rig.Setup(root);
+
+            var m = new FirearmModel { Root = root, Muzzle = muzzle, Grip = grip, Hip = new Vector3(0.15f, -0.15f, 0.3f) };
+
+            if (MeasureSights(root, out float sightTop, out float rearmostZ))
+            {
+                float frontZ, rearZ;
+                if (SightZ.TryGetValue(def.Prefab, out var known)) { frontZ = known.x; rearZ = known.y; }
+                else
+                {
+                    // Unknown model: front sight ≈ 1 cm behind the muzzle, rear sight ≈ 2 cm in front of the rearmost mesh point.
+                    frontZ = root.InverseTransformPoint(muzzle.position).z - 0.01f;
+                    rearZ = rearmostZ + 0.02f;
+                }
+                m.SightFront = new Vector3(0f, sightTop, frontZ);
+                m.SightRear = new Vector3(0f, sightTop, rearZ);
+                m.RearmostZ = rearmostZ;
+                m.HasSights = true;
+                // Root in camera space so that the sight tops (x 0, y sightTop) lie on the camera axis, rear sight EyeToRearSight away.
+                m.Aim = new Vector3(0f, -sightTop - AimEyeLift, EyeToRearSight - rearZ);
+            }
+            else
+            {
+                Debug.LogWarning($"Kosynierzy: {def.Prefab} — no meshes to measure sights from; using the old muzzle-height guess for ADS.");
+                float guessY = root.InverseTransformPoint(muzzle.position).y + 0.02f;
+                m.Aim = new Vector3(0f, -guessY, 0.2f);
+            }
+
+            if (grip != null)
+            {
+                Vector3 gripLocal = root.InverseTransformPoint(grip.position);
+                m.Hip = RealHipGrip - gripLocal; // root rotation is identity at the hip, so Uchwyt lands exactly on RealHipGrip
+                if (def.Slot == WeaponSlot.Pistol) RealHands(root, gripLocal);
+            }
+            return m;
+        }
+
+        /// <summary>Viewmodel hygiene shared by every real model: no colliders, no shadows, one layer.</summary>
+        static void PrepareViewmodel(Transform root, int layer)
+        {
+            foreach (var t in root.GetComponentsInChildren<Transform>(true)) t.gameObject.layer = layer;
+            foreach (var c in root.GetComponentsInChildren<Collider>(true)) { c.enabled = false; Destroy(c); }
+            foreach (var r in root.GetComponentsInChildren<Renderer>(true)) r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        }
+
+        /// <summary>
+        /// Top of the sights = highest point of the meshes that are not hammer/trigger/magazine/hands (the slide on the Vis:
+        /// measured from the mesh bounds, so it follows a re-exported model), plus the rearmost z. Root space.
+        /// </summary>
+        static bool MeasureSights(Transform root, out float topY, out float rearmostZ)
+        {
+            topY = float.MinValue;
+            rearmostZ = float.MaxValue;
+            bool any = false;
+            foreach (var mf in root.GetComponentsInChildren<MeshFilter>(true))
+            {
+                if (mf.sharedMesh == null || IsNotSightRenderer(mf.name)) continue;
+                Bounds b = mf.sharedMesh.bounds;
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector3 corner = b.center + Vector3.Scale(b.extents, new Vector3((i & 1) == 0 ? -1f : 1f, (i & 2) == 0 ? -1f : 1f, (i & 4) == 0 ? -1f : 1f));
+                    Vector3 p = root.InverseTransformPoint(mf.transform.TransformPoint(corner));
+                    if (p.y > topY) topY = p.y;
+                    if (p.z < rearmostZ) rearmostZ = p.z;
+                    any = true;
+                }
+            }
+            return any;
+        }
+
+        /// <summary>The real pistol has no hands: skin boxes and a sleeve around the grip (same offsets as the placeholder's).</summary>
+        void RealHands(Transform root, Vector3 grip)
+        {
+            Part(root, "HandR", PrimitiveType.Cube, grip + new Vector3(0.004f, -0.007f, -0.002f), new Vector3(0.058f, 0.085f, 0.085f), skin, new Vector3(RealGripLean, 0f, 0f));
+            Part(root, "HandL", PrimitiveType.Cube, grip + new Vector3(-0.03f, -0.017f, 0.013f), new Vector3(0.045f, 0.07f, 0.08f), skin, new Vector3(-10f, 0f, 20f));
+            Part(root, "SleeveR", PrimitiveType.Cube, grip + new Vector3(0.015f, -0.047f, -0.172f), new Vector3(0.075f, 0.075f, 0.26f), sleeve, new Vector3(-8f, 0f, 0f));
+        }
+
+        /// <summary>
+        /// Editor/dev builds: once per weapon, when it is in the hands and the holder is up, project the sight tops with the
+        /// camera at the ADS pose and log the viewport offsets (|x−0.5|,|y−0.5| must be &lt; 0.005), the distances, the depth of
+        /// the rearmost mesh point (must exceed the camera near plane) and where the grip is at the hip.
+        /// </summary>
+        IEnumerator AimSelfCheck(string id, FirearmModel m)
+        {
+            if (viewCam == null || m.Root == null || !aimChecked.Add(id)) yield break;
+            for (int i = 0; i < 600 && (IsSwapping || holderLower > 0.001f); i++) yield return null;
+            yield return null;
+            if (m.Root == null) yield break;
+
+            Vector3 pos0 = m.Root.localPosition;
+            Quaternion rot0 = m.Root.localRotation;
+            m.Root.localRotation = Quaternion.identity;
+            m.Root.localPosition = m.Aim;
+            Vector3 front = viewCam.WorldToViewportPoint(m.Root.TransformPoint(m.SightFront));
+            Vector3 rear = viewCam.WorldToViewportPoint(m.Root.TransformPoint(m.SightRear));
+            float rearmostDepth = viewCam.transform.InverseTransformPoint(m.Root.TransformPoint(new Vector3(0f, m.SightRear.y, m.RearmostZ))).z;
+            m.Root.localPosition = m.Hip;
+            Vector3 gripAtHip = m.Grip != null ? viewCam.transform.InverseTransformPoint(m.Grip.position) : Vector3.zero;
+            m.Root.localPosition = pos0;
+            m.Root.localRotation = rot0;
+
+            float worst = Mathf.Max(Mathf.Abs(front.x - 0.5f), Mathf.Abs(front.y - 0.5f), Mathf.Abs(rear.x - 0.5f), Mathf.Abs(rear.y - 0.5f));
+            bool ok = worst < 0.005f && rearmostDepth > viewCam.nearClipPlane;
+            string text = $"[Viewmodel] {id} ADS check: front sight vp=({front.x:F4},{front.y:F4}) dist={front.z:F3} m | rear sight vp=({rear.x:F4},{rear.y:F4}) dist={rear.z:F3} m"
+                        + $" | worst offset {worst:F4} (limit 0.005) | rearmost mesh depth {rearmostDepth:F3} m (near clip {viewCam.nearClipPlane:F2})"
+                        + $" | hip: Uchwyt in camera space ({gripAtHip.x:F3},{gripAtHip.y:F3},{gripAtHip.z:F3}) | eye lift {AimEyeLift * 1000f:F1} mm"
+                        + (ok ? " => PASS" : " => FAIL");
+            if (ok) Debug.Log(text); else Debug.LogWarning(text);
         }
 
         FirearmModel BuildPistol(WeaponDef def)
@@ -379,23 +567,27 @@ namespace Kosynierzy
                 Part(root, "Hammer", PrimitiveType.Cube, new Vector3(0f, 0.016f, -0.06f), new Vector3(0.008f, 0.02f, 0.012f), steel, new Vector3(-30f, 0f, 0f));
                 Part(root, "Grip", PrimitiveType.Cube, new Vector3(0f, -0.07f, -0.07f), new Vector3(0.028f, 0.1f, 0.04f), wood, new Vector3(-20f, 0f, 0f));
                 Part(root, "FrontSight", PrimitiveType.Cube, new Vector3(0f, 0.02f, 0.125f), new Vector3(0.004f, 0.009f, 0.008f), steel);
-                Part(root, "RearSightL", PrimitiveType.Cube, new Vector3(-0.005f, 0.0195f, -0.045f), new Vector3(0.005f, 0.008f, 0.008f), steel);
-                Part(root, "RearSightR", PrimitiveType.Cube, new Vector3(0.005f, 0.0195f, -0.045f), new Vector3(0.005f, 0.008f, 0.008f), steel);
+                Part(root, "RearSightL", PrimitiveType.Cube, new Vector3(-0.005f, 0.0205f, -0.045f), new Vector3(0.005f, 0.008f, 0.008f), steel);
+                Part(root, "RearSightR", PrimitiveType.Cube, new Vector3(0.005f, 0.0205f, -0.045f), new Vector3(0.005f, 0.008f, 0.008f), steel);
                 muzzle.localPosition = new Vector3(0f, 0.008f, 0.13f);
-                sightTop = 0.0235f;
+                sightTop = 0.0245f; // front blade top (0.02 + 0.0045) = rear post tops (0.0205 + 0.004)
             }
             else
             {
                 float s = def.Id == "browning" ? 0.82f : 1f;
+                // The sights are not scaled with the gun, so derive the rear posts from the front blade: both end at the
+                // same height (frontTop) and the ADS pose puts exactly that height on the camera axis.
+                float frontTop = 0.022f * s + 0.004f;
+                float rearY = frontTop - 0.0045f;
                 Part(root, "Slide", PrimitiveType.Cube, new Vector3(0f, 0f, 0.02f) * s, new Vector3(0.032f, 0.036f, 0.2f) * s, steel);
                 Part(root, "Frame", PrimitiveType.Cube, new Vector3(0f, -0.026f, 0f) * s, new Vector3(0.03f, 0.02f, 0.16f) * s, steel);
                 Part(root, "Grip", PrimitiveType.Cube, new Vector3(0f, -0.083f, -0.058f) * s, new Vector3(0.03f, 0.11f, 0.045f) * s, def.Id == "browning" ? black : wood, new Vector3(-16f, 0f, 0f));
                 Part(root, "TriggerGuard", PrimitiveType.Cube, new Vector3(0f, -0.048f, -0.005f) * s, new Vector3(0.008f, 0.025f, 0.04f) * s, steel);
                 Part(root, "FrontSight", PrimitiveType.Cube, new Vector3(0f, 0.022f, 0.112f) * s, new Vector3(0.005f, 0.008f, 0.008f), steel);
-                Part(root, "RearSightL", PrimitiveType.Cube, new Vector3(-0.0065f, 0.0225f, -0.072f) * s, new Vector3(0.006f, 0.009f, 0.008f), steel);
-                Part(root, "RearSightR", PrimitiveType.Cube, new Vector3(0.0065f, 0.0225f, -0.072f) * s, new Vector3(0.006f, 0.009f, 0.008f), steel);
+                Part(root, "RearSightL", PrimitiveType.Cube, new Vector3(-0.0065f * s, rearY, -0.072f * s), new Vector3(0.006f, 0.009f, 0.008f), steel);
+                Part(root, "RearSightR", PrimitiveType.Cube, new Vector3(0.0065f * s, rearY, -0.072f * s), new Vector3(0.006f, 0.009f, 0.008f), steel);
                 muzzle.localPosition = new Vector3(0f, 0.004f, 0.125f) * s;
-                sightTop = 0.0265f * s;
+                sightTop = frontTop;
             }
             Hands(root, -0.06f);
             return new FirearmModel { Root = root, Muzzle = muzzle, Hip = new Vector3(0.15f, -0.14f, 0.3f), Aim = new Vector3(0f, -sightTop, 0.2f) };
@@ -410,7 +602,9 @@ namespace Kosynierzy
 
             Part(root, "Stock", PrimitiveType.Cube, new Vector3(0f, -0.035f, -0.28f), new Vector3(0.045f, 0.075f, 0.42f), wood, new Vector3(4f, 0f, 0f));
             Part(root, "Forend", PrimitiveType.Cube, new Vector3(0f, -0.018f, smg ? 0.08f : 0.2f), new Vector3(0.04f, 0.04f, smg ? 0.2f : 0.42f), wood);
-            Part(root, "Receiver", PrimitiveType.Cube, new Vector3(0f, 0.002f, -0.04f), new Vector3(0.036f, 0.04f, 0.2f), steel);
+            // Starts right behind the rear sight (z -0.065): at ADS the eye is 0.12 m behind the root, so a longer receiver
+            // would cross the 0.05 m near plane and show a see-through hole at the bottom of the sight picture.
+            Part(root, "Receiver", PrimitiveType.Cube, new Vector3(0f, 0.002f, 0f), new Vector3(0.036f, 0.04f, 0.13f), steel);
             Part(root, "Barrel", PrimitiveType.Cylinder, new Vector3(0f, 0.012f, barrelEnd * 0.5f + 0.02f), new Vector3(0.018f, barrelEnd * 0.5f, 0.018f), steel, new Vector3(90f, 0f, 0f));
             if (smg)
             {
@@ -422,9 +616,11 @@ namespace Kosynierzy
                 Part(root, "Bolt", PrimitiveType.Cylinder, new Vector3(0.035f, 0.004f, -0.08f), new Vector3(0.012f, 0.025f, 0.012f), steel, new Vector3(0f, 0f, 90f));
                 Part(root, "BoltKnob", PrimitiveType.Sphere, new Vector3(0.06f, 0.004f, -0.08f), new Vector3(0.018f, 0.018f, 0.018f), steel);
             }
-            Part(root, "FrontSight", PrimitiveType.Cube, new Vector3(0f, 0.03f, barrelEnd), new Vector3(0.004f, 0.012f, 0.008f), steel);
-            Part(root, "RearSightL", PrimitiveType.Cube, new Vector3(-0.006f, 0.0305f, 0.02f), new Vector3(0.006f, 0.011f, 0.01f), steel);
-            Part(root, "RearSightR", PrimitiveType.Cube, new Vector3(0.006f, 0.0305f, 0.02f), new Vector3(0.006f, 0.011f, 0.01f), steel);
+            // Sight tops sit at y 0.036 (the ADS pose lifts exactly that onto the camera axis); the blades reach down to the
+            // barrel (top 0.021) and the receiver (top 0.022) so nothing floats.
+            Part(root, "FrontSight", PrimitiveType.Cube, new Vector3(0f, 0.0285f, barrelEnd), new Vector3(0.004f, 0.015f, 0.008f), steel);
+            Part(root, "RearSightL", PrimitiveType.Cube, new Vector3(-0.006f, 0.029f, 0.02f), new Vector3(0.006f, 0.014f, 0.01f), steel);
+            Part(root, "RearSightR", PrimitiveType.Cube, new Vector3(0.006f, 0.029f, 0.02f), new Vector3(0.006f, 0.014f, 0.01f), steel);
             Part(root, "Trigger", PrimitiveType.Cube, new Vector3(0f, -0.05f, -0.06f), new Vector3(0.008f, 0.03f, 0.035f), steel);
             var muzzle = new GameObject("Lufa").transform;
             muzzle.SetParent(root, false);
@@ -473,19 +669,40 @@ namespace Kosynierzy
         void BuildCamera()
         {
             cameraHolder = Holder("Holder_Camera");
-            cameraModel = new GameObject("Aparat_Placeholder").transform;
+            var realCamera = FindTeamPrefab(RealCameraPrefab);
+            cameraModel = new GameObject(realCamera != null ? "Aparat" : "Aparat_Placeholder").transform;
             cameraModel.SetParent(cameraHolder, false);
             cameraModel.localPosition = new Vector3(0.11f, -0.19f, 0.33f);
-            Part(cameraModel, "Body", PrimitiveType.Cube, Vector3.zero, new Vector3(0.135f, 0.07f, 0.034f), leather);
-            Part(cameraModel, "TopPlate", PrimitiveType.Cube, new Vector3(0f, 0.041f, 0f), new Vector3(0.135f, 0.014f, 0.034f), chrome);
-            Part(cameraModel, "Lens", PrimitiveType.Cylinder, new Vector3(0.018f, -0.004f, 0.03f), new Vector3(0.042f, 0.014f, 0.042f), black, new Vector3(90f, 0f, 0f));
-            Part(cameraModel, "LensRing", PrimitiveType.Cylinder, new Vector3(0.018f, -0.004f, 0.045f), new Vector3(0.036f, 0.004f, 0.036f), chrome, new Vector3(90f, 0f, 0f));
-            Part(cameraModel, "Dial", PrimitiveType.Cylinder, new Vector3(-0.045f, 0.052f, 0f), new Vector3(0.02f, 0.006f, 0.02f), chrome);
-            Part(cameraModel, "Window", PrimitiveType.Cube, new Vector3(-0.045f, 0.025f, 0.018f), new Vector3(0.016f, 0.012f, 0.002f), black);
+            if (realCamera != null)
+            {
+                // OB_Aparat: pivot at the bottom centre, lens +Z (child Obiektyw/FX_FlashAparatu), body (korpus) centre at y 0.031.
+                // Shifted so the body centre is the cameraModel origin — the placeholder body's origin — and our hands fit both.
+                var real = Instantiate(realCamera, cameraModel).transform;
+                real.name = RealCameraPrefab;
+                real.localPosition = new Vector3(0f, -0.031f, 0f);
+                real.localRotation = Quaternion.identity;
+                real.localScale = Vector3.one;
+                PrepareViewmodel(real, cameraHolder.gameObject.layer);
+                cameraRig = real.gameObject.AddComponent<ViewmodelRig>();
+                cameraRig.Setup(real);
+            }
+            else
+            {
+                Part(cameraModel, "Body", PrimitiveType.Cube, Vector3.zero, new Vector3(0.135f, 0.07f, 0.034f), leather);
+                Part(cameraModel, "TopPlate", PrimitiveType.Cube, new Vector3(0f, 0.041f, 0f), new Vector3(0.135f, 0.014f, 0.034f), chrome);
+                Part(cameraModel, "Lens", PrimitiveType.Cylinder, new Vector3(0.018f, -0.004f, 0.03f), new Vector3(0.042f, 0.014f, 0.042f), black, new Vector3(90f, 0f, 0f));
+                Part(cameraModel, "LensRing", PrimitiveType.Cylinder, new Vector3(0.018f, -0.004f, 0.045f), new Vector3(0.036f, 0.004f, 0.036f), chrome, new Vector3(90f, 0f, 0f));
+                Part(cameraModel, "Dial", PrimitiveType.Cylinder, new Vector3(-0.045f, 0.052f, 0f), new Vector3(0.02f, 0.006f, 0.02f), chrome);
+                Part(cameraModel, "Window", PrimitiveType.Cube, new Vector3(-0.045f, 0.025f, 0.018f), new Vector3(0.016f, 0.012f, 0.002f), black);
+            }
             Part(cameraModel, "HandR", PrimitiveType.Cube, new Vector3(0.085f, -0.01f, -0.01f), new Vector3(0.05f, 0.085f, 0.06f), skin);
             Part(cameraModel, "HandL", PrimitiveType.Cube, new Vector3(-0.085f, -0.01f, -0.01f), new Vector3(0.05f, 0.085f, 0.06f), skin);
             Part(cameraModel, "SleeveR", PrimitiveType.Cube, new Vector3(0.1f, -0.06f, -0.17f), new Vector3(0.07f, 0.07f, 0.24f), sleeve, new Vector3(-10f, -10f, 0f));
             Part(cameraModel, "SleeveL", PrimitiveType.Cube, new Vector3(-0.1f, -0.06f, -0.17f), new Vector3(0.07f, 0.07f, 0.24f), sleeve, new Vector3(-10f, 10f, 0f));
+            // Hidden while the viewfinder is up (AnimateHolders) — but not the flash particles: they play exactly then.
+            var hideWhenRaised = new List<Renderer>();
+            foreach (var r in cameraModel.GetComponentsInChildren<Renderer>(true)) if (!(r is ParticleSystemRenderer)) hideWhenRaised.Add(r);
+            cameraRenderers = hideWhenRaised.ToArray();
         }
 
         Transform Holder(string name)
