@@ -5,7 +5,7 @@ namespace Kosynierzy
     /// <summary>
     /// Ambience loops (Resources/Ambience) with a 0.4 s crossfade. API: Ambience.SetZone("amb_..."). Auto mode picks the zone
     /// from the player position: city loop (peaceful before 19:30, war after) or the interior of the nearest door target
-    /// (interiors sit at x &gt;= 900). Entering/leaving an interior plays the wooden door sound once.
+    /// (interiors sit at x 4000..4600). Entering/leaving an interior plays the wooden door sound once.
     /// </summary>
     public sealed class Ambience : MonoBehaviour
     {
@@ -71,6 +71,7 @@ namespace Kosynierzy
             ("spawn_hotel_wejscie", "amb_hotel_hol_wnetrze", 60f),
             ("spawn_ksiegarnia", "amb_ksiegarnia_wnetrze", 60f),
             ("spawn_fotograf", "amb_fotograf_ciemnia", 60f),
+            ("spawn_radio_tyl", "amb_radiostacja_technika", 40f),
         };
 
         string AutoZone(Vector3 p)

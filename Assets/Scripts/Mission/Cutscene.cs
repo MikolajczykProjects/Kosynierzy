@@ -25,7 +25,10 @@ namespace Kosynierzy
         readonly HashSet<string> fired = new();
         Mission hooked;
         bool shootoutDone;
-        PlayerControlLock locker = new();
+        readonly PlayerControlLock locker = new();
+        int locks;
+        void Lock() { if (locks++ == 0) locker.Lock(); }
+        void Unlock() { if (locks > 0 && --locks == 0) locker.Unlock(); }
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         static void ResetStatics() => instance = null;
@@ -33,8 +36,10 @@ namespace Kosynierzy
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
         static void Boot()
         {
-            if (instance != null) Destroy(instance.gameObject);
-            instance = new GameObject("Cutscene").AddComponent<Cutscene>();
+            if (instance != null) return;
+            var go = new GameObject("Cutscene");
+            instance = go.AddComponent<Cutscene>();
+            DontDestroyOnLoad(go);
         }
 
         public static bool Busy => instance != null && (instance.cardUntil > Time.unscaledTime || instance.bars);
@@ -96,7 +101,7 @@ namespace Kosynierzy
             cardTop = top; cardMain = main; cardSub = sub;
             cardFadeIn = Time.unscaledTime + 0.4f;
             cardUntil = Time.unscaledTime + seconds + 1.0f;
-            locker.Lock();
+            Lock();
             ScreenFade.Transition(() => { whileBlack?.Invoke(); }, 0.4f, seconds, 0.6f);
             StartCoroutine(UnlockAfter(seconds + 1.1f));
         }
@@ -104,7 +109,7 @@ namespace Kosynierzy
         IEnumerator UnlockAfter(float s)
         {
             yield return new WaitForSecondsRealtime(s);
-            locker.Unlock();
+            Unlock();
         }
 
         void OnGUI()
@@ -146,7 +151,7 @@ namespace Kosynierzy
             var cam = Camera.main;
             if (cam == null) yield break;
             bars = true; skip = false;
-            locker.Lock();
+            Lock();
             var startRot = cam.transform.rotation;
             var startPos = cam.transform.position;
             var endRot = Quaternion.LookRotation((target - startPos).sqrMagnitude > 0.01f ? target - startPos : cam.transform.forward);
@@ -157,7 +162,7 @@ namespace Kosynierzy
                 yield return null;
             }
             bars = false;
-            locker.Unlock();
+            Unlock();
         }
 
         // ------------------------------------------------------------------ triggers
@@ -180,7 +185,7 @@ namespace Kosynierzy
         readonly HashSet<string> finished = new();
 
         void OnEnable() => Dialog.Finished += OnDialogFinished;
-        void OnDisable() => Dialog.Finished -= OnDialogFinished;
+        void OnDisable() { Dialog.Finished -= OnDialogFinished; if (locks > 0) { locks = 0; locker.Unlock(); } }
         void OnDialogFinished(string id) => finished.Add(id);
 
         void Update()
@@ -192,7 +197,7 @@ namespace Kosynierzy
             var m = Mission.Instance;
             var pl = FindAnyObjectByType<FirstPersonController>();
             if (m == null || pl == null) return;
-            if (hooked != m) { hooked = m; m.ActStarted += OnAct; lastIndex = -2; fired.Clear(); finished.Clear(); shootoutDone = false; }
+            if (hooked != m) { hooked = m; m.ActStarted += OnAct; if (!string.IsNullOrEmpty(m.CurrentActName)) OnAct(m.CurrentActName); lastIndex = -2; fired.Clear(); finished.Clear(); shootoutDone = false; }
             if (Dialog.IsPlaying || Busy || MissionFail.IsFailed) return;
             Vector3 pp = pl.transform.position;
 
@@ -208,10 +213,10 @@ namespace Kosynierzy
             if (travelCheckAt > 0f && Time.unscaledTime >= travelCheckAt)
             {
                 travelCheckAt = -1f;
-                if (m.Current != null && m.Current.MarkerPosition.HasValue && pp.x < 900f)
+                if (m.Current != null && m.Current.MarkerPosition.HasValue && pp.x < 3000f)
                 {
                     var mp = m.Current.MarkerPosition.Value;
-                    if (mp.x < 900f && Vector3.Distance(pp, mp) > 300f) Travel(mp, m.Current.Title);
+                    if (mp.x < 3000f && Vector3.Distance(pp, mp) > 300f) Travel(mp, m.Current.Title);
                 }
             }
 
