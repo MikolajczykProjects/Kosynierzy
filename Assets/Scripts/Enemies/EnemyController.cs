@@ -44,14 +44,14 @@ namespace Kosynierzy
         [SerializeField] float gunshotAlarmDistance = 15f;
 
         [Header("Rifle")]
-        [SerializeField] float fireRange = 15f;
+        float fireRange = 24f;
         [Tooltip("Reaction from first seeing the player in Alarm to the first shot (min, max seconds).")]
         [SerializeField] Vector2 firstShotDelay = new(0.6f, 1.2f);
-        [SerializeField] Vector2 shotInterval = new(1.2f, 1.8f);
+        Vector2 shotInterval = new(0.6f, 1.2f);
         [Tooltip("Chance a shot is aimed on target at 3 m.")]
-        [SerializeField, Range(0f, 1f)] float hitChanceNear = 0.55f;
+        [SerializeField, Range(0f, 1f)] float hitChanceNear = 0.6f;
         [Tooltip("Chance a shot is aimed on target at fire range.")]
-        [SerializeField, Range(0f, 1f)] float hitChanceFar = 0.12f;
+        [SerializeField, Range(0f, 1f)] float hitChanceFar = 0.2f;
         [Tooltip("Hit chance multiplier while the player sprints or slides.")]
         [SerializeField, Range(0f, 1f)] float sprintAccuracy = 0.6f;
         [Tooltip("Hit chance multiplier while the player crouches behind cover (line to 1.0 m height blocked).")]

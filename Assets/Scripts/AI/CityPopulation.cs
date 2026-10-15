@@ -12,8 +12,8 @@ namespace Kosynierzy
     public class CityPopulation : MonoBehaviour
     {
         const float CullOut = 130f, CullIn = 105f;
-        const int ExtraCivilians = 48, ExtraSoldiers = 8, ExtraPolice = 4;
-        const int MaxActive = 40; // hard cap of simultaneously active extras
+        const int ExtraCivilians = 96, ExtraSoldiers = 18, ExtraPolice = 6;
+        const int MaxActive = 60; // hard cap of simultaneously active extras
 
         readonly List<GameObject> extras = new();
         float nextCull;
