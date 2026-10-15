@@ -1,0 +1,68 @@
+{
+"punkty": [
+{
+"n": "miasto_karta_1",
+"p": [
+16.5,
+0.0,
+0.0
+],
+"yaw": 270.0
+},
+{
+"n": "ratusz_wejscie",
+"p": [
+0.0,
+14.1,
+0.0
+],
+"yaw": 180.0
+}
+],
+"swiatla": [
+{
+"p": [
+-12.0,
+10.3,
+4.6
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.5,
+"typ": "point"
+},
+{
+"p": [
+-4.3,
+10.3,
+4.6
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.5,
+"typ": "point"
+},
+{
+"p": [
+4.3,
+10.3,
+4.6
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.5,
+"typ": "point"
+},
+{
+"p": [
+12.0,
+10.3,
+4.6
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.5,
+"typ": "point"
+}
+]
+}

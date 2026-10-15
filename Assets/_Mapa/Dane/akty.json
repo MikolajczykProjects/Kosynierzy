@@ -1,0 +1,498 @@
+{
+  "obiekty": {
+    "Rynek": {
+      "akty": [
+        2
+      ],
+      "rola": "Rynek — ulica przemarszu, 6 Kart historii, patrole SD/Schupo, tłum"
+    },
+    "Kosciol": {
+      "akty": [
+        2
+      ],
+      "rola": "punkt orientacyjny w drodze przez miasto"
+    },
+    "Hotel": {
+      "akty": [
+        1
+      ],
+      "rola": "Haus Oberschlesien — pokój Naujocksa, hasło 'Großmutter gestorben'"
+    },
+    "Dworzec": {
+      "akty": [
+        1
+      ],
+      "rola": "przyjazd Kruka pociągiem, start misji"
+    },
+    "Radiostacja": {
+      "akty": [
+        3,
+        4
+      ],
+      "rola": "nadajnik, mikrofon burzowy, 90 s na przecięcie linii; przy wyjściu ciało Honioka"
+    },
+    "Wnetrze_Hotel": {
+      "akty": [
+        1
+      ],
+      "rola": "wnętrze Haus Oberschlesien"
+    },
+    "Wnetrze_Radio": {
+      "akty": [
+        3,
+        4
+      ],
+      "rola": "wnętrze stacji nadawczej i piwnicy"
+    },
+    "Wnetrze_Ksiegarnia": {
+      "akty": [
+        1
+      ],
+      "rola": "księgarnia Zofii — start, aparat fotograficzny"
+    },
+    "Wnetrze_Fotograf": {
+      "akty": [
+        2
+      ],
+      "rola": "misja poboczna: fotograf i agent Gestapo"
+    }
+  },
+  "punkty": {
+    "spawn_dworzec": [
+      1
+    ],
+    "miasto_drzwi_hotel": [
+      1
+    ],
+    "spawn_hotel_wejscie": [
+      1
+    ],
+    "hotel_drzwi_wyjscie": [
+      1
+    ],
+    "hotel_recepcja": [
+      1
+    ],
+    "hotel_telefon": [
+      1
+    ],
+    "hotel_kolumna": [
+      1
+    ],
+    "hotel_patrol_1": [
+      1
+    ],
+    "hotel_patrol_2": [
+      1
+    ],
+    "hotel_schody_dol": [
+      1
+    ],
+    "hotel_schody_gora": [
+      1
+    ],
+    "hotel_pokoj_drzwi": [
+      1
+    ],
+    "hotel_pokoj_biurko": [
+      1
+    ],
+    "hotel_pokoj_mapa": [
+      1
+    ],
+    "hotel_pokoj_lozko": [
+      1
+    ],
+    "hotel_pokoj_lista": [
+      1
+    ],
+    "hotel_mebel_kominek_1": [
+      1
+    ],
+    "hotel_mebel_kominek_2": [
+      1
+    ],
+    "hotel_mebel_salon_1": [
+      1
+    ],
+    "hotel_mebel_salon_2": [
+      1
+    ],
+    "hotel_latarnia_1": [
+      1
+    ],
+    "hotel_latarnia_2": [
+      1
+    ],
+    "hotel_latarnia_3": [
+      1
+    ],
+    "miasto_drzwi_ksiegarnia": [
+      1
+    ],
+    "spawn_ksiegarnia": [
+      1
+    ],
+    "ksiegarnia_drzwi_wyjscie": [
+      1
+    ],
+    "ksiegarnia_zofia": [
+      1
+    ],
+    "ksiegarnia_kasa": [
+      1
+    ],
+    "ksiegarnia_mebel_stol": [
+      1
+    ],
+    "ksiegarnia_mebel_drabina": [
+      1
+    ],
+    "ksiegarnia_zaplecze": [
+      1
+    ],
+    "ksiegarnia_zaplecze_wejscie": [
+      1
+    ],
+    "miasto_karta_1": [
+      2
+    ],
+    "miasto_karta_2": [
+      2
+    ],
+    "miasto_karta_3": [
+      2
+    ],
+    "miasto_karta_4": [
+      2
+    ],
+    "miasto_karta_5": [
+      2
+    ],
+    "miasto_skrytka_most": [
+      2
+    ],
+    "miasto_most_zejscie": [
+      2
+    ],
+    "miasto_auto_sd_trasa_1": [
+      2
+    ],
+    "miasto_auto_sd_trasa_2": [
+      2
+    ],
+    "miasto_auto_sd_trasa_3": [
+      2
+    ],
+    "miasto_auto_sd_trasa_4": [
+      2
+    ],
+    "miasto_auto_sd_trasa_5": [
+      2
+    ],
+    "miasto_zagajnik_auto": [
+      2
+    ],
+    "miasto_zagajnik_krzaki": [
+      2
+    ],
+    "miasto_patrol_sd_1": [
+      2
+    ],
+    "miasto_patrol_sd_2": [
+      2
+    ],
+    "miasto_patrol_sd_3": [
+      2
+    ],
+    "miasto_patrol_sd_4": [
+      2
+    ],
+    "miasto_patrol_sd_5": [
+      2
+    ],
+    "miasto_patrol_sd_6": [
+      2
+    ],
+    "miasto_schupo_1": [
+      2
+    ],
+    "miasto_schupo_2": [
+      2
+    ],
+    "miasto_schupo_3": [
+      2
+    ],
+    "miasto_tlum_1": [
+      2
+    ],
+    "miasto_tlum_2": [
+      2
+    ],
+    "miasto_tlum_3": [
+      2
+    ],
+    "miasto_tlum_4": [
+      2
+    ],
+    "miasto_tlum_5": [
+      2
+    ],
+    "miasto_tlum_6": [
+      2
+    ],
+    "miasto_tlum_7": [
+      2
+    ],
+    "miasto_tlum_8": [
+      2
+    ],
+    "miasto_tlum_9": [
+      2
+    ],
+    "miasto_tlum_10": [
+      2
+    ],
+    "miasto_oslona_1": [
+      2
+    ],
+    "miasto_oslona_2": [
+      2
+    ],
+    "miasto_oslona_3": [
+      2
+    ],
+    "miasto_oslona_4": [
+      2
+    ],
+    "miasto_oslona_5": [
+      2
+    ],
+    "miasto_oslona_6": [
+      2
+    ],
+    "miasto_oslona_7": [
+      2
+    ],
+    "miasto_oslona_8": [
+      2
+    ],
+    "miasto_oslona_9": [
+      2
+    ],
+    "miasto_oslona_10": [
+      2
+    ],
+    "miasto_oslona_11": [
+      2
+    ],
+    "miasto_oslona_12": [
+      2
+    ],
+    "miasto_latarnia_1": [
+      2
+    ],
+    "miasto_latarnia_2": [
+      2
+    ],
+    "miasto_latarnia_3": [
+      2
+    ],
+    "miasto_latarnia_4": [
+      2
+    ],
+    "miasto_latarnia_5": [
+      2
+    ],
+    "miasto_latarnia_6": [
+      2
+    ],
+    "miasto_latarnia_7": [
+      2
+    ],
+    "miasto_latarnia_8": [
+      2
+    ],
+    "miasto_latarnia_9": [
+      2
+    ],
+    "miasto_latarnia_10": [
+      2
+    ],
+    "miasto_latarnia_11": [
+      2
+    ],
+    "miasto_latarnia_12": [
+      2
+    ],
+    "miasto_latarnia_13": [
+      2
+    ],
+    "miasto_latarnia_14": [
+      2
+    ],
+    "miasto_latarnia_15": [
+      2
+    ],
+    "miasto_latarnia_16": [
+      2
+    ],
+    "miasto_latarnia_17": [
+      2
+    ],
+    "miasto_latarnia_18": [
+      2
+    ],
+    "miasto_latarnia_19": [
+      2
+    ],
+    "miasto_latarnia_20": [
+      2
+    ],
+    "miasto_rower": [
+      2
+    ],
+    "miasto_ciezarowka": [
+      2
+    ],
+    "ratusz_wejscie": [
+      2
+    ],
+    "kosciol_drzwi": [
+      2
+    ],
+    "miasto_drzwi_fotograf": [
+      2
+    ],
+    "spawn_fotograf": [
+      2
+    ],
+    "fotograf_drzwi_wyjscie": [
+      2
+    ],
+    "fotograf_wlasciciel": [
+      2
+    ],
+    "fotograf_gestapo": [
+      2
+    ],
+    "fotograf_ciemnia": [
+      2
+    ],
+    "fotograf_ciemnia_drzwi": [
+      2
+    ],
+    "fotograf_zaplecze_drzwi": [
+      2
+    ],
+    "fotograf_studio_aparat": [
+      2
+    ],
+    "fotograf_studio_podest": [
+      2
+    ],
+    "fotograf_studio_lampa_1": [
+      2
+    ],
+    "fotograf_studio_lampa_2": [
+      2
+    ],
+    "fotograf_zaplecze_biurko": [
+      2
+    ],
+    "fotograf_ciemnia_powiekszalnik": [
+      2
+    ],
+    "miasto_kolejarz": [
+      2
+    ],
+    "miasto_drzwi_radio": [
+      3
+    ],
+    "miasto_dziura_plot": [
+      3
+    ],
+    "spawn_radio_brama": [
+      3
+    ],
+    "radio_latarnia_1": [
+      3
+    ],
+    "radio_latarnia_2": [
+      3
+    ],
+    "radio_latarnia_3": [
+      3
+    ],
+    "radio_latarnia_4": [
+      3
+    ],
+    "spawn_radio_tyl": [
+      3
+    ],
+    "radio_sterownia_pulpit": [
+      3
+    ],
+    "radio_sterownia_mikrofon": [
+      3
+    ],
+    "radio_technika_kable": [
+      3
+    ],
+    "radio_technika_lacznica": [
+      3
+    ],
+    "radio_kartka_grubera": [
+      3
+    ],
+    "radio_schody_gora": [
+      3
+    ],
+    "radio_schody_dol": [
+      3
+    ],
+    "radio_piwnica_drzwi": [
+      3
+    ],
+    "radio_piwnica_pracownik_1": [
+      3
+    ],
+    "radio_piwnica_pracownik_2": [
+      3
+    ],
+    "radio_piwnica_pracownik_3": [
+      3
+    ],
+    "radio_sd_1": [
+      3
+    ],
+    "radio_sd_2": [
+      3
+    ],
+    "radio_sd_3": [
+      3
+    ],
+    "radio_sd_4": [
+      3
+    ],
+    "radio_sd_5": [
+      3
+    ],
+    "radio_drzwi_wyjscie": [
+      4
+    ],
+    "radio_cialo_honiok": [
+      4
+    ],
+    "radio_kartka_honiok": [
+      4
+    ],
+    "miasto_stodola": [
+      4
+    ],
+    "miasto_karta_6": [
+      4
+    ]
+  },
+  "warstwy_tlo": "Budynki_/Ulice_/Natura_/Rekwizyty_/Teren = tło wszystkich aktów"
+}

@@ -1,0 +1,167 @@
+{
+  "model": "eleven_multilingual_v2",
+  "postacie": {
+    "kruk": {
+      "voice_id": "",
+      "opis": "młody mężczyzna ok. 26 lat, spokojny, cichy, myśli prawie szeptem",
+      "stability": 0.55,
+      "similarity_boost": 0.75,
+      "style": 0.2
+    },
+    "zofia": {
+      "voice_id": "",
+      "opis": "kobieta ok. 50 lat, ciepła, ale ostrożna, mówi półgłosem",
+      "stability": 0.6,
+      "similarity_boost": 0.75,
+      "style": 0.2
+    },
+    "naujocks": {
+      "voice_id": "",
+      "opis": "mężczyzna ok. 30 lat, niemiecki, chłodny, rozkazujący, bez krzyku",
+      "stability": 0.7,
+      "similarity_boost": 0.8,
+      "style": 0.3
+    },
+    "heinz": {
+      "voice_id": "",
+      "opis": "niemiecki mężczyzna, nerwowy; po polsku z wyraźnym niemieckim akcentem",
+      "stability": 0.3,
+      "similarity_boost": 0.7,
+      "style": 0.4
+    },
+    "sd": {
+      "voice_id": "",
+      "opis": "niemiecki mężczyzna, twardy, krótkie okrzyki",
+      "stability": 0.45,
+      "similarity_boost": 0.75,
+      "style": 0.4
+    },
+    "gestapo": {
+      "voice_id": "",
+      "opis": "jak sd, inny głos",
+      "stability": 0.45,
+      "similarity_boost": 0.75,
+      "style": 0.4
+    },
+    "recepcjonista": {
+      "voice_id": "",
+      "opis": "niemiecki, uprzejmy, starszy pan",
+      "stability": 0.6,
+      "similarity_boost": 0.75,
+      "style": 0.2
+    },
+    "schupo": {
+      "voice_id": "",
+      "opis": "niemiecki policjant, urzędowy",
+      "stability": 0.55,
+      "similarity_boost": 0.75,
+      "style": 0.3
+    },
+    "gruber": {
+      "voice_id": "",
+      "opis": "starszy Ślązak, przestraszony, gwara",
+      "stability": 0.4,
+      "similarity_boost": 0.75,
+      "style": 0.3
+    },
+    "fotograf": {
+      "voice_id": "",
+      "opis": "mężczyzna ok. 40 lat, szept",
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.2
+    },
+    "kolejarz": {
+      "voice_id": "",
+      "opis": "starszy Ślązak, gwara, rubaszny",
+      "stability": 0.45,
+      "similarity_boost": 0.75,
+      "style": 0.4
+    },
+    "sowa": {
+      "voice_id": "",
+      "opis": "mężczyzna, krótko, pośpiesznie",
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.3
+    },
+    "spiker": {
+      "voice_id": "",
+      "opis": "niemiecki spiker radiowy z lat 30., oficjalny, podniosły",
+      "stability": 0.75,
+      "similarity_boost": 0.8,
+      "style": 0.5
+    },
+    "przechodzien": {
+      "voice_id": "",
+      "opis": "dowolny",
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.2
+    },
+    "lektor": {
+      "voice_id": "",
+      "opis": "lektor dokumentalny, głęboki, spokojny, poważny",
+      "stability": 0.75,
+      "similarity_boost": 0.8,
+      "style": 0.2
+    },
+    "pracownik": {
+      "voice_id": "",
+      "opis": "pracownik radiostacji, niemiecki, przestraszony",
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.2
+    }
+  },
+  "sfx": {
+    "strzal": {
+      "opis": "single 1930s pistol gunshot in a city street, short",
+      "sekundy": 1.0
+    },
+    "przeladowanie": {
+      "opis": "pistol magazine reload, metallic clicks",
+      "sekundy": 1.0
+    },
+    "alarm": {
+      "opis": "old 1930s alarm bell ringing",
+      "sekundy": 2.0
+    },
+    "telefon": {
+      "opis": "1930s rotary telephone bell ringing twice",
+      "sekundy": 2.0
+    },
+    "migawka": {
+      "opis": "vintage Leica camera shutter click",
+      "sekundy": 0.5
+    },
+    "szum_radia": {
+      "opis": "old tube radio static and hiss",
+      "sekundy": 4.0
+    },
+    "iskra": {
+      "opis": "electric spark crackle from old switchboard",
+      "sekundy": 1.0
+    },
+    "drzwi": {
+      "opis": "old wooden door opening and closing",
+      "sekundy": 1.5
+    },
+    "rykoszet": {
+      "opis": "bullet ricochet off stone wall",
+      "sekundy": 0.8
+    },
+    "amb_miasto": {
+      "opis": "1930s european town square ambience, distant horse carriage, people chatting, summer afternoon",
+      "sekundy": 15.0
+    },
+    "amb_noc": {
+      "opis": "quiet summer night on town outskirts, crickets, distant dog",
+      "sekundy": 15.0
+    },
+    "amb_radio": {
+      "opis": "humming radio transmitter room, electrical buzz",
+      "sekundy": 10.0
+    }
+  }
+}

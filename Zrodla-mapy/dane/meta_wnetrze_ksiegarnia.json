@@ -1,0 +1,144 @@
+{
+"punkty": [
+{
+"n": "spawn_ksiegarnia",
+"p": [
+0.0,
+3.4,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "ksiegarnia_drzwi_wyjscie",
+"p": [
+0.0,
+4.0,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "ksiegarnia_zofia",
+"p": [
+2.9,
+0.8,
+0.0
+],
+"yaw": 270.0
+},
+{
+"n": "ksiegarnia_kasa",
+"p": [
+1.85,
+2.3,
+0.95
+],
+"yaw": 270.0
+},
+{
+"n": "ksiegarnia_mebel_stol",
+"p": [
+-1.3,
+0.8,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "ksiegarnia_mebel_drabina",
+"p": [
+-3.2,
+0.2,
+0.0
+],
+"yaw": 270.0
+},
+{
+"n": "ksiegarnia_zaplecze",
+"p": [
+0.0,
+-3.8,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "ksiegarnia_zaplecze_wejscie",
+"p": [
+2.65,
+-2.0,
+0.0
+],
+"yaw": 180.0
+}
+],
+"swiatla": [
+{
+"p": [
+-0.4,
+3.0,
+2.35
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.4,
+"typ": "point"
+},
+{
+"p": [
+-0.4,
+-0.6,
+2.35
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.4,
+"typ": "point"
+},
+{
+"p": [
+2.6,
+0.8,
+2.25
+],
+"kolor": "#ffd59a",
+"zasieg": 4.0,
+"moc": 1.0,
+"typ": "point"
+},
+{
+"p": [
+-3.5,
+-1.4,
+3.15
+],
+"kolor": "#ffc77a",
+"zasieg": 3.5,
+"moc": 0.6,
+"typ": "point"
+},
+{
+"p": [
+-3.5,
+1.3,
+3.15
+],
+"kolor": "#ffc77a",
+"zasieg": 3.5,
+"moc": 0.6,
+"typ": "point"
+},
+{
+"p": [
+0.0,
+-3.8,
+2.4
+],
+"kolor": "#ffb866",
+"zasieg": 5.0,
+"moc": 0.9,
+"typ": "point"
+}
+]
+}

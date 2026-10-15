@@ -1,0 +1,293 @@
+{
+  "menu": {
+    "tytul": "SENDER GLEIWITZ",
+    "podtytul": "31.08.1939",
+    "nowa_gra": "Nowa gra",
+    "kontynuuj": "Kontynuuj",
+    "tryb_historyczny": "Tryb historyczny",
+    "tryb_historyczny_opis": "Przejdź przez Gleiwitz z 1939 roku we własnym tempie i zbieraj karty historii.",
+    "ustawienia": "Ustawienia",
+    "wyjscie": "Wyjście",
+    "pauza": "Pauza",
+    "wznow": "Wznów",
+    "menu_glowne": "Menu główne",
+    "wczytywanie": "Wczytywanie"
+  },
+  "ostrzezenie_start": "Ta gra opowiada o prawdziwych wydarzeniach z 31 sierpnia 1939 roku w Gliwicach. Agent Jan Wrona „Kruk” jest postacią fikcyjną. Pozostałe miejsca, daty i nazwiska pochodzą z historii. W grze nie pokazujemy symboli nazistowskich. Franciszek Honiok i inne ofiary tamtych dni zginęli naprawdę, dlatego mówimy o nich z szacunkiem.",
+  "akty": [
+    {
+      "id": "a1",
+      "tytul": "Dworzec i hotel",
+      "godzina": "15:30",
+      "miejsce": "Gleiwitz, dworzec i Ring",
+      "wstep": "Gliwice leżą po niemieckiej stronie granicy, kilka kilometrów od Polski. Kruk wysiada z pociągu jako Johann Krause, kupiec z Bytomia, a ma tylko jeden adres: księgarnię na Ringu."
+    },
+    {
+      "id": "a2",
+      "tytul": "Przez miasto",
+      "godzina": "16:00–19:45",
+      "miejsce": "Gleiwitz, Wilhelmstraße i Kłodnica",
+      "wstep": "„Inżynierowie z Berlina” wyjeżdżają spod hotelu. Kruk musi iść za nimi przez miasto tak, żeby nikt go nie zauważył."
+    },
+    {
+      "id": "a3",
+      "tytul": "Radiostacja",
+      "godzina": "20:00",
+      "miejsce": "Sender Gleiwitz, Tarnowitzer Landstraße",
+      "wstep": "Ludzie w cywilnych ubraniach wchodzą do radiostacji i udają polskich powstańców. Kruk nie zatrzyma tego, co się stanie, ale może to zobaczyć i sfotografować."
+    },
+    {
+      "id": "a4",
+      "tytul": "Konserwa i ucieczka",
+      "godzina": "20:10",
+      "miejsce": "Teren radiostacji i pola na wschód",
+      "wstep": "Przy wejściu został człowiek, którego napastnicy nazywali „konserwą”. Kruk ma na filmie wszystko, co widział, ale film musi jeszcze dotrzeć do Katowic."
+    }
+  ],
+  "podpowiedzi": {
+    "ruch": "{WASD} ruch",
+    "bieg": "{Shift} bieg",
+    "skradanie": "{C} skradanie",
+    "interakcja": "{E} użyj",
+    "aparat": "{PPM} podnieś aparat",
+    "zdjecie_zrobione": "Zdjęcie zrobione",
+    "dziennik": "{J} dziennik",
+    "mapa": "{M} mapa",
+    "ukryj_sie": "{E} ukryj się",
+    "wykryty": "Zauważyli cię",
+    "zgubiles_poscig": "Zgubiłeś pościg",
+    "drzwi_zamkniete": "Zamknięte",
+    "podnies": "{E} podnieś",
+    "rozmawiaj": "{E} rozmawiaj",
+    "zapisano": "Zapisano grę"
+  },
+  "przedmioty": [
+    {
+      "id": "OB_aparat",
+      "nazwa": "Leica",
+      "opis": "Mały aparat od Zofii, mieści się w kieszeni marynarki. Słowu nikt nie uwierzy, a zdjęciu tak."
+    },
+    {
+      "id": "OB_film",
+      "nazwa": "Naświetlony film",
+      "opis": "Jedna rolka filmu. Jest na niej wszystko, co Kruk zobaczył w Gleiwitz."
+    },
+    {
+      "id": "OB_lista_ubran",
+      "nazwa": "Lista zaopatrzenia",
+      "opis": "Kartka z hotelowego pokoju: „Polskie ubrania cywilne, siedem kompletów”. Inżynierom z Berlina nie są potrzebne polskie ubrania."
+    },
+    {
+      "id": "OB_mapa_radiostacji",
+      "nazwa": "Plan Gleiwitz",
+      "opis": "Radiostacja przy Tarnowitzer Landstraße zakreślona na czerwono, obok ołówkiem dopisana godzina 20:00."
+    },
+    {
+      "id": "OB_kartka_grubera",
+      "nazwa": "Kartka technika Grubera",
+      "opis": "Notatka przypięta przy szafie z aparaturą: linia, wzmacniacz, zasilanie. W tej kolejności."
+    },
+    {
+      "id": "OB_rozklad_transportow",
+      "nazwa": "Rozkład transportów",
+      "opis": "Odręczna rozpiska od kolejarza. Godziny nocnych pociągów wojskowych jadących na wschód."
+    },
+    {
+      "id": "OB_amunicja_skrytka",
+      "nazwa": "Naboje do Visa",
+      "opis": "Osiem naboi ze skrytki Ekspozytury pod mostem na Kłodnicy. Lepiej, żeby zostały w magazynku."
+    },
+    {
+      "id": "OB_kartka_konserve",
+      "nazwa": "Kartka z nazwiskiem",
+      "opis": "„Honiok, Franz. Konserve.” Dla nich był rekwizytem. Był człowiekiem z Łubia."
+    },
+    {
+      "id": "OB_klucz_piwnicy",
+      "nazwa": "Klucz do piwnicy",
+      "opis": "Ciężki klucz z kółkiem. Za drzwiami piwnicy zamknięto pracowników radiostacji."
+    },
+    {
+      "id": "OB_noz_do_kabli",
+      "nazwa": "Nóż monterski",
+      "opis": "Krótki nóż z drewnianą rączką, taki, jakim technicy zdejmują izolację z przewodów."
+    },
+    {
+      "id": "OB_latarka",
+      "nazwa": "Latarka kieszonkowa",
+      "opis": "Płaska latarka na baterię. Świeci słabo, ale w ciemnej piwnicy to wystarczy."
+    },
+    {
+      "id": "OB_bilet_kolejowy",
+      "nazwa": "Bilet kolejowy",
+      "opis": "Beuthen – Gleiwitz, trzecia klasa. Kupiec z Bytomia nie ma powodu podróżować inaczej."
+    },
+    {
+      "id": "OB_gazeta",
+      "nazwa": "Oberschlesischer Wanderer",
+      "opis": "Gliwicka gazeta z 31 sierpnia 1939. Na pierwszej stronie oskarżenia pod adresem Polski i coraz więcej wiadomości z granicy."
+    },
+    {
+      "id": "OB_papierosy",
+      "nazwa": "Papierosy",
+      "opis": "Paczka kupiona na dworcu. Kruk nie pali, ale poczęstunek papierosem często zaczyna rozmowę."
+    },
+    {
+      "id": "OB_legitymacja",
+      "nazwa": "Papiery Johanna Krause",
+      "opis": "Fałszywe dokumenty przygotowane w Katowicach. Dopóki nikt nie zadzwoni do Bytomia, są w porządku."
+    }
+  ],
+  "misje_poboczne": [
+    {
+      "id": "pob_kolejarz",
+      "tytul": "Nocne pociągi",
+      "opis": "Kolejarz na peronie widzi każdej nocy, co jedzie na wschód. Boi się, ale chce pomóc.",
+      "cel": "Porozmawiaj z kolejarzem na peronie",
+      "nagroda": "Rozkład transportów"
+    },
+    {
+      "id": "pob_fotograf",
+      "tytul": "Druga kopia",
+      "opis": "Fotograf może wywołać film w ciemni, ale od rana na jego zapleczu siedzi człowiek z Gestapo.",
+      "cel": "Przekaż film fotografowi",
+      "nagroda": "Kopia zdjęć ukryta w zakładzie"
+    },
+    {
+      "id": "pob_skrytka",
+      "tytul": "Skrytka pod mostem",
+      "opis": "Ekspozytura zostawiła pod mostem na Kłodnicy zapas dla swoich ludzi. Trzeci kamień od lewej.",
+      "cel": "Zabierz naboje spod mostu",
+      "nagroda": "Osiem naboi do Visa"
+    }
+  ],
+  "dziennik_wpisy": [
+    {
+      "id": "dz_1",
+      "tekst": "15:30, dworzec. Gleiwitz. Jestem Johann Krause, kupiec z Bytomia. Centrala wie, że Niemcy coś szykują, ale nie wie gdzie."
+    },
+    {
+      "id": "dz_2",
+      "tekst": "Księgarnia na Ringu. Zofia mówi o „inżynierach z Berlina” w Haus Oberschlesien. Szef nazywa się Naujocks. Dostałem Leicę."
+    },
+    {
+      "id": "dz_3",
+      "tekst": "Pokój na piętrze. Mapa z radiostacją zakreśloną na czerwono i godziną 20:00. Na liście polskie ubrania cywilne, siedem kompletów."
+    },
+    {
+      "id": "dz_4",
+      "tekst": "Telefon z Berlina do Naujocksa, a w nim: „Großmutter gestorben”. To hasło. Zaczynają dziś wieczorem."
+    },
+    {
+      "id": "dz_5",
+      "tekst": "Czarne auto jedzie na północ, w stronę Tarnowitzer Landstraße. Idę za nim, trzymam się z daleka."
+    },
+    {
+      "id": "dz_6",
+      "tekst": "19:45, zagajnik. Przywieźli nieprzytomnego mężczyznę i nazywają go „konserwą”. Jest ich sześciu, a ja jeden."
+    },
+    {
+      "id": "dz_7",
+      "tekst": "20:00, radiostacja. Przebrani za Polaków nadali komunikat przez mikrofon burzowy. Pracownicy siedzieli zamknięci w piwnicy."
+    },
+    {
+      "id": "dz_8",
+      "tekst": "Przy wejściu został Franciszek Honiok. Film oddałem Sowie, który ma dotrzeć do Katowic przed północą. Rano zacznie się wojna."
+    }
+  ],
+  "ekran_wczytywania": [
+    "Wieża radiostacji w Gliwicach ma ok. 111 metrów i jest zbudowana z drewna modrzewiowego. Stoi od 1935 roku.",
+    "Po podziale Górnego Śląska w 1922 roku Gliwice zostały w Niemczech, a granica z Polską biegła kilka kilometrów od miasta.",
+    "Napastnicy nie umieli uruchomić głównego nadajnika. Komunikat nadali przez mikrofon burzowy, który służył do ostrzeżeń przed burzą.",
+    "Komunikat z radiostacji był słyszalny tylko w okolicy, ale niemiecka propaganda i tak przedstawiła napad jako polski atak.",
+    "Napadem dowodził Alfred Naujocks, oficer SD, czyli służby bezpieczeństwa SS.",
+    "Akcję zlecił Reinhard Heydrich, szef SD.",
+    "W planach napastników ofiary, które miały udawać zabitych „polskich napastników”, nazywano „Konserven”, czyli „konserwy”.",
+    "Franciszek Honiok był powstańcem śląskim z Łubia (Hohenlieben). Zatrzymano go 30 sierpnia 1939, a następnego wieczoru zabito przy radiostacji.",
+    "Napad na radiostację był częścią Operacji Himmler. Tej samej nocy upozorowano też ataki w Stodołach (Hochlinden) i Byczynie (Pitschen).",
+    "1 września 1939 o 4:45 pancernik Schleswig-Holstein otworzył ogień do Westerplatte. Załoga broniła się przez siedem dni.",
+    "Dawna Wilhelmstraße, przy której stał hotel Haus Oberschlesien, to dzisiejsza ulica Zwycięstwa w Gliwicach.",
+    "Radiostację można dziś zwiedzać. Muzeum Radiostacja Gliwice mieści się przy ul. Tarnogórskiej 129."
+  ],
+  "napisy_koncowe": [
+    "SENDER GLEIWITZ 31.08.1939",
+    "",
+    "Zespół",
+    "Nataniel – mapa i dialogi",
+    "Julek – Unity",
+    "Kuba – postacie",
+    "Borys – przedmioty",
+    "",
+    "Głosy postaci wygenerowano w ElevenLabs.",
+    "",
+    "Dziękujemy",
+    "organizatorom hackatonu",
+    "naszym nauczycielom",
+    "wszystkim, którzy testowali grę",
+    "",
+    "Źródła historyczne",
+    "Muzeum w Gliwicach – Radiostacja Gliwice",
+    "Zeznanie Alfreda Naujocksa, Norymberga, 1945",
+    "",
+    "Jan Wrona „Kruk” jest postacią fikcyjną.",
+    "Franciszek Honiok żył naprawdę.",
+    "",
+    "Pamięci Franciszka Honioka",
+    "i wszystkich ofiar II wojny światowej."
+  ],
+  "ui": {
+    "czas_kable": "Linia wzmacniacza: {s} s",
+    "zdjecia": "Zdjęcia: {n}/{max}",
+    "karty": "Karty historii: {n}/6",
+    "cel": "Cel",
+    "nowy_cel": "Nowy cel",
+    "cel_wykonany": "Cel wykonany",
+    "misja_poboczna": "Misja poboczna",
+    "misja_poboczna_ukonczona": "Misja poboczna ukończona",
+    "karta_odblokowana": "Nowa karta historii",
+    "nowy_wpis": "Nowy wpis w dzienniku",
+    "przedmiot_otrzymany": "Otrzymano: {nazwa}",
+    "ekwipunek": "Ekwipunek",
+    "dziennik": "Dziennik",
+    "mapa": "Mapa",
+    "godzina": "Godzina: {hh}:{mm}",
+    "ukryty": "Ukryty",
+    "podejrzenie": "Ktoś coś zauważył",
+    "poscig": "Pościg",
+    "naboje": "Naboje: {n}",
+    "glosnosc": "Głośność",
+    "muzyka": "Muzyka",
+    "glosy": "Głosy",
+    "napisy": "Napisy",
+    "czulosc_myszy": "Czułość myszy",
+    "pelny_ekran": "Pełny ekran",
+    "jakosc": "Jakość grafiki",
+    "zastosuj": "Zastosuj",
+    "wstecz": "Wstecz",
+    "tak": "Tak",
+    "nie": "Nie",
+    "potwierdz_wyjscie": "Wyjść z gry? Niezapisany postęp przepadnie.",
+    "potwierdz_menu": "Wrócić do menu głównego?",
+    "sprobuj_ponownie": "Spróbuj ponownie",
+    "od_ostatniego_zapisu": "Wczytaj ostatni zapis",
+    "koniec": "Koniec",
+    "pomin": "{Spacja} pomiń"
+  },
+  "_do_sprawdzenia": [
+    "Legitymacja: w zleceniu papiery są na nazwisko Johann Krause, a w dialogach (a1_intro, pob_fotograf_gestapo) Kruk przedstawia się jako Johann Krause. Zostawiłem Rabe, tak jak w zleceniu. Najprościej będzie zmienić nazwę przedmiotu na „Papiery Johanna Krause”, bo inaczej trzeba nagrać dialogi od nowa.",
+    "Gazeta: nie podaję konkretnych nagłówków z 31.08.1939, bo nie mam ich pewnych. Opis jest ogólny.",
+    "Napisy końcowe: wpisałem tylko te źródła, które na pewno istnieją. Podmieńcie je na te, z których naprawdę korzystaliście. Linię o ElevenLabs usuńcie, jeśli regulamin hackatonu tego nie wymaga.",
+    "Tryb historyczny: opisałem go jako swobodne zwiedzanie i zbieranie kart. Jeśli działa inaczej, trzeba poprawić tryb_historyczny_opis."
+  ],
+  "cele_hud": [
+    "Wejdź na teren radiostacji od tyłu",
+    "Sfotografuj przebranych napastników",
+    "Znajdź kartkę technika Grubera",
+    "Odepnij kable w 90 sekund",
+    "Uwolnij pracowników z piwnicy",
+    "Udokumentuj, co zostawili przy wejściu",
+    "Uciekaj na wschód, do stodoły",
+    "Nie daj się zauważyć",
+    "Przekaż film Sowie"
+  ]
+}

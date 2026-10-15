@@ -1,0 +1,316 @@
+{
+"punkty": [
+{
+"n": "hotel_latarnia_1",
+"p": [
+-6.6,
+0.0,
+3.6
+],
+"yaw": 0.0
+},
+{
+"n": "hotel_latarnia_2",
+"p": [
+0.0,
+0.0,
+3.6
+],
+"yaw": 0.0
+},
+{
+"n": "hotel_latarnia_3",
+"p": [
+6.6,
+0.0,
+3.6
+],
+"yaw": 0.0
+},
+{
+"n": "spawn_hotel_wejscie",
+"p": [
+0.0,
+5.3,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "hotel_drzwi_wyjscie",
+"p": [
+0.0,
+6.0,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "hotel_recepcja",
+"p": [
+-11.8,
+0.0,
+0.0
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_telefon",
+"p": [
+-9.82,
+4.6,
+1.45
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_kolumna",
+"p": [
+-4.5,
+2.05,
+0.0
+],
+"yaw": 0.0
+},
+{
+"n": "hotel_patrol_1",
+"p": [
+-6.5,
+4.8,
+0.0
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_patrol_2",
+"p": [
+6.0,
+-4.6,
+0.0
+],
+"yaw": 270.0
+},
+{
+"n": "hotel_schody_dol",
+"p": [
+9.0,
+2.0,
+0.0
+],
+"yaw": 180.0
+},
+{
+"n": "hotel_schody_gora",
+"p": [
+9.0,
+-5.0,
+2.5
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_pokoj_drzwi",
+"p": [
+12.2,
+2.0,
+2.5
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_pokoj_biurko",
+"p": [
+16.5,
+3.9,
+2.5
+],
+"yaw": 270.0
+},
+{
+"n": "hotel_pokoj_mapa",
+"p": [
+16.5,
+3.9,
+3.2800000000000002
+],
+"yaw": 270.0
+},
+{
+"n": "hotel_pokoj_lozko",
+"p": [
+13.4,
+2.8,
+2.5
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_pokoj_lista",
+"p": [
+13.1,
+4.75,
+3.7
+],
+"yaw": 180.0
+},
+{
+"n": "hotel_mebel_kominek_1",
+"p": [
+-1.5,
+-4.6,
+0.0
+],
+"yaw": 160.0
+},
+{
+"n": "hotel_mebel_kominek_2",
+"p": [
+1.5,
+-4.6,
+0.0
+],
+"yaw": 200.0
+},
+{
+"n": "hotel_mebel_salon_1",
+"p": [
+-7.0,
+1.5,
+0.0
+],
+"yaw": 90.0
+},
+{
+"n": "hotel_mebel_salon_2",
+"p": [
+6.5,
+4.6,
+0.0
+],
+"yaw": 270.0
+}
+],
+"swiatla": [
+{
+"p": [
+-6.6,
+0.0,
+3.5
+],
+"kolor": "#ffcf8a",
+"zasieg": 11.0,
+"moc": 2.6,
+"typ": "point"
+},
+{
+"p": [
+0.0,
+0.0,
+3.5
+],
+"kolor": "#ffcf8a",
+"zasieg": 11.0,
+"moc": 2.6,
+"typ": "point"
+},
+{
+"p": [
+6.6,
+0.0,
+3.5
+],
+"kolor": "#ffcf8a",
+"zasieg": 11.0,
+"moc": 2.6,
+"typ": "point"
+},
+{
+"p": [
+-11.6,
+0.0,
+3.0
+],
+"kolor": "#ffc77a",
+"zasieg": 6.0,
+"moc": 1.6,
+"typ": "point"
+},
+{
+"p": [
+0.0,
+-5.6,
+2.2
+],
+"kolor": "#ffb35c",
+"zasieg": 5.0,
+"moc": 1.2,
+"typ": "point"
+},
+{
+"p": [
+-0.1,
+6.2,
+2.7
+],
+"kolor": "#ffcf8a",
+"zasieg": 6.0,
+"moc": 1.0,
+"typ": "point"
+},
+{
+"p": [
+8.9,
+-2.0,
+3.8
+],
+"kolor": "#ffcf8a",
+"zasieg": 7.0,
+"moc": 1.4,
+"typ": "point"
+},
+{
+"p": [
+10.6,
+-5.0,
+4.5
+],
+"kolor": "#ffc77a",
+"zasieg": 5.0,
+"moc": 1.0,
+"typ": "point"
+},
+{
+"p": [
+10.6,
+-1.5,
+4.5
+],
+"kolor": "#ffc77a",
+"zasieg": 5.0,
+"moc": 1.0,
+"typ": "point"
+},
+{
+"p": [
+10.6,
+2.5,
+4.5
+],
+"kolor": "#ffc77a",
+"zasieg": 5.0,
+"moc": 1.0,
+"typ": "point"
+},
+{
+"p": [
+14.7,
+2.0,
+4.55
+],
+"kolor": "#ffc77a",
+"zasieg": 7.0,
+"moc": 1.4,
+"typ": "point"
+}
+]
+}
