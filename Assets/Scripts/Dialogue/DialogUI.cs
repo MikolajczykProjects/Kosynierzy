@@ -19,6 +19,44 @@ namespace Kosynierzy
         UnityEngine.UI.Image nameRule;
         Dialog.Line shownLine;
 
+        // floating bark subtitles (3D barks): text above the speaker's position, fades after ~2.5 s + text length
+        struct BarkLabel { public string Text; public Vector3 Pos; public float Until; public bool Thought; }
+        readonly System.Collections.Generic.List<BarkLabel> barks = new();
+        GUIStyle barkStyle;
+
+        void OnEnable() => Dialog.BarkShown += OnBark;
+        void OnDisable() => Dialog.BarkShown -= OnBark;
+
+        void OnBark(Dialog.Line line, Vector3 pos)
+        {
+            string t = string.IsNullOrEmpty(line.Subtitle) ? line.Text : line.Subtitle;
+            if (string.IsNullOrEmpty(t)) return;
+            barks.Add(new BarkLabel { Text = t, Pos = pos + Vector3.up * 2.1f, Until = Time.unscaledTime + 2.5f + t.Length * 0.04f, Thought = line.Thought });
+            if (barks.Count > 4) barks.RemoveAt(0);
+        }
+
+        void OnGUI()
+        {
+            if (barks.Count == 0 || Camera.main == null) return;
+            if (barkStyle == null)
+            {
+                barkStyle = new GUIStyle(GUI.skin.label) { fontSize = 20, alignment = TextAnchor.MiddleCenter, wordWrap = true };
+                barkStyle.normal.textColor = new Color(0.93f, 0.92f, 0.88f);
+            }
+            for (int i = barks.Count - 1; i >= 0; i--)
+            {
+                var b = barks[i];
+                if (Time.unscaledTime > b.Until) { barks.RemoveAt(i); continue; }
+                var sp = Camera.main.WorldToScreenPoint(b.Pos);
+                if (sp.z <= 0f || sp.z > 40f) continue;
+                var r = new Rect(sp.x - 220f, Screen.height - sp.y - 30f, 440f, 60f);
+                var shadow = new Rect(r.x + 1.5f, r.y + 1.5f, r.width, r.height);
+                var old = barkStyle.normal.textColor;
+                barkStyle.normal.textColor = new Color(0f, 0f, 0f, 0.85f); GUI.Label(shadow, b.Text, barkStyle);
+                barkStyle.normal.textColor = old; GUI.Label(r, b.Text, barkStyle);
+            }
+        }
+
         static Color SpeakerColor(string who) => who switch
         {
             "kruk" => UiTheme.LightOlive,

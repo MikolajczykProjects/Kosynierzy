@@ -161,7 +161,7 @@ namespace Kosynierzy
 
                 var clip = string.IsNullOrEmpty(line.Audio) ? null : Resources.Load<AudioClip>(AudioPath(line.Audio));
                 string shown = string.IsNullOrEmpty(line.Subtitle) ? line.Text : line.Subtitle;
-                float duration = clip != null ? clip.length + 0.25f : Mathf.Max(2f, (shown?.Length ?? 0) * 0.06f);
+                float duration = clip != null ? clip.length + 0.3f : Mathf.Max(2f, (shown?.Length ?? 0) * 0.06f);
                 if (clip != null) voice.PlayOneShot(clip);
 
                 float end = Time.unscaledTime + duration;
