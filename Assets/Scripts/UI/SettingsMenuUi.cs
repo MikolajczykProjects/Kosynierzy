@@ -16,21 +16,21 @@ namespace Kosynierzy
     {
         public const float ReferenceWidth = 1920f;
         public const float ReferenceHeight = 1080f;
-        public const float RowHeight = 50f;
+        public const float RowHeight = 56f;
 
-        public static readonly Color DimColor = UiTheme.WithAlpha(UiTheme.Dark, 0.82f);
-        public static readonly Color PanelColor = UiTheme.Paper;
-        public static readonly Color TextColor = UiTheme.Ink;
-        public static readonly Color MutedTextColor = UiTheme.FadedInk;
-        public static readonly Color AccentColor = UiTheme.Olive;
-        public static readonly Color TrackColor = UiTheme.WithAlpha(UiTheme.Ink, 0.22f);
+        public static readonly Color DimColor = MenuV2.Wash;
+        public static readonly Color PanelColor = MenuV2.Panel;
+        public static readonly Color TextColor = MenuV2.Bone;
+        public static readonly Color MutedTextColor = MenuV2.Bone2;
+        public static readonly Color AccentColor = MenuV2.Bone;
+        public static readonly Color TrackColor = MenuV2.Hair;
 
         static Font fontOverride;
 
-        /// <summary>Body font for every label (typewriter); set to override for all menus.</summary>
+        /// <summary>Body font for every label (UI v2: Segoe UI; Bahnschrift via MenuV2.Display); set to override for all menus.</summary>
         public static Font Font
         {
-            get => fontOverride != null ? fontOverride : UiTheme.Typewriter;
+            get => fontOverride != null ? fontOverride : MenuV2.Body;
             set => fontOverride = value;
         }
 
@@ -191,11 +191,7 @@ namespace Kosynierzy
         /// <summary>Full-screen dark dim + centred paper panel with a heading rule. Returns the paper (content area).</summary>
         public static RectTransform CreateDimmedPanel(Transform canvasRoot, Vector2 size)
         {
-            var dim = CreateImage("Dim", canvasRoot, DimColor, true);
-            Stretch(dim.rectTransform);
-            var paper = UiTheme.CreatePaper(canvasRoot, "Panel", size, out var root);
-            root.anchoredPosition = Vector2.zero;
-            return paper;
+            return MenuV2.CreateDimmedPanel(canvasRoot, size);
         }
 
         /// <summary>Buttons on paper: faint ink wash, olive when selected, stamp red when pressed.</summary>
@@ -224,11 +220,11 @@ namespace Kosynierzy
 
         public static UnityEngine.UI.ColorBlock RowColors() => new()
         {
-            normalColor = UiTheme.WithAlpha(UiTheme.Ink, 0.04f),
-            highlightedColor = UiTheme.WithAlpha(UiTheme.Olive, 0.16f),
-            pressedColor = UiTheme.WithAlpha(UiTheme.StampRed, 0.3f),
-            selectedColor = UiTheme.WithAlpha(UiTheme.Olive, 0.3f),
-            disabledColor = UiTheme.WithAlpha(UiTheme.Ink, 0.02f),
+            normalColor = Color.clear,
+            highlightedColor = UiTheme.WithAlpha(MenuV2.Bone, 0.06f),
+            pressedColor = UiTheme.WithAlpha(MenuV2.Bone, 0.14f),
+            selectedColor = UiTheme.WithAlpha(MenuV2.Bone, 0.10f),
+            disabledColor = Color.clear,
             colorMultiplier = 1f,
             fadeDuration = 0.08f,
         };
@@ -237,28 +233,8 @@ namespace Kosynierzy
         public static UnityEngine.UI.Button CreateButton(Transform parent, string label, float height, int fontSize,
             UnityEngine.Events.UnityAction onClick, out UnityEngine.UI.Text text, bool dark = false)
         {
-            var rt = CreateRect(label, parent);
-            var layout = rt.gameObject.AddComponent<UnityEngine.UI.LayoutElement>();
-            layout.preferredHeight = height;
-            layout.minHeight = height;
-
-            var image = rt.gameObject.AddComponent<UnityEngine.UI.Image>();
-            image.color = Color.white; // tinted by the button's ColorBlock
-            var button = rt.gameObject.AddComponent<UnityEngine.UI.Button>();
-            button.targetGraphic = image;
-            button.colors = dark ? DarkButtonColors() : ButtonColors();
-
-            Color ink = dark ? UiTheme.MutedWhite : UiTheme.Ink;
-            var rule = CreateImage("Rule", rt, UiTheme.WithAlpha(ink, 0.35f), false);
-            rule.rectTransform.anchorMin = new Vector2(0f, 0f);
-            rule.rectTransform.anchorMax = new Vector2(1f, 0f);
-            rule.rectTransform.pivot = new Vector2(0.5f, 0f);
-            rule.rectTransform.sizeDelta = new Vector2(0f, 1.5f);
-
-            text = CreateText("Label", rt, (label ?? "").ToUpperInvariant(), fontSize, TextAnchor.MiddleCenter, FontStyle.Bold, ink);
-            Stretch(text.rectTransform, 12f, 12f);
-            if (onClick != null) button.onClick.AddListener(onClick);
-            return button;
+            // UI v2: every generic button is an outlined caps button (dark menus only now, so "dark" no longer matters).
+            return MenuV2.CreateButton(parent, label ?? "", MenuV2.Kind.Outline, height, fontSize, onClick, out text);
         }
 
         /// <summary>Vertical stack (VerticalLayoutGroup) that sizes children by their LayoutElement height.</summary>
@@ -286,19 +262,15 @@ namespace Kosynierzy
             background.color = Color.white; // tinted by the row control's ColorBlock
             background.raycastTarget = true;
 
-            var text = CreateText("Label", row, label, 24, TextAnchor.MiddleLeft, FontStyle.Normal, UiTheme.Ink);
+            var text = MenuV2.Label("Label", row, label, 22, TextAnchor.MiddleLeft, MenuV2.Bone, isBody: true);
             Anchor(text.rectTransform, 0f, 0f, 0.47f, 1f);
-            text.rectTransform.offsetMin = new Vector2(22f, 0f);
+            text.rectTransform.offsetMin = new Vector2(16f, 0f);
 
-            var rule = CreateImage("Rule", row, UiTheme.WithAlpha(UiTheme.Ink, 0.18f), false);
-            rule.rectTransform.anchorMin = new Vector2(0f, 0f);
-            rule.rectTransform.anchorMax = new Vector2(1f, 0f);
-            rule.rectTransform.pivot = new Vector2(0.5f, 0f);
-            rule.rectTransform.sizeDelta = new Vector2(0f, 1f);
+            MenuV2.HairlineBottom(row);
 
             control = CreateRect("Control", row);
             Anchor(control, 0.49f, 0f, 1f, 1f);
-            control.offsetMax = new Vector2(-22f, 0f);
+            control.offsetMax = new Vector2(-16f, 0f);
             return row;
         }
 
@@ -307,11 +279,11 @@ namespace Kosynierzy
         {
             var row = CreateRow(parent, label, out var background, out var control);
 
-            var left = CreateText("Left", control, "‹", 36, TextAnchor.MiddleLeft, FontStyle.Bold, UiTheme.Olive);
-            Anchor(left.rectTransform, 0f, 0f, 0.15f, 1f);
-            var right = CreateText("Right", control, "›", 36, TextAnchor.MiddleRight, FontStyle.Bold, UiTheme.Olive);
-            Anchor(right.rectTransform, 0.85f, 0f, 1f, 1f);
-            var value = CreateText("Value", control, "", 24, TextAnchor.MiddleCenter, FontStyle.Bold, UiTheme.Ink);
+            var left = MenuV2.Chevron(control, false, MenuV2.Bone2);
+            Place(left, new Vector2(0f, 0.5f), new Vector2(10f, 0f), new Vector2(16f, 16f));
+            var right = MenuV2.Chevron(control, true, MenuV2.Bone2);
+            Place(right, new Vector2(1f, 0.5f), new Vector2(-10f, 0f), new Vector2(16f, 16f));
+            var value = MenuV2.Label("Value", control, "", 26, TextAnchor.MiddleCenter, MenuV2.Bone);
             Anchor(value.rectTransform, 0.12f, 0f, 0.88f, 1f);
 
             var stepper = row.gameObject.AddComponent<SettingsMenuStepper>();
@@ -328,23 +300,23 @@ namespace Kosynierzy
             CreateRow(parent, label, out var background, out var control);
 
             var sliderRt = CreateRect("Slider", control);
-            Anchor(sliderRt, 0.02f, 0.38f, 0.74f, 0.62f);
+            Anchor(sliderRt, 0.02f, 0.455f, 0.74f, 0.545f);
 
             var track = CreateImage("Track", sliderRt, TrackColor, true);
             Stretch(track.rectTransform);
 
             var fillArea = CreateRect("FillArea", sliderRt);
             Stretch(fillArea);
-            var fill = CreateImage("Fill", fillArea, UiTheme.Olive, false);
+            var fill = CreateImage("Fill", fillArea, MenuV2.Bone, false);
             Stretch(fill.rectTransform);
 
             var handleArea = CreateRect("HandleArea", sliderRt);
-            Stretch(handleArea, 7f, 7f);
-            var handle = CreateImage("Handle", handleArea, UiTheme.Ink, true);
+            Stretch(handleArea, 4f, 4f);
+            var handle = CreateImage("Handle", handleArea, MenuV2.Bone, true);
             // The slider drives the anchors (x = value, y = 0..1); sizeDelta.y makes the handle taller than the track.
-            handle.rectTransform.sizeDelta = new Vector2(10f, 18f);
+            handle.rectTransform.sizeDelta = new Vector2(8f, 24f);
 
-            var valueText = CreateText("Value", control, "", 24, TextAnchor.MiddleRight, FontStyle.Bold, UiTheme.Ink);
+            var valueText = MenuV2.Label("Value", control, "", 26, TextAnchor.MiddleRight, MenuV2.Bone);
             Anchor(valueText.rectTransform, 0.76f, 0f, 1f, 1f);
 
             var slider = sliderRt.gameObject.AddComponent<UnityEngine.UI.Slider>();

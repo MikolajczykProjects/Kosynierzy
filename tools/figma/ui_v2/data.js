@@ -1,0 +1,30 @@
+// Content for the UI v2 mock frames. Numbers mirror Assets/Scripts/Weapons/WeaponCatalog.cs (15.10.2026).
+"use strict";
+const WEAPONS = {
+  vis: { id: "vis", icon: "w_vis", name: "Vis wz. 35", cal: "9 mm Parabellum", slot: 1, kind: "pistol",
+    desc: "Polski pistolet służbowy. Celny i niezawodny, ale słychać go z daleka.", tags: ["Celny", "Głośny"],
+    nums: [["34", "obrażenia"], ["400", "strz./min"], ["8", "nabojów"], ["30 m", "słychać"]], rel: [0.85, 0.75, 0.9, 0.5] },
+  browning: { id: "browning", icon: "w_browning", name: "Browning wz. 1922", cal: "7,65 mm", slot: 1, kind: "pistol",
+    desc: "Mały pistolet kieszonkowy. Słabszy, ale cichszy i szybki w ręku.", tags: ["Szybki", "Cichszy"],
+    nums: [["26", "obrażenia"], ["480", "strz./min"], ["9", "nabojów"], ["20 m", "słychać"]], rel: [0.65, 0.9, 1, 0.33] },
+  nagant: { id: "nagant", icon: "w_nagant", name: "Nagant wz. 1930", cal: "7,62 mm", slot: 1, kind: "pistol",
+    desc: "Rewolwer z gazoszczelnym bębnem — najcichszy strzał. Długie ładowanie nabój po naboju.", tags: ["Najcichszy", "Mocny"],
+    nums: [["40", "obrażenia"], ["260", "strz./min"], ["7", "nabojów"], ["12 m", "słychać"]], rel: [1, 0.55, 0.78, 0.2] },
+  bagnet: { id: "bagnet", icon: "w_bagnet", name: "Bagnet wz. 1924", cal: "ostrze 25 cm", slot: 3, kind: "melee",
+    desc: "Długie ostrze — cicha likwidacja z większej odległości.", tags: ["Cichy", "Dłuższy zasięg"],
+    nums: [["1,9 m", "zasięg"], ["0,30 s", "likwidacja"], ["0 m", "słychać"]], rel: [1, 0.6, 1] },
+  noz: { id: "noz", icon: "w_noz", name: "Nóż sprężynowy", cal: "ostrze 11 cm", slot: 3, kind: "melee",
+    desc: "Krótki i szybki — likwidacja trwa chwilę krócej, ale trzeba podejść bliżej.", tags: ["Cichy", "Szybszy"],
+    nums: [["1,4 m", "zasięg"], ["0,18 s", "likwidacja"], ["0 m", "słychać"]], rel: [0.74, 1, 1] },
+  wz29: { id: "wz29", icon: "w_wz29", name: "Karabinek wz. 29", cal: "7,92 mm Mauser", slot: 2, kind: "rifle",
+    desc: "Polski karabinek powtarzalny. Zabójczo celny, huk słychać w całej okolicy.", tags: ["Celny", "Bardzo głośny"],
+    nums: [["100", "obrażenia"], ["55", "strz./min"], ["5", "nabojów"], ["60 m", "słychać"]], rel: [1, 0.1, 0.16, 1] },
+  k98: { id: "k98", icon: "w_k98", name: "Mauser 98k", cal: "7,92 mm Mauser", slot: 2, kind: "rifle",
+    desc: "Karabin odebrany SD. Te same naboje, trochę szybszy zamek.", tags: ["Celny", "Bardzo głośny"],
+    nums: [["100", "obrażenia"], ["62", "strz./min"], ["5", "nabojów"], ["60 m", "słychać"]], rel: [1, 0.12, 0.16, 1] },
+  erma: { id: "erma", icon: "w_erma", name: "Erma EMP", cal: "9 mm Parabellum", slot: 2, kind: "rifle",
+    desc: "Pistolet maszynowy. Ogień ciągły z bliska — mało celny, bardzo głośny.", tags: ["Ogień ciągły", "Głośny"],
+    nums: [["30", "obrażenia"], ["540", "strz./min"], ["32", "nabojów"], ["45 m", "słychać"]], rel: [0.3, 1, 1, 0.75] },
+  camera: { id: "camera", icon: "w_camera", name: "Aparat Leica", cal: "dowody", slot: 4, kind: "tool", desc: "", tags: [], nums: [], rel: [] },
+};
+module.exports = { WEAPONS };

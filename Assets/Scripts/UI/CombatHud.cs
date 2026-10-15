@@ -39,7 +39,7 @@ namespace Kosynierzy
     }
 
     /// <summary>
-    /// The in-game HUD (uGUI, 1939 document style from UiTheme): objectives slip with clock and collections,
+    /// The in-game HUD (uGUI, UI v2 look from UiTheme: bare text with soft shadows): compass, objectives with clock and collections,
     /// objective marker, crosshair with hit marker and popups, target ID, interaction tag, ammo cartridges,
     /// stamina, hotbar and received-item card, detection arcs/badge/eye, photo viewfinder and prints.
     /// Fades out while paused, during history cards, failure, epilogue and full-screen dialogue.

@@ -17,7 +17,7 @@ namespace Kosynierzy
         public static event Action RestartFromCheckpointRequested;
 
         const string QuitLabel = "WYJDŹ Z GRY";
-        const string QuitConfirmLabel = "NA PEWNO? NACIŚNIJ PONOWNIE";
+        const string QuitConfirmLabel = "NA PEWNO?";
 
         [SerializeField] int sortingOrder = 100;
         [Tooltip("Optional font for all menus; the built-in LegacyRuntime font is used when empty.")]
@@ -175,23 +175,32 @@ namespace Kosynierzy
         void Build()
         {
             canvas = SettingsMenuUi.CreateCanvas("PauseCanvas", transform, sortingOrder);
-            var panel = SettingsMenuUi.CreateDimmedPanel(canvas.transform, new Vector2(680f, 540f));
+            var root = canvas.transform;
+            // Dark wash + vignette over the frozen game (no blur available in uGUI without a render texture).
+            var dim = SettingsMenuUi.CreateImage("Dim", root, MenuV2.Wash, true);
+            SettingsMenuUi.Stretch(dim.rectTransform);
+            var vignette = SettingsMenuUi.CreateImage("Vignette", root, new Color(0f, 0f, 0f, 0.6f), false);
+            vignette.sprite = UiTheme.VignetteSprite;
+            SettingsMenuUi.Stretch(vignette.rectTransform);
 
-            var title = UiTheme.CreateHeading("Title", panel, "Pauza", 60, UiTheme.Ink);
-            SettingsMenuUi.PinTop(title.rectTransform, 28f, 84f, 40f);
-            var rule = UiTheme.CreateRule("Rule", panel, UiTheme.FadedInk);
-            SettingsMenuUi.PinTop(rule.rectTransform, 120f, 2f, 56f);
-            var stamp = UiTheme.CreateStamp(panel, "Tajne", UiTheme.StampRed, 24);
-            stamp.anchorMin = stamp.anchorMax = new Vector2(1f, 1f);
-            stamp.anchoredPosition = new Vector2(-96f, -46f);
+            var label = MenuV2.Label("Caption", root, "PAUZA", 16, TextAnchor.MiddleLeft, MenuV2.Bone3);
+            SettingsMenuUi.Place(label.rectTransform, new Vector2(0f, 0.5f), new Vector2(96f, 220f), new Vector2(400f, 24f));
 
-            var column = SettingsMenuUi.CreateColumn("Buttons", panel, 14f);
-            SettingsMenuUi.Stretch(column, 56f, 56f, 140f, 40f);
+            var column = SettingsMenuUi.CreateColumn("Buttons", root, 8f);
+            SettingsMenuUi.Place(column, new Vector2(0f, 0.5f), new Vector2(96f, -20f), new Vector2(900f, 4 * 84f + 3 * 8f));
 
-            resumeButton = SettingsMenuUi.CreateButton(column, "Wznów", 64f, 28, Resume, out _);
-            settingsButton = SettingsMenuUi.CreateButton(column, "Ustawienia", 64f, 28, OpenSettings, out _);
-            var checkpointButton = SettingsMenuUi.CreateButton(column, "Spróbuj od punktu kontrolnego", 64f, 25, RestartFromCheckpoint, out _);
-            var quitButton = SettingsMenuUi.CreateButton(column, QuitLabel, 64f, 28, Quit, out quitText);
+            resumeButton = MenuV2.CreateButton(column, "Wznów", MenuV2.Kind.Item, 84f, 52, Resume, out _);
+            settingsButton = MenuV2.CreateButton(column, "Ustawienia", MenuV2.Kind.Item, 84f, 52, OpenSettings, out _);
+            var checkpointButton = MenuV2.CreateButton(column, "Punkt kontrolny", MenuV2.Kind.Item, 84f, 52, RestartFromCheckpoint, out _);
+            var quitButton = MenuV2.CreateButton(column, QuitLabel, MenuV2.Kind.Item, 84f, 52, Quit, out quitText);
+
+            // Mission block, bottom right.
+            var missionLabel = MenuV2.Label("MissionLabel", root, "MISJA", 14, TextAnchor.LowerRight, MenuV2.Bone3);
+            SettingsMenuUi.Place(missionLabel.rectTransform, new Vector2(1f, 0f), new Vector2(-64f, 120f), new Vector2(520f, 20f));
+            var missionName = MenuV2.Label("MissionName", root, "BABCIA UMARŁA", 32, TextAnchor.LowerRight, MenuV2.Bone);
+            SettingsMenuUi.Place(missionName.rectTransform, new Vector2(1f, 0f), new Vector2(-64f, 80f), new Vector2(520f, 40f));
+            var missionPlace = MenuV2.Label("MissionPlace", root, "Gliwice, 31.08.1939", 16, TextAnchor.LowerRight, MenuV2.Bone2, isBody: true);
+            SettingsMenuUi.Place(missionPlace.rectTransform, new Vector2(1f, 0f), new Vector2(-64f, 48f), new Vector2(520f, 24f));
 
             SettingsMenuUi.LinkVertical(new UnityEngine.UI.Selectable[] { resumeButton, settingsButton, checkpointButton, quitButton });
         }

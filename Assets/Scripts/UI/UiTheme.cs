@@ -71,6 +71,82 @@ namespace Kosynierzy
             }
         }
 
+        // ---------- UI v2 tokens (docs/design/UI_V2_SPEC.md) ----------
+
+        public static readonly Color Bone = Hex(0xEEEAE0);
+        public static readonly Color Bone2 = WithAlpha(Hex(0xEEEAE0), 0.65f);
+        public static readonly Color Bone3 = WithAlpha(Hex(0xEEEAE0), 0.38f);
+        public static readonly Color Hairline = WithAlpha(Hex(0xEEEAE0), 0.18f);
+        public static readonly Color Safe = Hex(0x93AD66);
+        public static readonly Color Warn = Hex(0xE2A93B);
+        public static readonly Color Danger = Hex(0xDB4630);
+        public static readonly Color KeyInk = Hex(0x0C0E10);
+
+        static Font label, body;
+
+        /// <summary>Condensed face for labels and numbers (Bahnschrift SemiCondensed; falls back to the body face).</summary>
+        public static Font Label
+        {
+            get
+            {
+                if (label == null) label = OsFont(new[] { "Bahnschrift SemiCondensed", "Bahnschrift", "Segoe UI" }, 32);
+                return label;
+            }
+        }
+
+        /// <summary>Body face for sentences (Segoe UI).</summary>
+        public static Font Body
+        {
+            get
+            {
+                if (body == null) body = OsFont(new[] { "Segoe UI", "Arial" }, 32);
+                return body;
+            }
+        }
+
+        /// <summary>Bare HUD text: no box, soft two-layer shadow. Condensed face unless <paramref name="bodyFace"/>.</summary>
+        public static UnityEngine.UI.Text CreateHudText(string name, Transform parent, string content, int size,
+            TextAnchor alignment, Color color, bool bodyFace = false)
+        {
+            var text = SettingsMenuUi.CreateText(name, parent, content, size, alignment, FontStyle.Normal, color);
+            text.font = bodyFace ? Body : Label;
+            text.horizontalOverflow = HorizontalWrapMode.Overflow;
+            AddSoftShadow(text);
+            return text;
+        }
+
+        /// <summary>Two stacked shadows: tight (0,1,2 @72%) and a wide faint one (@40%).</summary>
+        public static void AddSoftShadow(UnityEngine.UI.Graphic g)
+        {
+            var tight = g.gameObject.AddComponent<UnityEngine.UI.Shadow>();
+            tight.effectColor = new Color(0f, 0f, 0f, 0.72f);
+            tight.effectDistance = new Vector2(0f, -1.5f);
+            var wide = g.gameObject.AddComponent<UnityEngine.UI.Shadow>();
+            wide.effectColor = new Color(0f, 0f, 0f, 0.4f);
+            wide.effectDistance = new Vector2(0f, -4f);
+        }
+
+        /// <summary>Small diamond (rotated square) with a soft shadow; anchored by the caller. Hollow = ring of 4 strokes' worth via two squares.</summary>
+        public static RectTransform CreateDiamond(Transform parent, float size, Color color, bool filled = true)
+        {
+            var rt = SettingsMenuUi.CreateRect("Diamond", parent);
+            rt.sizeDelta = new Vector2(size * 1.42f, size * 1.42f);
+            var outer = SettingsMenuUi.CreateImage("Outer", rt, color, false);
+            SettingsMenuUi.Place(outer.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(size, size));
+            outer.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 45f);
+            AddSoftShadow(outer);
+            if (!filled)
+            {
+                var hole = SettingsMenuUi.CreateImage("Hole", rt, new Color(0f, 0f, 0f, 1f), false);
+                hole.rectTransform.SetParent(rt, false);
+                // Hollow look without masking: draw a smaller square in the HUD's shadow-dark tone, mostly transparent bone ring.
+                hole.color = new Color(0.05f, 0.05f, 0.05f, 0.85f);
+                SettingsMenuUi.Place(hole.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(size - 3f, size - 3f));
+                hole.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 45f);
+            }
+            return rt;
+        }
+
         static Font OsFont(string[] names, int size)
         {
             try
@@ -225,7 +301,7 @@ namespace Kosynierzy
 
         /// <summary>Half-angle of the detection arc in degrees, and its ring band (fractions of the radius).</summary>
         public const float ArcHalfAngle = 26f;
-        public const float ArcInner = 0.86f;
+        public const float ArcInner = 0.94f;
 
         /// <summary>
         /// Ring segment centred on +Y, cropped to its bounding box (width 2·sin(a)·R, height R − inner·cos(a)·R),

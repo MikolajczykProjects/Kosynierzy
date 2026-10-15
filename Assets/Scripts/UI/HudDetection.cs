@@ -23,11 +23,13 @@ namespace Kosynierzy
         readonly List<Arc> arcs = new();
         RectTransform badge;
         UnityEngine.UI.Text badgeText;
-        readonly List<UnityEngine.UI.Image> badgeFrame = new();
+        UnityEngine.UI.Image badgeRule, alarmVignette;
+        float vignetteAlpha;
         string badgeLabel;
         RectTransform eyePanel, eyeWhite, eyePupil, eyeLid;
         UnityEngine.UI.Image eyeWhiteImage;
-        UnityEngine.UI.Text eyeText;
+        UnityEngine.UI.Text eyeText, eyeDetail;
+        UnityEngine.UI.Image eyeFill;
 
         public override void Build(HudContext ctx)
         {
@@ -36,40 +38,64 @@ namespace Kosynierzy
             arcCentre = SettingsMenuUi.CreateRect("DetectionArcs", root);
             SettingsMenuUi.Place(arcCentre, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
 
-            var badgeBar = UiTheme.CreateDarkBar("DetectionBadge", root, 0.8f);
-            badge = badgeBar.rectTransform;
-            SettingsMenuUi.Place(badge, new Vector2(0.5f, 1f), new Vector2(0f, -28f), new Vector2(260f, 50f));
-            badge.localRotation = Quaternion.Euler(0f, 0f, -3f);
-            int before = badge.childCount;
-            UiTheme.AddFrame(badge, Color.white, 2.5f, 0f);
-            UiTheme.AddFrame(badge, Color.white, 1f, 5f);
-            for (int i = before; i < badge.childCount; i++) badgeFrame.Add(badge.GetChild(i).GetComponent<UnityEngine.UI.Image>());
-            badgeText = SettingsMenuUi.CreateText("Label", badge, "", 26, TextAnchor.MiddleCenter, FontStyle.Bold, Color.white);
-            badgeText.horizontalOverflow = HorizontalWrapMode.Overflow;
-            SettingsMenuUi.Stretch(badgeText.rectTransform);
+            // Alarm: red edge vignette (only in alarm) and the badge - tracked red caps with a short rule, no box.
+            alarmVignette = SettingsMenuUi.CreateImage("AlarmVignette", root, UiTheme.WithAlpha(UiTheme.Danger, 0f), false);
+            alarmVignette.sprite = UiTheme.VignetteSprite;
+            SettingsMenuUi.Stretch(alarmVignette.rectTransform);
+
+            badge = SettingsMenuUi.CreateRect("DetectionBadge", root);
+            SettingsMenuUi.Place(badge, new Vector2(0.5f, 1f), new Vector2(0f, -118f), new Vector2(700f, 60f));
+            badge.pivot = new Vector2(0.5f, 1f);
+            badgeText = UiTheme.CreateHudText("Label", badge, "", 36, TextAnchor.UpperCenter, UiTheme.Danger);
+            badgeText.rectTransform.anchorMin = new Vector2(0f, 1f);
+            badgeText.rectTransform.anchorMax = new Vector2(1f, 1f);
+            badgeText.rectTransform.pivot = new Vector2(0.5f, 1f);
+            badgeText.rectTransform.sizeDelta = new Vector2(0f, 40f);
+            badgeText.rectTransform.anchoredPosition = Vector2.zero;
+            var rule = SettingsMenuUi.CreateImage("Rule", badge, UiTheme.Danger, false);
+            SettingsMenuUi.Place(rule.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -46f), new Vector2(120f, 2f));
+            rule.rectTransform.pivot = new Vector2(0.5f, 1f);
+            badgeRule = rule;
             badge.gameObject.SetActive(false);
 
-            // Visibility eye, bottom-left.
-            var eyeBar = UiTheme.CreateDarkBar("Visibility", root, 0.7f);
-            eyePanel = eyeBar.rectTransform;
-            SettingsMenuUi.Place(eyePanel, Vector2.zero, new Vector2(30f, 30f), new Vector2(196f, 58f));
+            // Visibility, bottom-left: eye, state word, 3 px bar, detail line.
+            eyePanel = SettingsMenuUi.CreateRect("Visibility", root);
+            eyePanel.anchorMin = eyePanel.anchorMax = eyePanel.pivot = Vector2.zero;
+            eyePanel.sizeDelta = new Vector2(320f, 90f);
+            eyePanel.anchoredPosition = new Vector2(64f, 48f);
             var eye = SettingsMenuUi.CreateRect("Eye", eyePanel);
-            SettingsMenuUi.Place(eye, new Vector2(0f, 0.5f), new Vector2(40f, 0f), new Vector2(54f, 30f));
-            eye.pivot = new Vector2(0.5f, 0.5f);
-            var white = SettingsMenuUi.CreateImage("White", eye, UiTheme.MutedWhite, false);
+            SettingsMenuUi.Place(eye, new Vector2(0f, 1f), new Vector2(15f, -41f), new Vector2(30f, 20f));
+            var white = SettingsMenuUi.CreateImage("White", eye, UiTheme.Bone, false);
             white.sprite = UiTheme.CircleSprite;
             eyeWhiteImage = white;
             eyeWhite = white.rectTransform;
-            SettingsMenuUi.Place(eyeWhite, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(50f, 26f));
-            var pupil = SettingsMenuUi.CreateImage("Pupil", eye, UiTheme.Dark, false);
+            SettingsMenuUi.Place(eyeWhite, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(28f, 16f));
+            UiTheme.AddSoftShadow(white);
+            var pupil = SettingsMenuUi.CreateImage("Pupil", eye, UiTheme.KeyInk, false);
             pupil.sprite = UiTheme.CircleSprite;
             eyePupil = pupil.rectTransform;
-            SettingsMenuUi.Place(eyePupil, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(14f, 14f));
-            var lid = SettingsMenuUi.CreateImage("Lid", eye, UiTheme.MutedWhite, false);
+            SettingsMenuUi.Place(eyePupil, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(8f, 8f));
+            var lid = SettingsMenuUi.CreateImage("Lid", eye, UiTheme.Bone, false);
             eyeLid = lid.rectTransform;
-            SettingsMenuUi.Place(eyeLid, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(48f, 3f));
-            eyeText = SettingsMenuUi.CreateText("Label", eyePanel, "", 15, TextAnchor.MiddleLeft, FontStyle.Bold, UiTheme.MutedWhite);
-            SettingsMenuUi.Stretch(eyeText.rectTransform, 74f, 8f);
+            SettingsMenuUi.Place(eyeLid, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(28f, 2f));
+            eyeText = UiTheme.CreateHudText("State", eyePanel, "", 22, TextAnchor.UpperLeft, UiTheme.Bone);
+            eyeText.rectTransform.anchorMin = eyeText.rectTransform.anchorMax = new Vector2(0f, 1f);
+            eyeText.rectTransform.pivot = new Vector2(0f, 1f);
+            eyeText.rectTransform.sizeDelta = new Vector2(280f, 28f);
+            eyeText.rectTransform.anchoredPosition = new Vector2(38f, -27f);
+            var track = SettingsMenuUi.CreateImage("Track", eyePanel, UiTheme.WithAlpha(UiTheme.Bone, 0.2f), false);
+            SettingsMenuUi.Place(track.rectTransform, new Vector2(0f, 1f), new Vector2(0f, -66f), new Vector2(180f, 3f));
+            track.rectTransform.pivot = new Vector2(0f, 1f);
+            eyeFill = SettingsMenuUi.CreateImage("Fill", track.rectTransform, UiTheme.Bone, false);
+            eyeFill.rectTransform.anchorMin = Vector2.zero;
+            eyeFill.rectTransform.anchorMax = Vector2.one;
+            eyeFill.rectTransform.pivot = new Vector2(0f, 0.5f);
+            eyeFill.rectTransform.offsetMin = eyeFill.rectTransform.offsetMax = Vector2.zero;
+            eyeDetail = UiTheme.CreateHudText("Detail", eyePanel, "", 15, TextAnchor.UpperLeft, UiTheme.Bone2, true);
+            eyeDetail.rectTransform.anchorMin = eyeDetail.rectTransform.anchorMax = new Vector2(0f, 1f);
+            eyeDetail.rectTransform.pivot = new Vector2(0f, 1f);
+            eyeDetail.rectTransform.sizeDelta = new Vector2(320f, 20f);
+            eyeDetail.rectTransform.anchoredPosition = new Vector2(0f, -72f);
         }
 
         Arc CreateArc()
@@ -77,8 +103,8 @@ namespace Kosynierzy
             var pivot = SettingsMenuUi.CreateRect("Arc", arcCentre);
             SettingsMenuUi.Place(pivot, new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
             var arc = new Arc { Pivot = pivot };
-            arc.Back = ArcImage(pivot, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.18f));
-            arc.Fill = ArcImage(pivot, Color.white);
+            arc.Back = ArcImage(pivot, UiTheme.WithAlpha(UiTheme.Bone, 0.18f));
+            arc.Fill = ArcImage(pivot, UiTheme.Bone);
             arc.Fill.type = UnityEngine.UI.Image.Type.Filled;
             arc.Fill.fillMethod = UnityEngine.UI.Image.FillMethod.Horizontal;
             arc.Fill.fillOrigin = (int)UnityEngine.UI.Image.OriginHorizontal.Left;
@@ -129,9 +155,9 @@ namespace Kosynierzy
                     arc.Pivot.localRotation = Quaternion.Euler(0f, 0f, -angle);
                     arc.Pivot.localScale = Vector3.one * (o.IsPolice ? 1.08f : 1f);
 
-                    Color c = level >= 3 ? UiTheme.AlertRed
-                        : meter < 0.5f ? Color.Lerp(UiTheme.MutedWhite, UiTheme.Amber, meter * 2f)
-                        : Color.Lerp(UiTheme.Amber, UiTheme.AlertRed, (meter - 0.5f) * 2f);
+                    Color c = level >= 3 ? UiTheme.Danger
+                        : meter < 0.5f ? Color.Lerp(UiTheme.Bone, UiTheme.Warn, meter * 2f)
+                        : Color.Lerp(UiTheme.Warn, UiTheme.Danger, (meter - 0.5f) * 2f);
                     float alpha = 0.45f + 0.55f * Mathf.Clamp01(meter * 3f);
                     if (level >= 3) alpha *= 0.75f + 0.25f * Mathf.Abs(Mathf.Sin(ctx.Now * 8f));
                     arc.Fill.color = UiTheme.WithAlpha(c, alpha);
@@ -144,46 +170,56 @@ namespace Kosynierzy
         void TickBadge(HudContext ctx)
         {
             int status = (int)Detection.PlayerStatus;
-            string label;
-            Color color;
+            string label = null;
+            Color color = UiTheme.Warn;
             switch (status)
             {
-                case 1: label = "PODEJRZENIE"; color = UiTheme.Amber; break;
-                case 2: label = "POSZUKIWANIA"; color = Color.Lerp(UiTheme.Amber, UiTheme.AlertRed, 0.5f); break;
-                case 3: label = "ALARM"; color = UiTheme.AlertRed; break;
-                default:
-                    label = Detection.PlayerHidden ? "UKRYTY" : null;
-                    color = UiTheme.LightOlive;
-                    break;
+                case 1: label = "PODEJRZENIE"; break;
+                case 2: label = "POSZUKIWANIA"; break;
+                case 3: label = "ALARM"; color = UiTheme.Danger; break;
             }
 
             bool show = label != null && !ctx.ViewfinderUp;
             badge.gameObject.SetActive(show);
+            float vignetteTarget = status == 3 && !ctx.ViewfinderUp ? 0.4f + 0.1f * Mathf.Abs(Mathf.Sin(ctx.Now * 4f)) : 0f;
+            vignetteAlpha = Mathf.MoveTowards(vignetteAlpha, vignetteTarget, ctx.Dt * 1.5f);
+            alarmVignette.color = UiTheme.WithAlpha(UiTheme.Danger, vignetteAlpha);
             if (!show) return;
             if (label != badgeLabel)
             {
                 badgeLabel = label;
                 badgeText.text = label;
-                badge.sizeDelta = new Vector2(badgeText.preferredWidth + 56f, 50f);
             }
-            badge.anchoredPosition = new Vector2(0f, -28f - ctx.TopCentreUsed);
-            float pulse = status == 3 ? 1f + 0.06f * Mathf.Abs(Mathf.Sin(ctx.Now * 7f)) : 1f;
-            badge.localScale = Vector3.one * pulse;
+            badge.anchoredPosition = new Vector2(0f, -118f - ctx.TopCentreUsed);
+            badgeText.fontSize = status == 3 ? 36 : 28;
             badgeText.color = color;
-            for (int i = 0; i < badgeFrame.Count; i++) badgeFrame[i].color = UiTheme.WithAlpha(color, i < 4 ? 0.9f : 0.5f); // outer, inner frame
+            badgeRule.color = color;
         }
 
         void TickEye(HudContext ctx)
         {
             bool hidden = Detection.PlayerHidden;
             float vis = Mathf.Clamp01(Detection.Visibility01);
+            int status = (int)Detection.PlayerStatus;
             float open = hidden ? 0.08f : Mathf.Lerp(0.25f, 1f, vis);
             eyeWhite.localScale = new Vector3(1f, open, 1f);
             eyePupil.localScale = Vector3.one * (hidden ? 0f : Mathf.Lerp(0.6f, 1f, vis));
             eyeLid.gameObject.SetActive(hidden);
-            Color tint = vis > 0.7f && !hidden ? UiTheme.Amber : UiTheme.MutedWhite;
+
+            string word;
+            Color tint;
+            if (status >= 3) { word = "ALARM"; tint = UiTheme.Danger; }
+            else if (status == 2) { word = "POSZUKIWANIA"; tint = UiTheme.Warn; }
+            else if (status == 1) { word = "PODEJRZENIE"; tint = UiTheme.Warn; }
+            else if (hidden) { word = "UKRYTY"; tint = UiTheme.Safe; }
+            else { word = "NIEZAUWAŻONY"; tint = UiTheme.Bone; }
             eyeWhiteImage.color = tint;
-            eyeText.text = hidden ? "UKRYTY" : $"WIDOCZNOŚĆ\n{Mathf.RoundToInt(vis * 100f)}%";
+            eyeLid.GetComponent<UnityEngine.UI.Image>().color = tint;
+            eyeText.text = word;
+            eyeText.color = tint;
+            eyeFill.color = tint;
+            eyeFill.rectTransform.anchorMax = new Vector2(Mathf.Max(0.01f, hidden ? 0.05f : vis), 1f);
+            eyeDetail.text = hidden ? "Poza zasięgiem wzroku" : $"Widoczność {Mathf.RoundToInt(vis * 100f)}%";
             eyePanel.gameObject.SetActive(!ctx.ViewfinderUp);
         }
     }

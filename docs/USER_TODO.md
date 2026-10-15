@@ -5,3 +5,5 @@
 - [ ] 15.10.2026 — When teammates push: Kosynierzy/Refresh Prefab Registry; put Mapa_Gliwice.prefab in the scene, delete Mapa_Testowa, re-bake NavMesh (Kosynierzy/Create Enemy Test Setup bakes on "Ground").
 - [ ] 15.10.2026 — jakubprusakowski still has to accept the GitHub invitation.
 - [ ] Before the presentation: scene → Assets/_Gra/Sceny/Gra.unity + Menu.unity in Build Settings; record the backup video (team doc 4:15).
+- [ ] 15.10.2026 — Figma: Plugins > Development > Import plugin from manifest > ~/.claude/narzedzia/figma-plugin/manifest.json, then run it (Ctrl+/ > "bez telemetrii"); then `node tools/figma/ui_v2/push_figma.js --rename-v1 292:2` puts UI v2 at x=44400.
+- [ ] 15.10.2026 — Approve UI v2 (docs/design/ui_v2/png) or list changes; also yes/no to downloading OFL fonts (Barlow Condensed, Barlow, Courier Prime) into Assets/_Gra/Fonts.

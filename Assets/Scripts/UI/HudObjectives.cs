@@ -4,30 +4,31 @@ using UnityEngine;
 namespace Kosynierzy
 {
     /// <summary>
-    /// Top-right objectives: clock on a dark bar, a paper slip (stamp "ZADANIE", act name, current task with progress,
-    /// "OPCJONALNE" side tasks) and "Dowody x/6 · Karty y/6" under it. A finished task gets a tick and a strike-through,
-    /// stays ~2.5 s, slides out; the next one slides in with a typewriter reveal. Also the top-centre cable countdown.
+    /// Top-right objectives (UI v2): bare right-aligned text on the image with soft shadows - clock, date, hairline, act,
+    /// current task (diamond at the right edge), detail line, "OPCJONALNE" list and the evidence/card counters.
+    /// A finished task gets a green check and a strike-through, stays ~2.5 s, slides out; the next one slides in
+    /// with a typewriter reveal. Also the top-centre cable countdown.
     /// </summary>
     public sealed class HudObjectives : HudWidget
     {
-        const float Width = 470f;
-        const float Pad = 18f;
-        const float RightMargin = 30f;
-        const float SlipTop = 88f;
-        const float TitleLeft = 46f;
+        const float Width = 460f;
+        const float RightMargin = 64f;
+        const float HeaderTop = 36f;
+        const float SlipTop = 156f;
+        const float TaskRight = 32f;
+        const float RowRight = 22f;
         const float CompleteHold = 2.5f;
 
         enum Phase { Showing, Completing, Leaving, Entering }
 
         RectTransform clockBar;
-        UnityEngine.UI.Text clockText;
-        RectTransform slipRoot, slipPaper;
+        UnityEngine.UI.Text clockText, dateText, actText;
+        RectTransform slipRoot;
         CanvasGroup slipGroup;
-        UnityEngine.UI.Text actText;
         RectTransform taskBlock;
         CanvasGroup taskGroup;
         UnityEngine.UI.Text taskTitle, taskProgress;
-        RectTransform taskTick;
+        RectTransform taskTick, taskDiamond;
         HudStrike taskStrike;
         UnityEngine.UI.Text optionalHeader;
         readonly List<OptionalRow> rows = new();
@@ -48,7 +49,7 @@ namespace Kosynierzy
         {
             public RectTransform Root;
             public UnityEngine.UI.Text Text;
-            public RectTransform Tick;
+            public RectTransform Tick, Diamond;
             public HudStrike Strike;
             public CanvasGroup Group;
         }
@@ -57,51 +58,55 @@ namespace Kosynierzy
         {
             var root = ctx.Root;
 
-            var clock = UiTheme.CreateDarkBar("Clock", root);
-            clockBar = clock.rectTransform;
-            TopRight(clockBar, 24f, new Vector2(170f, 52f));
-            clockText = SettingsMenuUi.CreateText("Time", clockBar, "15:30", 36, TextAnchor.MiddleCenter, FontStyle.Bold, UiTheme.MutedWhite);
-            SettingsMenuUi.Stretch(clockText.rectTransform);
+            // Header: time, date, hairline, act - one block so the viewfinder can hide it.
+            clockBar = SettingsMenuUi.CreateRect("Clock", root);
+            TopRight(clockBar, HeaderTop, new Vector2(Width, 116f));
+            clockText = UiTheme.CreateHudText("Time", clockBar, "15:30", 36, TextAnchor.UpperRight, UiTheme.Bone);
+            PinTopLeft(clockText.rectTransform, 0f, 40f, 0f, 0f);
+            dateText = UiTheme.CreateHudText("Date", clockBar, "", 13, TextAnchor.UpperRight, UiTheme.Bone2);
+            PinTopLeft(dateText.rectTransform, 46f, 18f, 0f, 0f);
+            var rule = SettingsMenuUi.CreateImage("Hairline", clockBar, UiTheme.Hairline, false);
+            rule.rectTransform.anchorMin = rule.rectTransform.anchorMax = new Vector2(1f, 1f);
+            rule.rectTransform.pivot = new Vector2(1f, 1f);
+            rule.rectTransform.sizeDelta = new Vector2(300f, 1f);
+            rule.rectTransform.anchoredPosition = new Vector2(0f, -76f);
+            actText = UiTheme.CreateHudText("Act", clockBar, "", 13, TextAnchor.UpperRight, UiTheme.Bone2);
+            PinTopLeft(actText.rectTransform, 90f, 18f, 0f, 0f);
 
-            slipPaper = UiTheme.CreatePaper(root, "ObjectivesSlip", new Vector2(Width, 160f), out slipRoot);
-            TopRight(slipRoot, SlipTop, slipRoot.sizeDelta);
+            slipRoot = SettingsMenuUi.CreateRect("ObjectivesSlip", root);
+            TopRight(slipRoot, SlipTop, new Vector2(Width, 160f));
             slipGroup = slipRoot.gameObject.AddComponent<CanvasGroup>();
 
-            actText = SettingsMenuUi.CreateText("Act", slipPaper, "", 16, TextAnchor.MiddleRight, FontStyle.Bold, UiTheme.FadedInk);
-            SettingsMenuUi.PinTop(actText.rectTransform, 14f, 22f, Pad);
-            var rule = UiTheme.CreateRule("Rule", slipPaper, UiTheme.FadedInk, 1.5f);
-            SettingsMenuUi.PinTop(rule.rectTransform, 44f, 1.5f, Pad);
-
-            var stamp = UiTheme.CreateStamp(slipPaper, "Zadanie", UiTheme.StampRed, 17);
-            stamp.anchorMin = stamp.anchorMax = new Vector2(0f, 1f);
-            stamp.anchoredPosition = new Vector2(78f, -18f);
-
-            taskBlock = SettingsMenuUi.CreateRect("Task", slipPaper);
+            taskBlock = SettingsMenuUi.CreateRect("Task", slipRoot);
             taskGroup = taskBlock.gameObject.AddComponent<CanvasGroup>();
-            taskTick = CreateTick(taskBlock, UiTheme.Olive);
-            taskTick.anchorMin = taskTick.anchorMax = new Vector2(0f, 1f);
-            taskTick.anchoredPosition = new Vector2(Pad, -4f);
-            taskTitle = SettingsMenuUi.CreateText("Title", taskBlock, "", 22, TextAnchor.UpperLeft, FontStyle.Bold, UiTheme.Ink);
-            taskStrike = new HudStrike(taskTitle, UiTheme.StampRed);
-            taskProgress = SettingsMenuUi.CreateText("Progress", taskBlock, "", 18, TextAnchor.UpperLeft, FontStyle.Normal, UiTheme.FadedInk);
+            taskTick = CreateTick(taskBlock, UiTheme.Safe);
+            taskTick.anchorMin = taskTick.anchorMax = new Vector2(1f, 1f);
+            taskTick.anchoredPosition = new Vector2(-22f, -4f);
+            taskDiamond = UiTheme.CreateDiamond(taskBlock, 10f, UiTheme.Bone);
+            taskDiamond.anchorMin = taskDiamond.anchorMax = new Vector2(1f, 1f);
+            taskDiamond.pivot = new Vector2(1f, 0.5f);
+            taskDiamond.anchoredPosition = new Vector2(0f, -15f);
+            taskTitle = UiTheme.CreateHudText("Title", taskBlock, "", 26, TextAnchor.UpperRight, UiTheme.Bone);
+            taskTitle.horizontalOverflow = HorizontalWrapMode.Wrap;
+            taskStrike = new HudStrike(taskTitle, UiTheme.Bone);
+            taskProgress = UiTheme.CreateHudText("Progress", taskBlock, "", 16, TextAnchor.UpperRight, UiTheme.Bone2, true);
+            taskProgress.horizontalOverflow = HorizontalWrapMode.Wrap;
 
-            optionalHeader = SettingsMenuUi.CreateText("OptionalHeader", slipPaper, "OPCJONALNE", 15, TextAnchor.MiddleLeft, FontStyle.Bold, UiTheme.FadedInk);
+            optionalHeader = UiTheme.CreateHudText("OptionalHeader", slipRoot, "OPCJONALNE", 12, TextAnchor.MiddleRight, UiTheme.Bone3);
 
-            var counts = UiTheme.CreateDarkBar("Collections", root);
-            countsBar = counts.rectTransform;
-            TopRight(countsBar, SlipTop + 200f, new Vector2(Width + 8f, 34f));
-            countsText = SettingsMenuUi.CreateText("Text", countsBar, "", 19, TextAnchor.MiddleRight, FontStyle.Bold, UiTheme.MutedWhite);
-            SettingsMenuUi.Stretch(countsText.rectTransform, 14f, 14f);
+            countsBar = SettingsMenuUi.CreateRect("Collections", root);
+            TopRight(countsBar, SlipTop + 200f, new Vector2(Width, 22f));
+            countsText = UiTheme.CreateHudText("Text", countsBar, "", 13, TextAnchor.MiddleRight, UiTheme.Bone3);
+            SettingsMenuUi.Stretch(countsText.rectTransform);
 
-            var cable = UiTheme.CreateDarkBar("CableCountdown", root, 0.85f);
-            cableBar = cable.rectTransform;
-            SettingsMenuUi.Place(cableBar, new Vector2(0.5f, 1f), new Vector2(0f, -24f), new Vector2(640f, 62f));
-            UiTheme.AddFrame(cableBar, UiTheme.AlertRed, 2f, 0f);
-            cableText = SettingsMenuUi.CreateText("Text", cableBar, "", 24, TextAnchor.MiddleCenter, FontStyle.Bold, UiTheme.AlertRed);
-            SettingsMenuUi.PinTop(cableText.rectTransform, 6f, 34f, 12f);
-            var track = SettingsMenuUi.CreateImage("Track", cableBar, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.15f), false);
-            SettingsMenuUi.PinTop(track.rectTransform, 44f, 8f, 18f);
-            cableFill = SettingsMenuUi.CreateImage("Fill", track.rectTransform, UiTheme.AlertRed, false);
+            // Cable countdown: bare red caps with a thin bar, top centre under the compass.
+            cableBar = SettingsMenuUi.CreateRect("CableCountdown", root);
+            SettingsMenuUi.Place(cableBar, new Vector2(0.5f, 1f), new Vector2(0f, -122f), new Vector2(640f, 44f));
+            cableText = UiTheme.CreateHudText("Text", cableBar, "", 26, TextAnchor.UpperCenter, UiTheme.Danger);
+            PinTopLeft(cableText.rectTransform, 0f, 30f, 0f, 0f);
+            var track = SettingsMenuUi.CreateImage("Track", cableBar, UiTheme.Hairline, false);
+            PinTopLeft(track.rectTransform, 36f, 3f, 120f, 120f);
+            cableFill = SettingsMenuUi.CreateImage("Fill", track.rectTransform, UiTheme.Danger, false);
             cableFill.rectTransform.anchorMin = Vector2.zero;
             cableFill.rectTransform.anchorMax = Vector2.one;
             cableFill.rectTransform.pivot = new Vector2(0f, 0.5f);
@@ -120,7 +125,8 @@ namespace Kosynierzy
         {
             var mission = Mission.Instance;
             clockText.text = GameClock.Text;
-            countsText.text = $"Dowody {GameProgress.Photos.Count}/{GameProgress.EvidenceTotal} · Karty {GameProgress.HistoryCards.Count}/{GameProgress.HistoryCardTotal}";
+            dateText.text = "CZWARTEK 31 SIERPNIA 1939";
+            countsText.text = $"DOWODY {GameProgress.Photos.Count}/{GameProgress.EvidenceTotal}   KARTY {GameProgress.HistoryCards.Count}/{GameProgress.HistoryCardTotal}";
             actText.text = mission != null ? (mission.CurrentActName ?? "").ToUpperInvariant() : "";
 
             TickTask(ctx);
@@ -131,8 +137,8 @@ namespace Kosynierzy
             countsBar.gameObject.SetActive(!ctx.ViewfinderUp);
             slipAlpha = Mathf.MoveTowards(slipAlpha, anything && !ctx.ViewfinderUp ? 1f : 0f, ctx.Dt * (ctx.ViewfinderUp ? 12f : 4f));
             slipGroup.alpha = slipAlpha;
-            slipRoot.sizeDelta = new Vector2(Width + 8f, height + 8f);
-            countsBar.anchoredPosition = new Vector2(-RightMargin, -(SlipTop + (anything ? height + 8f + 10f : 0f)));
+            slipRoot.sizeDelta = new Vector2(Width, height);
+            countsBar.anchoredPosition = new Vector2(-RightMargin, -(SlipTop + (anything ? height + 6f : 0f)));
 
             TickCable(ctx, mission);
         }
@@ -162,7 +168,8 @@ namespace Kosynierzy
                     taskTick.gameObject.SetActive(true);
                     taskTick.localScale = Vector3.one * Overshoot(Mathf.Clamp01(t / 0.25f));
                     taskStrike.Set(k);
-                    taskTitle.color = Color.Lerp(UiTheme.Ink, UiTheme.FadedInk, k);
+                    taskTitle.color = Color.Lerp(UiTheme.Bone, UiTheme.Bone2, k);
+                    taskDiamond.gameObject.SetActive(false);
                     if (t >= CompleteHold) Enter(Phase.Leaving, ctx);
                     break;
                 }
@@ -205,7 +212,8 @@ namespace Kosynierzy
             fullTitle = TitleOf(key) ?? "";
             taskTick.gameObject.SetActive(false);
             taskStrike.Set(0f);
-            taskTitle.color = UiTheme.Ink;
+            taskTitle.color = UiTheme.Bone;
+            taskDiamond.gameObject.SetActive(true);
             taskTitle.text = "";
             taskProgress.text = "";
             if (string.IsNullOrEmpty(fullTitle))
@@ -262,20 +270,20 @@ namespace Kosynierzy
 
         float Layout(Mission mission)
         {
-            float textWidth = Width - TitleLeft - Pad;
-            float y = 54f;
+            float y = 0f;
 
             bool hasTask = shown != null && !string.IsNullOrEmpty(fullTitle);
             taskBlock.gameObject.SetActive(hasTask);
             if (hasTask)
             {
-                float titleH = Mathf.Max(28f, MeasureHeight(taskTitle, fullTitle, textWidth));
+                float titleW = Width - TaskRight;
+                float titleH = Mathf.Max(30f, MeasureHeight(taskTitle, fullTitle, titleW));
                 bool hasProgress = !string.IsNullOrEmpty(taskProgress.text);
-                float blockH = titleH + (hasProgress ? 26f : 0f);
+                float blockH = titleH + (hasProgress ? 24f : 0f);
                 PinTopLeft(taskBlock, y, blockH, slideX, -slideX);
-                PinTopLeft(taskTitle.rectTransform, 0f, titleH, TitleLeft, Pad);
-                PinTopLeft(taskProgress.rectTransform, titleH + 2f, 24f, TitleLeft, Pad);
-                y += blockH + 10f;
+                PinTopLeft(taskTitle.rectTransform, 0f, titleH, 0f, TaskRight);
+                PinTopLeft(taskProgress.rectTransform, titleH + 4f, 22f, 0f, TaskRight);
+                y += blockH + 14f;
             }
 
             var optional = mission != null ? mission.Optional : null;
@@ -283,8 +291,8 @@ namespace Kosynierzy
             optionalHeader.gameObject.SetActive(count > 0);
             if (count > 0)
             {
-                PinTopLeft(optionalHeader.rectTransform, y, 20f, Pad, Pad);
-                y += 24f;
+                PinTopLeft(optionalHeader.rectTransform, y, 16f, 0f, 0f);
+                y += 22f;
             }
             while (rows.Count < count) rows.Add(CreateRow());
             for (int i = 0; i < rows.Count; i++)
@@ -298,28 +306,34 @@ namespace Kosynierzy
                 string progress = !done ? SafeProgress(task) : null;
                 string label = string.IsNullOrEmpty(progress) ? task.Title : $"{task.Title} ({progress})";
                 if (row.Text.text != label) row.Text.text = label;
-                float h = Mathf.Max(22f, MeasureHeight(row.Text, label, textWidth - 4f));
+                float h = Mathf.Max(22f, MeasureHeight(row.Text, label, Width - RowRight));
                 PinTopLeft(row.Root, y, h, 0f, 0f);
-                PinTopLeft(row.Text.rectTransform, 0f, h, TitleLeft, Pad);
+                PinTopLeft(row.Text.rectTransform, 0f, h, 0f, RowRight);
                 row.Tick.gameObject.SetActive(done);
-                row.Group.alpha = done ? 0.5f : 1f;
+                row.Diamond.gameObject.SetActive(!done);
+                row.Text.color = done ? UiTheme.Bone3 : UiTheme.Bone2;
                 row.Strike.Set(done ? 1f : 0f);
                 y += h + 4f;
             }
 
-            return y + 12f;
+            return y + 4f;
         }
 
         OptionalRow CreateRow()
         {
-            var rt = SettingsMenuUi.CreateRect("Optional", slipPaper);
+            var rt = SettingsMenuUi.CreateRect("Optional", slipRoot);
             var row = new OptionalRow { Root = rt, Group = rt.gameObject.AddComponent<CanvasGroup>() };
-            row.Tick = CreateTick(rt, UiTheme.Olive);
-            row.Tick.anchorMin = row.Tick.anchorMax = new Vector2(0f, 1f);
-            row.Tick.anchoredPosition = new Vector2(Pad + 2f, -2f);
-            row.Tick.localScale = Vector3.one * 0.8f;
-            row.Text = SettingsMenuUi.CreateText("Text", rt, "", 17, TextAnchor.UpperLeft, FontStyle.Normal, UiTheme.Ink);
-            row.Strike = new HudStrike(row.Text, UiTheme.Ink);
+            row.Tick = CreateTick(rt, UiTheme.Safe);
+            row.Tick.anchorMin = row.Tick.anchorMax = new Vector2(1f, 1f);
+            row.Tick.anchoredPosition = new Vector2(-16f, -3f);
+            row.Tick.localScale = Vector3.one * 0.7f;
+            row.Diamond = UiTheme.CreateDiamond(rt, 8f, UiTheme.Bone2, false);
+            row.Diamond.anchorMin = row.Diamond.anchorMax = new Vector2(1f, 1f);
+            row.Diamond.pivot = new Vector2(1f, 0.5f);
+            row.Diamond.anchoredPosition = new Vector2(0f, -11f);
+            row.Text = UiTheme.CreateHudText("Text", rt, "", 16, TextAnchor.UpperRight, UiTheme.Bone2);
+            row.Text.horizontalOverflow = HorizontalWrapMode.Wrap;
+            row.Strike = new HudStrike(row.Text, UiTheme.Bone3);
             return row;
         }
 
@@ -361,11 +375,11 @@ namespace Kosynierzy
             cableBar.gameObject.SetActive(show);
             if (!show) return;
             float left = cable.Duration > 0f ? Mathf.Clamp01(cable.Remaining / cable.Duration) : 0f;
-            cableText.text = $"KOMUNIKAT NA ANTENIE — {Mathf.CeilToInt(cable.Remaining)} s";
+            cableText.text = $"KOMUNIKAT NA ANTENIE  {Mathf.CeilToInt(cable.Remaining)} s";
             cableFill.rectTransform.anchorMax = new Vector2(left, 1f);
             float pulse = left < 0.25f ? 0.6f + 0.4f * Mathf.Abs(Mathf.Sin(ctx.Now * 6f)) : 1f;
-            cableText.color = UiTheme.WithAlpha(UiTheme.AlertRed, pulse);
-            ctx.TopCentreUsed = 96f;
+            cableText.color = UiTheme.WithAlpha(UiTheme.Danger, pulse);
+            ctx.TopCentreUsed = 70f;
         }
 
         // ---------- Tick mark ----------

@@ -38,8 +38,11 @@ namespace Kosynierzy
              "a Hitler mówił w Reichstagu, że „od 5:45 odpowiadamy ogniem”."),
         };
 
-        static readonly Color Ink = UiTheme.Ink;
-        static readonly Color FadedInk = UiTheme.FadedInk;
+        // UI v2 paper document: paper #E4DCC4, ink #25221B, typewriter font only here.
+        static readonly Color Ink = new(0.145f, 0.133f, 0.106f, 1f);
+        static readonly Color FadedInk = new(0.145f, 0.133f, 0.106f, 0.62f);
+        static readonly Color PaperColor = new(0.894f, 0.863f, 0.769f, 1f);
+        static readonly Color PaperEdgeColor = new(0.725f, 0.682f, 0.561f, 1f);
         const float InputDelay = 0.3f; // the E that picked the card up must not close it
 
         static HistoryCardView instance;
@@ -168,8 +171,11 @@ namespace Kosynierzy
 
             var panel = UiTheme.CreatePaper(root, "Card", new Vector2(1000f, 620f), out var cardRoot);
             cardRoot.localRotation = Quaternion.Euler(0f, 0f, 0.8f); // a sheet dropped on the desk, not a window
+            cardRoot.GetComponent<UnityEngine.UI.Image>().color = PaperEdgeColor;
+            panel.GetComponent<UnityEngine.UI.Image>().color = PaperColor;
 
             headerText = SettingsMenuUi.CreateText("Header", panel, "", 22, TextAnchor.MiddleLeft, FontStyle.Bold, FadedInk);
+            headerText.font = UiTheme.Typewriter;
             SettingsMenuUi.PinTop(headerText.rectTransform, 28f, 30f, 60f);
 
             archiveStamp = UiTheme.CreateStamp(panel, "Archiwum", UiTheme.Olive, 22);
@@ -181,16 +187,19 @@ namespace Kosynierzy
             }
 
             titleText = UiTheme.CreateHeading("Title", panel, "", 42, Ink);
+            titleText.font = UiTheme.Typewriter;
             SettingsMenuUi.PinTop(titleText.rectTransform, 74f, 64f, 60f);
 
             var rule = UiTheme.CreateRule("Rule", panel, FadedInk);
             SettingsMenuUi.PinTop(rule.rectTransform, 148f, 2f, 60f);
 
             bodyText = SettingsMenuUi.CreateText("Body", panel, "", 28, TextAnchor.UpperLeft, FontStyle.Normal, Ink);
+            bodyText.font = UiTheme.Typewriter;
             bodyText.lineSpacing = 1.15f;
             SettingsMenuUi.Stretch(bodyText.rectTransform, 70f, 70f, 176f, 80f);
 
             var hint = SettingsMenuUi.CreateText("Hint", panel, "E — zamknij", 22, TextAnchor.MiddleRight, FontStyle.Bold, FadedInk);
+            hint.font = UiTheme.Typewriter;
             var hintRt = hint.rectTransform;
             hintRt.anchorMin = new Vector2(0f, 0f);
             hintRt.anchorMax = new Vector2(1f, 0f);

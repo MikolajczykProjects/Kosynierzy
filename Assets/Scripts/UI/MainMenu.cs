@@ -116,34 +116,24 @@ namespace Kosynierzy
             vignette.sprite = UiTheme.VignetteSprite;
             SettingsMenuUi.Stretch(vignette.rectTransform);
 
-            var titleText = UiTheme.CreateHeading("Title", root, title, 104, UiTheme.MutedWhite);
-            titleText.horizontalOverflow = HorizontalWrapMode.Overflow;
-            SettingsMenuUi.PinTop(titleText.rectTransform, 130f, 130f, 80f);
+            // Title block, left: two 132 px lines, then the date line.
+            string[] words = title.Split(' ');
+            string line1 = words[0].ToUpperInvariant();
+            string line2 = words.Length > 1 ? string.Join(" ", words, 1, words.Length - 1).ToUpperInvariant() : "";
+            var t1 = MenuV2.Label("Title1", root, line1, 132, TextAnchor.LowerLeft, MenuV2.Bone);
+            SettingsMenuUi.Place(t1.rectTransform, new Vector2(0f, 1f), new Vector2(96f, -230f), new Vector2(1200f, 140f));
+            var t2 = MenuV2.Label("Title2", root, line2, 132, TextAnchor.LowerLeft, MenuV2.Bone);
+            SettingsMenuUi.Place(t2.rectTransform, new Vector2(0f, 1f), new Vector2(96f, -366f), new Vector2(1200f, 140f));
+            var date = MenuV2.Label("Date", root, subtitle + "  ·  KATOWICE, EKSPOZYTURA NR 4", 20, TextAnchor.MiddleLeft, MenuV2.Amber);
+            SettingsMenuUi.Place(date.rectTransform, new Vector2(0f, 1f), new Vector2(100f, -520f), new Vector2(1000f, 28f));
 
-            var rule = UiTheme.CreateRule("Rule", root, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.5f));
-            SettingsMenuUi.Place(rule.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -272f), new Vector2(760f, 2f));
+            var column = SettingsMenuUi.CreateColumn("Buttons", root, 4f);
+            SettingsMenuUi.Place(column, new Vector2(0f, 0f), new Vector2(96f, 150f), new Vector2(700f, 4 * 68f + 3 * 4f));
 
-            var date = UiTheme.CreateStamp(root, subtitle, UiTheme.AlertRed, 40);
-            date.anchorMin = date.anchorMax = new Vector2(0.5f, 1f);
-            date.anchoredPosition = new Vector2(0f, -330f);
-
-            // The menu itself is a paper dossier with a "TAJNE" stamp.
-            var dossier = UiTheme.CreatePaper(root, "Dossier", new Vector2(620f, 4 * 64f + 3 * 14f + 120f), out var dossierRoot);
-            dossierRoot.anchoredPosition = new Vector2(0f, -150f);
-            var caption = SettingsMenuUi.CreateText("Caption", dossier, "Ekspozytura nr 4 · Oddział II", 20, TextAnchor.MiddleLeft,
-                FontStyle.Normal, UiTheme.FadedInk);
-            SettingsMenuUi.PinTop(caption.rectTransform, 18f, 30f, 40f);
-            var stamp = UiTheme.CreateStamp(dossier, "Tajne", UiTheme.StampRed, 26);
-            stamp.anchorMin = stamp.anchorMax = new Vector2(1f, 1f);
-            stamp.anchoredPosition = new Vector2(-100f, -34f);
-
-            var column = SettingsMenuUi.CreateColumn("Buttons", dossier, 14f);
-            SettingsMenuUi.Stretch(column, 48f, 48f, 80f, 40f);
-
-            newGameButton = SettingsMenuUi.CreateButton(column, "Nowa gra", 64f, 30, () => StartGame(false), out _);
-            var historicalButton = SettingsMenuUi.CreateButton(column, "Tryb historyczny", 64f, 30, () => StartGame(true), out _);
-            settingsButton = SettingsMenuUi.CreateButton(column, "Ustawienia", 64f, 30, OpenSettings, out _);
-            var quitButton = SettingsMenuUi.CreateButton(column, "Wyjście", 64f, 30, Quit, out _);
+            newGameButton = MenuV2.CreateButton(column, "Nowa gra", MenuV2.Kind.Item, 68f, 40, () => StartGame(false), out _);
+            var historicalButton = MenuV2.CreateButton(column, "Tryb historyczny", MenuV2.Kind.Item, 68f, 40, () => StartGame(true), out _);
+            settingsButton = MenuV2.CreateButton(column, "Ustawienia", MenuV2.Kind.Item, 68f, 40, OpenSettings, out _);
+            var quitButton = MenuV2.CreateButton(column, "Wyjście", MenuV2.Kind.Item, 68f, 40, Quit, out _);
             SettingsMenuUi.LinkVertical(new UnityEngine.UI.Selectable[] { newGameButton, historicalButton, settingsButton, quitButton });
         }
     }

@@ -16,8 +16,8 @@ namespace Kosynierzy
     {
         const string MenuSceneName = "Menu";
         const float ShowDelay = 0.8f;
-        static readonly Color Background = UiTheme.WithAlpha(UiTheme.Dark, 0.9f);
-        static readonly Color FailRed = UiTheme.StampRed;
+        static readonly Color Background = new(0.024f, 0.031f, 0.039f, 0.7f);
+        static readonly Color FailRed = MenuV2.Red;
 
         static FailScreen instance;
 
@@ -162,30 +162,31 @@ namespace Kosynierzy
             var background = SettingsMenuUi.CreateImage("Background", root, Background, true);
             SettingsMenuUi.Stretch(background.rectTransform);
 
-            // A field report on paper with a big red stamp.
-            var report = UiTheme.CreatePaper(root, "Report", new Vector2(980f, 600f), out _);
-            var header = SettingsMenuUi.CreateText("Header", report, "RAPORT · AGENT »KRUK« · 31.08.1939", 22, TextAnchor.MiddleLeft,
-                FontStyle.Bold, UiTheme.FadedInk);
-            SettingsMenuUi.PinTop(header.rectTransform, 26f, 30f, 48f);
-            var rule = UiTheme.CreateRule("Rule", report, UiTheme.FadedInk);
-            SettingsMenuUi.PinTop(rule.rectTransform, 64f, 2f, 48f);
+            // Bare centred banner on the wash: label, title, red rule, two buttons (no card).
+            var banner = MenuV2.Label("Banner", root, "ZADANIE NIEUDANE", 16, TextAnchor.MiddleCenter, FailRed);
+            SettingsMenuUi.Place(banner.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 170f), new Vector2(800f, 24f));
 
-            var stamp = UiTheme.CreateStamp(report, "Porażka", FailRed, 64, -7f);
-            stamp.anchorMin = stamp.anchorMax = new Vector2(0.5f, 1f);
-            stamp.anchoredPosition = new Vector2(0f, -150f);
+            messageText = MenuV2.Label("Message", root, "", 64, TextAnchor.MiddleCenter, MenuV2.Bone);
+            messageText.horizontalOverflow = HorizontalWrapMode.Wrap;
+            messageText.resizeTextForBestFit = true;
+            messageText.resizeTextMinSize = 32;
+            messageText.resizeTextMaxSize = 64;
+            SettingsMenuUi.Place(messageText.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 90f), new Vector2(1300f, 130f));
 
-            messageText = SettingsMenuUi.CreateText("Message", report, "", 30, TextAnchor.MiddleCenter, FontStyle.Normal, UiTheme.Ink);
-            SettingsMenuUi.PinTop(messageText.rectTransform, 230f, 110f, 70f);
+            var rule = MenuV2.Box("Rule", root, FailRed);
+            SettingsMenuUi.Place(rule.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0f, 10f), new Vector2(160f, 3f));
 
-            var column = SettingsMenuUi.CreateColumn("Buttons", report, 12f);
-            column.anchorMin = column.anchorMax = new Vector2(0.5f, 0f);
-            column.pivot = new Vector2(0.5f, 0f);
-            column.sizeDelta = new Vector2(640f, 2 * 60f + 12f);
-            column.anchoredPosition = new Vector2(0f, 40f);
+            var row = SettingsMenuUi.CreateRect("Buttons", root);
+            SettingsMenuUi.Place(row, new Vector2(0.5f, 0.5f), new Vector2(0f, -80f), new Vector2(700f, 60f));
+            var layout = row.gameObject.AddComponent<UnityEngine.UI.HorizontalLayoutGroup>();
+            layout.spacing = 20f;
+            layout.childControlWidth = layout.childControlHeight = true;
+            layout.childForceExpandWidth = layout.childForceExpandHeight = true;
 
-            checkpointButton = SettingsMenuUi.CreateButton(column, "Spróbuj od punktu kontrolnego", 60f, 26, RetryFromCheckpoint, out _);
-            restartButton = SettingsMenuUi.CreateButton(column, "Zacznij od nowa", 60f, 26, StartOver, out _);
-            menuButton = SettingsMenuUi.CreateButton(column, "Menu główne", 60f, 26, GoToMenu, out _);
+            // Primary (bone-filled) retry, outlined secondary actions; only the relevant ones are shown.
+            checkpointButton = MenuV2.CreateButton(row, "Od punktu kontrolnego", MenuV2.Kind.Filled, 60f, 22, RetryFromCheckpoint, out _);
+            restartButton = MenuV2.CreateButton(row, "Zacznij od nowa", MenuV2.Kind.Filled, 60f, 22, StartOver, out _);
+            menuButton = MenuV2.CreateButton(row, "Menu główne", MenuV2.Kind.Outline, 60f, 22, GoToMenu, out _);
         }
 
         static void Place(RectTransform rt, float x, float y, Vector2 size)

@@ -10,7 +10,7 @@ namespace Kosynierzy
     public sealed class HudPhoto : HudWidget
     {
         const float PrintIn = 0.35f, PrintHold = 4f, PrintOut = 0.35f;
-        const float PrintX = 30f, PrintY = 104f;
+        const float PrintX = 64f, PrintY = 150f;
 
         RectTransform viewfinder;
         UnityEngine.UI.Text frameCounter;
@@ -23,6 +23,7 @@ namespace Kosynierzy
         float printTime = -1f;
 
         PhotoCamera subscribed;
+        int filmTotal;
 
         public override void Build(HudContext ctx)
         {
@@ -37,17 +38,17 @@ namespace Kosynierzy
             // Bright-line frame = the part of the picture that counts (0.2–0.8 of the screen).
             var frame = SettingsMenuUi.CreateRect("BrightLines", viewfinder);
             SettingsMenuUi.Anchor(frame, 0.2f, 0.2f, 0.8f, 0.8f);
-            UiTheme.AddFrame(frame, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.45f), 1.5f, 0f);
+            UiTheme.AddFrame(frame, UiTheme.WithAlpha(UiTheme.Bone, 0.5f), 1f, 0f);
             Corner(frame, new Vector2(0f, 0f), 1f, 1f);
             Corner(frame, new Vector2(1f, 0f), -1f, 1f);
             Corner(frame, new Vector2(0f, 1f), 1f, -1f);
             Corner(frame, new Vector2(1f, 1f), -1f, -1f);
 
-            var patch = SettingsMenuUi.CreateImage("FocusPatch", viewfinder, UiTheme.WithAlpha(UiTheme.Brass, 0.16f), false);
+            var patch = SettingsMenuUi.CreateImage("FocusPatch", viewfinder, UiTheme.WithAlpha(UiTheme.Warn, 0.14f), false);
             SettingsMenuUi.Place(patch.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(70f, 46f));
-            UiTheme.AddFrame(patch.rectTransform, UiTheme.WithAlpha(UiTheme.Brass, 0.7f), 1.5f, 0f);
+            UiTheme.AddFrame(patch.rectTransform, UiTheme.WithAlpha(UiTheme.Warn, 0.85f), 1.5f, 0f);
 
-            frameCounter = SettingsMenuUi.CreateText("Counter", viewfinder, "", 22, TextAnchor.MiddleRight, FontStyle.Bold, UiTheme.MutedWhite);
+            frameCounter = UiTheme.CreateHudText("Counter", viewfinder, "", 20, TextAnchor.MiddleRight, UiTheme.Bone);
             frameCounter.rectTransform.anchorMin = frameCounter.rectTransform.anchorMax = new Vector2(0.8f, 0.2f);
             frameCounter.rectTransform.pivot = new Vector2(1f, 1f);
             frameCounter.rectTransform.sizeDelta = new Vector2(240f, 30f);
@@ -67,7 +68,7 @@ namespace Kosynierzy
             printImage.raycastTarget = false;
             printImage.color = new Color(0.92f, 0.88f, 0.8f, 1f); // slight sepia
             printEmpty = SettingsMenuUi.CreateText("Empty", photoBack.rectTransform, "—", 30, TextAnchor.MiddleCenter, FontStyle.Bold,
-                UiTheme.WithAlpha(UiTheme.MutedWhite, 0.4f));
+                UiTheme.WithAlpha(UiTheme.Bone, 0.4f));
             SettingsMenuUi.Stretch(printEmpty.rectTransform);
             printCaption = SettingsMenuUi.CreateText("Caption", paper, "", 17, TextAnchor.UpperLeft, FontStyle.Normal, UiTheme.Ink);
             SettingsMenuUi.Stretch(printCaption.rectTransform, 14f, 14f, 174f, 6f);
@@ -76,14 +77,14 @@ namespace Kosynierzy
             evidenceStamp.anchoredPosition = new Vector2(-70f, -128f);
             printRoot.gameObject.SetActive(false);
 
-            flash = SettingsMenuUi.CreateImage("Flash", root, UiTheme.WithAlpha(UiTheme.MutedWhite, 0f), false);
+            flash = SettingsMenuUi.CreateImage("Flash", root, UiTheme.WithAlpha(UiTheme.Bone, 0f), false);
             SettingsMenuUi.Stretch(flash.rectTransform);
         }
 
         static void Corner(RectTransform frame, Vector2 corner, float dirX, float dirY)
         {
-            const float length = 26f, thick = 3f;
-            var color = UiTheme.WithAlpha(UiTheme.MutedWhite, 0.9f);
+            const float length = 28f, thick = 2f;
+            var color = UiTheme.WithAlpha(UiTheme.Bone, 0.95f);
             var h = SettingsMenuUi.CreateImage("CornerH", frame, color, false);
             var hr = h.rectTransform;
             hr.anchorMin = hr.anchorMax = corner;
@@ -126,8 +127,12 @@ namespace Kosynierzy
             }
 
             viewfinder.gameObject.SetActive(ctx.ViewfinderUp);
-            if (ctx.ViewfinderUp) frameCounter.text = $"KLATKA {Mathf.Max(0, photo.ShotsLeft):00}";
-            flash.color = UiTheme.WithAlpha(UiTheme.MutedWhite, photo != null ? Mathf.Clamp01(photo.FlashAlpha) * 0.9f : 0f);
+            if (ctx.ViewfinderUp)
+            {
+                filmTotal = Mathf.Max(filmTotal, photo.ShotsLeft);
+                frameCounter.text = photo.ShotsLeft <= 0 ? "Brak kadrów" : $"Zdjęcie {filmTotal - photo.ShotsLeft + 1} / {filmTotal}";
+            }
+            flash.color = UiTheme.WithAlpha(UiTheme.Bone, photo != null ? Mathf.Clamp01(photo.FlashAlpha) * 0.9f : 0f);
 
             if (printTime < 0f) return;
             printTime += ctx.Dt;

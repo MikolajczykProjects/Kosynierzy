@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,10 +10,10 @@ namespace Kosynierzy
     public enum LoadoutMode { Start, Armoury }
 
     /// <summary>
-    /// CS2-style weapon picker. Start of the game: PISTOLET (1 of 3) + BROŃ BIAŁA (1 of 2);
-    /// the radio-station armoury: KARABIN (1 of 3). Category tabs on the left, a grid of cards with a
-    /// silhouette and stat bars, the detail panel on the right, "ZATWIERDŹ" confirms.
-    /// Mouse, keyboard (arrows/WASD, Tab, Enter) and gamepad (d-pad, A, shoulders). Freezes the game while open.
+    /// CS2-style weapon picker in the UI v2 look. Start of the game: PISTOLET (1 of 3) + BROŃ BIAŁA (1 of 2) columns and a locked
+    /// KARABIN column; the radio-station armoury: one KARABIN column (1 of 3). Cards = silhouette + name + descriptor tags,
+    /// hero panel on the right with four real numbers, loadout strip bottom-left, "ZATWIERDŹ" confirms.
+    /// Mouse, keyboard (W/S card, A/D column, Tab, Enter) and gamepad (d-pad, A, shoulders). Freezes the game while open.
     /// </summary>
     public class LoadoutScreen : MonoBehaviour
     {
@@ -21,22 +22,32 @@ namespace Kosynierzy
 
         class Category { public string Title; public List<WeaponDef> Weapons; public WeaponDef Picked; }
 
+        class CardView
+        {
+            public Image Background;
+            public RectTransform Art;
+            public GameObject Strip, Cursor;
+            public Text Tags;
+        }
+
+        const float ColumnX = 64f, ColumnStep = 304f, CardW = 280f, CardH = 140f, CardGap = 16f, ColumnTop = 196f;
+        static readonly Color CardFocus = new(0.137f, 0.157f, 0.18f, 0.92f);
+
         readonly List<Category> categories = new();
+        readonly List<List<CardView>> cards = new();
+        readonly List<Text> counts = new();
         int catIndex, cardIndex;
+        bool armoury;
         Action onDone;
         PlayerControlLock controlLock;
         InputAction navigate, confirm, nextTab, prevTab;
 
-        RectTransform grid, tabsRoot;
-        Text detailName, detailCaliber, detailDesc, footerHint;
-        readonly List<(RectTransform bar, string label)> detailBars = new();
-        readonly List<Image> cardFrames = new();
-        readonly List<Image> tabBacks = new();
-
-        static readonly Color Panel = new(0.09f, 0.09f, 0.085f, 0.94f);
-        static readonly Color Card = new(0.15f, 0.145f, 0.13f, 1f);
-        static readonly Color CardHoverColor = new(0.22f, 0.2f, 0.16f, 1f);
-        static readonly Color Accent = UiTheme.Brass;
+        Text heroName, heroCaliber, heroDesc;
+        RectTransform heroArt;
+        readonly List<Text> heroValues = new();
+        readonly List<Text> heroCaptions = new();
+        readonly List<RectTransform> heroFills = new();
+        readonly List<RectTransform> slotAreas = new();
 
         public static void Open(LoadoutMode mode, Action done)
         {
@@ -49,12 +60,17 @@ namespace Kosynierzy
         void Build(LoadoutMode mode, Action done)
         {
             onDone = done;
-            if (mode == LoadoutMode.Start)
+            armoury = mode == LoadoutMode.Armoury;
+            if (!armoury)
             {
                 categories.Add(new Category { Title = "PISTOLET", Weapons = WeaponCatalog.Pistols, Picked = WeaponCatalog.SelectedPistol });
                 categories.Add(new Category { Title = "BROŃ BIAŁA", Weapons = WeaponCatalog.Melee, Picked = WeaponCatalog.SelectedMelee });
             }
-            else categories.Add(new Category { Title = "KARABIN", Weapons = WeaponCatalog.Rifles, Picked = WeaponCatalog.SelectedRifle ?? WeaponCatalog.Rifles[0] });
+            else
+            {
+                var rifle = WeaponCatalog.SelectedRifle;
+                categories.Add(new Category { Title = "KARABIN", Weapons = WeaponCatalog.Rifles, Picked = rifle != null ? rifle : WeaponCatalog.Rifles[0] });
+            }
 
             controlLock = new PlayerControlLock();
             controlLock.Lock();
@@ -75,7 +91,7 @@ namespace Kosynierzy
             prevTab.AddBinding("<Gamepad>/leftShoulder");
             navigate.Enable(); confirm.Enable(); nextTab.Enable(); prevTab.Enable();
 
-            BuildUi(mode);
+            BuildUi();
             SelectCategory(0);
         }
 
@@ -85,212 +101,396 @@ namespace Kosynierzy
             if (instance == this) instance = null;
         }
 
-        // ------------------------------------------------------------------ layout
+        // ------------------------------------------------------------------ layout (1920x1080 reference, top-left origin)
 
-        void BuildUi(LoadoutMode mode)
+        static readonly Vector2 TopLeft = new(0f, 1f);
+
+        static void PlaceTL(RectTransform rt, float x, float y, float w, float h) =>
+            SettingsMenuUi.Place(rt, TopLeft, new Vector2(x, -y), new Vector2(w, h));
+
+        void BuildUi()
         {
             var canvas = SettingsMenuUi.CreateCanvas("LoadoutCanvas", transform, 60);
             var root = canvas.transform;
 
-            var dim = SettingsMenuUi.CreateImage("Dim", root, new Color(0.03f, 0.03f, 0.025f, 0.92f), true);
+            var dim = SettingsMenuUi.CreateImage("Dim", root, MenuV2.Wash, true);
             SettingsMenuUi.Stretch(dim.rectTransform);
 
-            // Header strip.
-            var header = SettingsMenuUi.CreateRect("Header", root);
-            SettingsMenuUi.Anchor(header, 0f, 1f, 1f, 1f);
-            header.pivot = new Vector2(0.5f, 1f);
-            header.sizeDelta = new Vector2(0f, 120f);
-            header.anchoredPosition = Vector2.zero;
-            var title = UiTheme.CreateHeading("Title", header, mode == LoadoutMode.Start ? "WYPOSAŻENIE AGENTA" : "ZBROJOWNIA RADIOSTACJI", 44, UiTheme.MutedWhite);
-            SettingsMenuUi.Place(title.rectTransform, new Vector2(0f, 1f), new Vector2(80f, -34f), new Vector2(1000f, 56f));
-            title.alignment = TextAnchor.MiddleLeft;
-            var sub = SettingsMenuUi.CreateText("Sub", header, mode == LoadoutMode.Start
-                ? "Ekspozytura nr 4 · Katowice · 31.08.1939 — wybierz broń na misję „Babcia umarła”"
-                : "Weź jeden karabin. Huk karabinu słychać w całej okolicy — strzelaj tylko, gdy musisz.", 20, TextAnchor.MiddleLeft, FontStyle.Normal, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.65f));
-            SettingsMenuUi.Place(sub.rectTransform, new Vector2(0f, 1f), new Vector2(80f, -84f), new Vector2(1400f, 30f));
-            var stamp = UiTheme.CreateStamp(header, "TAJNE", UiTheme.StampRed, 26);
-            SettingsMenuUi.Place(stamp, new Vector2(1f, 1f), new Vector2(-180f, -60f), new Vector2(170f, 54f));
-            var rule = UiTheme.CreateRule("Rule", root, UiTheme.WithAlpha(Accent, 0.6f), 2f);
-            SettingsMenuUi.Anchor(rule.rectTransform, 0f, 1f, 1f, 1f);
-            rule.rectTransform.sizeDelta = new Vector2(-160f, 2f);
-            rule.rectTransform.anchoredPosition = new Vector2(0f, -122f);
+            // Header: caps title, one short line, hairline.
+            var title = MenuV2.Label("Title", root, armoury ? "ZBROJOWNIA" : "WYPOSAŻENIE", 32, TextAnchor.MiddleLeft, MenuV2.Bone);
+            PlaceTL(title.rectTransform, 64f, 40f, 1000f, 44f);
+            var sub = MenuV2.Label("Sub", root, armoury ? "Weź jeden karabin. Strzał słychać w całej okolicy." : "Pistolet i broń biała na start. Karabin odbierzesz w zbrojowni.",
+                16, TextAnchor.MiddleLeft, MenuV2.Bone2, isBody: true);
+            PlaceTL(sub.rectTransform, 64f, 90f, 1200f, 24f);
+            MenuV2.HairlineTop(root, 128f, 64f);
 
-            // Left: category tabs.
-            tabsRoot = SettingsMenuUi.CreateRect("Tabs", root);
-            SettingsMenuUi.Place(tabsRoot, new Vector2(0f, 1f), new Vector2(80f + 150f, -150f - 120f), new Vector2(300f, 240f));
-            for (int i = 0; i < categories.Count; i++)
+            // Columns.
+            for (int c = 0; c < categories.Count; c++) BuildColumn(root, c);
+            if (!armoury) BuildLockedColumn(root, categories.Count);
+
+            // Hero panel.
+            BuildHero(root);
+
+            // Loadout strip.
+            var stripLabel = MenuV2.Label("StripLabel", root, "TWOJE WYPOSAŻENIE", 12, TextAnchor.MiddleLeft, MenuV2.Bone3);
+            PlaceTL(stripLabel.rectTransform, 64f, 800f, 300f, 16f);
+            for (int i = 0; i < 4; i++)
             {
-                int idx = i;
-                var tab = SettingsMenuUi.CreateImage("Tab_" + i, tabsRoot, Card, true);
-                SettingsMenuUi.Place(tab.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -i * 76f - 34f), new Vector2(300f, 64f));
-                var btn = tab.gameObject.AddComponent<Button>();
-                btn.transition = Selectable.Transition.None;
-                btn.onClick.AddListener(() => SelectCategory(idx));
-                var label = SettingsMenuUi.CreateText("Label", tab.transform, $"{i + 1}   {categories[i].Title}", 24, TextAnchor.MiddleLeft, FontStyle.Bold, UiTheme.MutedWhite);
-                SettingsMenuUi.Stretch(label.rectTransform, 24f, 10f, 0f, 0f);
-                tabBacks.Add(tab);
+                var slot = MenuV2.Box("Slot" + (i + 1), root, MenuV2.Card);
+                PlaceTL(slot.rectTransform, 64f + i * 140f, 824f, 128f, 64f);
+                var key = MenuV2.Label("Key", slot.transform, (i + 1).ToString(), 12, TextAnchor.UpperLeft, MenuV2.Bone3);
+                SettingsMenuUi.Stretch(key.rectTransform, 8f, 0f, 6f, 0f);
+                var art = SettingsMenuUi.CreateRect("Art", slot.transform);
+                SettingsMenuUi.Stretch(art, 20f, 20f, 8f, 8f);
+                slotAreas.Add(art);
             }
 
-            // Centre: card grid.
-            grid = SettingsMenuUi.CreateRect("Grid", root);
-            SettingsMenuUi.Anchor(grid, 0f, 0f, 1f, 1f);
-            grid.offsetMin = new Vector2(420f, 190f);
-            grid.offsetMax = new Vector2(-620f, -160f);
+            // Confirm.
+            var ok = MenuV2.CreateButton(root, "ZATWIERDŹ", MenuV2.Kind.Filled, 56f, 22, ConfirmAll, out _);
+            SettingsMenuUi.Place((RectTransform)ok.transform, new Vector2(1f, 1f), new Vector2(-64f, -800f), new Vector2(300f, 56f));
 
-            // Right: detail panel.
-            var detail = SettingsMenuUi.CreateImage("Detail", root, Panel, false);
-            SettingsMenuUi.Anchor(detail.rectTransform, 1f, 0f, 1f, 1f);
-            detail.rectTransform.pivot = new Vector2(1f, 0.5f);
-            detail.rectTransform.offsetMin = new Vector2(-560f, 190f);
-            detail.rectTransform.offsetMax = new Vector2(-80f, -160f);
-            UiTheme.AddFrame(detail.rectTransform, UiTheme.WithAlpha(Accent, 0.5f), 2f, 0f);
-            detailName = UiTheme.CreateHeading("Name", detail.transform, "", 34, UiTheme.MutedWhite);
-            SettingsMenuUi.PinTop(detailName.rectTransform, 30f, 44f, 34f);
-            detailName.alignment = TextAnchor.MiddleLeft;
-            detailCaliber = SettingsMenuUi.CreateText("Caliber", detail.transform, "", 20, TextAnchor.MiddleLeft, FontStyle.Normal, Accent);
-            SettingsMenuUi.PinTop(detailCaliber.rectTransform, 80f, 28f, 34f);
-            detailDesc = SettingsMenuUi.CreateText("Desc", detail.transform, "", 20, TextAnchor.UpperLeft, FontStyle.Normal, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.8f));
-            SettingsMenuUi.PinTop(detailDesc.rectTransform, 124f, 120f, 34f);
-            string[] labels = { "SIŁA", "CELNOŚĆ", "CISZA", "OBSŁUGA" };
-            for (int i = 0; i < labels.Length; i++)
+            // Footer key caps.
+            float x = 64f;
+            x = KeyHint(root, x, new[] { "W", "S" }, "Wybór");
+            x = KeyHint(root, x, new[] { "A", "D" }, "Kategoria");
+            x = KeyHint(root, x, new[] { "TAB" }, "Dalej");
+            KeyHint(root, x, new[] { "ENTER" }, "Zatwierdź");
+        }
+
+        /// <summary>Bone key caps (24 px high) followed by a label; returns the x for the next hint.</summary>
+        static float KeyHint(Transform root, float x, string[] keys, string label)
+        {
+            foreach (var k in keys)
             {
-                var lbl = SettingsMenuUi.CreateText("StatLabel" + i, detail.transform, labels[i], 18, TextAnchor.MiddleLeft, FontStyle.Bold, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.7f));
-                SettingsMenuUi.PinTop(lbl.rectTransform, 270f + i * 54f, 24f, 34f);
-                var track = SettingsMenuUi.CreateImage("Track" + i, detail.transform, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.12f), false);
-                SettingsMenuUi.PinTop(track.rectTransform, 298f + i * 54f, 10f, 34f);
-                var fill = SettingsMenuUi.CreateImage("Fill", track.transform, Accent, false);
+                float w = k.Length > 1 ? 14f + k.Length * 9f : 24f;
+                var cap = MenuV2.Box("KeyCap", root, MenuV2.Bone);
+                PlaceTL(cap.rectTransform, x, 1004f, w, 24f);
+                var t = MenuV2.Label("Key", cap.transform, k, 15, TextAnchor.MiddleCenter, MenuV2.Ink);
+                SettingsMenuUi.Stretch(t.rectTransform);
+                x += w + 4f;
+            }
+            x += 6f;
+            var text = MenuV2.Label("Hint", root, label, 18, TextAnchor.MiddleLeft, MenuV2.Bone2, isBody: true);
+            PlaceTL(text.rectTransform, x, 1003f, 200f, 26f);
+            return x + label.Length * 9f + 40f;
+        }
+
+        void BuildColumn(Transform root, int c)
+        {
+            var cat = categories[c];
+            float x = ColumnX + c * ColumnStep;
+            ColumnHeader(root, x, cat.Title, out var count);
+            counts.Add(count);
+
+            var list = new List<CardView>();
+            for (int i = 0; i < cat.Weapons.Count; i++)
+            {
+                int ci = c, idx = i;
+                var def = cat.Weapons[i];
+                var card = MenuV2.Box("Card_" + def.Id, root, MenuV2.Card);
+                card.raycastTarget = true;
+                PlaceTL(card.rectTransform, x, ColumnTop + i * (CardH + CardGap), CardW, CardH);
+                var btn = card.gameObject.AddComponent<Button>();
+                btn.transition = Selectable.Transition.None;
+                btn.onClick.AddListener(() => { catIndex = ci; cardIndex = idx; Pick(); });
+                var hover = card.gameObject.AddComponent<CardHover>();
+                hover.OnEnter = () => { catIndex = ci; cardIndex = idx; Refresh(); };
+
+                var cv = new CardView { Background = card };
+                var art = SettingsMenuUi.CreateRect("Art", card.transform);
+                PlaceTL(art, 20f, 14f, CardW - 40f, CardH - 62f);
+                DrawSilhouette(art, def);
+                cv.Art = art;
+                var name = MenuV2.Label("Name", card.transform, def.Name.ToUpperInvariant(), 17, TextAnchor.MiddleLeft, MenuV2.Bone);
+                PlaceTL(name.rectTransform, 16f, CardH - 42f, CardW - 32f, 20f);
+                cv.Tags = MenuV2.Label("Tags", card.transform, Tags(def), 13, TextAnchor.MiddleLeft, MenuV2.Bone3);
+                PlaceTL(cv.Tags.rectTransform, 16f, CardH - 22f, CardW - 32f, 16f);
+                var key = MenuV2.Label("Key", card.transform, (i + 1).ToString(), 13, TextAnchor.UpperRight, MenuV2.Bone3);
+                PlaceTL(key.rectTransform, CardW - 34f, 10f, 24f, 16f);
+
+                var strip = MenuV2.Box("Strip", card.transform, MenuV2.Bone);
+                strip.rectTransform.anchorMin = new Vector2(0f, 0f);
+                strip.rectTransform.anchorMax = new Vector2(1f, 0f);
+                strip.rectTransform.pivot = new Vector2(0.5f, 0f);
+                strip.rectTransform.sizeDelta = new Vector2(0f, 3f);
+                strip.rectTransform.anchoredPosition = Vector2.zero;
+                cv.Strip = strip.gameObject;
+
+                var cursor = SettingsMenuUi.CreateRect("Cursor", card.transform);
+                SettingsMenuUi.Stretch(cursor);
+                UiTheme.AddFrame(cursor, UiTheme.WithAlpha(MenuV2.Bone, 0.45f), 1f, 0f);
+                cv.Cursor = cursor.gameObject;
+                list.Add(cv);
+            }
+            cards.Add(list);
+        }
+
+        static void ColumnHeader(Transform root, float x, string label, out Text count)
+        {
+            var diamond = MenuV2.Box("Diamond", root, MenuV2.Bone2);
+            SettingsMenuUi.Place(diamond.rectTransform, TopLeft, new Vector2(x + 4f, -172f), new Vector2(7f, 7f));
+            diamond.rectTransform.localRotation = Quaternion.Euler(0f, 0f, 45f);
+            var t = MenuV2.Label("ColumnTitle", root, label, 14, TextAnchor.MiddleLeft, MenuV2.Bone2);
+            PlaceTL(t.rectTransform, x + 20f, 164f, CardW - 20f, 18f);
+            count = MenuV2.Label("Count", root, "", 14, TextAnchor.MiddleRight, MenuV2.Bone3);
+            PlaceTL(count.rectTransform, x + CardW - 120f, 164f, 120f, 18f);
+        }
+
+        void BuildLockedColumn(Transform root, int c)
+        {
+            float x = ColumnX + c * ColumnStep;
+            ColumnHeader(root, x, "KARABIN", out var count);
+            count.text = "";
+            var box = SettingsMenuUi.CreateRect("LockedCard", root);
+            PlaceTL(box, x, ColumnTop, CardW, CardH);
+            UiTheme.AddFrame(box, MenuV2.Hair, 1f, 0f);
+            var a = MenuV2.Label("Locked", box, "ZBROJOWNIA", 15, TextAnchor.LowerCenter, MenuV2.Bone3);
+            SettingsMenuUi.Anchor(a.rectTransform, 0f, 0.5f, 1f, 0.5f);
+            a.rectTransform.sizeDelta = new Vector2(0f, 24f);
+            a.rectTransform.pivot = new Vector2(0.5f, 0f);
+            a.rectTransform.anchoredPosition = new Vector2(0f, 2f);
+            var b = MenuV2.Label("LockedNote", box, "Odblokujesz w akcie 3", 15, TextAnchor.UpperCenter, MenuV2.Bone3, isBody: true);
+            SettingsMenuUi.Anchor(b.rectTransform, 0f, 0.5f, 1f, 0.5f);
+            b.rectTransform.sizeDelta = new Vector2(0f, 24f);
+            b.rectTransform.pivot = new Vector2(0.5f, 1f);
+            b.rectTransform.anchoredPosition = new Vector2(0f, -4f);
+        }
+
+        void BuildHero(Transform root)
+        {
+            const float w = 816f, h = 600f;
+            var panel = MenuV2.Box("Hero", root, MenuV2.Panel);
+            SettingsMenuUi.Place(panel.rectTransform, new Vector2(1f, 1f), new Vector2(-64f, -164f), new Vector2(w, h));
+            UiTheme.AddFrame(panel.rectTransform, UiTheme.WithAlpha(MenuV2.Bone, 0.14f), 1f, 0f);
+            var p = panel.transform;
+
+            heroName = MenuV2.Label("Name", p, "", 56, TextAnchor.MiddleLeft, MenuV2.Bone);
+            PlaceTL(heroName.rectTransform, 40f, 30f, w - 80f, 64f);
+            heroCaliber = MenuV2.Label("Caliber", p, "", 18, TextAnchor.MiddleLeft, MenuV2.Bone2);
+            PlaceTL(heroCaliber.rectTransform, 40f, 98f, w - 80f, 24f);
+            heroArt = SettingsMenuUi.CreateRect("Art", p);
+            PlaceTL(heroArt, 40f, 150f, w - 80f, 190f);
+            MenuV2.HairlineTop(p, 366f, 40f);
+
+            float cw = (w - 80f) / 4f;
+            for (int i = 0; i < 4; i++)
+            {
+                var v = MenuV2.Label("Value" + i, p, "", 44, TextAnchor.MiddleLeft, MenuV2.Bone);
+                PlaceTL(v.rectTransform, 40f + i * cw, 380f, cw, 50f);
+                var cap = MenuV2.Label("Caption" + i, p, "", 13, TextAnchor.MiddleLeft, MenuV2.Bone3);
+                PlaceTL(cap.rectTransform, 40f + i * cw, 432f, cw, 16f);
+                var track = MenuV2.Box("Track" + i, p, MenuV2.Hair);
+                PlaceTL(track.rectTransform, 40f + i * cw, 458f, cw - 24f, 2f);
+                var fill = MenuV2.Box("Fill", track.transform, UiTheme.WithAlpha(MenuV2.Bone, 0.85f));
                 fill.rectTransform.anchorMin = Vector2.zero;
                 fill.rectTransform.anchorMax = new Vector2(0.5f, 1f);
                 fill.rectTransform.offsetMin = fill.rectTransform.offsetMax = Vector2.zero;
-                detailBars.Add((fill.rectTransform, labels[i]));
+                heroValues.Add(v);
+                heroCaptions.Add(cap);
+                heroFills.Add(fill.rectTransform);
             }
-
-            // Footer: confirm.
-            var ok = SettingsMenuUi.CreateImage("Confirm", root, Accent, true);
-            SettingsMenuUi.Place(ok.rectTransform, new Vector2(1f, 0f), new Vector2(-80f - 240f, 100f), new Vector2(480f, 76f));
-            var okBtn = ok.gameObject.AddComponent<Button>();
-            okBtn.transition = Selectable.Transition.ColorTint;
-            okBtn.onClick.AddListener(ConfirmAll);
-            var okText = UiTheme.CreateHeading("Label", ok.transform, "ZATWIERDŹ  ▸", 30, UiTheme.Ink);
-            SettingsMenuUi.Stretch(okText.rectTransform);
-            okText.alignment = TextAnchor.MiddleCenter;
-            footerHint = SettingsMenuUi.CreateText("Hint", root, "←→ wybór   ·   TAB kategoria   ·   ENTER zatwierdź", 18, TextAnchor.MiddleLeft, FontStyle.Normal, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.5f));
-            SettingsMenuUi.Place(footerHint.rectTransform, new Vector2(0f, 0f), new Vector2(80f + 400f, 100f), new Vector2(800f, 30f));
+            heroDesc = MenuV2.Label("Desc", p, "", 20, TextAnchor.UpperLeft, MenuV2.Bone, isBody: true);
+            PlaceTL(heroDesc.rectTransform, 40f, 498f, w - 80f, 90f);
         }
 
-        void SelectCategory(int idx)
+        // ------------------------------------------------------------------ data helpers
+
+        /// <summary>Two-word descriptor from the 0..1 card stats (e.g. "CELNY, GŁOŚNY").</summary>
+        static string Tags(WeaponDef d)
         {
-            catIndex = Mathf.Clamp(idx, 0, categories.Count - 1);
-            for (int i = 0; i < tabBacks.Count; i++)
-                tabBacks[i].color = i == catIndex ? UiTheme.WithAlpha(Accent, 0.9f) : Card;
-            for (int i = 0; i < tabBacks.Count; i++)
-                tabBacks[i].GetComponentInChildren<Text>().color = i == catIndex ? UiTheme.Ink : UiTheme.MutedWhite;
-            var cat = categories[catIndex];
-            cardIndex = Mathf.Max(0, cat.Weapons.IndexOf(cat.Picked));
-            RebuildCards();
+            var tags = new List<string>();
+            if (d.StatSilence >= 0.7f) tags.Add("CICHY");
+            else if (d.StatSilence <= 0.35f) tags.Add("GŁOŚNY");
+            if (d.StatAccuracy >= 0.8f) tags.Add("CELNY");
+            if (d.StatDamage >= 0.75f) tags.Add("MOCNY");
+            if (d.StatHandling >= 0.85f) tags.Add("SZYBKI");
+            if (d.IsMelee && d.MeleeRange >= 1.9f) tags.Add("DŁUŻSZY ZASIĘG");
+            if (tags.Count == 0) tags.Add(d.IsMelee ? "CICHY" : "UNIWERSALNY");
+            return string.Join(", ", tags.GetRange(0, Mathf.Min(2, tags.Count)));
         }
 
-        void RebuildCards()
+        static string Num(float v, string format) => v.ToString(format, CultureInfo.InvariantCulture).Replace('.', ',');
+
+        // ------------------------------------------------------------------ silhouettes
+
+        /// <summary>
+        /// Solid right-facing silhouette from blocks, fitted (aspect-correct) into <paramref name="area"/>; readable at a glance like CS icons.
+        /// <paramref name="tint"/> defaults to bone at 92 %.
+        /// </summary>
+        public static void DrawSilhouette(RectTransform area, WeaponDef def, Color? tint = null)
         {
-            for (int i = grid.childCount - 1; i >= 0; i--) Destroy(grid.GetChild(i).gameObject);
-            cardFrames.Clear();
-            var cat = categories[catIndex];
-            int n = cat.Weapons.Count;
-            float gap = 24f;
-            for (int i = 0; i < n; i++)
+            Color c = tint ?? UiTheme.WithAlpha(MenuV2.Bone, 0.92f);
+            float aspect;
+            switch (def.Slot)
             {
-                int idx = i;
-                var def = cat.Weapons[i];
-                var card = SettingsMenuUi.CreateImage("Card_" + def.Id, grid, Card, true);
-                var rt = card.rectTransform;
-                rt.anchorMin = new Vector2((float)i / n, 0f);
-                rt.anchorMax = new Vector2((float)(i + 1) / n, 1f);
-                rt.offsetMin = new Vector2(gap * 0.5f, 0f);
-                rt.offsetMax = new Vector2(-gap * 0.5f, 0f);
-                var btn = card.gameObject.AddComponent<Button>();
-                btn.transition = Selectable.Transition.None;
-                btn.onClick.AddListener(() => { cardIndex = idx; Pick(); });
-                var hover = card.gameObject.AddComponent<CardHover>();
-                hover.OnEnter = () => { cardIndex = idx; Refresh(); };
-
-                var number = SettingsMenuUi.CreateText("Key", card.transform, (i + 1).ToString(), 22, TextAnchor.UpperLeft, FontStyle.Bold, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.45f));
-                SettingsMenuUi.PinTop(number.rectTransform, 14f, 28f, 18f);
-                var silhouette = SettingsMenuUi.CreateRect("Silhouette", card.transform);
-                SettingsMenuUi.Anchor(silhouette, 0.08f, 0.42f, 0.92f, 0.85f);
-                silhouette.offsetMin = silhouette.offsetMax = Vector2.zero;
-                DrawSilhouette(silhouette, def);
-                var name = UiTheme.CreateHeading("Name", card.transform, def.Name.ToUpperInvariant(), 24, UiTheme.MutedWhite);
-                SettingsMenuUi.Anchor(name.rectTransform, 0f, 0f, 1f, 0f);
-                name.rectTransform.pivot = new Vector2(0.5f, 0f);
-                name.rectTransform.sizeDelta = new Vector2(-36f, 34f);
-                name.rectTransform.anchoredPosition = new Vector2(0f, 70f);
-                name.alignment = TextAnchor.MiddleLeft;
-                var cal = SettingsMenuUi.CreateText("Cal", card.transform, def.IsMelee ? def.Caliber : $"{def.Caliber} · {def.Magazine} naboi", 17, TextAnchor.MiddleLeft, FontStyle.Normal, UiTheme.WithAlpha(UiTheme.MutedWhite, 0.6f));
-                SettingsMenuUi.Anchor(cal.rectTransform, 0f, 0f, 1f, 0f);
-                cal.rectTransform.pivot = new Vector2(0.5f, 0f);
-                cal.rectTransform.sizeDelta = new Vector2(-36f, 26f);
-                cal.rectTransform.anchoredPosition = new Vector2(0f, 40f);
-
-                var frame = SettingsMenuUi.CreateImage("Frame", card.transform, Color.clear, false);
-                SettingsMenuUi.Stretch(frame.rectTransform);
-                UiTheme.AddFrame(frame.rectTransform, Accent, 3f, 0f);
-                cardFrames.Add(frame);
+                case WeaponSlot.Pistol: aspect = def.Id == "nagant" ? 1.9f : 1.7f; break;
+                case WeaponSlot.Rifle: aspect = def.Id == "erma" ? 3.2f : 4.4f; break;
+                default: aspect = def.Id == "noz" ? 3.6f : 4.6f; break;
             }
-            Refresh();
-        }
+            var fit = SettingsMenuUi.CreateRect("Fit", area);
+            SettingsMenuUi.Anchor(fit, 0f, 0f, 1f, 1f);
+            var fitter = fit.gameObject.AddComponent<AspectRatioFitter>();
+            fitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+            fitter.aspectRatio = aspect;
 
-        // Silhouette from blocks (pistol / revolver / rifle / smg / blade) — readable at a glance like CS icons.
-        public static void DrawSilhouette(RectTransform area, WeaponDef def)
-        {
-            Color c = UiTheme.WithAlpha(UiTheme.MutedWhite, 0.88f);
             void Block(float x0, float y0, float x1, float y1, float rot = 0f)
             {
-                var img = SettingsMenuUi.CreateImage("b", area, c, false);
+                var img = SettingsMenuUi.CreateImage("b", fit, c, false);
                 SettingsMenuUi.Anchor(img.rectTransform, x0, y0, x1, y1);
-                img.rectTransform.offsetMin = img.rectTransform.offsetMax = Vector2.zero;
                 img.rectTransform.localRotation = Quaternion.Euler(0f, 0f, rot);
             }
             switch (def.Slot)
             {
                 case WeaponSlot.Pistol when def.Id == "nagant":
-                    Block(0.30f, 0.62f, 0.85f, 0.72f); Block(0.30f, 0.50f, 0.50f, 0.78f); Block(0.18f, 0.08f, 0.32f, 0.62f, 18f); Block(0.24f, 0.70f, 0.30f, 0.82f);
+                    Block(0.34f, 0.62f, 0.99f, 0.74f);   // barrel
+                    Block(0.18f, 0.50f, 0.52f, 0.86f);   // frame + drum
+                    Block(0.08f, 0.06f, 0.30f, 0.62f, 16f); // grip
+                    Block(0.38f, 0.28f, 0.52f, 0.52f);   // trigger guard
+                    Block(0.12f, 0.80f, 0.22f, 0.92f);   // hammer
                     break;
                 case WeaponSlot.Pistol:
-                    float s = def.Id == "browning" ? 0.85f : 1f;
-                    Block(0.2f, 0.6f, 0.2f + 0.62f * s, 0.8f); Block(0.24f, 0.08f, 0.24f + 0.16f * s, 0.62f, 14f); Block(0.42f, 0.42f, 0.5f, 0.6f);
+                    float s = def.Id == "browning" ? 0.88f : 1f;
+                    Block(0.04f, 0.58f, 0.04f + 0.92f * s, 0.90f);  // slide
+                    Block(0.16f, 0.42f, 0.16f + 0.62f * s, 0.62f);  // frame
+                    Block(0.12f, 0.04f, 0.34f, 0.62f, 12f);         // grip
+                    Block(0.40f, 0.28f, 0.58f, 0.46f);              // trigger guard
+                    Block(0.04f + 0.80f * s, 0.88f, 0.04f + 0.86f * s, 0.98f); // front sight
                     break;
                 case WeaponSlot.Rifle when def.Id == "erma":
-                    Block(0.05f, 0.42f, 0.32f, 0.58f); Block(0.30f, 0.5f, 0.80f, 0.64f); Block(0.78f, 0.55f, 0.98f, 0.6f); Block(0.42f, 0.64f, 0.56f, 0.94f); Block(0.30f, 0.22f, 0.38f, 0.5f, 10f);
+                    Block(0.00f, 0.40f, 0.12f, 0.64f, 6f);   // stock
+                    Block(0.10f, 0.44f, 0.50f, 0.68f);       // receiver
+                    Block(0.48f, 0.50f, 0.92f, 0.64f);       // barrel jacket
+                    Block(0.90f, 0.54f, 1.00f, 0.60f);       // muzzle
+                    Block(0.42f, 0.10f, 0.52f, 0.46f);       // magazine
+                    Block(0.24f, 0.14f, 0.32f, 0.46f, 10f);  // grip
                     break;
                 case WeaponSlot.Rifle:
-                    Block(0.02f, 0.32f, 0.30f, 0.56f, 6f); Block(0.28f, 0.46f, 0.66f, 0.58f); Block(0.60f, 0.52f, 0.99f, 0.57f); Block(0.42f, 0.58f, 0.46f, 0.70f); Block(0.32f, 0.30f, 0.38f, 0.46f);
+                    Block(0.00f, 0.26f, 0.27f, 0.58f, 7f);   // stock
+                    Block(0.24f, 0.42f, 0.54f, 0.64f);       // receiver
+                    Block(0.44f, 0.46f, 0.76f, 0.60f);       // handguard
+                    Block(0.50f, 0.53f, 0.99f, 0.59f);       // barrel
+                    Block(0.33f, 0.20f, 0.40f, 0.44f);       // trigger guard / magazine
+                    Block(0.93f, 0.58f, 0.96f, 0.70f);       // front sight
+                    Block(0.34f, 0.64f, 0.38f, 0.72f);       // rear sight
                     break;
                 default:
-                    float len = def.Id == "noz" ? 0.55f : 0.78f;
-                    Block(0.08f, 0.44f, 0.32f, 0.56f); Block(0.32f, 0.36f, 0.35f, 0.64f); Block(0.35f, 0.47f, 0.35f + len * 0.62f, 0.53f);
+                    float len = def.Id == "noz" ? 0.8f : 1f;
+                    Block(0.02f, 0.36f, 0.28f, 0.64f);                       // handle
+                    Block(0.28f, 0.20f, 0.33f, 0.80f);                       // guard
+                    Block(0.33f, 0.40f, 0.33f + 0.38f * len, 0.64f);         // blade
+                    Block(0.33f + 0.38f * len, 0.44f, 0.33f + 0.54f * len, 0.62f);
+                    Block(0.33f + 0.54f * len, 0.50f, 0.33f + 0.64f * len, 0.58f);
                     break;
             }
         }
 
+        /// <summary>Recolours a silhouette (all its blocks) without rebuilding it.</summary>
+        static void Tint(RectTransform area, Color c)
+        {
+            foreach (var img in area.GetComponentsInChildren<Image>(true)) img.color = c;
+        }
+
+        // ------------------------------------------------------------------ state
+
+        void SelectCategory(int idx)
+        {
+            catIndex = Mathf.Clamp(idx, 0, categories.Count - 1);
+            var cat = categories[catIndex];
+            cardIndex = Mathf.Max(0, cat.Weapons.IndexOf(cat.Picked));
+            Refresh();
+        }
+
         void Refresh()
         {
-            var cat = categories[catIndex];
-            for (int i = 0; i < cardFrames.Count; i++)
+            for (int c = 0; c < categories.Count; c++)
             {
-                bool picked = cat.Weapons[i] == cat.Picked;
-                bool hover = i == cardIndex;
-                cardFrames[i].gameObject.SetActive(picked || hover);
-                foreach (var img in cardFrames[i].GetComponentsInChildren<Image>())
-                    if (img != cardFrames[i]) img.color = picked ? Accent : UiTheme.WithAlpha(UiTheme.MutedWhite, 0.35f);
-                cardFrames[i].transform.parent.GetComponent<Image>().color = hover ? CardHoverColor : Card;
+                var cat = categories[c];
+                for (int i = 0; i < cards[c].Count; i++)
+                {
+                    var cv = cards[c][i];
+                    bool picked = cat.Weapons[i] == cat.Picked;
+                    bool focus = c == catIndex && i == cardIndex;
+                    cv.Background.color = picked ? MenuV2.CardSelected : focus ? CardFocus : MenuV2.Card;
+                    cv.Strip.SetActive(picked);
+                    cv.Cursor.SetActive(focus);
+                    Tint(cv.Art, picked || focus ? UiTheme.WithAlpha(MenuV2.Bone, 0.96f) : UiTheme.WithAlpha(MenuV2.Bone, 0.6f));
+                    cv.Tags.color = picked ? MenuV2.Bone2 : MenuV2.Bone3;
+                }
+                counts[c].text = $"{Mathf.Max(0, cat.Weapons.IndexOf(cat.Picked)) + 1} / {cat.Weapons.Count}";
             }
-            var def = cat.Weapons[Mathf.Clamp(cardIndex, 0, cat.Weapons.Count - 1)];
-            detailName.text = def.Name.ToUpperInvariant();
-            detailCaliber.text = def.IsMelee ? def.Caliber : $"{def.Caliber}  ·  magazynek {def.Magazine}  ·  słychać z {def.NoiseRadius:0} m";
-            detailDesc.text = def.Description;
-            float[] stats = { def.StatDamage, def.StatAccuracy, def.StatSilence, def.StatHandling };
-            for (int i = 0; i < detailBars.Count; i++)
-                detailBars[i].bar.anchorMax = new Vector2(Mathf.Clamp01(stats[i]), 1f);
+
+            var focusCat = categories[catIndex];
+            var def = focusCat.Weapons[Mathf.Clamp(cardIndex, 0, focusCat.Weapons.Count - 1)];
+            heroName.text = def.Name.ToUpperInvariant();
+            heroCaliber.text = def.Caliber.ToUpperInvariant();
+            heroDesc.text = def.Description;
+            for (int i = heroArt.childCount - 1; i >= 0; i--) Destroy(heroArt.GetChild(i).gameObject);
+            DrawSilhouette(heroArt, def);
+
+            string[] values, captions;
+            float[] rel;
+            if (def.IsMelee)
+            {
+                values = new[] { Num(def.MeleeRange, "0.0") + " m", Num(def.TakedownTime, "0.00") + " s", "0 m", "" };
+                captions = new[] { "ZASIĘG", "ELIMINACJA", "SŁYCHAĆ", "" };
+                rel = new[] { Mathf.Clamp01(def.MeleeRange / 3f), Mathf.Clamp01(1f - def.TakedownTime / 1.5f), 0f, 0f };
+            }
+            else
+            {
+                values = new[] { Num(def.Damage, "0"), Num(def.FireRate, "0"), def.Magazine.ToString(CultureInfo.InvariantCulture), Num(def.NoiseRadius, "0") + " m" };
+                captions = new[] { "OBRAŻENIA", "STRZ./MIN", "NABOJÓW", "SŁYCHAĆ" };
+                rel = new[] { Mathf.Clamp01(def.Damage / 70f), Mathf.Clamp01(def.FireRate / 900f), Mathf.Clamp01(def.Magazine / 30f), Mathf.Clamp01(def.NoiseRadius / 80f) };
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                heroValues[i].text = values[i];
+                heroCaptions[i].text = captions[i];
+                heroFills[i].anchorMax = new Vector2(rel[i], 1f);
+                heroFills[i].parent.gameObject.SetActive(captions[i].Length > 0);
+            }
+
+            RefreshStrip();
+        }
+
+        /// <summary>Slots 1-4: pistol, rifle, melee, camera (as picked so far; empty slot = a dash).</summary>
+        void RefreshStrip()
+        {
+            WeaponDef pistol = null, rifle = null, melee = null;
+            foreach (var cat in categories)
+            {
+                if (cat.Picked == null) continue;
+                if (cat.Picked.Slot == WeaponSlot.Pistol) pistol = cat.Picked;
+                else if (cat.Picked.Slot == WeaponSlot.Rifle) rifle = cat.Picked;
+                else melee = cat.Picked;
+            }
+            if (rifle == null) rifle = WeaponCatalog.SelectedRifle;
+            var defs = new[] { pistol, rifle, melee };
+            for (int i = 0; i < slotAreas.Count; i++)
+            {
+                var area = slotAreas[i];
+                for (int k = area.childCount - 1; k >= 0; k--) Destroy(area.GetChild(k).gameObject);
+                if (i < 3 && defs[i] != null) DrawSilhouette(area, defs[i]);
+                else if (i == 3) DrawCamera(area);
+                else
+                {
+                    var dash = MenuV2.Box("Dash", area, MenuV2.Bone3);
+                    SettingsMenuUi.Place(dash.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(16f, 2f));
+                }
+            }
+        }
+
+        static void DrawCamera(RectTransform area)
+        {
+            var body = MenuV2.Box("Body", area, UiTheme.WithAlpha(MenuV2.Bone, 0.92f));
+            SettingsMenuUi.Place(body.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(54f, 32f));
+            var top = MenuV2.Box("Top", area, UiTheme.WithAlpha(MenuV2.Bone, 0.92f));
+            SettingsMenuUi.Place(top.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(-8f, 19f), new Vector2(18f, 7f));
+            var ring = MenuV2.Box("Ring", area, MenuV2.Ink);
+            ring.sprite = UiTheme.CircleSprite;
+            SettingsMenuUi.Place(ring.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(22f, 22f));
+            var lens = MenuV2.Box("Lens", area, UiTheme.WithAlpha(MenuV2.Bone, 0.92f));
+            lens.sprite = UiTheme.CircleSprite;
+            SettingsMenuUi.Place(lens.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(12f, 12f));
         }
 
         void Pick()
@@ -319,10 +519,10 @@ namespace Kosynierzy
             if (navigate.WasPressedThisFrame())
             {
                 var v = navigate.ReadValue<Vector2>();
-                if (v.x > 0.5f) cardIndex = Mathf.Min(cat.Weapons.Count - 1, cardIndex + 1);
-                else if (v.x < -0.5f) cardIndex = Mathf.Max(0, cardIndex - 1);
-                else if (v.y < -0.5f && catIndex < categories.Count - 1) { SelectCategory(catIndex + 1); return; }
-                else if (v.y > 0.5f && catIndex > 0) { SelectCategory(catIndex - 1); return; }
+                if (v.y < -0.5f) cardIndex = Mathf.Min(cat.Weapons.Count - 1, cardIndex + 1);
+                else if (v.y > 0.5f) cardIndex = Mathf.Max(0, cardIndex - 1);
+                else if (v.x > 0.5f && catIndex < categories.Count - 1) { SelectCategory(catIndex + 1); return; }
+                else if (v.x < -0.5f && catIndex > 0) { SelectCategory(catIndex - 1); return; }
                 Refresh();
             }
             var kb = Keyboard.current;
