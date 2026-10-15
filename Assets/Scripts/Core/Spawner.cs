@@ -40,6 +40,8 @@ namespace Kosynierzy
 
         static PrefabRegistry Registry => registry != null ? registry : registry = Resources.Load<PrefabRegistry>("PrefabRegistry");
 
+        static readonly Dictionary<string, string> ModelAlias = new() { { "CH_Sowa", "CH_Kolejarz" } };
+
         public static bool HasPrefab(string prefabName) => Registry != null && Registry.Find(prefabName) != null;
 
         public static GameObject Spawn(string prefabName, string pointName) =>
@@ -48,6 +50,8 @@ namespace Kosynierzy
         public static GameObject Spawn(string prefabName, Vector3 position, Quaternion rotation)
         {
             var prefab = Registry != null ? Registry.Find(prefabName) : null;
+            // Team C has no model for some story characters yet: borrow a look instead of a grey capsule.
+            if (prefab == null && Registry != null && ModelAlias.TryGetValue(prefabName, out var alias)) prefab = Registry.Find(alias);
             GameObject go;
             if (prefab != null)
             {

@@ -13,6 +13,48 @@ MonoBehaviour:
   m_Name: PrefabRegistry
   m_EditorClassIdentifier: Assembly-CSharp::Kosynierzy.PrefabRegistry
   Entries:
+  - Name: CH_Cywil_K1
+    Prefab: {fileID: 5354880261567236402, guid: 0108f55e0697b834bb84962ac3068280, type: 3}
+  - Name: CH_Cywil_K2
+    Prefab: {fileID: 779902962149148910, guid: 81b4da18824421e4f9df941a7218ca4b, type: 3}
+  - Name: CH_Cywil_K3
+    Prefab: {fileID: 7527716126321224899, guid: 1eac17e5f2561004cb49877e05316926, type: 3}
+  - Name: CH_Cywil_M1
+    Prefab: {fileID: 596283910669478020, guid: 406561a445e89da4d88abf8ce59aa9e0, type: 3}
+  - Name: CH_Cywil_M2
+    Prefab: {fileID: 7720786828397340210, guid: 47c1f98fa241514449460b027d9976c9, type: 3}
+  - Name: CH_Cywil_M3
+    Prefab: {fileID: 6676961723155595916, guid: b5e175fe09912f1428ee28ac9c983749, type: 3}
+  - Name: CH_Fotograf
+    Prefab: {fileID: 7600893681051959729, guid: c9badf3ea95375e41895451b75e6510b, type: 3}
+  - Name: CH_Gestapo
+    Prefab: {fileID: 8753899810275970570, guid: dae225298cf4bdc4eb5f155fe8bc5b2b, type: 3}
+  - Name: CH_Gruber
+    Prefab: {fileID: 3195413345181612825, guid: 09a47296047b08b4aaab9be36670d9fc, type: 3}
+  - Name: CH_Heinz
+    Prefab: {fileID: 6471952675456520978, guid: 0fb402d3e1eb5044cad47e8a02a5cf8e, type: 3}
+  - Name: CH_Honiok
+    Prefab: {fileID: 4997840085065098245, guid: bb8bad152f3e3304f9e5b149b2dcbb32, type: 3}
+  - Name: CH_Kolejarz
+    Prefab: {fileID: 6365730103473072629, guid: 228e48837fe0b754ab2dff9a9ca185f7, type: 3}
+  - Name: CH_Kruk
+    Prefab: {fileID: 5765910020233749951, guid: 37c41e3e6d1de494e9e8d256c0a19143, type: 3}
+  - Name: CH_Naujocks
+    Prefab: {fileID: 648924186286250904, guid: c22e666f4b80057408aa8105d356c7f8, type: 3}
+  - Name: CH_Pracownik
+    Prefab: {fileID: 328159960317299541, guid: 86f2008f0cc834944a0276979458a19c, type: 3}
+  - Name: CH_Recepcjonista
+    Prefab: {fileID: 5627092321385874579, guid: b18f5ab01fd70eb42aaba1dcc004d722, type: 3}
+  - Name: CH_Schupo
+    Prefab: {fileID: 7224383733309884528, guid: f32fb61888ad4454fa462bd6f59b1d2c, type: 3}
+  - Name: CH_SD
+    Prefab: {fileID: 2203475796351136218, guid: 4c18de44ecda8f54aa9d89518c44f777, type: 3}
+  - Name: CH_SD_Oficer
+    Prefab: {fileID: 1487737293496959995, guid: 58df0d5c6eecd2e4085e7750f87e59a8, type: 3}
+  - Name: CH_Sowa
+    Prefab: {fileID: 5209507223212598199, guid: 51b0f7cec069b064f806e133a9dd2139, type: 3}
+  - Name: CH_Zofia
+    Prefab: {fileID: 4609318297812591360, guid: 855edac33c96eed4c84052e0cb4cc9f5, type: 3}
   - Name: OB_Amunicja
     Prefab: {fileID: 3341932022859729269, guid: 7f17120022e01d64b83e22df3d029073, type: 3}
   - Name: OB_Aparat
