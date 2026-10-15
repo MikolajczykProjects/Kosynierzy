@@ -183,7 +183,7 @@ namespace Kosynierzy
             // the 90 s cable timer must not start while the player is still in the yard.
             steps.Add(new ReachAnyStep("Dostań się do stacji — po cichu dziurą w płocie albo głównym wejściem", 6f,
                 "spawn_radio_tyl") { MarkerPoint = "miasto_dziura_plot" });
-            steps.Add(new ActionStep(() => { SetHour(20f); SpawnWorkersDoor(); SetRadioGuards(true); SpawnArmoury(); SpawnMicrophone(); }));
+            steps.Add(new ActionStep(() => { SetHour(20f); SpawnStory("CH_Gruber", "radio_piwnica_pracownik_2"); SpawnWorkersDoor(); SetRadioGuards(true); SpawnArmoury(); SpawnMicrophone(); }));
             // The storm microphone's red lamp blinks (Animator bool Nadaje) from the announcement until the right cable is cut.
             steps.Add(new DialogStep("a3_komunikat", "SD nadaje przez mikrofon burzowy!", () => SetMicrophone(true)));
             SpawnFor("spawn_radio_tyl");
@@ -292,6 +292,10 @@ namespace Kosynierzy
                 Optional.Add(new OptionalTask { Title = "Uwolnij pracowników stacji (akt 3)", IsDone = () => workersFreed });
             Optional.Add(new OptionalTask { Title = "Zbrojownia — karabin (akt 3)", IsDone = () => WeaponCatalog.SelectedRifle != null });
 
+            // Photographer and the Gestapo agent (side location) at their interior points.
+            SpawnStory("CH_Fotograf", "fotograf_wlasciciel");
+            SpawnStory("CH_Gestapo", "fotograf_gestapo");
+
             // 6 history cards.
             for (int i = 1; i <= GameProgress.HistoryCardTotal; i++)
             {
@@ -328,8 +332,7 @@ namespace Kosynierzy
             // Railwayman (side talk).
             if (Points.Has("miasto_kolejarz"))
             {
-                var go = Spawner.Spawn("CH_Kolejarz", "miasto_kolejarz");
-                MissionStep.MakeInnocent(go);
+                var go = MissionStep.SpawnStoryNpc("CH_Kolejarz", Points.Position("miasto_kolejarz"), Points.Rotation("miasto_kolejarz"));
                 var it = go.GetComponent<Interactable>();
                 if (it == null) it = go.AddComponent<Interactable>();
                 it.SetPrompt("Porozmawiaj");
@@ -373,6 +376,12 @@ namespace Kosynierzy
         {
             var mic = Spawner.Find("OB_Mikrofon_Burzowy");
             if (mic != null) AnimParams.SetBool(mic, "Nadaje", broadcasting);
+        }
+
+        static void SpawnStory(string character, string point)
+        {
+            if (!Points.Has(point) || Spawner.Find(character) != null) return;
+            MissionStep.SpawnStoryNpc(character, Points.Position(point), Points.Rotation(point));
         }
 
         void SpawnWorkersDoor()

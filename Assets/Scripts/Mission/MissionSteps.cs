@@ -61,6 +61,20 @@ namespace Kosynierzy
             go.AddComponent<Character>().Type = CharacterType.Ally;
         }
 
+        // Story characters without their own model borrow a look (Spawner has the same idea for CH_Sowa).
+        static readonly Dictionary<string, string> LookAlike = new() { { "CH_Zofia", "CH_Cywil_K1" } };
+
+        /// <summary>Spawns a story character as its real CH_* model (or a look-alike), idle, innocent, turning to the player in dialogues.</summary>
+        public static GameObject SpawnStoryNpc(string character, Vector3 pos, Quaternion rot)
+        {
+            string prefab = !Spawner.HasPrefab(character) && LookAlike.TryGetValue(character, out var alt) && Spawner.HasPrefab(alt) ? alt : character;
+            var go = Spawner.Spawn(prefab, pos, rot);
+            go.name = character; // Dialog finds speakers by "CH_<speaker>"
+            MakeInnocent(go);
+            if (go.GetComponent<StoryNpcFacing>() == null) go.AddComponent<StoryNpcFacing>();
+            return go;
+        }
+
         // Explicit null check: GetComponent returns a fake-null object in the editor, so "??" would not add.
         protected static T GetOrAdd<T>(GameObject go) where T : Component
         {
@@ -145,7 +159,8 @@ namespace Kosynierzy
         public override void Begin()
         {
             spawned = Spawner.Find(character);
-            if (spawned == null) { Resolve(point, out var pos, out var rot); spawned = Spawner.Spawn(character, pos, rot); }
+            if (spawned == null) { Resolve(point, out var pos, out var rot); spawned = SpawnStoryNpc(character, pos, rot); }
+            else if (spawned.GetComponent<StoryNpcFacing>() == null) spawned.AddComponent<StoryNpcFacing>();
             MakeInnocent(spawned);
             talk = GetOrAdd<Interactable>(spawned);
             talk.SetPrompt("Porozmawiaj");
