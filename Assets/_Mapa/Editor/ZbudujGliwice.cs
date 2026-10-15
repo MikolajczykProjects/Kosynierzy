@@ -319,7 +319,8 @@ public static class ZbudujGliwice
         int n = 0;
         foreach (var plikAbs in pliki)
         {
-            string sciezka = "Assets" + plikAbs.Substring(Application.dataPath.Length).Replace('\\', '/');
+            string norm = plikAbs.Replace('\\', '/');
+            string sciezka = norm.StartsWith("Assets/") ? norm : "Assets" + norm.Substring(Application.dataPath.Length);
             var importer = AssetImporter.GetAtPath(sciezka) as ModelImporter;
             if (importer == null) continue;
 

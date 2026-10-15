@@ -101,3 +101,5 @@ MonoBehaviour:
     Prefab: {fileID: 948129414299390789, guid: dc783c6dfc0b96a4e9ca14af69965eba, type: 3}
   - Name: OB_Wozek_Reczny
     Prefab: {fileID: 4317166308069180034, guid: e0ec0c1b35438a3429828976c5538dec, type: 3}
+  - Name: Mapa_Gliwice
+    Prefab: {fileID: 5394481902713272511, guid: 11d8e9abe661026418d27a66290ee8cd, type: 3}
