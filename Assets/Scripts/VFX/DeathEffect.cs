@@ -5,7 +5,8 @@ namespace Kosynierzy
 {
     /// <summary>
     /// On death the visible parts are moved to a separate "corpse" that topples away from the last hit,
-    /// kicks up a dust burst and sinks out after a while — independent of when Health destroys the enemy.
+    /// lands with a small rebound and a dust / ground-ring / pebble burst (VfxLibrary.PlayBodyFall)
+    /// and sinks out after a while — independent of when Health destroys the enemy.
     /// Works with any child models from the art team.
     /// </summary>
     [RequireComponent(typeof(Health))]
@@ -77,7 +78,19 @@ namespace Kosynierzy
                 yield return null;
             }
             transform.rotation = end;
+            // The body hits the ground: dust rolls out along it, a ground ring, pebbles.
+            VfxLibrary.PlayBodyFall(startPos, fallDir, 1.7f);
             CameraShake.AddTrauma(0.05f);
+
+            // A small rebound so the landing has weight instead of stopping dead.
+            Quaternion rebound = Quaternion.AngleAxis(-5f, axis) * end;
+            const float reboundTime = 0.18f;
+            for (float t = 0f; t < reboundTime; t += Time.deltaTime)
+            {
+                transform.rotation = Quaternion.Slerp(end, rebound, Mathf.Sin(t / reboundTime * Mathf.PI));
+                yield return null;
+            }
+            transform.rotation = end;
 
             yield return new WaitForSeconds(lifetime);
             for (float t = 0f; t < sinkTime; t += Time.deltaTime)

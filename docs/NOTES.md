@@ -1,5 +1,8 @@
 # Kosynierzy — project notes
 
+> **Hand-over 15.10.2026: start with `docs/PLAN_SONNET.md`** (execution plan for Sonnet 5.5 + agents: UI research → Figma v2 → implementation, gameplay verification, release).
+
+
 > **CAMERA = FIRST PERSON (FPP). NOT third person.** The team doc ROLA-B-UNITY.txt says TPP / Starter Assets /
 > Cinemachine over the shoulder — that part is OVERRIDDEN by the user (15.10.2026). Everything else in
 > docs/00-PODZIAL-I-ZASADY.txt, ROLA-B-UNITY.txt and FABULA.md is the source of truth (one hit = fail, no blood unless

@@ -236,7 +236,8 @@ namespace Kosynierzy
 
             flashLight.enabled = true;
             flashUntil = Time.time + 0.045f;
-            VfxLibrary.PlayMuzzleFlash(muzzlePos, origin.rotation);
+            VfxLibrary.PlayMuzzleFlash(muzzlePos, origin.rotation, muzzleScale);
+            VfxLibrary.PlayShellEject(muzzlePos, origin.rotation, player != null ? player.Velocity : Vector3.zero);
 
             Fired?.Invoke();
             if (AmmoInMagazine == 0) TryReload();

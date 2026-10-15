@@ -108,6 +108,7 @@ namespace Kosynierzy
         {
             Popups.RemoveAll(p => Time.unscaledTime - p.Born > 1.6f);
             if (Time.time - lastKillTime > streakWindow) Streak = 0;
+            ScreenFx.LowHealth(LowHealth);
 
             if (player != null && !GameState.IsPaused)
             {
@@ -157,6 +158,7 @@ namespace Kosynierzy
             SfxBank.Play(Streak >= 2 ? SfxBank.Sfx.MultiKill : SfxBank.Sfx.Kill);
             CameraShake.AddTrauma(hit.Headshot ? 0.2f : 0.14f);
             TimeControl.HitStop(hit.Headshot ? 0.09f : 0.06f);
+            VfxLibrary.PlayKill(hit.Point, hit.Headshot);
         }
 
         void OnPlayerDamaged(float amount, Vector3 point, Vector3 normal)
@@ -165,9 +167,10 @@ namespace Kosynierzy
             LastDamageDirection = normal;
             CameraShake.AddTrauma(Mathf.Clamp(amount * 0.025f, 0.15f, 0.45f));
             SfxBank.Play(SfxBank.Sfx.PlayerHurt);
+            ScreenFx.DamagePulse();
         }
 
-        void OnFired() => SfxBank.Play(SfxBank.Sfx.Shot);
+        void OnFired() { SfxBank.Play(SfxBank.Sfx.Shot); ScreenFx.ShotPulse(); }
         void OnDryFired() => SfxBank.Play(SfxBank.Sfx.DryFire);
         void OnReloadStarted() => SfxBank.Play(SfxBank.Sfx.ReloadStart);
         void OnReloadFinished() => SfxBank.Play(SfxBank.Sfx.ReloadEnd);

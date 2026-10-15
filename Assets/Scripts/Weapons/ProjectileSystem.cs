@@ -105,10 +105,9 @@ namespace Kosynierzy
             var go = new GameObject("Tracer");
             go.transform.SetParent(transform, false);
             var lr = go.AddComponent<LineRenderer>();
-            lr.sharedMaterial = VfxLibrary.TracerMaterial;
+            VfxLibrary.ConfigureTracer(lr);
             lr.positionCount = 2;
             lr.useWorldSpace = true;
-            lr.widthCurve = new AnimationCurve(new Keyframe(0f, 0.035f), new Keyframe(1f, 0.01f));
             lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             lr.receiveShadows = false;
             return lr;
@@ -138,6 +137,7 @@ namespace Kosynierzy
             }
 
             b.Position = start + delta;
+            if (!b.Shot.FromPlayer) VfxLibrary.BulletNearMiss(start, b.Position);
             b.Travelled += dist;
             UpdateTracer(b);
             return b.Travelled >= b.Shot.MaxDistance;
