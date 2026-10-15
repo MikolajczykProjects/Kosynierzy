@@ -97,6 +97,7 @@ namespace Kosynierzy
             if (!resendAfterDetour)
             {
                 if (moved < 0.6f && (busy || Time.time < requestTime + 1f)) return; // same target (idle agent: retry 1x/s)
+                if (moved < 0.6f && !busy && FlatDistanceTo(sampledDestination) <= agent.stoppingDistance + 0.5f) return; // already there: no destination churn
                 if (busy && moved < 3f && Time.time < nextRepathTime) return;       // moving target: repath at most 4x/s
             }
             resendAfterDetour = false;

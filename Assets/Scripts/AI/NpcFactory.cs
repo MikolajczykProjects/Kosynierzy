@@ -80,7 +80,7 @@ namespace Kosynierzy
                 case CharacterType.Worker: GetOrAdd<WorkerController>(go); break;
             }
 
-            if (soldier) GetOrAdd<TakedownTarget>(go);
+            if (watcher) GetOrAdd<TakedownTarget>(go);
             else Kill(go.GetComponent<TakedownTarget>());
 
             if (watcher) GetOrAdd<SuspicionIndicator>(go);

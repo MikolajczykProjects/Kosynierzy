@@ -15,19 +15,19 @@ namespace Kosynierzy
         const string Prompt = "Zlikwiduj po cichu (bagnet)";
 
         [Tooltip("Max distance from the soldier to the player (flat).")]
-        [SerializeField] float reach = 1.6f;
+        [SerializeField] float reach = 1.9f;
         [Tooltip("Max angle between the soldier's back and the direction to the player.")]
         [SerializeField] float maxBackAngle = 70f;
         [SerializeField] float killDelay = 0.25f;
 
-        EnemyController enemy;
+        WatcherBrain enemy;
         Character character;
         Interactable interactable;
         bool busy;
 
         void Awake()
         {
-            enemy = GetComponent<EnemyController>();
+            enemy = GetComponent<WatcherBrain>();
             character = GetComponent<Character>();
             interactable = GetComponent<Interactable>();
             if (interactable == null) interactable = gameObject.AddComponent<Interactable>();
@@ -72,7 +72,8 @@ namespace Kosynierzy
             if (busy || !CanBeTakenDown()) return;
             busy = true;
             interactable.enabled = false;
-            if (enemy != null) enemy.BeginTakedown();
+            if (enemy is EnemyController soldier) soldier.BeginTakedown();
+            else if (enemy != null) enemy.enabled = false; // Schupo: stop thinking until the kill lands
             if (character != null) character.MarkSilentKill(); // before the stab: PlayerHands may land the hit itself
             var hands = PlayerHands.Instance;
             if (hands != null) hands.PlayStab();
