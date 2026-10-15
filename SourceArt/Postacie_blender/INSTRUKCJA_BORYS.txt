@@ -1,0 +1,56 @@
+SENDER GLEIWITZ — PACZKA OD BORYSA (obiekty + postacie + rece FPP + bron)
+================================================================================
+W ZIPie:
+  _Obiekty/     -> wrzucic do Assets/_Obiekty   (rola D: 44 obiekty OB_* + 6 nowych broni)
+  _Postacie/    -> wrzucic do Assets/_Postacie  (rola C: 21 postaci CH_*, animacje, rece FPP)
+  blender/      -> zrodla (skrypty Pythona + obiekty.blend, bazy.blend). NIE do Unity.
+
+1. UNITY — CO KLIKNAC
+--------------------------------------------------------------------------------
+  a) Skopiuj _Obiekty i _Postacie do Assets/.
+  b) Menu: Obiekty > Zbuduj wszystko      (prefaby OB_*, materialy, animatory, FX)
+  c) Menu: Postacie > Zbuduj wszystko     (prefaby CH_*, AC_Czlowiek)
+  d) Obiekty > Scena testowa  — wszystko w rzedzie do sprawdzenia skali.
+  Skryptow C# NIKT nie odpalil w Unity (nie bylo Unity na tym komputerze) — jesli konsola
+  pokaze bledy kompilacji, poprawic je (to zwykle drobiazgi w API).
+
+2. CO JEST GOTOWE
+--------------------------------------------------------------------------------
+  OBIEKTY (_Obiekty/Modele): 44 OB_* z priorytetow 1-3 + bron: OB_Pistolet_Luger, OB_Pistolet_PPK,
+    OB_Karabin_Kar98k, OB_Karabin_wz29, OB_Bagnet, OB_Noz. Parametry animatorow: _Obiekty/CZYTAJ.txt
+  POSTACIE (_Postacie/Modele): 21 CH_*.fbx (wlasna siatka low poly, szkielet Humanoid),
+    CH_Animacje.fbx = 13 klipow: Idle, Chod, Bieg, Kucanie_Idle, Kucanie_Chod, Celowanie, Strzal,
+    Trafiony, Rozmowa, RecePodniesione, Siedzi, Lezy, Spadanie. Parametry AC_Czlowiek: _Postacie/CZYTAJ.txt
+  RECE FPP (_Postacie/Modele): FP_Vis, FP_PPK, FP_Luger, FP_Kar98k, FP_wz29 — klipy:
+    <nazwa>_Idle, _Chod, _Celowanie, _Strzal, _Strzal_Cel, _Przeladowanie (luska wylatuje w klipie);
+    FP_Bagnet, FP_Noz — klipy _Idle, _Chod, _Atak, _Pchniecie. Bron jest wbudowana w rece.
+
+3. CO TRZEBA DOKONCZYC / POPRAWIC
+--------------------------------------------------------------------------------
+  [!] _Postacie/Editor/BudujPostacie.cs, funkcja Rece(): nadal szuka jednego pliku FP_Rece.fbx,
+      a teraz jest 7 plikow FP_*.fbx. Trzeba zrobic petle po FP_*.fbx:
+        - pistolety/karabiny: AC_FP z parametrami Speed, Celuje, Strzal, Przeladuj
+          (stany: Ruch = blend <n>_Idle/<n>_Chod, Celowanie, Strzal, Strzal_Cel, Przeladowanie),
+        - noze: parametry Speed, Atak, Pchniecie (stany Ruch, Atak, Pchniecie),
+        - do kazdego prefab FP_<nazwa> + FX_BlyskLufy pod kosc "Lufa" (bron palna).
+      Nazwy klipow w FBX maja przedrostek "<rig>|" — skrypt bierze czesc po ostatnim "|".
+  [!] Postacie: sprawdzic w Unity Avatar (Rig > Configure) — kosci nazwane jak Unity Humanoid
+      (Hips, Spine, Chest, Neck, Head, LeftUpperArm...). Jesli Unity zglosi blad T-pozy: Enforce T-Pose.
+  [ ] Spodnice/poly plaszczy: wagi biodra + uda; przy biegu moze lekko przenikac — ewentualnie
+      zmniejszyc krok w Chod/Bieg dla postaci w sukienkach albo poszerzyc dol (ch_cialo3.py, tuba "spodnica").
+  [ ] Rece FPP: przy przeciaganiu zamka pistoletu lewy rekaw moze zaslaniac kadr — dostroic
+      Wrack w blender/fp_bron.py (specyfikacje(), pist).
+  [ ] NPC z karabinem: brak osobnej pozy celowania z karabinu (jest tylko z pistoletu) — do dorobienia.
+  [ ] Gniazdo broni NPC: RightHand/Bron_P — dopasowac offset pistoletu w prefabie.
+  [ ] LICENCJE (napisy koncowe): proporcje postaci mierzone na modelach Sketchfab CC BY 4.0:
+      "Simple Low Poly Character" — PIXELOKAY, "Low Poly Female Base Mesh" — mesh-base.
+
+4. JAK ZMIENIAC MODELE (Blender + skrypty)
+--------------------------------------------------------------------------------
+  Otworz blender/obiekty.blend, zakladka Scripting, uruchom (exec):
+    zbuduj_wszystko.py   -> obiekty OB_* (ob_lib, ob_p1/p2/p3, ob_v2)
+    zbuduj_postacie.py   -> postacie CH_* + CH_Animacje (ch_*.py; bazy w bazy.blend)
+  Bron/rece FPP: bronie.py + fp_bron.py (zbuduj_fp_wszystkie(), eksport_fp_wszystkie()).
+  Podglad animacji: blender/podglad_animacji.blend (Spacja = play).
+  Zasada: 1 j = 1 m, przod = -Y w Blenderze (= +Z w Unity), pivot na dole.
+  Zero swastyk/symboli, zero krwi — sprawdzone na wszystkich modelach.

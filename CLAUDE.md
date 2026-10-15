@@ -46,3 +46,32 @@ Wspólne zasady i podział ról: `docs/00-PODZIAL-I-ZASADY.txt`. Fabuła: `docs/
 - Bruk na Rynku z daleka wygląda gładko; latarnie palą się dopiero w Unity (skrypt lamp).
 
 Licencje: dane mapy © współtwórcy OpenStreetMap (ODbL), tekstury ambientCG (CC0).
+
+## Postacie (rola C, paczka od Borysa, poprawki 15.10)
+- `Assets/_Postacie/`: 21 postaci `CH_*.fbx` (Humanoid, wspólny szkielet), `CH_Animacje.fbx` (13 klipów: Idle, Chod, Bieg, Kucanie_Idle, Kucanie_Chod, Celowanie, Strzal, Trafiony, Rozmowa, RecePodniesione, Siedzi, Lezy, Spadanie), ręce FPP `FP_*.fbx` (Vis, PPK, Luger, Kar98k, wz29, Bagnet, Noz), atlas w `Materialy/`. Parametry animatora są w `Assets/_Postacie/CZYTAJ.txt`.
+- Źródła (Blender i skrypty, NIE do Unity): `SourceArt/Postacie_blender/`. Opis Borysa: `INSTRUKCJA_BORYS.txt`.
+
+### Pierwsze kroki w Unity
+1. Poczekaj na import, potem **Postacie → Zbuduj wszystko**. `_Obiekty` musi już być zbudowane, bo ręce FPP biorą `Assets/_Obiekty/Efekty/FX_BlyskLufy.prefab`.
+2. Wynik: `Assets/_Postacie/Prefaby/CH_*.prefab`, `FP_<broń>.prefab` (+ `FP_Rece.prefab` = kopia `FP_Vis`), `AC_Czlowiek.controller`, `Animacje/AC_FP_<broń>.controller`. Potem **Kosynierzy → Refresh Prefab Registry**, żeby NPC dostały prawdziwe modele zamiast kapsuł.
+3. Jeśli Unity zgłosi błąd Avatara: model → Rig → Configure → Enforce T-Pose.
+4. Zacommituj od razu wygenerowane `.meta` i prefaby, żeby wszyscy mieli te same GUID-y.
+
+### Ręce FPP (dziecko kamery gracza, pozycja i obrót 0)
+- Broń palna, `AC_FP_<n>`: float `Speed`, bool `Celuje`, trigger `Strzal`, trigger `Przeladuj`. Przy strzale: `Lufa/FX_BlyskLufy` → `ParticleSystem.Play()`.
+- Noże (`FP_Bagnet`, `FP_Noz`): float `Speed`, trigger `Atak`, trigger `Pchniecie`.
+- Jeśli gra ma już własne viewmodele (np. Vis), te prefaby są opcjonalne i nie trzeba ich podpinać.
+
+### Co zmieniono względem paczki Borysa
+- `BudujPostacie.cs`: zamiast jednego `FP_Rece.fbx` jest pętla po wszystkich `FP_*.fbx`, z osobnym kontrolerem i prefabem dla każdej broni. Kompilacja poza edytorem: 0 błędów. W Unity skrypt nie był jeszcze uruchamiany.
+- Siatki postaci przebudowane (`ch_cialo3.py`): równe rękawy bez „balona” na bicepsie, grubsze przedramiona i nadgarstki, większe dłonie z kciukiem, pełniejsze nogawki, większe buty, szersza klatka u mężczyzn.
+- `CH_Honiok`: usunięta płaska płyta „okrycia”, która w każdej animacji była przyklejona do tułowia. Teraz ma kaszkiet i kamizelkę. Scena z okrytym Honiokiem = klip `Lezy` + osobny rekwizyt w scenie.
+- Bez zmian: szkielet, nazwy kości, klipy i parametry animatora.
+- Przebudowa z Blendera (Mac/Linux): `Blender -b SourceArt/Postacie_blender/obiekty.blend -P SourceArt/Postacie_blender/zbuduj_postacie_mac.py [-- CH_Kruk ...]`. FBX trafiają do `SourceArt/_Postacie/Modele`, skąd trzeba je skopiować do `Assets/_Postacie/Modele`.
+
+### Znane braki postaci
+- NPC z karabinem nie ma osobnej pozy celowania (jest tylko z pistoletu).
+- Gniazdo broni NPC `RightHand/Bron_P`: offset pistoletu trzeba dopasować w prefabie.
+- Przy przeciąganiu zamka pistoletu lewy rękaw FPP może zasłaniać kadr.
+
+Licencje postaci (napisy końcowe): proporcje mierzone na modelach Sketchfab CC BY 4.0: „Simple Low Poly Character” (PIXELOKAY), „Low Poly Female Base Mesh” (mesh-base).

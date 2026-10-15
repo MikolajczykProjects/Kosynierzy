@@ -1,0 +1,20 @@
+POSTACIE (rola C) + RECE FPP — jak wrzucic do Unity
+================================================================================
+1. Skopiuj folder _Postacie do Assets/ (obok _Obiekty — FP_Rece uzywa FX_BlyskLufy z _Obiekty).
+2. Menu: Postacie > Zbuduj wszystko  ->  Assets/_Postacie/Prefaby/CH_*.prefab (21) + FP_<bron>.prefab (7)
+   Assets/_Postacie/AC_Czlowiek.controller, Animacje/AC_FP_<bron>.controller
+
+POSTACIE (Humanoid, wspolny AC_Czlowiek, parametry jak w 00-PODZIAL-I-ZASADY):
+  Speed, MotionSpeed, Grounded, Jump, FreeFall, Kucanie, Celuje, Strzal, Trafiony, Rozmowa,
+  RecePodniesione, Siedzi, Lezy.  13 klipow w CH_Animacje.fbx (Idle, Chod, Bieg, Kucanie_Idle,
+  Kucanie_Chod, Celowanie, Strzal, Trafiony, Rozmowa, RecePodniesione, Siedzi, Lezy, Spadanie).
+  Gniazdo broni: RightHand/Bron_P. CapsuleCollider 1,8 m. 1 siatka + 1 material na postac (1,4-3,4 tys. tris).
+
+RECE FPP: 7 plikow FP_*.fbx (Vis, PPK, Luger, Kar98k, wz29, Bagnet, Noz) -> prefaby FP_<n>.prefab
+  (+ FP_Rece.prefab = kopia FP_Vis). Dziecko kamery gracza, pozycja i obrot 0.
+  Bron palna, Animacje/AC_FP_<n>.controller: float Speed, bool Celuje, trigger Strzal, trigger Przeladuj.
+  Przy strzale odpal: Lufa/FX_BlyskLufy -> ParticleSystem.Play().
+  Noze (AC_FP_Bagnet, AC_FP_Noz): float Speed, trigger Atak, trigger Pchniecie.
+
+LICENCJE: bazy postaci ze Sketchfab (CC BY 4.0) — podac w napisach:
+  "Simple Low Poly Character" by PIXELOKAY, "Low Poly Female Base Mesh" by mesh-base.
