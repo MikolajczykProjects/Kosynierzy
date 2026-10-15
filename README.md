@@ -4,9 +4,13 @@
 
 Zespół **Kosynierzy** · Hackaton 2026 · Unity 6.6 (URP)
 
-[![Trailer](docs/design/ui_v2/png/A_hud_calm.png)](docs/trailer/Sender-Gleiwitz-trailer.mp4)
+<p align="center">
+  <a href="docs/trailer/Sender-Gleiwitz-trailer.mp4">
+    <img src="docs/trailer/teaser.gif" alt="Sender Gleiwitz — trailer" width="100%">
+  </a>
+</p>
 
-▶ **Trailer:** [`docs/trailer/Sender-Gleiwitz-trailer.mp4`](docs/trailer/Sender-Gleiwitz-trailer.mp4) (80 s, 1080p)
+<p align="center">▶ <b><a href="docs/trailer/Sender-Gleiwitz-trailer.mp4">Obejrzyj cały trailer</a></b> (80 s, 720p, 9 MB, z dźwiękiem)</p>
 
 ---
 
@@ -92,7 +96,7 @@ GIF-y nagrywa `Assets/Scripts/Core/DemoRecorder.cs` (Play), składa `node tools/
 | `Assets/Scripts/` | Kod gry: `Player`, `Weapons`, `Combat`, `AI` (NPC, SD, Schupo, cywile), `Stealth`, `Mission`, `Quests`, `Dialogue`, `Interaction` (aparat, drzwi), `Audio`, `VFX`, `UI`, `Admin`, `Core` |
 | `Assets/_Mapa/` | Mapa Gliwic 1939: modele, tekstury, skrypt „Zbuduj Gliwice”, podglądy aktów |
 | `Assets/_Postacie/` | 21 postaci (Humanoid, 13 animacji) i ręce FPP z 7 brońmi |
-| `Assets/_Obiekty/` | Broń, rekwizyty, efekty (np. błysk lufy) |
+| `Assets/_Obiekty/` | Broń (Vis, Luger, PPK, Kar98k, wz. 29, nóż, bagnet), rekwizyty, efekty (np. błysk lufy) |
 | `Assets/_Dialogi/` | Dialogi PL/DE, nagrania, muzyka, dźwięki otoczenia, manifesty |
 | `Assets/_Gra/` | Sceny gry |
 | `SourceArt/`, `Zrodla-mapy/` | Źródła z Blendera i dane OSM. Nie są importowane do Unity. |
