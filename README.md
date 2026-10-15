@@ -86,7 +86,7 @@ Szczegóły mapy: `Assets/_Mapa/CZYTAJ_NAJPIERW_AI.md`. Szczegóły postaci: `As
 | `Assets/Scripts/` | Kod gry: `Player`, `Weapons`, `Combat`, `AI` (NPC, SD, Schupo, cywile), `Stealth`, `Mission`, `Quests`, `Dialogue`, `Interaction` (aparat, drzwi), `Audio`, `VFX`, `UI`, `Admin`, `Core` |
 | `Assets/_Mapa/` | Mapa Gliwic 1939: modele, tekstury, skrypt „Zbuduj Gliwice”, podglądy aktów |
 | `Assets/_Postacie/` | 21 postaci (Humanoid, 13 animacji) i ręce FPP z 7 brońmi |
-| `Assets/_Obiekty/` | Broń, rekwizyty, efekty (np. błysk lufy) |
+| `Assets/_Obiekty/` | Broń (Vis, Luger, PPK, Kar98k, wz. 29, nóż, bagnet), rekwizyty, efekty (np. błysk lufy) |
 | `Assets/_Dialogi/` | Dialogi PL/DE, nagrania, muzyka, dźwięki otoczenia, manifesty |
 | `Assets/_Gra/` | Sceny gry |
 | `SourceArt/`, `Zrodla-mapy/` | Źródła z Blendera i dane OSM. Nie są importowane do Unity. |
