@@ -61,11 +61,11 @@ namespace Kosynierzy
             pointNames.Sort();
         }
 
-        FirstPersonController Player => FindFirstObjectByType<FirstPersonController>();
+        FirstPersonController Player => FindAnyObjectByType<FirstPersonController>();
 
         void FillAmmo()
         {
-            var w = FindFirstObjectByType<PlayerWeapon>();
+            var w = FindAnyObjectByType<PlayerWeapon>();
             if (w == null) return;
             var f = typeof(PlayerWeapon).GetField("reserveAmmo", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
             if (f != null && w.ReserveAmmo < 30) f.SetValue(w, 60);
