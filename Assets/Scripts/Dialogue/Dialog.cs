@@ -173,6 +173,7 @@ namespace Kosynierzy
                 if (weapon != null && weapon.enabled) { weapon.enabled = false; frozenWeapon = weapon; }
             }
 
+            float freezeStart = Time.unscaledTime;
             Animator speakerAnim = null;
             foreach (var line in lines)
             {
@@ -189,6 +190,7 @@ namespace Kosynierzy
                 while (Time.unscaledTime < end)
                 {
                     if (!GameState.IsPaused && nextAction.WasPressedThisFrame()) break;
+                    if (Time.unscaledTime - freezeStart > 6f) ReleasePlayer(); // safety: never keep the player frozen > 6 s (long voice lines)
                     yield return null;
                 }
                 voice.Stop();
