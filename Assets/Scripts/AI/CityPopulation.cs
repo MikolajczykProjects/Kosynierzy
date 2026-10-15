@@ -41,7 +41,7 @@ namespace Kosynierzy
                     if (buddy != null)
                     {
                         var bc = buddy.GetComponent<CivilianController>();
-                        if (bc != null) bc.SetWanderPoints(crowdPositions);
+                        if (bc != null) { bc.SetWanderPoints(crowdPositions); if (civ != null) bc.SetFollow(civ); }
                     }
                 }
             }

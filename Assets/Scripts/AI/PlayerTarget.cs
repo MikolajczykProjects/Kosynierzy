@@ -11,6 +11,7 @@ namespace Kosynierzy
         static FirstPersonController player;
         static Camera cam;
         static Health health;
+        static PlayerHands hands;
         static float nextSearch;
         static int zoneFrame = -1;
         static bool inZone;
@@ -21,6 +22,7 @@ namespace Kosynierzy
             player = null;
             cam = null;
             health = null;
+            hands = null;
             nextSearch = 0f;
             zoneFrame = -1;
             inZone = false;
@@ -35,6 +37,7 @@ namespace Kosynierzy
             if (player == null) return false;
             cam = player.GetComponentInChildren<Camera>(true);
             health = player.GetComponent<Health>();
+            hands = player.GetComponentInChildren<PlayerHands>(true);
             return true;
         }
 
@@ -56,6 +59,9 @@ namespace Kosynierzy
 
         /// <summary>Where enemies aim.</summary>
         public static Vector3 Chest => Feet + Vector3.up * (IsCrouching ? 0.7f : 1.25f);
+
+        /// <summary>Pistol or rifle in hand (visible to guards).</summary>
+        public static bool WeaponDrawn => Find() && hands != null && (hands.Current == HandItem.Pistol || hands.Current == HandItem.Rifle);
 
         public static bool IsCrouching => Find() && player.IsCrouching;
         /// <summary>Horizontal speed in m/s.</summary>

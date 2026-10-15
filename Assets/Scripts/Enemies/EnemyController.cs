@@ -383,7 +383,7 @@ namespace Kosynierzy
             if (Time.time - alarmContact > alarmMemory)
             {
                 alertness = 1.5f;
-                EnterSearch(LastKnownPlayerPosition);
+                EnterSearch(LastKnownPlayerPosition, "bark_sd_zgubil");
             }
         }
 

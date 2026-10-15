@@ -55,7 +55,7 @@ namespace Kosynierzy
             Color question = police ? PoliceQuestion : SoldierQuestion;
             Color alarmColor = police ? PoliceAlarm : SoldierAlarm;
 
-            float scale = Mathf.Lerp(1f, 0.55f, screen.z / maxDistance) * (Screen.height / 1080f);
+            float scale = Mathf.Lerp(1.5f, 0.8f, screen.z / maxDistance) * (Screen.height / 1080f);
             float x = screen.x, y = Screen.height - screen.y;
             style.fontSize = Mathf.Max(10, Mathf.RoundToInt((alarm ? 64f : 54f) * scale));
             var rect = new Rect(x - 40f * scale, y - 52f * scale, 80f * scale, 52f * scale);
@@ -69,7 +69,7 @@ namespace Kosynierzy
 
             if (!alarm)
             {
-                float w = 46f * scale, h = Mathf.Max(3f, 6f * scale);
+                float w = 56f * scale, h = Mathf.Max(4f, 7f * scale);
                 var bar = new Rect(x - w * 0.5f, y + 2f * scale, w, h);
                 GUI.color = new Color(0f, 0f, 0f, 0.6f);
                 GUI.DrawTexture(bar, Texture2D.whiteTexture);

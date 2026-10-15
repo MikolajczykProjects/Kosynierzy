@@ -31,13 +31,13 @@ namespace Kosynierzy
 
         [Header("Suspicion '?' meter (fill per second)")]
         [Tooltip("Fill speed with the player at the edge of sight range (before exposure multipliers).")]
-        [SerializeField] float fillFar = 0.18f;
+        float fillFar = 0.15f;
         [Tooltip("Fill speed with the player right in front (before exposure multipliers).")]
-        [SerializeField] float fillNear = 1.1f;
+        float fillNear = 1.0f;
         [Tooltip("Multiplier at Detection.Visibility01 = 0 (hidden, dark, crouched, still).")]
-        [SerializeField] float hiddenMultiplier = 0.3f;
+        float hiddenMultiplier = 0.25f;
         [Tooltip("Multiplier at Detection.Visibility01 = 1 (lit, standing, moving).")]
-        [SerializeField] float exposedMultiplier = 1.6f;
+        float exposedMultiplier = 1.0f;
         [SerializeField] float sprintMultiplier = 1.3f;
         [SerializeField] float forbiddenZoneMultiplier = 3f;
         [Tooltip("Meter drop per second while the player is out of sight.")]
@@ -160,7 +160,8 @@ namespace Kosynierzy
         float FillRate()
         {
             float closeness = 1f - Mathf.Clamp01(PlayerDistance / Mathf.Max(0.1f, SightRange()));
-            float rate = Mathf.Lerp(fillFar, fillNear, closeness * closeness);
+            float rate = Mathf.Lerp(fillFar, fillNear, closeness); // ~2.3 s to full at 10 m in plain view; slower far, crouched, in shadow
+            if (PlayerTarget.WeaponDrawn) rate *= 1.6f;
             rate *= Mathf.Lerp(hiddenMultiplier, exposedMultiplier, Detection.Visibility01);
             if (PlayerTarget.IsSprinting) rate *= sprintMultiplier;
             if (PlayerTarget.InForbiddenZone) rate *= forbiddenZoneMultiplier;

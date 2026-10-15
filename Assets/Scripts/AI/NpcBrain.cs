@@ -36,6 +36,7 @@ namespace Kosynierzy
         Vector3 roamTarget;
         bool roamHasTarget, roamWaiting;
         float roamWaitUntil;
+        float nextLookAt, lookYaw;
         int roamIndex = -1;
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
@@ -244,7 +245,17 @@ namespace Kosynierzy
                 roamWaiting = false;
                 roamTarget = NextRoamPoint(points, randomOrder, radius);
             }
-            if (roamWaiting) return;
+            if (roamWaiting)
+            {
+                // Standing idle: glance around now and then.
+                if (Time.time >= nextLookAt)
+                {
+                    nextLookAt = Time.time + Random.Range(1.2f, 3f);
+                    lookYaw = transform.eulerAngles.y + Random.Range(-100f, 100f);
+                }
+                TurnTo(Quaternion.Euler(0f, lookYaw, 0f), 70f);
+                return;
+            }
 
             if (Arrived(roamTarget))
             {

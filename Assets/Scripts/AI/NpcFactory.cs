@@ -47,7 +47,7 @@ namespace Kosynierzy
             bool soldier = type == CharacterType.Enemy;
             bool watcher = soldier || type == CharacterType.Police;
 
-            SetupAgent(go);
+            SetupAgent(go, type);
             EnsureBodyCollider(go, placeholder, soldier);
             ConfigureOneHit(GetOrAdd<Health>(go));
             if (soldier) EnsureHeadHitbox(go);
@@ -139,7 +139,7 @@ namespace Kosynierzy
             return true;
         }
 
-        static void SetupAgent(GameObject go)
+        static void SetupAgent(GameObject go, CharacterType type)
         {
             bool onMesh = NavMesh.SamplePosition(go.transform.position, out var hit, 3f, NavMesh.AllAreas);
             if (onMesh) go.transform.position = hit.position;
@@ -167,8 +167,8 @@ namespace Kosynierzy
             agent.radius = AgentRadius;
             agent.height = AgentHeight;
             agent.baseOffset = 0f;
-            agent.angularSpeed = 540f;
-            agent.acceleration = 14f;
+            agent.angularSpeed = 240f;
+            agent.acceleration = (type == CharacterType.Civilian || type == CharacterType.Worker) ? 4f : 8f; // civilians ease in/out; guards react faster
             agent.stoppingDistance = 0.3f;
             agent.autoBraking = true;
             agent.autoRepath = true;

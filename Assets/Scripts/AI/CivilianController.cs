@@ -40,6 +40,10 @@ namespace Kosynierzy
         bool reportIsAlarm;
         Vector3 scareFrom, fleeTarget;
         NpcBrain reportTo;
+        CivilianController leader;
+
+        /// <summary>Walk side by side with another civilian (a pair); ends when the leader goes down.</summary>
+        public void SetFollow(CivilianController other) => leader = other;
 
         public bool IsFleeing => mode == Mode.Fleeing;
         public bool IsPanicking => mode != Mode.Wander;
@@ -48,7 +52,8 @@ namespace Kosynierzy
         protected override void Awake()
         {
             base.Awake();
-            walkSpeed = Random.Range(walkSpeedRange.x, walkSpeedRange.y);
+            walkSpeed = Random.Range(0.9f, 1.4f); // every civilian its own pace
+            waitTime = new Vector2(2f, 8f);
             foreach (var t in wanderPoints)
                 if (t != null) points.Add(t.position);
         }
@@ -86,7 +91,8 @@ namespace Kosynierzy
             switch (mode)
             {
                 case Mode.Wander:
-                    Roam(points, true, wanderRadius, walkSpeed, waitTime);
+                    if (leader != null && !leader.IsDown && leader.gameObject.activeInHierarchy && !leader.IsPanicking) WalkWithLeader();
+                    else Roam(points, true, wanderRadius, walkSpeed, waitTime);
                     break;
                 case Mode.Reporting:
                     UpdateReport();
@@ -102,6 +108,18 @@ namespace Kosynierzy
                     if (Arrived(fleeTarget, 1.5f)) fleeTarget = PickFleePoint();
                     MoveTo(fleeTarget, runSpeed);
                     break;
+            }
+        }
+
+        void WalkWithLeader()
+        {
+            Vector3 desired = leader.transform.position + leader.transform.right * 1.0f;
+            float d = FlatDistanceTo(desired);
+            if (d > 0.9f) MoveTo(desired, d > 3f ? leader.walkSpeed * 1.4f : leader.walkSpeed);
+            else
+            {
+                Halt();
+                FaceTowards(transform.position + leader.transform.forward, 180f);
             }
         }
 
