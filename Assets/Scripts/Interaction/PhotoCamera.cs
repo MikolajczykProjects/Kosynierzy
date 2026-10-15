@@ -89,7 +89,7 @@ namespace Kosynierzy
             nextShot = Time.unscaledTime + cooldown;
             flashUntil = Time.unscaledTime + 0.25f;
             ShotsLeft = Mathf.Max(0, ShotsLeft - 1);
-            SfxBank.Play(SfxBank.Sfx.Pickup);
+            SfxBank.Play(SfxBank.Sfx.Shutter);
             Noise.Emit(transform.position, 2f, NoiseKind.Other, player != null ? player.transform : transform);
 
             string caught = null;

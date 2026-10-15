@@ -78,6 +78,7 @@ namespace Kosynierzy
             SfxBank.Sfx.Jump => One(Step("jump", 0.08f, 0.3f)),
             SfxBank.Sfx.Land => One(Thud("land", 0.14f, 110f, 0.6f)),
             SfxBank.Sfx.Slide => One(Swish("slide", 0.45f, 0.35f)),
+            SfxBank.Sfx.Shutter => One(Concat("shutter2", Click("t1", 0.015f, 4200f, 0.7f), Silence(0.05f), Click("t2", 0.025f, 2600f, 0.6f))),
             SfxBank.Sfx.Pickup => One(Concat("shutter", Click("s1", 0.015f, 4200f, 0.7f), Silence(0.05f), Click("s2", 0.025f, 2600f, 0.6f))),
             SfxBank.Sfx.QuestStep => One(Concat("quest", Tone("q1", 0.12f, 523f, 0.22f), Tone("q2", 0.3f, 784f, 0.22f))),
             SfxBank.Sfx.QuestComplete => One(Concat("done", Tone("d1", 0.15f, 523f, 0.22f), Tone("d2", 0.15f, 659f, 0.22f), Tone("d3", 0.5f, 784f, 0.25f))),

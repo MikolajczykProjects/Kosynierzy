@@ -13,7 +13,7 @@ namespace Kosynierzy
         {
             Shot, DryFire, ReloadStart, ReloadEnd, Hit, Headshot, Kill, MultiKill,
             PlayerHurt, LowHealthHeartbeat, Footstep, Jump, Land, Slide,
-            QuestStep, QuestComplete, Pickup, EnemyShot, BulletImpact, BulletWhizz
+            QuestStep, QuestComplete, Pickup, EnemyShot, BulletImpact, BulletWhizz, Shutter
         }
 
         [System.Serializable]
@@ -74,9 +74,60 @@ namespace Kosynierzy
                 Emit(clip, position, e.Volume <= 0f ? 1f : e.Volume, e.PitchJitter);
                 return;
             }
+            // Clips shipped in Resources/Sfx/<name> (team A) come before the synthesised placeholder.
+            string res = ResourceName(id);
+            if (res != null)
+            {
+                if (!resourceClips.TryGetValue(res, out var rc)) resourceClips[res] = rc = Resources.Load<AudioClip>("Sfx/" + res);
+                if (rc != null && id == Sfx.Footstep) { PlayStepSlice(rc); return; }
+                if (rc != null) { Emit(rc, position, id == Sfx.Footstep ? 0.55f : 0.9f, 0.05f); return; }
+            }
             // No clip from the sound team yet → synthesised placeholder.
             var fallback = ProceduralSfx.Get(id);
             if (fallback != null) Emit(fallback, position, FallbackVolume(id), 0.06f);
+        }
+
+        readonly System.Collections.Generic.Dictionary<string, AudioClip> resourceClips = new();
+        AudioSource stepSource;
+        float stepStopAt;
+
+        // The shipped footstep files are long walking recordings: one stride = a short random slice of it.
+        void PlayStepSlice(AudioClip clip)
+        {
+            if (stepSource == null)
+            {
+                stepSource = new GameObject("StepVoice").AddComponent<AudioSource>();
+                stepSource.transform.SetParent(transform, false);
+                stepSource.playOnAwake = false;
+                stepSource.spatialBlend = 0f;
+                stepSource.volume = 0.55f;
+            }
+            const float slice = 0.4f;
+            stepSource.clip = clip;
+            stepSource.time = Random.Range(0f, Mathf.Max(0f, clip.length - slice - 0.05f));
+            stepSource.pitch = 1f + Random.Range(-0.05f, 0.05f);
+            stepSource.Play();
+            stepStopAt = Time.unscaledTime + slice;
+        }
+
+        void Update()
+        {
+            if (stepSource != null && stepSource.isPlaying && Time.unscaledTime >= stepStopAt) stepSource.Stop();
+        }
+
+        /// <summary>Resources/Sfx clip for an event; footsteps depend on the floor (interiors stand at x >= 3000).</summary>
+        static string ResourceName(Sfx id)
+        {
+            if (id == Sfx.Shutter) return "sfx_aparat_leica_migawka";
+            if (id != Sfx.Footstep) return null;
+            var p = FindPlayerPosition();
+            return p.x >= 3000f ? "sfx_kroki_drewno" : "sfx_kroki_bruk";
+        }
+
+        static Vector3 FindPlayerPosition()
+        {
+            var cam = Camera.main;
+            return cam != null ? cam.transform.position : Vector3.zero;
         }
 
         void Emit(AudioClip clip, Vector3? position, float volume, float jitter)
