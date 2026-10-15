@@ -16,6 +16,7 @@ namespace Kosynierzy
         const int MaxActive = 60; // hard cap of simultaneously active extras
 
         readonly List<GameObject> extras = new();
+        readonly List<bool> extraIsSd = new();
         float nextCull;
 
         public void Populate(IList<Transform> crowdPoints, IList<Transform> patrolPoints, string[] civilianPrefabs)
@@ -83,7 +84,24 @@ namespace Kosynierzy
             var go = NpcFactory.Setup(raw, type);
             go.transform.SetParent(transform, true);
             extras.Add(go);
+            extraIsSd.Add(type == CharacterType.Enemy);
             return go;
+        }
+
+        static bool PlaceNearPlayer(GameObject go, Vector3 pp)
+        {
+            for (int tries = 0; tries < 6; tries++)
+            {
+                float a = Random.Range(0f, Mathf.PI * 2f), r = Random.Range(25f, 60f);
+                var p = pp + new Vector3(Mathf.Cos(a) * r, 0f, Mathf.Sin(a) * r);
+                if (!NavMesh.SamplePosition(p, out var hit, 6f, NavMesh.AllAreas)) continue;
+                var agent = go.GetComponent<NavMeshAgent>();
+                go.transform.position = hit.position;
+                if (go.activeSelf && agent != null && agent.enabled && agent.isOnNavMesh) agent.Warp(hit.position);
+                if (!go.activeSelf) go.SetActive(true);
+                return true;
+            }
+            return false;
         }
 
         static bool Sample(Vector3 origin, float radius, out Vector3 result)
@@ -116,6 +134,32 @@ namespace Kosynierzy
                 if (on && dist > CullOut) { go.SetActive(false); on = false; }
                 else if (!on && dist < CullIn && active < MaxActive) { go.SetActive(true); on = true; }
                 if (on) active++;
+            }
+
+            // Keep the streets around the player alive: bring far extras to a spot 25-60 m from the player.
+            int nearCiv = 0, nearSd = 0;
+            for (int i = 0; i < extras.Count; i++)
+            {
+                var go = extras[i];
+                if (go == null || !go.activeSelf) continue;
+                var d = go.transform.position - pp; d.y = 0f;
+                if (d.sqrMagnitude > 70f * 70f) continue;
+                if (extraIsSd[i]) nearSd++; else nearCiv++;
+            }
+            int budget = 3;
+            for (int i = 0; i < extras.Count && budget > 0 && (nearSd < 8 || nearCiv < 30); i++)
+            {
+                var go = extras[i];
+                if (go == null) continue;
+                bool sd = extraIsSd[i];
+                if (sd ? nearSd >= 8 : nearCiv >= 30) continue;
+                var ch = go.GetComponent<Character>();
+                if (ch != null && ch.IsDown) continue;
+                var d = go.transform.position - pp; d.y = 0f;
+                if (go.activeSelf && d.sqrMagnitude < 70f * 70f) continue; // already near
+                if (!PlaceNearPlayer(go, pp)) continue;
+                budget--;
+                if (sd) nearSd++; else nearCiv++;
             }
         }
     }
