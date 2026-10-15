@@ -99,6 +99,7 @@ namespace Kosynierzy
         {
             navigate?.Dispose(); confirm?.Dispose(); nextTab?.Dispose(); prevTab?.Dispose();
             if (instance == this) instance = null;
+            if (controlLock != null && controlLock.IsLocked) { controlLock.Unlock(); Time.timeScale = 1f; PlayerControlLock.SetCursorFree(false); }
         }
 
         // ------------------------------------------------------------------ layout (1920x1080 reference, top-left origin)
