@@ -12,4 +12,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db9ab58739b1fe498f911abf8c9ce81, type: 3}
   m_Name: PrefabRegistry
   m_EditorClassIdentifier: Assembly-CSharp::Kosynierzy.PrefabRegistry
-  Entries: []
+  Entries:
+  - Name: OB_Amunicja
+    Prefab: {fileID: 3341932022859729269, guid: 7f17120022e01d64b83e22df3d029073, type: 3}
+  - Name: OB_Aparat
+    Prefab: {fileID: 8758966541246619775, guid: 82e48828634f2144e9aaf8c6c737f85c, type: 3}
+  - Name: OB_Aparat_Studyjny
+    Prefab: {fileID: 3609986479516875839, guid: 3068e7a07d61ea04997ad28fa0749e1d, type: 3}
+  - Name: OB_Auto_SD
+    Prefab: {fileID: 802083354764478780, guid: 0f0376999e4764740a5240e93d98d6bc, type: 3}
+  - Name: OB_Beczka
+    Prefab: {fileID: 7563220232946134453, guid: 01012ea1380147048a0baf1d002c5205, type: 3}
+  - Name: OB_Biurko
+    Prefab: {fileID: 778312058072250378, guid: 3291fc99f943f0f44a2fe5deda8b9f6d, type: 3}
+  - Name: OB_Ciezarowka
+    Prefab: {fileID: 3474046855610865523, guid: d061d38edb8efba479eab658925af1f9, type: 3}
+  - Name: OB_Drzwi
+    Prefab: {fileID: 3296266952305935770, guid: f212b1c1debd3fe4eb8840a707809577, type: 3}
+  - Name: OB_Film
+    Prefab: {fileID: 4369846097069776064, guid: b232e5bf5e22f0f49996cf011efbca2a, type: 3}
+  - Name: OB_Hydrant
+    Prefab: {fileID: 8154055501888281285, guid: 03b65c824a72abf4880c8fb30e10487a, type: 3}
+  - Name: OB_Kanapa
+    Prefab: {fileID: 1857577883861573308, guid: 7da0389246975ad47818159e24bf14d1, type: 3}
+  - Name: OB_Karta_Historii
+    Prefab: {fileID: 2456290140558161537, guid: cc106dcc471a8d744af220153283e9cb, type: 3}
+  - Name: OB_Kartka
+    Prefab: {fileID: 1169691812991502318, guid: 805a917a7c8b3e14bad388026b24c74b, type: 3}
+  - Name: OB_Kiosk
+    Prefab: {fileID: 3770901796603922343, guid: 5a519085c80e43440a08ce6ae78eefde, type: 3}
+  - Name: OB_Kosz
+    Prefab: {fileID: 6428467286494253583, guid: bac0f3af68f298740831b34274a991ca, type: 3}
+  - Name: OB_Krzeslo
+    Prefab: {fileID: 7905371088897313322, guid: 7349cd0b9b0184740908a815dc114cd3, type: 3}
+  - Name: OB_Lacznica
+    Prefab: {fileID: 6982987953739761975, guid: 49ccdd0f34c7d514f84dd57169f36f51, type: 3}
+  - Name: OB_Lada_Recepcja
+    Prefab: {fileID: 2726870606885753031, guid: ebdc51c54d7d18a40be1f514c375ab55, type: 3}
+  - Name: OB_Lampa_Biurkowa
+    Prefab: {fileID: 8773069146379134792, guid: 19194917879852041a960447355d1a29, type: 3}
+  - Name: OB_Lampa_Ciemnia
+    Prefab: {fileID: 435766794015828844, guid: e1013a86266ea8d4d8ccf395f016c211, type: 3}
+  - Name: OB_Latarnia
+    Prefab: {fileID: 3373826974899015387, guid: df97b817d6ad91a41ad050b979979625, type: 3}
+  - Name: OB_Lawka
+    Prefab: {fileID: 8120161849446264605, guid: de2b644425cd76c4facee5ba29013261, type: 3}
+  - Name: OB_Lista
+    Prefab: {fileID: 591435813467557494, guid: 73b8ae1ff31629d4d866a067151ccb92, type: 3}
+  - Name: OB_Lokomotywa
+    Prefab: {fileID: 5161899783062575782, guid: e7737ac4ca5392145a88dd2a1d884ef4, type: 3}
+  - Name: OB_Lozko
+    Prefab: {fileID: 1950451845311021328, guid: df9feb2f21c2bc042955b4ab1a1daa4f, type: 3}
+  - Name: OB_Lustro
+    Prefab: {fileID: 5614583813180900896, guid: 4ec1b1e47e0908b47ae9ea1ed73ef321, type: 3}
+  - Name: OB_Mapa_Stol
+    Prefab: {fileID: 4404857450928640821, guid: d2cd2d8d46881a144bd96c4aadd9f9a6, type: 3}
+  - Name: OB_Mikrofon_Burzowy
+    Prefab: {fileID: 1526638359723689380, guid: cc3337ac6bcdfa740afa0b780e0991b9, type: 3}
+  - Name: OB_Pistolet_Vis
+    Prefab: {fileID: 4569174315506479113, guid: 3fc0bf89764e48e478d25f9d7eb9964f, type: 3}
+  - Name: OB_Plakat
+    Prefab: {fileID: 226560376500805740, guid: 985b2dd364119fc4a9b70e8339d5aabe, type: 3}
+  - Name: OB_Pulpit
+    Prefab: {fileID: 7036964100006982807, guid: 30d5ccbe9a105e44fab4e6046643fd51, type: 3}
+  - Name: OB_Radio_Odbiornik
+    Prefab: {fileID: 6592724699934654905, guid: 2e545a4098d140245820ac6cb10c54bd, type: 3}
+  - Name: OB_Regal_Ksiazki
+    Prefab: {fileID: 2957372656925115533, guid: e53db43dff56ff04eadd4530da75179f, type: 3}
+  - Name: OB_Rower
+    Prefab: {fileID: 7951799501243454514, guid: d4f631fcd56fabf41bf551df25b91e8d, type: 3}
+  - Name: OB_Skrytka
+    Prefab: {fileID: 5935749961093355215, guid: a94460225d7b3944ab70f8b3fbef4076, type: 3}
+  - Name: OB_Skrzynia
+    Prefab: {fileID: 352602458824707206, guid: bf51fa9b6ecf4f74996d65a744bc534b, type: 3}
+  - Name: OB_Slup_Ogloszeniowy
+    Prefab: {fileID: 2085827775234752329, guid: d9724ad93e2703e43b4c8134db6a8cee, type: 3}
+  - Name: OB_Stol
+    Prefab: {fileID: 5901194377017408575, guid: 33b5338b7e4431e4bbbc1480e92fb123, type: 3}
+  - Name: OB_Szafa
+    Prefab: {fileID: 640953392786751901, guid: fb88f7a687ca7e1438c8509027cb9d9e, type: 3}
+  - Name: OB_Szafa_Aparatura
+    Prefab: {fileID: 2281950286297877114, guid: 9e0431fa1377e6c4b87a75309585a65f, type: 3}
+  - Name: OB_Telefon
+    Prefab: {fileID: 2318436215261830068, guid: e328cd83a18492b4cb1b5466b006f311, type: 3}
+  - Name: OB_Wagon
+    Prefab: {fileID: 2439553805665207135, guid: ed8ead152c5865e4a9f6cc01781c501e, type: 3}
+  - Name: OB_Worki
+    Prefab: {fileID: 948129414299390789, guid: dc783c6dfc0b96a4e9ca14af69965eba, type: 3}
+  - Name: OB_Wozek_Reczny
+    Prefab: {fileID: 4317166308069180034, guid: e0ec0c1b35438a3429828976c5538dec, type: 3}

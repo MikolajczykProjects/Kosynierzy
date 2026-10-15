@@ -1,0 +1,230 @@
+ROLA A — NATANIEL: MAPA 3D LOW POLY + DIALOGI
+================================================================================
+Najpierw przeczytaj 00-PODZIAL-I-ZASADY.txt.
+
+Twoje foldery: Assets/_Mapa/ i Assets/_Dialogi/. Nic poza nimi.
+Twój produkt:
+  1. Assets/_Mapa/Mapa_Gliwice.prefab — teren, budynki, wnętrza, kolizje,
+     WSZYSTKIE nazwane punkty z kontraktu.
+  2. Assets/_Dialogi/Resources/dialogi.json + Resources/Audio/*.mp3 (+ Sfx/).
+
+NAJWAŻNIEJSZE: na 1:00 wypchnij mapę z KOMPLETEM punktów, nawet z szarych
+pudełek. Od punktów zależy cała reszta zespołu. Upiększasz potem.
+
+
+CZĘŚĆ 1 — MAPA
+================================================================================
+Najszybciej: zwykły Claude (chat) pisze ci SKRYPT EDYTORA C#, który jednym
+kliknięciem (menu Tools > Zbuduj Gliwice) stawia całą mapę z prymitywów
+w stylu low poly i zapisuje ją jako prefab. Prompt masz niżej — wklej w całości.
+
+Potem możesz podmienić część pudełek na ładne modele z Kenney (City Kit
+Commercial/Suburban, Retro Urban Kit, Nature Kit — CC0). Skrypt
+tools/pobierz_modele.py z paczki start-unity ściąga je do projektu, ale
+przenieś je do Assets/_Mapa/Kenney/, żeby siedziały w twoim folderze.
+
+Po wygenerowaniu:
+[ ] Klawisz F2 / Gizmos: widać wszystkie punkty z nazwami.
+[ ] Konsola: „Mapa OK: N punktów” (skrypt sam sprawdza).
+[ ] Wejdź w Play na Test_Mapa.unity kapsułą/Starter Assets i przejdź się:
+    nie ma dziur w podłodze, nie da się wyjść za mapę, drzwi są w ścianach.
+[ ] git add Assets/_Mapa && commit && pull --rebase && push,
+    na Discord: „mapa: wrzucona, N punktów”.
+
+
+========== PROMPT DO CLAUDE (chat) — KOPIUJ OD TEJ LINII ==========
+
+Jesteś doświadczonym programistą Unity (C#). Napisz mi SKRYPT EDYTORA dla
+Unity 6 (szablon Universal 3D, URP), który jednym kliknięciem zbuduje CAŁĄ
+mapę 3D gry „SENDER GLEIWITZ”: stylizowane Gliwice z 31.08.1939 w stylu
+low poly (płaskie kolory, proste bryły, bez tekstur). Gra jest third person,
+kamera zza pleców, gracz ma 1,8 m.
+
+TWARDE WYMAGANIA
+- Plik(i) w Assets/_Mapa/Editor/. Menu: Tools > Zbuduj Gliwice.
+  Skrypt tworzy w scenie obiekt „Mapa_Gliwice” i zapisuje go jako prefab
+  Assets/_Mapa/Mapa_Gliwice.prefab (PrefabUtility.SaveAsPrefabAssetAndConnect).
+  Przy ponownym uruchomieniu usuwa starą mapę i buduje od nowa.
+- ZERO zewnętrznych modeli i tekstur. Tylko GameObject.CreatePrimitive
+  (Cube, Cylinder, Plane, Quad) + własne proste siatki tam, gdzie trzeba
+  (dach dwuspadowy jako graniastosłup trójkątny — zbuduj Mesh w kodzie,
+  RecalculateNormals, płaskie cieniowanie przez niewspółdzielone wierzchołki).
+- Materiały: twórz w kodzie jako assety w Assets/_Mapa/Materialy/
+  (shader „Universal Render Pipeline/Lit”, Smoothness 0,1), JEDEN materiał na
+  kolor, współdzielony. Paleta stonowana, 1939, sepia: tynk kamienic (beż,
+  jasna ochra, szaro-zielony, łososiowy), cegła, dachówka (ceglasty, ciemny
+  brąz), blacha (szary), bruk (ciemny szary), chodnik (jasny szary), asfalt,
+  trawa (2 zielenie), ziemia, woda (granat, lekko przezroczysta), drewno
+  (modrzew dla wieży), okna (ciemny granat), ramy okien (biały).
+- 1 jednostka = 1 m. Oś Y w górę, PÓŁNOC = +Z, wschód = +X.
+- Miasto mieści się w prostokącie od (0,0,0) do (400,0,320) — to skrót
+  prawdziwych odległości, nie 1:1.
+- Kolizje: zostaw collidery z prymitywów (Box/Capsule), na ziemi jeden duży
+  BoxCollider. Bez MeshColliderów poza własnymi siatkami dachów (tam też Box).
+- Krawędź mapy: niewidzialne ściany (BoxCollider bez renderera) + pas drzew,
+  żeby nie dało się wyjść.
+- Wszystkie statyczne obiekty: isStatic = true (pod NavMesh i oświetlenie).
+- Hierarchia: Mapa_Gliwice > Teren, Ulice, Budynki, Natura, Wnetrza, Granice,
+  Punkty. Budynki nazwane (Hotel_HausOberschlesien, Dworzec, Ratusz itd.).
+- Mapę opisuj w kodzie funkcjami pomocniczymi, np.
+  Kamienica(x, z, szer, gleb, pietra, kolor, kierunekFrontu),
+  Ulica(x1, z1, x2, z2, szer), Drzewo(x, z), Plot(x1, z1, x2, z2),
+  Budynek z drzwiami: zostaw otwór/wnękę na drzwi 1,2 x 2,2 m we froncie.
+  Okna jako płaskie ciemne prostopadłościany wystające 2 cm ze ściany,
+  rzędami na każdym piętrze (piętro 3,5 m). Gzyms pod dachem. Kamienice
+  w pierzejach, stykające się ścianami, różne wysokości (2–4 piętra) i kolory
+  z deterministycznego Random (stałe ziarno), żeby wyglądało żywo.
+- Unity 6 API: FindFirstObjectByType zamiast FindObjectOfType.
+- Kod ma się kompilować bez błędów, bez żadnych dodatkowych pakietów.
+
+UKŁAD MIASTA (przybliżony)
+- POŁUDNIE (z 10–50): dworzec Bahnhof Gleiwitz (x 170–240): duży ceglany
+  budynek z wysokim dachem, perony z zadaszeniem na słupach, tory ze
+  wschodu na zachód przez całą mapę (szyny = cienkie długie prostopadłościany
+  na podkładach), 2 przejazdy przez tory.
+- Wilhelmstraße (dziś ul. Zwycięstwa): szeroka ulica (16 m z chodnikami)
+  od dworca prosto na północ do Ringu (x ok. 200), szpaler drzew. Po
+  wschodniej stronie w połowie drogi Hotel „Haus Oberschlesien”: największy
+  budynek przy ulicy, 4 piętra, symetryczna fasada, wejście z daszkiem.
+- CENTRUM (z 140–190): Ring (rynek, bruk), Ratusz pośrodku z wieżyczką,
+  fontanna, ogródki kawiarni (stoliki = osłony). Dookoła pierzeje kamienic.
+  W kamienicach wejścia: Buchhandlung (księgarnia), Photograph (fotograf),
+  Café. Na NW od Ringu kościół Wszystkich Świętych: nawa + wysoka wieża
+  z hełmem, mur dookoła. Wąskie boczne uliczki jako skróty.
+- Rzeka Kłodnica ze wschodu na zachód (z ok. 200–215), obniżone koryto
+  z wodą (Plane), skarpy. 2 mosty, w tym most przy Tarnowitzer Landstraße
+  z zejściem pod most na brzeg (tam skrytka).
+- PÓŁNOC: Tarnowitzer Landstraße (dziś Tarnogórska) od mostu na północ do
+  radiostacji. Zabudowa rzednie: wille w ogrodach, żywopłoty (osłony 1,2 m),
+  potem pola.
+- SKRAJ PÓŁNOCNY (z 270–315): Radiostacja Gleiwitz: teren za płotem
+  (siatka/sztachety 2 m) z bramą od drogi i DZIURĄ w płocie od tyłu.
+  Budynek nadajnika (piętrowy, ceglany). WIEŻA: drewniana kratownica
+  z modrzewia, przekrój kwadratowy zwężający się ku górze, w grze 70 m
+  wysokości (prawdziwa ma 111 m), zbudowana z cienkich belek: 4 słupy
+  narożne, poziome pierścienie co 5 m i ukośne zastrzały na krzyż, na
+  szczycie platforma. Ma być widoczna z całego miasta — to symbol gry.
+  Na zachód od stacji zagajnik: gęste drzewa (low poly: pień-cylinder +
+  korona z 1–2 brył), krzaki, polanka z miejscem na auto.
+- WSCHÓD: droga na Hindenburg (dziś Zabrze) od dworca na wschód. Na
+  wschodnim skraju pola i drewniana stodoła (x 360–390, z 20–45).
+- Ulice: jezdnia z bruku, krawężniki (niskie Box 0,15 m), chodniki.
+- Latarnie i rekwizyty NIE — robi je kolega. Ty stawiasz tylko punkty.
+- ŻADNYCH swastyk ani symboli nazistowskich. Szyldy z niemieckimi nazwami
+  (TextMeshPro albo TextMesh 3D) nad wejściami: Hotel Haus Oberschlesien,
+  Bahnhof Gleiwitz, Rathaus, Buchhandlung, Photograph, Sender Gleiwitz.
+  Nazwy ulic na tabliczkach: Wilhelmstraße, Ring, Tarnowitzer Landstraße.
+
+WNĘTRZA (osobne pokoje, daleko od miasta, ta sama scena, gracz teleportuje się
+przez drzwi)
+- Wszystkie od x = 1000, z = 0, każde z podłogą, ścianami, sufitem
+  (sufit bez renderera od dołu albo pominięty — kamera zza pleców nie może
+  się zaklinować; najlepiej sufit z warstwą, którą kamera ignoruje), oknami
+  (ciemne prostokąty), światłem (Point Light ciepły). Wysokość pomieszczeń 3,5 m.
+- hotel (x 1000–1040): hol (posadzka w kratę, 4 kolumny = osłony, kontuar
+  recepcji, telefon na ścianie, dywan) -> schody/korytarz z drzwiami do pokoi
+  (wnęki i donice = osłony) -> pokój Naujocksa (biurko pod oknem, łóżko,
+  szafa — meble jako proste bryły w kolorze drewna).
+- ksiegarnia (x 1060–1076): regały pod ścianami (bryły z „książkami” =
+  kolorowe paski), lada, zaplecze.
+- fotograf (x 1090–1106): sklep z ladą, studio, mała ciemnia za drzwiami.
+- radio (x 1120–1160): korytarz -> sterownia (pulpit pod oknem) -> pokój
+  techniczny (ściana pod łącznicę, szafy z aparaturą jako osłony) -> schody
+  do piwnicy (ciemniej, niższy sufit) -> korytarz przy wyjściu.
+- Między pomieszczeniami w środku zwykłe otwory drzwiowe 1,2 x 2,2 m.
+
+NAZWANE PUNKTY (puste GameObjecty pod „Punkty”, nazwy DOKŁADNIE takie)
+Punkt stoi na podłodze (Y = wysokość podłogi), w miejscu, po którym da się
+chodzić. Obrót: oś +Z punktu = kierunek, w który ma patrzeć postać/obiekt.
+Punkty drzwi stoją 1 m PRZED drzwiami, patrzą w stronę drzwi.
+- miasto: spawn_dworzec, miasto_drzwi_hotel, miasto_drzwi_ksiegarnia,
+  miasto_drzwi_fotograf, miasto_drzwi_radio, miasto_dziura_plot,
+  miasto_kolejarz, miasto_skrytka_most, miasto_zagajnik_krzaki,
+  miasto_zagajnik_auto, miasto_stodola, miasto_rower, miasto_ciezarowka,
+  miasto_karta_1 … miasto_karta_6 (1: przy ratuszu, 2: przy kościele,
+  3: w ogrodzie willi przy Tarnowitzer, 4: na dworcu, 5: przy moście,
+  6: przy stodole), miasto_patrol_sd_1 … _6, miasto_schupo_1 … _3,
+  miasto_auto_sd_trasa_1 … _5 (droga autem z hotelu do zagajnika po ulicach),
+  miasto_tlum_1 … _10 (chodniki Wilhelmstraße i Ringu),
+  miasto_oslona_1 … _12 (miejsca na beczki/skrzynie/auta przy trasie gracza),
+  miasto_latarnia_1 … _20 (krawędź chodnika wzdłuż Wilhelmstraße, Ringu,
+  Tarnowitzer).
+- hotel: spawn_hotel_wejscie, hotel_drzwi_wyjscie, hotel_recepcja,
+  hotel_telefon, hotel_kolumna, hotel_patrol_1, hotel_patrol_2,
+  hotel_pokoj_drzwi, hotel_pokoj_mapa (na biurku), hotel_pokoj_lista,
+  hotel_latarnia_1 … _3.
+- ksiegarnia: spawn_ksiegarnia, ksiegarnia_drzwi_wyjscie, ksiegarnia_zofia.
+- fotograf: spawn_fotograf, fotograf_drzwi_wyjscie, fotograf_wlasciciel,
+  fotograf_gestapo, fotograf_ciemnia.
+- radio: spawn_radio_tyl (w środku, za drzwiami od tyłu), spawn_radio_brama,
+  radio_drzwi_wyjscie, radio_sterownia_mikrofon, radio_technika_kable (przy
+  ścianie łącznicy, patrzy na ścianę), radio_kartka_grubera,
+  radio_piwnica_drzwi, radio_piwnica_pracownik_1 … _3, radio_sd_1 … _5,
+  radio_cialo_honiok (przy wyjściu), radio_kartka_honiok,
+  radio_latarnia_1 … _4.
+
+KONIEC BUDOWANIA
+- Sprawdź każdy punkt: Physics.Raycast z 2 m nad punktem w dół musi trafić
+  podłogę w odległości < 2,5 m i punkt nie może być wewnątrz collidera
+  (Physics.CheckSphere 0,3 m na wysokości 1 m). Wypisz w konsoli listę błędów
+  albo „Mapa OK: N punktów”.
+- Dodaj do mapy komponent PunktyGizmos (zwykły MonoBehaviour w
+  Assets/_Mapa/, NIE w Editor/): w OnDrawGizmos rysuje kulkę + strzałkę +Z
+  i nazwę (Handles.Label w #if UNITY_EDITOR) każdego punktu; w trakcie gry
+  klawisz F2 (Input System: Keyboard.current.f2Key) pokazuje/ukrywa małe
+  znaczniki z nazwami (TextMesh nad punktem).
+- Ustaw w scenie Directional Light (popołudnie, ciepłe) tylko jeśli go nie ma.
+
+FORMA ODPOWIEDZI
+Podziel kod na pliki, każdy w osobnym bloku z nazwą nad blokiem:
+1. MapaPomocnicy.cs (Editor): materiały, prymitywy, dach, okna, kamienica,
+   drzewo, płot, ulica.
+2. MapaMiasto.cs (Editor): układ miasta + punkty miejskie.
+3. MapaWnetrza.cs (Editor): wnętrza + ich punkty.
+4. ZbudujGliwice.cs (Editor): menu, czyszczenie, budowanie, walidacja,
+   zapis prefabu.
+5. PunktyGizmos.cs (runtime).
+Najpierw plik 1. Gdy napiszę „dalej”, następny. Nie pytaj o szczegóły,
+rozsądnie zakładaj. Kod ma się kompilować w Unity 6 bez dodatkowych pakietów
+(TextMesh zamiast TextMeshPro, jeśli nie jesteś pewien).
+
+========== KONIEC PROMPTU ==========
+
+Jak coś się wywali: wklej Claude'owi błąd z konsoli Unity (cały, z numerem
+linii) i nazwę pliku. Jak wieża wygląda źle: „przebuduj tylko funkcję Wieza()”.
+
+
+CZĘŚĆ 2 — DIALOGI I DŹWIĘK
+================================================================================
+Masz gotowe w paczce (folder Assets/_Dialogi/ i tools/):
+- Assets/_Dialogi/Resources/dialogi.json — szkic 34 scen (ok. 3,2 tys. znaków).
+  Niemcy mówią po niemiecku, na ekranie polskie napisy; kolejarz i Gruber
+  gwarą. Popraw teksty po swojemu, ale NIE ZMIENIAJ nazw scen (a1_zofia itd.)
+  i pól (kto, tekst, napis, mysl) — B czyta je z kodu.
+- Assets/_Dialogi/glosy.json — opis głosu dla każdej postaci + efekty (sfx).
+  Wpisujesz tylko voice_id z ElevenLabs.
+- tools/generuj_glosy.py — wersja pod Unity. Uruchamiasz z katalogu projektu:
+    plik .env w katalogu projektu:  ELEVENLABS_API_KEY=twój_klucz
+    (.env jest w .gitignore — klucz nie trafi do kolegów)
+    python3 tools/generuj_glosy.py --lista-glosow   # twoje głosy i voice_id
+    python3 tools/generuj_glosy.py --sucho          # policz znaki, nic nie wysyła
+    python3 tools/generuj_glosy.py --tylko a1_      # najpierw akt 1, posłuchaj
+    python3 tools/generuj_glosy.py                  # reszta
+    python3 tools/generuj_glosy.py --wymus a1_zofia # ta scena od nowa
+    python3 tools/generuj_glosy.py --sfx            # efekty dźwiękowe
+  Wynik: Assets/_Dialogi/Resources/Audio/<scena>_01.mp3 …, a w dialogi.json
+  każda linia dostaje pole "audio": "<scena>_01". B ładuje to przez
+  Resources.Load<AudioClip>("Audio/a1_zofia_01").
+  Efekty: Assets/_Dialogi/Resources/Sfx/<nazwa>.mp3 (strzal, przeladowanie,
+  alarm, telefon, migawka, szum_radia, iskra, drzwi, rykoszet, amb_miasto,
+  amb_noc, amb_radio). B ładuje Resources.Load<AudioClip>("Sfx/strzal").
+- Postacie w glosy.json: kruk, zofia, naujocks, heinz, sd, gestapo,
+  recepcjonista, schupo, gruber, fotograf, kolejarz, sowa, spiker,
+  przechodzien, lektor (epilog).
+
+Kolejność: wybierz głosy w pierwszych 15 min (gdy B stawia projekt), wygeneruj
+akt 1 i wypchnij — B od razu podłączy okno dialogowe. Resztę generuj w tle,
+gdy Claude pisze ci mapę.
+
+Po każdej partii: git add Assets/_Dialogi && commit && pull --rebase && push.
+Nie commituj .env.

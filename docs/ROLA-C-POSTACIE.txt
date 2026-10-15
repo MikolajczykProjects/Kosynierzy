@@ -1,0 +1,148 @@
+ROLA C — POSTACIE (low poly, rig Humanoid, wbudowane animacje)
+================================================================================
+Najpierw przeczytaj 00-PODZIAL-I-ZASADY.txt.
+
+Robisz WSZYSTKIE postacie gry: wygląd, rig, animacje, jeden wspólny Animator
+Controller i prefaby CH_*. NIE piszesz kodu gry — ruch, AI i strzelanie podpina
+osoba B. Ty dajesz postaci, które ładnie chodzą, kucają, celują, strzelają,
+padają, rozmawiają.
+
+Twój folder: Assets/_Postacie/  (nic poza nim nie ruszasz)
+  _Postacie/Modele/        pliki .fbx
+  _Postacie/Animacje/      klipy animacji .fbx/.anim
+  _Postacie/Materialy/     materiały kolorów (mundury, ubrania, skóra)
+  _Postacie/Prefaby/       CH_*.prefab   <- to jest twój produkt
+  _Postacie/AC_Czlowiek.controller
+  _Postacie/Test_Postacie.unity   twoja scena do testów
+
+
+SKĄD BRAĆ (darmowe, legalne, szybkie)
+--------------------------------------------------------------------------------
+Najszybsza droga — MIXAMO (mixamo.com, darmowe konto Adobe):
+  - Postacie + automatyczny rig + setki animacji, wszystko gotowe do Unity.
+  - Pobieraj: Format FBX for Unity (.fbx), Skin: With Skin dla modelu,
+    animacje: Without Skin, 30 fps. Przy chodzie/biegu zaznacz „In Place”.
+Alternatywy (CC0, styl low poly):
+  - Quaternius (quaternius.com): Ultimate Modular Men/Women, Universal Animation
+    Library — low poly ludziki z riggiem i animacjami.
+  - Kenney (kenney.nl): Animated Characters / Mini Characters.
+  - Poly Pizza (poly.pizza): pojedyncze modele, sprawdzaj licencję.
+Najlepiej: JEDEN styl modeli dla wszystkich (np. same Quaternius), a animacje
+z Mixamo — działają na każdym modelu Humanoid dzięki retargetowi w Unity.
+
+
+USTAWIENIA IMPORTU (każdy model i każda animacja)
+--------------------------------------------------------------------------------
+- Zaznacz .fbx > Inspector > Rig > Animation Type: Humanoid > Apply.
+  Modele: Avatar Definition = Create From This Model.
+  Animacje: Avatar Definition = Copy From Other Avatar > avatar modelu bazowego.
+- Model: Scale Factor tak, żeby człowiek miał ok. 1,8 m (sprawdź obok kostki 1 m).
+- Animacje: zakładka Animation > Loop Time ON dla idle/chód/bieg/kucanie/
+  rozmowa/siedzenie; Root Transform Rotation i Position Y: Bake Into Pose ON.
+- Pivot między stopami, przód na +Z.
+
+
+ANIMACJE, KTÓRE MUSZĄ BYĆ (nazwy klipów dowolne, stany w Animatorze takie)
+--------------------------------------------------------------------------------
+  Idle                     stanie, oddech
+  Walk                     chód ok. 1,5 m/s
+  Run                      bieg ok. 5,5 m/s
+  CrouchIdle, CrouchWalk   przykucnięcie i skradanie
+  PistolIdle, PistolWalk   chód z pistoletem w gotowości (Mixamo: „Pistol”)
+  Shoot                    strzał z pistoletu (krótki, odrzut)
+  Rifle (opcjonalnie)      SD z karabinem
+  HitDeath                 trafiony, upada i ZOSTAJE na ziemi (bez krwi)
+  Talk                     gestykulacja przy rozmowie
+  HandsUp                  ręce w górze (pracownicy stacji)
+  Sit                      siedzenie na krześle (recepcjonista, fotograf)
+  LyingUnconscious         leży nieprzytomny (Honiok, ogłuszeni)
+  Jump, Fall, Land         skok/spadanie (wymagane przez Starter Assets)
+
+
+ANIMATOR CONTROLLER — AC_Czlowiek (jeden dla wszystkich, łącznie z graczem)
+--------------------------------------------------------------------------------
+Parametry DOKŁADNIE takie (osoba B steruje nimi z kodu):
+  Speed (float), MotionSpeed (float, domyślnie 1), Grounded (bool, domyślnie
+  true), Jump (bool), FreeFall (bool), Kucanie (bool), Celuje (bool),
+  Strzal (trigger), Trafiony (trigger), Rozmowa (bool), RecePodniesione (bool),
+  Siedzi (bool), Lezy (bool)
+
+Układ:
+- Warstwa Base:
+  * Blend Tree „Ruch” po Speed: 0 Idle, 1,5 Walk, 5,5 Run.
+  * Blend Tree „Kucanie” po Speed: 0 CrouchIdle, 2 CrouchWalk.
+    Ruch <-> Kucanie przez bool Kucanie.
+  * Blend Tree „Pistolet” po Speed: 0 PistolIdle, 2 PistolWalk.
+    Ruch <-> Pistolet przez bool Celuje.
+  * Any State -> HitDeath przez trigger Trafiony (stan końcowy, bez wyjścia).
+  * Any State -> Lying przez Lezy = true; Sit przez Siedzi; HandsUp przez
+    RecePodniesione; Talk przez Rozmowa (Has Exit Time OFF, przejścia 0,15 s).
+  * Jump/FreeFall/Grounded: skopiuj logikę z StarterAssetsThirdPerson.controller
+    (jest w Assets/ThirdParty/StarterAssets/...), żeby gracz działał bez zmian.
+- Warstwa „Strzal” (Avatar Mask: tylko ręce i tułów, Additive albo Override,
+  waga 1): pusty stan -> Shoot przez trigger Strzal -> powrót.
+Przejścia między stanami ruchu: Has Exit Time OFF, Transition Duration 0,1–0,2.
+Test: w Test_Postacie.unity ręcznie zmieniaj parametry w oknie Animator
+podczas Play i sprawdź, czy każdy stan działa.
+
+
+LISTA POSTACI (prefaby, nazwy dokładnie takie)
+--------------------------------------------------------------------------------
+Każdy prefab: model + Animator (AC_Czlowiek, Apply Root Motion OFF)
++ CapsuleCollider (wysokość 1,8, promień 0,3, środek Y 0,9).
+NIE dodawaj skryptów ani NavMeshAgenta — to robi B.
+
+ PRIORYTET 1 (do 1:00):
+ CH_Kruk            gracz. 26 lat, ciemny płaszcz/marynarka, kaszkiet albo
+                    kapelusz, wygląda jak zwykły kupiec. Nie może się wyróżniać.
+ CH_SD              żołnierz SD: szaro-zielony mundur polowy, czapka, pas,
+                    buty z cholewami. BEZ ŻADNYCH NASZYWEK, SYMBOLI, SWASTYK.
+ PRIORYTET 2 (do 2:00):
+ CH_Naujocks        dowódca, cywilny garnitur i płaszcz, kapelusz, wyższy.
+ CH_Heinz           agent SD czytający komunikat, przebrany za polskiego
+                    powstańca (cywilne ubranie, czapka, opaska bez napisów).
+ CH_Zofia           księgarka ok. 50 lat, spódnica, sweter, okulary.
+ CH_Schupo          policjant: zielony mundur, czako/hełm policyjny, bez symboli.
+ CH_Honiok          ok. 43 lata, robotnicze ubranie. W grze tylko leży
+                    (Lezy = true), przykryty płaszczem. Z szacunkiem, bez krwi.
+ CH_Gruber          technik radiostacji: szary kitel, okulary.
+ CH_Pracownik       pracownik stacji (B postawi 3 kopie), koszula, kamizelka.
+ CH_Cywil_M1..M3    mężczyźni 1939: garnitury, kapelusze, różne kolory.
+ CH_Cywil_K1..K3    kobiety 1939: sukienki, płaszcze, kapelusze.
+ PRIORYTET 3 (jak zostanie czas):
+ CH_SD_Oficer       jak CH_SD + płaszcz skórzany, czapka z daszkiem.
+ CH_Gestapo         długi płaszcz, kapelusz (cywil, nie mundur).
+ CH_Fotograf        starszy pan, kamizelka, muszka.
+ CH_Kolejarz        mundur kolejarza, granatowy, czapka.
+ CH_Sowa            kurier, rolnik: kurtka, czapka, buty robocze.
+ CH_Recepcjonista   hotel: frak/uniform hotelowy, siedzi za ladą.
+
+Szybkie warianty: ten sam model, inny materiał (kolor ubrania) = nowa postać.
+Duplikuj prefab, podmień materiały. Tak zrobisz 6 cywilów w 10 minut.
+
+
+SPRAWDZENIE PRZED PUSHEM
+--------------------------------------------------------------------------------
+[ ] Postać stoi na ziemi (stopy na Y = 0), nie lewituje, nie wchodzi w podłogę.
+[ ] Wysokość ok. 1,8 m, patrzy na +Z.
+[ ] Rig = Humanoid, w Configure Avatar wszystkie kości zielone.
+[ ] Każdy parametr z listy przełącza właściwą animację.
+[ ] Brak różowych materiałów (różowy = zły shader; ustaw URP/Lit albo
+    Edit > Rendering > Materials > Convert to URP).
+[ ] Żadnych symboli nazistowskich na teksturach.
+Potem: git add Assets/_Postacie && git commit && git pull --rebase && git push
+i na Discord: „postacie: dodane CH_..., CH_...”.
+
+
+PROMPT DO CLAUDE (chat albo Claude Code), jak utkniesz
+--------------------------------------------------------------------------------
+Robię postacie do gry w Unity 6 (URP) na hackatonie. Jestem osobą od postaci:
+modele low poly z Mixamo/Quaternius, rig Humanoid, jeden Animator Controller
+AC_Czlowiek z parametrami Speed, MotionSpeed, Grounded, Jump, FreeFall, Kucanie,
+Celuje, Strzal (trigger), Trafiony (trigger), Rozmowa, RecePodniesione, Siedzi,
+Lezy. Nie piszę kodu gry. Prowadź mnie krok po kroku po edytorze Unity
+(co kliknąć, gdzie), krótko. Mój problem: [OPISZ]
+
+Możesz też poprosić Claude Code o skrypt EDYTORA (Assets/_Postacie/Editor/),
+który sam zbuduje AC_Czlowiek z parametrami i blend tree z klipów w folderze
+Animacje — oszczędza 20 minut klikania. Skrypt edytora to nie kod gry, wolno.

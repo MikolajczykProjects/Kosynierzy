@@ -1,0 +1,140 @@
+ROLA D — OBIEKTY (low poly, wbudowane animacje obiektów)
+================================================================================
+Najpierw przeczytaj 00-PODZIAL-I-ZASADY.txt.
+
+Robisz WSZYSTKIE przedmioty w grze: broń, dowody, rekwizyty, meble, pojazdy,
+drzwi, latarnie, osłony. Każdy jako gotowy prefab OB_* z materiałem, colliderem
+i — jeśli trzeba — wbudowaną animacją (Animator z ustalonymi parametrami).
+NIE piszesz logiki gry (podnoszenie, interakcja, zadania robi osoba B).
+Budynki, ulice, drzewa, wieża radiostacji = mapa (Nataniel), nie ty.
+
+Twój folder: Assets/_Obiekty/  (nic poza nim nie ruszasz)
+  _Obiekty/Modele/  _Obiekty/Materialy/  _Obiekty/Animacje/
+  _Obiekty/Efekty/      (cząsteczki: iskry, błysk z lufy, dym z rury)
+  _Obiekty/Prefaby/     OB_*.prefab   <- twój produkt
+  _Obiekty/Test_Obiekty.unity
+
+
+SKĄD BRAĆ (darmowe, CC0, low poly)
+--------------------------------------------------------------------------------
+- Kenney (kenney.nl): Survival Kit, Furniture Kit, Car Kit, Weapon Pack,
+  Retro Urban Kit, City Kit — wszystko CC0, gotowe .fbx.
+- Quaternius (quaternius.com): Ultimate Weapons, Furniture, Vehicles.
+- Poly Pizza (poly.pizza): wyszukiwarka pojedynczych modeli (sprawdź licencję).
+- Czego nie ma (łącznica, mikrofon burzowy, aparat 1939): złóż z prymitywów
+  w Unity (Cube/Cylinder) albo w ProBuilder (Package Manager > ProBuilder).
+  W low poly 5 sześcianów w dobrych kolorach wygląda dobrze.
+- Klimat: 1939 rok. Żadnych nowoczesnych aut, plastiku, neonów.
+  Auta: czarne sedany z błotnikami, ciężarówka wojskowa z plandeką.
+
+
+ZASADY KAŻDEGO PREFABU
+--------------------------------------------------------------------------------
+- 1 jednostka = 1 m, pivot na dole (albo w zawiasie dla drzwi), przód +Z.
+- Collider: Box/Capsule dopasowany z grubsza. Pojazdy: Box na karoserię.
+- Materiał URP/Lit, płaskie kolory, Smoothness ok. 0,1.
+- Animacje: Animator + mały Animator Controller w _Obiekty/Animacje/
+  (np. AC_Drzwi). Klipy zrób w oknie Animation (Window > Animation > Animation,
+  Record, ustaw klatki) — 2–3 klatki wystarczą.
+- Puste obiekty-punkty w prefabie (nazwy dokładnie takie), żeby B wiedział,
+  gdzie co przyczepić: Lufa, Uchwyt, PunktInterakcji itd. (niżej przy obiektach).
+- Bez skryptów gry. Wyjątek: proste efekty wizualne (cząsteczki, Light).
+
+
+LISTA OBIEKTÓW (nazwy prefabów DOKŁADNIE takie)
+--------------------------------------------------------------------------------
+PRIORYTET 1 — do 1:00
+ OB_Drzwi           drewniane drzwi 1,0 x 2,1 m, z ościeżnicą. Pivot w zawiasie.
+                    Animator AC_Drzwi: bool Otwarte (obrót 0° -> 100°, 0,4 s).
+                    + trigger Otworz (otwiera i sam zamyka po 1 s).
+                    Punkt: PunktInterakcji (przed drzwiami, 0,8 m).
+ OB_Karta_Historii  pożółkła kartka/pocztówka ok. 0,2 m. Animacja w pętli:
+                    obrót wokół Y + lekkie unoszenie (idle), delikatna poświata
+                    (Point Light, żółty, zasięg 2 m, słaby).
+ OB_Pistolet_Vis    polski pistolet Vis wz. 35, ok. 0,21 m. Pivot w chwycie.
+                    Punkty: Lufa (wylot lufy, +Z), Uchwyt (gdzie dłoń).
+                    Efekt: _Obiekty/Efekty/FX_BlyskLufy (krótki błysk + dym,
+                    Play On Awake OFF — B odpala).
+ OB_Lacznica        tablica łącznicy/wzmacniacza na ścianę ok. 1,2 x 1,5 m:
+                    szare pudło, zegary, przełączniki. Na wierzchu 3 grube kable
+                    jako osobne dzieci: Kabel_1 (czerwony), Kabel_2 (czarny),
+                    Kabel_3 (biały). Każdy kabel ma Animator: trigger Przetnij
+                    (kabel rozdziela się na dwie połówki i opada).
+                    Dzieci FX_Iskra_1..3 (iskry, Play On Awake OFF).
+                    Lampka kontrolna Lampka (emisja czerwona) — bool Zasilanie
+                    w Animatorze tablicy: ON świeci, OFF gaśnie.
+
+PRIORYTET 2 — do 2:00
+ OB_Aparat          aparat małoobrazkowy z lat 30. (typu Leica), 0,13 m.
+ OB_Mapa_Stol       stół z rozłożoną mapą (kartka z liniami i czerwonym kółkiem
+                    na północy miasta). Punkt: CelZdjecia (środek mapy).
+ OB_Lista           kartka z listą na stole/biurku. Punkt: CelZdjecia.
+ OB_Kartka          luźna kartka (Gruber, Honiok) do położenia na ziemi.
+ OB_Telefon         telefon z lat 30. z korbką/słuchawką na widełkach.
+ OB_Skrytka         skrzynka pod mostem, wieko z animacją: trigger Otworz.
+                    W środku OB_Amunicja.
+ OB_Amunicja        pudełko nabojów / magazynek.
+ OB_Mikrofon_Burzowy  mikrofon na statywie, metalowa siatka, kabel. Punkt:
+                    CelZdjecia. Animator: bool Nadaje (czerwona lampka miga).
+ OB_Pulpit          pulpit sterowni radiostacji: zegary, pokrętła, przełączniki.
+ OB_Szafa_Aparatura szafa z aparaturą 0,8 x 2 m (lampy, zegary) — osłona.
+ OB_Latarnia        latarnia uliczna z lat 30., 4 m. Dziecko Light (Spot w dół,
+                    ciepły żółty, zasięg 8 m). Animator: bool Wlaczona
+                    (Light + emisja klosza ON/OFF), opcjonalnie lekkie migotanie.
+ OB_Auto_SD         czarny sedan 1939, ok. 4,5 m. Dzieci: Kolo_PP, Kolo_LP,
+                    Kolo_PT, Kolo_LT (B kręci kołami albo Animator: float
+                    Speed). Animator: trigger OtworzDrzwi (drzwi kierowcy).
+                    Światła przednie: Light jako dziecko, bool Swiatla.
+                    BEZ symboli i flag.
+ OB_Beczka, OB_Skrzynia, OB_Worki    osłony ruchome (B stawia na miasto_oslona_*).
+                    Wysokość ok. 1 m — gracz kuca za nimi.
+
+PRIORYTET 3 — jak zostanie czas
+ OB_Ciezarowka      wojskowa ciężarówka z plandeką (typu Opel Blitz), bez symboli.
+ OB_Rower           czarny rower z lat 30. Punkt: Siodelko. Animator: float
+                    Speed (koła i pedały się kręcą).
+ OB_Film            rolka filmu (oddajesz ją Sowie na końcu).
+ OB_Radio_Odbiornik radio lampowe drewniane (epilog, księgarnia).
+ Wnętrza:  OB_Stol, OB_Krzeslo, OB_Lozko, OB_Szafa, OB_Biurko, OB_Lada_Recepcja,
+           OB_Regal_Ksiazki, OB_Lampa_Biurkowa, OB_Kanapa, OB_Lustro
+ Fotograf: OB_Aparat_Studyjny (aparat na statywie z płachtą),
+           OB_Lampa_Ciemnia (czerwone światło, Light czerwony)
+ Ulica:    OB_Lawka, OB_Kiosk (z plakatami bez symboli), OB_Slup_Ogloszeniowy,
+           OB_Hydrant, OB_Kosz, OB_Wozek_Reczny, OB_Plakat
+ Dworzec:  OB_Lokomotywa, OB_Wagon (stoją przy peronie; opcjonalnie dym:
+           FX_Dym, cząsteczki szare w pętli z komina)
+
+
+EFEKTY (cząsteczki, _Obiekty/Efekty/)
+--------------------------------------------------------------------------------
+ FX_BlyskLufy   żółto-biały błysk 0,05 s + szary dymek.
+ FX_Iskra       iskry ze zwarcia kabla, 0,5 s.
+ FX_Dym         dym z komina lokomotywy, pętla.
+ FX_FlashAparatu  biały błysk (B odpala przy zdjęciu).
+Wszystkie: Play On Awake OFF (oprócz FX_Dym), Stop Action: None.
+
+
+SPRAWDZENIE PRZED PUSHEM
+--------------------------------------------------------------------------------
+[ ] Skala realna (porównaj z kostką 1 m i kapsułą 1,8 m w Test_Obiekty.unity).
+[ ] Pivot na dole / w zawiasie, przód +Z, root prefabu: pozycja 0, rotacja 0,
+    skala 1.
+[ ] Animacja odpala się, gdy w trakcie Play zmienisz parametr w oknie Animator.
+[ ] Punkty (Lufa, PunktInterakcji, CelZdjecia...) są i mają dobre nazwy.
+[ ] Brak różowych materiałów (Edit > Rendering > Materials > Convert to URP).
+[ ] Zero symboli nazistowskich.
+Potem: git add Assets/_Obiekty && git commit && git pull --rebase && git push
+i na Discord: „obiekty: dodane OB_..., OB_...”.
+
+
+PROMPT DO CLAUDE (chat albo Claude Code), jak utkniesz
+--------------------------------------------------------------------------------
+Robię obiekty do gry w Unity 6 (URP) na hackatonie, styl low poly, rok 1939.
+Jestem osobą od obiektów: modele (Kenney/Quaternius/ProBuilder), materiały,
+prefaby OB_* i proste animacje przez Animator (np. drzwi: bool Otwarte, kabel:
+trigger Przetnij). Nie piszę logiki gry. Prowadź mnie krok po kroku po edytorze,
+krótko. Mój problem: [OPISZ]
+
+Claude Code może ci też napisać skrypt EDYTORA (Assets/_Obiekty/Editor/), który
+złoży z prymitywów brakujące modele (łącznica, mikrofon burzowy, aparat, pulpit)
+i zapisze je jako prefaby z Animatorami. To szybsze niż klikanie każdego sześcianu.

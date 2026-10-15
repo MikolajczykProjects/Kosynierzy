@@ -1,0 +1,60 @@
+OBIEKTY (rola D, Borys) — jak wrzucic do Unity
+================================================================================
+1. Skopiuj CALY folder _Obiekty do Assets/ w projekcie od Julka
+   (ma byc Assets/_Obiekty/Modele, Materialy, Editor ...).
+2. Poczekaj az Unity zaimportuje. W menu u gory pojawi sie "Obiekty".
+3. Obiekty > Zbuduj wszystko
+   -> Assets/_Obiekty/Prefaby/OB_*.prefab   (44 prefaby)
+   -> Assets/_Obiekty/Animacje/AC_*.controller + klipy .anim
+   -> Assets/_Obiekty/Efekty/FX_BlyskLufy, FX_Iskra, FX_Dym, FX_FlashAparatu
+   -> Assets/_Obiekty/Materialy/M_*.mat (URP/Lit, smoothness 0,1)
+4. Obiekty > Scena testowa  -> Assets/_Obiekty/Test_Obiekty.unity
+   (wszystkie prefaby w rzedzie + kostka 1 m + kapsula 1,8 m do porownania skali)
+5. git add Assets/_Obiekty && git commit -m "obiekty: ..." && git pull --rebase && git push
+
+Zmiana modelu: Blender -> plik blender/obiekty.blend albo skrypty blender/*.py,
+w Blenderze: exec(open(r"...\blender\zbuduj_wszystko.py", encoding="utf-8").read())
+-> nadpisuje FBX w _Obiekty/Modele -> w Unity znowu Obiekty > Zbuduj wszystko.
+
+DLA JULKA (B) — parametry Animatorow i punkty
+--------------------------------------------------------------------------------
+OB_Drzwi            AC_Drzwi:  bool Otwarte, trigger Otworz (otwiera, po 1 s zamyka)
+                    Skrzydlo ma BoxCollider (rusza sie z drzwiami). Punkt: PunktInterakcji
+OB_Karta_Historii   AC_Karta: idle w petli (obrot + unoszenie), Light "Poswiata",
+                    BoxCollider trigger 0,5 m na wysokosci 1 m
+OB_Pistolet_Vis     AC_Vis: trigger Strzal (kurek, odrzut zamka 0,16 s), trigger Przeladuj (1,8 s:
+                    magazynek wypada, nowy wchodzi, zamek przeciagniety). Czesci: Zamek, Kurek, Spust, Magazynek
+                    Punkty: Lufa (+Z), Uchwyt, Wyrzut. Przy strzale: Lufa/FX_BlyskLufy i Wyrzut/FX_Luska -> Play()
+OB_Lacznica         AC_Lacznica: bool Zasilanie (domyslnie true, lampka swieci)
+                    Kabel_1 (czerwony), Kabel_2 (czarny), Kabel_3 (bialy):
+                    kazdy ma wlasny Animator AC_Kabel z triggerem Przetnij
+                    FX_Iskra_1..3 -> Play() przy cieciu. Punkt: PunktInterakcji
+OB_Skrytka          AC_Skrytka: trigger Otworz. W srodku OB_Amunicja (Wnetrze)
+OB_Mikrofon_Burzowy AC_Mikrofon: bool Nadaje (czerwona lampka miga). Punkt: CelZdjecia
+OB_Latarnia         AC_Latarnia: bool Wlaczona (domyslnie true, lekkie migotanie). Light "Swiatlo" (Spot w dol, 8 m)
+OB_Auto_SD          AC_Auto_SD: float Speed [m/s] (kreci Kolo_PP/LP/PT/LT), trigger OtworzDrzwi,
+                    bool Swiatla (reflektory + 2 Spoty). Punkt: Siedzenie_Kierowcy
+OB_Ciezarowka       AC_Ciezarowka: float Speed, trigger OtworzDrzwi, bool Swiatla. Punkty: Paka, Siedzenie_Kierowcy
+OB_Rower            AC_Rower: float Speed (kola + pedaly). Punkt: Siodelko
+OB_Aparat, OB_Aparat_Studyjny   Obiektyw/FX_FlashAparatu -> Play()
+OB_Mapa_Stol, OB_Lista, OB_Kartka   Punkt: CelZdjecia
+OB_Lokomotywa       Komin/FX_Dym (gra sama, petla)
+OB_Lampa_Biurkowa, OB_Lampa_Ciemnia   maja Light (cieply / czerwony)
+Osłony (miasto_oslona_*): OB_Beczka, OB_Skrzynia, OB_Worki — ok. 1 m, BoxCollider.
+
+TEKSTURY
+--------------------------------------------------------------------------------
+Jeden material M_Obiekty_Atlas dla prawie wszystkiego (1 draw call na obiekt):
+  T_Obiekty_Atlas.png     kolor (drewno, metale, papier, tkaniny...)
+  T_Obiekty_Atlas_MS.png  R = metalicznosc, A = gladkosc (chrom/mosiadz blyszcza, papier matowy)
+  T_Obiekty_Atlas_N.png   normal mapa (sloje, fugi desek, splot tkanin)
+Skrypt sam ustawia import (_N = Normal map, _MS = bez sRGB) i podpina je w URP/Lit.
+Swiatlo NIE jest w modelach — daje je scena (Directional Light + Skybox). Prefaby maja tylko
+wlasne zrodla: latarnie, reflektory, lampy, poswiata karty.
+
+Podglad animacji w Blenderze: po zbuduj_wszystko.py uruchom blender/podglad_animacji.py
+i odtworz klatki 1-96 (te same ruchy co klipy w Unity).
+
+Kamera jest trzecioosobowa — modele sa robione pod widok z dystansu.
+Lokomotywa z tendrem ma ok. 19 m, wagon ok. 17 m.
+Zero symboli, flag i napisow na autach, mundurach i plakatach.
