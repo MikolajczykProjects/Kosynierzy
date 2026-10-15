@@ -196,7 +196,7 @@ namespace Kosynierzy
         {
             staminaRoot = SettingsMenuUi.CreateRect("Stamina", root);
             staminaRoot.anchorMin = staminaRoot.anchorMax = staminaRoot.pivot = Vector2.zero;
-            staminaRoot.sizeDelta = new Vector2(StaminaSegments * 38f - 4f, 3f);
+            staminaRoot.sizeDelta = new Vector2(StaminaSegments * 60f - 6f, 7f);
             staminaRoot.anchoredPosition = new Vector2(64f, 136f);
             staminaGroup = staminaRoot.gameObject.AddComponent<CanvasGroup>();
             staminaGroup.alpha = 0f;
@@ -204,8 +204,8 @@ namespace Kosynierzy
             {
                 var back = SettingsMenuUi.CreateImage("Seg", staminaRoot, UiTheme.WithAlpha(UiTheme.Bone, 0.2f), false);
                 back.rectTransform.anchorMin = back.rectTransform.anchorMax = back.rectTransform.pivot = Vector2.zero;
-                back.rectTransform.sizeDelta = new Vector2(34f, 3f);
-                back.rectTransform.anchoredPosition = new Vector2(i * 38f, 0f);
+                back.rectTransform.sizeDelta = new Vector2(54f, 7f);
+                back.rectTransform.anchoredPosition = new Vector2(i * 60f, 0f);
                 var fill = SettingsMenuUi.CreateImage("Fill", back.rectTransform, UiTheme.WithAlpha(UiTheme.Bone, 0.92f), false);
                 SettingsMenuUi.Stretch(fill.rectTransform);
                 fill.rectTransform.pivot = new Vector2(0f, 0.5f);
