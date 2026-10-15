@@ -420,7 +420,7 @@ namespace Kosynierzy
                 Direction = direction,
                 VisualOrigin = visual,
                 Speed = bulletSpeed,
-                Damage = 1f,
+                Damage = PlayerShotDamage(),
                 GravityScale = 0f,
                 MaxDistance = 120f,
                 Impulse = 1.5f,
@@ -531,6 +531,15 @@ namespace Kosynierzy
                 var b = waypoints[(i + 1) % waypoints.Length];
                 if (a != null && b != null) Gizmos.DrawLine(a.position, b.position);
             }
+        }
+
+        /// <summary>One enemy hit = 1/15 of the player's max health, so the player dies on the 15th body hit.</summary>
+        static float PlayerShotDamage()
+        {
+            var p = UnityEngine.Object.FindAnyObjectByType<FirstPersonController>();
+            Health hp = null;
+            if (p != null) { hp = p.GetComponentInParent<Health>(); if (hp == null) hp = p.GetComponentInChildren<Health>(); }
+            return hp != null ? hp.Max / 15f + 0.001f : 1f;
         }
     }
 }

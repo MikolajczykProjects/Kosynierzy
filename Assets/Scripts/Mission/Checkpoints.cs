@@ -41,6 +41,10 @@ namespace Kosynierzy
             {
                 SavedPosition = p.transform.position;
                 SavedYaw = p.transform.eulerAngles.y;
+                // Every checkpoint heals the player back to full.
+                var hp = p.GetComponentInParent<Health>();
+                if (hp == null) hp = p.GetComponentInChildren<Health>();
+                if (hp != null && !hp.IsDead) hp.Revive();
             }
         }
 
