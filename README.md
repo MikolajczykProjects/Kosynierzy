@@ -70,6 +70,16 @@ Gamepad też działa (lewa gałka, A skok, B kucanie, RT cios).
 
 Szczegóły mapy: `Assets/_Mapa/CZYTAJ_NAJPIERW_AI.md`. Szczegóły postaci: `Assets/_Postacie/CZYTAJ.txt`.
 
+## Demo z gry (nagrane w Unity)
+| | |
+|---|---|
+| ![Wyposażenie na start](docs/media/01_wyposazenie.gif)<br>**Wyposażenie** — wybór pistoletu i broni białej | ![Gliwice, droga na Ring](docs/media/02_miasto.gif)<br>**Gliwice 1939** — znacznik celu, HUD, ulice |
+| ![Księgarnia Zofii](docs/media/03_ksiegarnia.gif)<br>**Księgarnia pani Zofii** — wnętrze, rozmowa | ![Hotel Haus Oberschlesien](docs/media/04_hotel_dowody.gif)<br>**Hotel** — dowody, wykrycie i alarm |
+| ![Zmrok w zagajniku](docs/media/05_zmrok_zagajnik.gif)<br>**Zmrok** — zagajnik, aparat, kryjówka | ![Radiostacja](docs/media/06_radiostacja.gif)<br>**Radiostacja** — SD nadaje komunikat |
+| ![Alarm przy radiostacji](docs/media/07_alarm_strzelanina.gif)<br>**Alarm** — SD wykrywa gracza i otwiera ogień | |
+
+GIF-y nagrywa `Assets/Scripts/Core/DemoRecorder.cs` (Play), składa `node tools/gif/make_gif.js <folder> <out.gif>`.
+
 ## Zrzuty z gry
 | | |
 |---|---|
