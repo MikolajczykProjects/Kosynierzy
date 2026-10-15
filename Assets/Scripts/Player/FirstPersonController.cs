@@ -23,9 +23,9 @@ namespace Kosynierzy
         [SerializeField] float airControl = 0.35f;
 
         [Header("Stamina")]
-        [SerializeField] float maxStamina = 100f;
+        [SerializeField] float maxStamina = 160f;
         [SerializeField] float sprintDrain = 16f;
-        [SerializeField] float staminaRegen = 24f;
+        [SerializeField] float staminaRegen = 31.2f;
         [SerializeField] float regenDelay = 0.8f;
         [Tooltip("After running dry, sprint unlocks again at this much stamina.")]
         [SerializeField] float exhaustedRecover = 30f;
@@ -112,6 +112,8 @@ namespace Kosynierzy
                 if (c != null) cameraPivot = c.transform;
             }
             cam = cameraPivot != null ? cameraPivot.GetComponent<Camera>() : null;
+            maxStamina = Mathf.Max(maxStamina, 160f);      // +60 % (user playtest 15.10); scenes saved with 100 get lifted
+            staminaRegen = Mathf.Max(staminaRegen, 31.2f); // +30 %
             stamina = maxStamina;
             currentHeight = standHeight;
             eyeHeight = standHeight * eyeHeightRatio;

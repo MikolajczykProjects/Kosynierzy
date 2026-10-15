@@ -13,6 +13,8 @@ namespace Kosynierzy
         public const string ShotInnocent = "Polski agent nie strzela do cywilów. Właśnie dałeś im prawdziwy dowód.";
 
         public static bool IsFailed { get; private set; }
+        /// <summary>Distinct civilians the player has hurt; the 3rd one fails the mission.</summary>
+        public static int InnocentHits;
         public static string Message { get; private set; }
         public static event Action<string> Failed;
 
@@ -20,6 +22,7 @@ namespace Kosynierzy
         static void ResetStatics()
         {
             IsFailed = false;
+            InnocentHits = 0;
             Message = null;
             Failed = null;
         }
@@ -38,6 +41,7 @@ namespace Kosynierzy
         {
             IsFailed = false;
             Message = null;
+            InnocentHits = 0;
         }
     }
 }

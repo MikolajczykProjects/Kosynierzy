@@ -157,10 +157,10 @@ namespace Kosynierzy
             bool controls = player == null || player.enabled;
             if (controls && !GameState.IsPaused && !stabbing && !(photo != null && photo.IsRaised))
             {
-                if (slot1.WasPressedThisFrame()) Equip(HandItem.Pistol);
-                if (slot2.WasPressedThisFrame()) Equip(HandItem.Rifle);
-                if (slot3.WasPressedThisFrame()) Equip(HandItem.Bayonet);
-                if (slot4.WasPressedThisFrame()) Equip(HandItem.Camera);
+                if (slot1.WasPressedThisFrame()) Toggle(HandItem.Pistol);
+                if (slot2.WasPressedThisFrame()) Toggle(HandItem.Rifle);
+                if (slot3.WasPressedThisFrame()) Toggle(HandItem.Bayonet);
+                if (slot4.WasPressedThisFrame()) Toggle(HandItem.Camera);
                 float c = cycle.ReadValue<float>();
                 if (Mathf.Abs(c) > 0.1f && cycle.WasPressedThisFrame()) Cycle(c > 0 ? -1 : 1);
                 if (Current == HandItem.Bayonet && Cursor.lockState == CursorLockMode.Locked && stabAction.WasPressedThisFrame()) PlayStab();
@@ -203,6 +203,13 @@ namespace Kosynierzy
                 var next = Order[((idx + dir * i) % Order.Length + Order.Length) % Order.Length];
                 if (Owns(next)) { Equip(next); return; }
             }
+        }
+
+        /// <summary>Slot key: same slot as the item in hand = holster (empty hands); otherwise draw it.</summary>
+        void Toggle(HandItem item)
+        {
+            if (IsSwapping || !Owns(item)) return;
+            Equip(item == Current ? HandItem.Empty : item);
         }
 
         public void Equip(HandItem item)

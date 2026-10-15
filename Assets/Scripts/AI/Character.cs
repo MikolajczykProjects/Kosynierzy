@@ -149,10 +149,19 @@ namespace Kosynierzy
         /// <summary>The next death is a silent takedown (no shot, no noise).</summary>
         public void MarkSilentKill() => SilentKill = true;
 
+        bool countedAsHit;
+
         void OnAnyHit(HitResult hit)
         {
-            if (hit.FromPlayer && IsInnocent && hit.Health != null && hit.Health == Health)
-                MissionFail.Trigger(MissionFail.ShotInnocent);
+            if (hit.FromPlayer && IsInnocent && hit.Health != null && hit.Health == Health && !countedAsHit)
+            {
+                countedAsHit = true;
+                MissionFail.InnocentHits++;
+                if (MissionFail.InnocentHits >= 3) { MissionFail.Trigger(MissionFail.ShotInnocent); return; }
+                var fb = FindFirstObjectByType<CombatFeedback>();
+                if (fb != null) fb.AddPopup($"Cywil ranny! Ostrzeżenie {MissionFail.InnocentHits}/3", new Color(1f, 0.55f, 0.2f), 1.2f);
+                Debug.Log($"Kosynierzy: civilian hit {MissionFail.InnocentHits}/3");
+            }
         }
 
         void OnDied(Health _)

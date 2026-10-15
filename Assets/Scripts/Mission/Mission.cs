@@ -33,6 +33,16 @@ namespace Kosynierzy
         public string CurrentActName { get; private set; } = "";
         public bool Finished { get; private set; }
 
+        // --- admin panel hooks (Admin/AdminPanel.cs) ---
+        public int DebugStepCount => steps.Count;
+        public string DebugStepTitle(int i) => i >= 0 && i < steps.Count ? steps[i].Title : "";
+        /// <summary>Reloads the scene and resumes at the given step, like a checkpoint load.</summary>
+        public void DebugJumpTo(int stepIndex)
+        {
+            Checkpoints.ResumeStep = Mathf.Clamp(stepIndex, 0, Mathf.Max(0, steps.Count - 1));
+            Checkpoints.Restart();
+        }
+
         /// <summary>Side goals for the HUD's objectives panel ("Opcjonalne").</summary>
         public class OptionalTask
         {
@@ -352,9 +362,16 @@ namespace Kosynierzy
 
         // ------------------------------------------------------------------ runner
 
+        float nextAutoSave = 90f;
+
         void Update()
         {
             if (Finished || MissionFail.IsFailed || GameState.IsPaused) return;
+            if (!GameMode.Historical && Time.time > nextAutoSave)
+            {
+                nextAutoSave = Time.time + 90f;
+                if (Detection.PlayerStatus == AwarenessLevel.Unaware && !Dialog.IsPlaying) Checkpoints.Save(CurrentIndex);
+            }
 
             if (skipAction.WasPressedThisFrame() && Current != null && !Dialog.IsPlaying)
             {
